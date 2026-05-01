@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A D S O</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Times New Roman, sans-serif;
+    text-align: center;
+    background-image: url("FONDO.jpg");
+    background-size: cover;       
+    background-position: center;  
+    background-repeat: no-repeat; 
+}
+footer {
+   
+      background-color: #3498DB;
+   
+      color: white;
+      text-align: center;
+      padding: 15px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+
+.top-bar {
+    background: rgba(245, 245, 245, 0.5);
+
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+.navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar ul li {
+    display: inline-block;
+    margin: 0 15px;
+}
+
+.navbar ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+main {
+    margin-top: 40px;
+}
+
+
+form {
+    background: rgba(220, 245, 245, 0.5);
+    display: inline-block;
+    padding: 25px;
+    border-radius: 10px;
+    margin-top: 40px;
+}
+
+input, select {
+    padding: 8px;
+    width: 200px;
+}
+
+button {
+    color: white;
+    border: yes;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-enviar {
+    background-color: #3498DB;
+}
+
+.btn-cancelar {
+    background-color: #3498DB;
+}
+
+.btn-volver {
+    background-color: #3498DB;
+}
+
+button:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+</style>
+
+</head>
+<body>
+<footer>
+  <p>© 2026 A C S O Experiencia y eficacia sin igual a la mano.</p>
+</footer>
+
+<div style="margin-top: 30px;">
+    <img src="LOGO.jpg" alt="LOGO" width="120">
+    
+</div>
+
+
+<div class="top-bar">
+    <div><strong>A C S O</strong></div>
+    <div>Experiencia y eficacia sin igual</div>
+</div>
+
+<main>
+
+    <section>
+        <h2>Solicitar servicio</h2>
+
+        <form onsubmit="return enviarFormulario()">
+
+            <label>Nombre:</label><br>
+            <input type="text" required><br><br>
+
+            <label>Correo:</label><br>
+            <input type="email" required><br><br>
+
+            <label>Fecha de servicio:</label><br>
+            <input type="date"><br><br>
+
+            <label>Tipo de servicio:</label><br>
+            <select>
+                <option>Aseo general</option>
+                <option>Limpieza de ventanas</option>
+                <option>Cortar césped</option>
+            </select><br><br>
+
+            <label>Hora:</label><br>
+            <input type="time"><br><br>
+
+            <button type="submit" class="btn-enviar">Solicitar</button>
+
+     
+            <a href="cliente.html" class="btn-cuadro">Cancelar</a>
+
+            <a href="cliente.html">Volver</a>
+
+
+        </form>
+    </section>
+</main>
+
+</body>
+</html>
