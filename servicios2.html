@@ -7,18 +7,30 @@
    
     <title>LOGIN</title>
     <style>
+
         body{
+            background-image: url("imagen clean .jpg");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            
             background-color: #f2f2f2;
-            font-family: Arial, sans-serif;
+            font-family: "arial", sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
         }
+         h2{
+             font-family: "baguet script", cursive;
+             font-size: 20px;
+             color: #333;
+        }
         h1{
             color: #333;
-            font size: 24px;
+
+            
         }
         form{
             background-color: #fff;
@@ -34,7 +46,7 @@
         input[type="text"],
         input[type="password"]{
             width: 100%;
-            padding: 10px;
+            padding: 5px;
             margin-bottom: 15px;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -51,9 +63,19 @@
         button:hover{
             background-color: #45a049;
         }
+        input{
+            width:400px;
+            height: 30px;
+            font-size: 22px;
+            border-radius: 10px;
+            padding: 10px;
+        }
+  
+
     </style>
     <body>
-        <h1>LOGIN</h1>
+        <h2>inicia sesion para conocer los servicios</h2>
+       
         <form action="servicios2.html" method="post">
             <label for="GMAIL">Ingresar correo :</label>
             <input type="text" id="GMAIL" ><br><br>
