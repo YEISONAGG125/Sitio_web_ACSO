@@ -1,95 +1,163 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    
-   
-    <title>LOGIN</title>
-    <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        body{
-            background-image: url("c:\\Users\\Usuario\\OneDrive\\Desktop\\logo .jpg\\imagen clean.jpg");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-repeat: no-repeat;
+<title>inicio de sesion</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background-image:url("imagen-clean.jpg");
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    min-height:100vh;
+}
 
 
 
+.navbar{
+    width:100%;
+    background:#2e8b57;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    padding:18px;
+}
 
-            background-color: #f2f2f2;
-            font-family: "arial", sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-         h2{
-             font-family: "baguet script", cursive;
-           
-        }
-        h1{
-            color: #333;
+.logo{
+    color:white;
+    font-size:24px;
+    font-weight:bold;
+}
 
-            
-        }
-        form{
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        label{
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-        }
-        input[type="text"],
-        input[type="password"]{
-            width: 100%;
-            padding: 5px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        button{
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover{
-            background-color: #45a049;
-        }
-        input{
-            width:400px;
-            height: 30px;
-            font-size: 22px;
-            border-radius: 10px;
-            padding: 10px;
-        }
-  
+.menu{
+    display:flex;
+    list-style:none;
+    gap:20px;
+}
 
-    </style>
-    <body>
-        <h2>inicia sesion para conocer los servicios</h2>
-       
-        <form action="servicios2.html" method="post">
-            <label for="GMAIL">Ingresar correo :</label>
-            <input type="text" id="GMAIL" ><br><br>
-            <label for="password">Ingresar contraseña:</label>
-            <input type="password" id="password" ><br><br>
-           <button >Iniciar sesión</button><br><br>
+.menu a{
+    text-decoration:none;
+    color:white;
+    font-weight:bold;
+    padding:10px 15px;
+    border-radius:5px;
+    transition:0.3s;
+}
 
-           <button >volver</button><br><br>
-          
-           </body>
-            
-      
-      
+.menu a:hover{
+    background:#20b2aa;
+}
+
+.activo{
+    background:#1e6f4f;
+}
+
+
+
+.container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:85vh;
+}
+
+form{
+    background:rgba(255,255,255,0.95);
+    padding:40px;
+    border-radius:15px;
+    box-shadow:0 0 15px rgba(0,0,0,0.3);
+    width:450px;
+}
+
+h2{
+    text-align:center;
+    margin-bottom:25px;
+    color:#2e8b57;
+}
+
+label{
+    display:block;
+    margin-bottom:8px;
+    color:#333;
+    font-weight:bold;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin-bottom:20px;
+    border-radius:10px;
+    border:1px solid #ccc;
+    font-size:16px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    background:#2e8b57;
+    color:white;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:17px;
+    margin-top:10px;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#20b2aa;
+}
+
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">A C S O</div>
+
+    <ul class="menu">
+        <li><a href="#">INICIO</a></li>
+        <li><a href="#">AYUDA Y COMENTARIOS ▼</a></li>
+        <li><a href="#">RESERVAS ▼</a></li>
+        <li><a href="#">PERSONAL ▼</a></li>
+        <li><a href="#">PRODUCTOS ▼</a></li>
+        <li><a href="#" class="activo">CONTACTO</a></li>
+    </ul>
+
+</nav>
+
+<div class="container">
+
+<form action="servicios2.html">
+
+    <h2>Inicia sesión para conocer los servicios</h2>
+
+    <label>Ingresar correo:</label>
+    <input type="text" placeholder="Correo electrónico">
+
+    <label>Ingresar contraseña:</label>
+    <input type="password" placeholder="Contraseña">
+
+    <button type="submit">Iniciar sesión</button>
+
+    <button type="button">Volver</button>
+
+</form>
+
+</div>
+
+</body>
 </html>
