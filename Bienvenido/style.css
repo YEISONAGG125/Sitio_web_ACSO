@@ -1,0 +1,104 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f6f9;
+    background-image:url("Fondodesitio.png");
+    background-size: cover;
+}
+
+header{
+    width: 100%;
+    background-gradient: linear-gradient(to right, #ffffff, #f0f0f0);
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+    border: 2px solid rgba(76,175,80,3);
+}
+
+.logo{
+    cursor: pointer;
+    transition: 0.3s;    
+    height: 70px;      
+    border-radius: 50%;  
+    object-fit: cover;  
+}
+
+
+.logo:hover{
+    transform: scale(1.05);
+}
+
+.login a{
+    text-decoration: none;
+    color: #222;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.login a:hover{
+    color: #0099ff;
+}
+
+
+.navbar{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+    
+}
+
+
+nav{
+    width: 90%;
+    max-width: 1200px;
+    background-gradient: linear-gradient(to right, #1b1919, #f0f0f0);
+    border-radius: 18px;
+    padding: 22px 40px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0px 8px 20px rgb(0,0,0,0);
+    transition: 0.3s;
+    border: 2px solid rgba(76,175,80,3);
+
+}
+
+nav:hover{
+    transform: translateY(-2px);
+}
+
+nav a{
+    text-decoration: none;
+    color: #222;
+    font-size: 18px;
+    font-weight: bold;
+    position: relative;
+    transition: 0.3s;
+}
+
+nav a:hover{
+    color: #0099ff;
+}
+
+nav a::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0%;
+    height: 3px;
+    background: #0099ff;
+    transition: 0.3s;
+}
+nav a:hover::after{
+    width: 100%;
+}
