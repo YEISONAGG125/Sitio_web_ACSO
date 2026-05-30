@@ -1,0 +1,34 @@
+body{
+    background-image: URL("FONDO.jpg");
+    backgroud-size: cover;
+    background-color: #ff7e5f;
+}
+
+h1{
+    color: rgb(255, 255, 255);
+    text-align: center;
+    font-family: "times new roman";
+    font-size: 20px;
+}
+form{
+    diplay: flex;
+    font-size: 30px;
+    height: 70px;
+    padding: 20px;
+    margin: 20px;
+    width: 10%;
+    color:black;
+    text-align: center;
+
+
+}
+.formulario_input{
+    color: black;
+    text-align: center;
+    padding: 5px;
+}
+.formulario_submit{
+    color: black;
+    text-align: center;
+    padding: 5px;
+}
