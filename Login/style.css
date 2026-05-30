@@ -1,13 +1,3 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>inicio de sesion</title>
-
-<style>
-
 *{
     margin:0;
     padding:0;
@@ -16,7 +6,7 @@
 }
 
 body{
-    background-image:url("imagen-clean.jpg");
+    background-image:url("Fondodesitio.png");
     background-size:cover;
     background-position:center;
     background-repeat:no-repeat;
@@ -119,45 +109,3 @@ button:hover{
     background:#20b2aa;
 }
 
-</style>
-</head>
-
-<body>
-
-<nav class="navbar">
-
-    <div class="logo">A C S O</div>
-
-    <ul class="menu">
-        <li><a href="#">INICIO</a></li>
-        <li><a href="#">AYUDA Y COMENTARIOS ▼</a></li>
-        <li><a href="#">RESERVAS ▼</a></li>
-        <li><a href="#">PERSONAL ▼</a></li>
-        <li><a href="#">PRODUCTOS ▼</a></li>
-        <li><a href="#" class="activo">CONTACTO</a></li>
-    </ul>
-
-</nav>
-
-<div class="container">
-
-<form action="servicios2.html">
-
-    <h2>Inicia sesión para conocer los servicios</h2>
-
-    <label>Ingresar correo:</label>
-    <input type="email" placeholder="Correo electrónico"required>
-
-    <label>Ingresar contraseña:</label>
-    <input type="password" placeholder="Contraseña"required>
-
-    <button type="submit">Iniciar sesión</button>
-
-    <button type="button">Volver</button>
-
-</form>
-
-</div>
-
-</body>
-</html>
