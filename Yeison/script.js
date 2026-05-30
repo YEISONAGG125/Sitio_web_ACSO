@@ -1,10 +1,10 @@
-const secciones = document.querySelectorAll(".section");
+function mostrar(id) {
 
-function mostrar(id){
+    let secciones = document.querySelectorAll('.seccion');
 
     secciones.forEach(seccion => {
-        seccion.style.display = "none";
+        seccion.style.display = 'none';
     });
 
-    document.getElementById(id).style.display = "block";
+    document.getElementById(id).style.display = 'block';
 }
