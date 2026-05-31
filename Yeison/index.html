@@ -15,30 +15,28 @@
 <header>
 
     <img src="logo.png" class="logo">
-
-    <button type="button" onclick="window.location.href='../inicio de sistema/login.html'">
-    Iniciar sesión
-</button>
+    <div class="navbar">
+    <nav>
+        <button onclick="mostrar('inicio')">Inicio</button>
+        <button type="button" onclick="window.location.href='../servicios/servicios.html'">
+            Servicios
+        </button>
+        <button onclick="mostrar('nosotros')">Nosotros</button>
+        <button onclick="mostrar('contacto')"> Contacto </button>
+        <button type="button" onclick="window.location.href='../inicio de sistema/login.html'">
+        <p></p>
+            ¡Hola, iniciar sesión o registrarse!
+        </p>
+    </button>
+    </nav>
+</div>
 
 </header>
 
-<div class="navbar">
-    <nav>
-        <button onclick="mostrar('inicio')">Inicio</button>
-        <button onclick="mostrar('servicios')">Servicios </button>
-        <button onclick="mostrar('nosotros')">Nosotros</button>
-        <button onclick="mostrar('contacto')"> Contacto </button>
-    </nav>
-</div>
 <div class="secciones">
 <section id="inicio" class="section">
     <p>
         Este es el inicio de ACSO
-    </p>
-</section>
-<section id="servicios" class="section">
-    <p>
-        Aquí van los servicios
     </p>
 </section>
 

@@ -1,115 +1,130 @@
 *{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
-
 
 body{
     font-family: Arial, Helvetica, sans-serif;
-    background: #f4f6f9;
-    background-image:url("Fondodesitio.png");
-    background-size: cover;
+    background-image:url("image.png");
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    min-height:100px;
+}
+body::before{
+    content:"";
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.25);
+    z-index:-1;
 }
 
 header{
-    width: 100%;
-    background-color: transparent;
-    padding: 20px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
-    border: 2px solid rgba(76,175,80,3);
+    width:100%;
+    padding:20px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:rgba(255,255,255,0.25);
+    backdrop-filter:blur(10px);
+    border-bottom:2px solid rgba(76,175,80,0.7);
+    box-shadow:0 4px 15px rgba(0,0,0,0.15);
 }
 
 .logo{
-    cursor: pointer;
-    transition: 0.3s;    
-    height: 70px;      
-    border-radius: 50%;  
-    object-fit: cover;  
+    height:75px;
+    border-radius:50%;
+    object-fit:cover;
+    cursor:pointer;
+    transition:all 0.4s ease;
 }
-
 
 .logo:hover{
-    transform: scale(1.05);
+    transform:scale(1.1) rotate(5deg);
 }
 
+
 .login a{
-    text-decoration: none;
-    color: #222;
-    font-weight: bold;
-    transition: 0.3s;
+    text-decoration:none;
+    color:#222;
+    font-weight:bold;
+    font-size:18px;
+    transition:0.3s;
 }
 
 .login a:hover{
-    color: #0099ff;
+    color:#2196f3;
 }
 
-
 .navbar{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: 25px;
+    display:flex;
+    justify-content:space-between;
+    margin-top:30px;
+}
+
+nav{
+    width:100%;
+    max-width:1200px;
+    padding:22px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    transition:0.4s;
+}
+nav:hover{
+    transform:translateY(-3px);
+}
+button{
+    background:none;
+    border:none;
+    cursor:pointer;
+    color:#222;
+    font-size:18px;
+    font-weight:bold;
+    transition:0.3s;
     
 }
 
-
-nav{
-    width: 90%;
-    max-width: 1200px;
-    background-color: rgba(111, 209, 241, 0.5);
-    border-radius: 18px;
-    padding: 22px 40px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    box-shadow: 0px 8px 20px rgb(0,0,0,0);
-    transition: 0.3s;
-    border: 2px solid rgba(76,175,80,3);
-
-}
-
-nav:hover{
-    transform: translateY(-2px);
-}
-
-button{
-    text-decoration: none;
-    color: #222;
-    font-size: 18px;
-    font-weight: bold;
-    position: relative;
-    transition: 0.3s;
-    border: none;
-    outline: none;
-    background: none;
-}
-
-
 button:hover{
-    color: #0099ff;
+    color:#2196f3;
+    transform:scale(1.08);
 }
+
 .section{
-    padding: 30px;
-    background-color: rgba(42, 138, 170, 0.5);
-    text-align: center;
-    border: 1px solid rgba(76, 175, 80, 1);
-    max-width: 1200px;
-    margin: 40px auto;
-    border-radius: 20px;
-    box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+    max-width:1200px;
+    margin:40px auto;
+    padding:40px;
+    text-align:center;
+    background:rgba(255,255,255,0.2);
+    backdrop-filter:blur(12px);
+    border-radius:25px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.15);
+    border:1px solid rgba(255,255,255,0.3);
+}
+
+.section h1{
+    color:#1565c0;
+    margin-bottom:15px;
+}
+
+.section p{
+    font-size:17px;
+    line-height:1.8;
+    color:#333;
 }
 footer{
     position:fixed;
     bottom:0;
     width:100%;
-
-    background: rgba(255, 255, 255, 0.6);
-    color: black;
+    background:rgba(255,255,255,0.25);
+    backdrop-filter:blur(10px);
+    color:#222;
     text-align:center;
     padding:15px;
+    border-top:1px solid rgba(255,255,255,0.3);
 }
-
