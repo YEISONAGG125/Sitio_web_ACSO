@@ -8,25 +8,24 @@
 </head>
 
 <body>
-
 <div>
 
-<form class="Login-form">
+<form id="loginForm">
 
-    <h2>Inicia sesión para conocer los servicios</h2>
+    <label>Usuario:</label><br>
+    <input type="text" id="usuario" required placeholder="Nombre de usuario"><br><br>
 
-    <label>Ingresar correo:</label>
-    <input type="email" placeholder="Correo electrónico"required>
+    <label>Password:</label><br>
+    <input type="password" id="password" required placeholder="Contraseña"><br><br>
 
-    <label>Ingresar contraseña:</label>
-    <input type="password" placeholder="Contraseña"required>
-
-    <button type="submit">Iniciar sesión</button>
+    <button type="submit">Entrar</button><br><br>
 
     <button type="button" onclick="window.location.href='../yeison/index.html'">Volver</button>
+    <button type="button" onclick="window.location.href='../registro/registro.html'">registrarse</button>
 
 </form>
 
 </div>
+<script src="script.js"></script>
 </body>
 </html>
