@@ -1,51 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Supervisores</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<div style="margin-top: 30px;">
-    <img src="LOGO.jpg" alt="LOGO" width="120">
-</div><div class="barra-superior">
-<button class="boton-perfil" onclick="window.location.href='../yeison/index.html'">⬅ Cerrar
-    
-</button>
-<h2>SUPERVISORES</h2>
-
+<header class="d-flex justify-content-end align-items-center p-3">
+    <button class="btn btn-outline-light"
+        onclick="window.location.href='../inicio de sistema/login.html'">
+        ⬅ Cerrar
+    </button>
+</header>
 <div class="tabs">
-    <div class="tab active" onclick="mostrar('Inicio', this)">Inicio</div>
-    <div class="tab" onclick="mostrar('Empleados', this)">Empleados</div>
-    <div class="tab" onclick="mostrar('Clientes', this)">Clientes</div>
-    <div class="tab" onclick="mostrar('incapacidades', this)">Incapacidades</div>
-    <div class="tab" onclick="mostrar('Contratos', this)">Contratos</div>
-    <div class="tab" onclick="mostrar('Novedades', this)">Novedades</div>
-    <div class="tab" onclick="mostrar('Cuentas', this)">Cuentas</div>
+    <img src="LOGO.png" alt="LOGO" width="60" class="rounded-circle" >
+    <div class="tab active" onclick="mostrar('Inicio', this)">🏠 Inicio</div>
+    <div class="tab" onclick="mostrar('Personal', this)">👨‍💼 Personal</div>
+    <div class="tab" onclick="mostrar('Incapacidades', this)">🏥 Incapacidades</div>
+    <div class="tab" onclick="mostrar('Inventario', this)">🧰 Inventario</div>
+    <div class="tab" onclick="mostrar('Contratos', this)">📄 Contratos</div>
+    <div class="tab" onclick="mostrar('Clientes', this)">🤝 Clientes</div>
+    <div class="tab" onclick="mostrar('Alertas', this)">🚨 Alertas</div>
+    <div class="tab" onclick="mostrar('Configuracion', this)">⚙️ Configuración</div>
 </div>
-
 <div id="Inicio" class="contenido active">
     <h3>Bienvenido</h3>
     <p>Panel administrativo del sistema A C S O</p>
 </div>
-
-<div id="Empleados" class="contenido">
-    <h3>Empleados</h3>
-
+<div id="Personal" class="contenido">
+    <h3>Personal</h3>
     <div class="fila encabezado">
         <div>Nombre</div>
         <div>Cargo</div>
         <div>Correo</div>
         <div>Estado</div>
     </div>
-
     <div class="fila">
         <div>Juan Pérez</div>
         <div>Supervisor</div>
         <div>juan@gmail.com</div>
         <div>Activo</div>
     </div>
-
     <div class="fila">
         <div>Laura Gómez</div>
         <div>Empleado</div>
@@ -53,35 +50,14 @@
         <div>Activo</div>
     </div>
 </div>
-
-<div id="Clientes" class="contenido">
-    <h3>Clientes</h3>
-
-    <div class="fila encabezado">
-        <div>Nombre</div>
-        <div>Correo</div>
-        <div>Teléfono</div>
-        <div>Dirección</div>
-    </div>
-
-    <div class="fila">
-        <div>Carlos Ruiz</div>
-        <div>carlos@gmail.com</div>
-        <div>3001234567</div>
-        <div>Calle 10</div>
-    </div>
-</div>
-
-<div id="incapacidades" class="contenido">
+<div id="Incapacidades" class="contenido">
     <h3>Incapacidades</h3>
-
     <div class="fila encabezado">
         <div>Empleado</div>
         <div>Motivo</div>
-        <div>Fecha</div>
+        <div>Fecha Inicio</div>
         <div>Días</div>
     </div>
-
     <div class="fila">
         <div>Juan Pérez</div>
         <div>Enfermedad</div>
@@ -89,8 +65,23 @@
         <div>3</div>
     </div>
 </div>
-
+<div id="Inventario" class="contenido">
+    <h3>Inventario</h3>
+    <div class="fila encabezado">
+        <div>Código</div>
+        <div>Utensilio</div>
+        <div>Estado</div>
+        <div>Responsable</div>
+    </div>
+    <div class="fila">
+        <div>001</div>
+        <div>Taladro</div>
+        <div>Disponible</div>
+        <div>Juan Pérez</div>
+    </div>
+</div>
 <div id="Contratos" class="contenido">
+
     <h3>Contratos</h3>
 
     <div class="fila encabezado">
@@ -106,10 +97,30 @@
         <div>6 meses</div>
         <div>Activo</div>
     </div>
-</div>
 
-<div id="Novedades" class="contenido">
-    <h3>Novedades</h3>
+</div>
+<div id="Clientes" class="contenido">
+
+    <h3>Clientes</h3>
+
+    <div class="fila encabezado">
+        <div>Nombre</div>
+        <div>Correo</div>
+        <div>Teléfono</div>
+        <div>Estado</div>
+    </div>
+
+    <div class="fila">
+        <div>Carlos Ruiz</div>
+        <div>carlos@gmail.com</div>
+        <div>3001234567</div>
+        <div>Activo</div>
+    </div>
+
+</div>
+<div id="Alertas" class="contenido">
+
+    <h3>🚨 Alertas</h3>
 
     <div class="fila encabezado">
         <div>Fecha</div>
@@ -117,7 +128,6 @@
         <div>Empleado</div>
         <div>Estado</div>
     </div>
-
     <div class="fila">
         <div>2026-04-05</div>
         <div>Retraso en servicio</div>
@@ -125,22 +135,25 @@
         <div>Pendiente</div>
     </div>
 </div>
-
-<div id="Cuentas" class="contenido">
-    <h3>Cuentas registradas</h3>
-
+<div id="Configuracion" class="contenido">
+    <h3>⚙️ Configuración</h3>
     <div class="fila encabezado">
-        <div>Nombre</div>
-        <div>Usuario</div>
-        <div>Correo</div>
-        <div>Cargo</div>
+        <div>Perfil</div>
+        <div>Notificaciones</div>
+        <div>Tema</div>
+        <div>Estado</div>
     </div>
-
-    <div id="listaUsuarios"></div>
-    <footer>
-  <p>© 2026 A C S O Experiencia y eficacia sin igual a la mano.</p>
+    <div class="fila">
+        <div>Supervisor</div>
+        <div>Activadas</div>
+        <div>Claro</div>
+        <div>Activo</div>
+    </div>
+</div>
+<footer>
+    <p>© 2026 A C S O - Experiencia y eficacia sin igual a la mano.</p>
 </footer>
 <script src="script.js"></script>
-</div>
+
 </body>
 </html>

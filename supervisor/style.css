@@ -1,0 +1,124 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+body{
+    min-height:100vh;
+    background-image:url("image.png");
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+}
+body::before{
+    content:"";
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.45);
+    z-index:-1;
+}
+header{
+    position:fixed;
+    top:0;
+    left:250px;
+    width:calc(100% - 250px);
+    height:90px;
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(12px);
+    display:flex;
+    align-items:center;
+    padding:0 30px;
+    border-bottom:1px solid rgba(255,255,255,0.15);
+    z-index:1000;
+}
+.tabs{
+    position:fixed;
+    top:0;
+    left:0;
+    width:250px;
+    height:100vh;
+    background:rgba(15,23,42,0.85);
+    backdrop-filter:blur(15px);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding-top:20px;
+    gap:10px;
+    border-right:1px solid rgba(255,255,255,0.1);
+}
+.tab{
+    width:90%;
+    padding:10px;
+    color:white;
+    font-size:16px;
+    border-radius:12px;
+    cursor:pointer;
+    transition:all .3s ease;
+}
+.tab:hover{
+    background:#2563eb;
+    transform:translateX(5px);
+}
+.tab.active{
+    background:#2563eb;
+    font-weight:bold;
+}
+.contenido{
+    display:none;
+    margin-left:280px;
+    margin-top:120px;
+    margin-right:20px;
+    padding:30px;
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(15px);
+    border-radius:20px;
+    color:white;
+    box-shadow:0 8px 30px rgba(0,0,0,.25);
+}
+.contenido.active{
+    display:block;
+}
+.contenido h3{
+    margin-bottom:20px;
+}
+.fila{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    padding:15px;
+    color:white;
+    border-bottom:1px solid rgba(255,255,255,0.15);
+}
+.encabezado{
+    background:#2563eb;
+    color:white;
+    font-weight:bold;
+    border-radius:10px;
+    margin-bottom:10px;
+}
+.btn-outline-light{
+    border:2px solid white !important;
+    color:white !important;
+    transition:.3s;
+}
+
+.btn-outline-light:hover{
+    background:white !important;
+    color:#0f172a !important;
+}
+footer{
+    position: fixed;
+    bottom: 0;
+    left: 250px;
+    text-align: center;
+    padding: 15px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    color: white;
+    width: calc(100% - 250px);
+}
