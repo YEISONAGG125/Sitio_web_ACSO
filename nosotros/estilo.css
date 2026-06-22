@@ -1,0 +1,181 @@
+**{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    text-align:center;
+    font-family: Arial, Helvetica, sans-serif;
+    background-image:url("image.png");
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+}
+
+body::before{
+    text-align:center;
+    content:"";
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.25);
+    z-index:-1;
+}
+
+header{
+    text-align:center;
+    width:100%;
+    padding:20px 40px;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:20px;
+    background:rgba(255,255,255,0.25);
+    backdrop-filter:blur(10px);
+    border-bottom:2px solid rgba(76,175,80,0.7);
+    box-shadow:0 4px 15px rgba(0,0,0,0.15);
+}
+
+.logo{
+    height:75px;
+    width:75px;
+    border-radius:50%;
+    object-fit:cover;
+    cursor:pointer;
+    transition:all 0.4s ease;
+}
+
+.logo:hover{
+    transform:scale(1.1) rotate(5deg);
+}
+
+.login a{
+    text-decoration:none;
+    color:#222;
+    font-weight:bold;
+    font-size:18px;
+    transition:0.3s;
+}
+
+.login a:hover{
+    color:#2196f3;
+}
+
+.navbar ul{
+    display:flex;
+    justify-content:center;
+    margin-top:20px;
+}
+
+nav{
+    width:100%;
+    max-width:1200px;
+    padding:20px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:30px;
+    flex-wrap:wrap;
+}
+
+button{
+    background:none;
+    border:none;
+    cursor:pointer;
+    color:#222;
+    font-size:18px;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+button:hover{
+    color:#2196f3;
+    transform:scale(1.08);
+}
+.banner-nosotros{
+    height:400px;
+    background-image:
+    linear-gradient(rgba(94, 95, 97, 0.351),
+    rgba(71, 73, 76, 0.349)),
+    url("");
+
+    background-size:cover;
+    background-position:center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.nosotros{
+    padding:60px;
+}
+
+.contenedor{
+    max-width:1100px;
+    margin:auto;
+}
+
+.contenedor h2{
+    color:#000000;
+    font-size:40px;
+    margin-bottom:20px;
+}
+
+.contenedor p{
+    font-size:18px;
+    line-height:1.8;
+    margin-bottom:20px;
+    color:#000000;
+}
+
+
+.mvv{
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 50px 20px;
+    flex-wrap: wrap;
+}
+
+.card{
+    width: 400px;
+    background: #ffffff39;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    text-align: center;
+    transition: 0.3s;
+}
+
+.card:hover{
+    transform: translateY(-10px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+}
+
+.card h2{
+    color: #000000;
+    margin-bottom: 15px;
+    font-size: 30px;
+}
+
+.card p{
+    color: #000000;
+    line-height: 1.8;
+    font-size: 17px;
+}
+
+footer{
+    margin-top:auto;
+    width:100%;
+    background: rgba(255, 255, 255, 0.382);
+    color: black;
+    text-align:center;
+    padding:15px;
+}
