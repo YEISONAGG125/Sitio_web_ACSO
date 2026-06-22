@@ -3,258 +3,404 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POWER CLEAN — Panel de Empleado</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-<title>ACSO - Servicios de Aseo</title>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-<link rel="icon" type="image/png" href="logo.png">
 </head>
 <body>
-<body>
-<footer>
-  <p>© 2026 A C S O Experiencia y eficacia sin igual a la mano.</p>
-</footer>
+ 
+<div class="overlay" id="overlay"></div>
+ 
+<div class="app">
+ 
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <img src="logo.png" alt="Logo" class="logo">
+      <div class="brand-text">
+        <div class="name">POWER CLEAN</div>
+        <div class="tag">Panel ACSO</div>
+      </div>
+    </div>
+ 
+    <div class="nav-section-label">Menú principal</div>
+   <nav class="nav">
+  <a href="#" class="nav-link active">
+    <i class="fa-solid fa-house"></i>
+    <span>Inicio</span>
+  </a>
 
-<div style="margin-top: 30px;">
-    <img src="logo.png" alt="logo" width="70">
-    
+  <a href="#" class="nav-link">
+    <i class="fa-solid fa-broom"></i>
+    <span>Servicios Pendientes</span>
+    <span class="badge alert">5</span>
+  </a>
+
+  <a href="#" class="nav-link">
+    <i class="fa-solid fa-boxes-stacked"></i>
+    <span>Inventario</span>
+  </a>
+
+  <a href="#" class="nav-link">
+    <i class="fa-solid fa-clipboard-list"></i>
+    <span>Mis Asignaciones</span>
+  </a>
+
+  <a href="#" class="nav-link">
+    <i class="fa-solid fa-paper-plane"></i>
+    <span>Solicitudes</span>
+    <span class="badge">2</span>
+  </a>
+
+  <a href="#" class="nav-link">
+    <i class="fa-solid fa-bell"></i>
+    <span>Notificaciones</span>
+    <span class="badge alert">4</span>
+  </a>
+
+  <a href="perfil.html" class="nav-link">
+    <i class="fa-solid fa-user"></i>
+    <span>Mi Perfil</span>
+  </a>
+</nav>
+
+</nav>
+ 
+   <div class="sidebar-footer">
+  <button class="logout-link" onclick="window.location.href='../yeison/index.html'">
+    <i class="fa-solid fa-right-from-bracket"></i>
+    <span>Cerrar Sesión</span>
+  </button>
 </div>
-<button class="boton-perfil" onclick="window.location.href='perfil empleado.html'">
-    Perfil
-</button>
+  </aside>
 
-<div class="barra-superior">
-    <button type="button" class="volver" onclick="window.location.href='../inicio de sistema/login.html'">
-        ⬅ Cerrar
-    </button>
+ <!-- main -->
+  <main class="main">
+ 
+    <!-- Topbar -->
+    <div class="topbar">
+      <div style="display:flex;align-items:center;">
+        <button class="menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+        <div class="page-heading">
+          <h1>HOLA juan</h1>
+          <p>Lunes, 22 de junio — Tienes 5 servicios pendientes hoy.</p>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" placeholder="Buscar cliente o dirección...">
+        </div>
+        <button class="icon-btn"><i class="fa-regular fa-bell"></i><span class="dot-alert"></span></button>
+        <button class="icon-btn"><i class="fa-solid fa-gear"></i></button>
+        <div class="profile-chip">
+
+  <div class="perfil-empleado"><img id="fotoEmpleado" src="perfil.png" alt="Foto de perfil"> </div>
+
+  <div class="info">
+    <div class="pname">Juan Pérez</div>
+    <div class="prole">Operario de Aseo</div>
+  </div>
+
+  <button class="editar" onclick="window.location.href='perfil.html'">
+    Editar
+  </button>
+
 </div>
-
-<h2>PANEL EMPLEADO</h2>
-
-<div class="tabs">
-     <div class="tab active" onclick="mostrar('Servicios', this)">Servicios activos</div>
-    <div class="tab" onclick="mostrar('Inventario', this)">Inventario</div>
-    <div class="tab" onclick="mostrar('Herramientas', this)">Herramientas</div>
-    <div class="tab" onclick="mostrar('Capacitaciones', this)">Capacitaciones</div>
-    <div class="tab" onclick="mostrar('horas', this)">Horas extras</div>
-    <div class="tab" onclick="mostrar('incapacidades', this)">Incapacidades</div>
-   <div class="tab" onclick="mostrar('Productos', this)">Productos</div>
+      </div>
+    </div>
+ 
+    <!-- Stat cards -->
+    <div class="stats-grid">
+      <div class="stat-card sc-pendientes">
+        <div class="stat-top">
+          <div class="stat-icon"><i class="fa-solid fa-hourglass-half"></i></div>
+          <span class="stat-trend">Hoy</span>
+        </div>
+        <div class="stat-num">5</div>
+        <div class="stat-label">Servicios Pendientes</div>
+      </div>
+ 
+      <div class="stat-card sc-completados">
+        <div class="stat-top">
+          <div class="stat-icon"><i class="fa-solid fa-circle-check"></i></div>
+          <span class="stat-trend">+12%</span>
+        </div>
+        <div class="stat-num">28</div>
+        <div class="stat-label">Servicios Completados</div>
+      </div>
+ 
+      <div class="stat-card sc-solicitudes">
+        <div class="stat-top">
+          <div class="stat-icon"><i class="fa-solid fa-paper-plane"></i></div>
+          <span class="stat-trend">En revisión</span>
+        </div>
+        <div class="stat-num">2</div>
+        <div class="stat-label">Solicitudes Enviadas</div>
+      </div>
+ 
+      <div class="stat-card sc-notif">
+        <div class="stat-top">
+          <div class="stat-icon"><i class="fa-solid fa-bell"></i></div>
+          <span class="stat-trend">Nuevas</span>
+        </div>
+        <div class="stat-num">4</div>
+        <div class="stat-label">Notificaciones</div>
+      </div>
+    </div>
+ 
+    <!-- Content grid -->
+    <div class="content-grid">
+ 
+      <!-- Tabla de servicios -->
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Servicios Asignados</h2>
+            <p>Tus tareas programadas para hoy y los próximos días</p>
+          </div>
+          <a class="panel-link" href="#">Ver todos →</a>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Dirección</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Estado</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="acc-pendiente">
+                <td>
+                  <div class="cliente-cell">
+                    <div class="cliente-ico">CO</div>
+                    <div>
+                      <div class="cliente-name">Conjunto Olivares</div>
+                      <div class="cliente-sub">Cliente residencial</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="dir-cell"><i class="fa-solid fa-location-dot"></i>Cra. 45 #102-30, Bogotá</td>
+                <td>22 jun 2026</td>
+                <td>09:00 AM</td>
+                <td><span class="pill p-pendiente">Pendiente</span></td>
+                <td>
+                  <div class="action-group">
+                    <button class="row-action"><i class="fa-solid fa-play"></i></button>
+                    <button class="row-action"><i class="fa-solid fa-eye"></i></button>
+                  </div>
+                </td>
+              </tr>
+              <tr class="acc-proceso">
+                <td>
+                  <div class="cliente-cell">
+                    <div class="cliente-ico">TR</div>
+                    <div>
+                      <div class="cliente-name">Torre Empresarial RX</div>
+                      <div class="cliente-sub">Cliente corporativo</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="dir-cell"><i class="fa-solid fa-location-dot"></i>Calle 100 #19-30, Bogotá</td>
+                <td>22 jun 2026</td>
+                <td>11:30 AM</td>
+                <td><span class="pill p-proceso">En Proceso</span></td>
+                <td>
+                  <div class="action-group">
+                    <button class="row-action"><i class="fa-solid fa-flag-checkered"></i></button>
+                    <button class="row-action"><i class="fa-solid fa-eye"></i></button>
+                  </div>
+                </td>
+              </tr>
+              <tr class="acc-pendiente">
+                <td>
+                  <div class="cliente-cell">
+                    <div class="cliente-ico">FM</div>
+                    <div>
+                      <div class="cliente-name">Familia Méndez</div>
+                      <div class="cliente-sub">Cliente residencial</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="dir-cell"><i class="fa-solid fa-location-dot"></i>Av. Suba #128-15, Bogotá</td>
+                <td>22 jun 2026</td>
+                <td>02:00 PM</td>
+                <td><span class="pill p-pendiente">Pendiente</span></td>
+                <td>
+                  <div class="action-group">
+                    <button class="row-action"><i class="fa-solid fa-play"></i></button>
+                    <button class="row-action"><i class="fa-solid fa-eye"></i></button>
+                  </div>
+                </td>
+              </tr>
+              <tr class="acc-completado">
+                <td>
+                  <div class="cliente-cell">
+                    <div class="cliente-ico">CL</div>
+                    <div>
+                      <div class="cliente-name">Clínica Vitalis</div>
+                      <div class="cliente-sub">Cliente institucional</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="dir-cell"><i class="fa-solid fa-location-dot"></i>Cra. 7 #54-20, Bogotá</td>
+                <td>21 jun 2026</td>
+                <td>08:00 AM</td>
+                <td><span class="pill p-completado">Completado</span></td>
+                <td>
+                  <div class="action-group">
+                    <button class="row-action"><i class="fa-solid fa-file-invoice"></i></button>
+                    <button class="row-action"><i class="fa-solid fa-eye"></i></button>
+                  </div>
+                </td>
+              </tr>
+              <tr class="acc-pendiente">
+                <td>
+                  <div class="cliente-cell">
+                    <div class="cliente-ico">ED</div>
+                    <div>
+                      <div class="cliente-name">Edificio Dorado 360</div>
+                      <div class="cliente-sub">Cliente corporativo</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="dir-cell"><i class="fa-solid fa-location-dot"></i>Calle 72 #10-50, Bogotá</td>
+                <td>23 jun 2026</td>
+                <td>10:00 AM</td>
+                <td><span class="pill p-pendiente">Pendiente</span></td>
+                <td>
+                  <div class="action-group">
+                    <button class="row-action"><i class="fa-solid fa-play"></i></button>
+                    <button class="row-action"><i class="fa-solid fa-eye"></i></button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+ 
+      <!-- Columna lateral derecha -->
+      <div class="side-col">
+ 
+        <!-- Inventario -->
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>Inventario</h2>
+              <p>Insumos disponibles para tu turno</p>
+            </div>
+          </div>
+          <div class="inv-grid">
+            <div class="inv-card">
+              <div class="inv-top">
+                <div class="inv-ico"><i class="fa-solid fa-broom"></i></div>
+                <span class="inv-stock ok">Stock OK</span>
+              </div>
+              <div>
+                <div class="inv-name">Escobas</div>
+                <div class="inv-qty">14 unidades</div>
+              </div>
+              <div class="inv-bar"><span style="width:85%;"></span></div>
+            </div>
+ 
+            <div class="inv-card">
+              <div class="inv-top">
+                <div class="inv-ico"><i class="fa-solid fa-mop"></i></div>
+                <span class="inv-stock ok">Stock OK</span>
+              </div>
+              <div>
+                <div class="inv-name">Trapeadores</div>
+                <div class="inv-qty">9 unidades</div>
+              </div>
+              <div class="inv-bar"><span style="width:60%;"></span></div>
+            </div>
+ 
+            <div class="inv-card">
+              <div class="inv-top">
+                <div class="inv-ico"><i class="fa-solid fa-wind"></i></div>
+                <span class="inv-stock low">Stock bajo</span>
+              </div>
+              <div>
+                <div class="inv-name">Aspiradoras</div>
+                <div class="inv-qty">2 unidades</div>
+              </div>
+              <div class="inv-bar"><span style="width:20%;background:var(--rojo);"></span></div>
+            </div>
+ 
+            <div class="inv-card">
+              <div class="inv-top">
+                <div class="inv-ico"><i class="fa-solid fa-pump-soap"></i></div>
+                <span class="inv-stock ok">Stock OK</span>
+              </div>
+              <div>
+                <div class="inv-name">Productos de limpieza</div>
+                <div class="inv-qty">37 unidades</div>
+              </div>
+              <div class="inv-bar"><span style="width:75%;"></span></div>
+            </div>
+          </div>
+          <div class="panel-foot">
+            <button class="btn-soft"><i class="fa-solid fa-plus"></i> Solicitar insumos</button>
+          </div>
+        </section>
+ 
+        <!-- Notificaciones -->
+        <section class="panel">
+          <div class="panel-head">
+            <div>
+              <h2>Notificaciones</h2>
+              <p>Actividad reciente</p>
+            </div>
+          </div>
+          <div class="notif-list">
+            <div class="notif-item">
+              <div class="notif-ico n-warn"><i class="fa-solid fa-triangle-exclamation"></i></div>
+              <div class="notif-text">
+                <p>Stock bajo de aspiradoras en bodega central</p>
+                <span>Hace 20 min</span>
+              </div>
+            </div>
+            <div class="notif-item">
+              <div class="notif-ico n-info"><i class="fa-solid fa-clipboard-check"></i></div>
+              <div class="notif-text">
+                <p>Nuevo servicio asignado: Edificio Dorado 360</p>
+                <span>Hace 1 hora</span>
+              </div>
+            </div>
+            <div class="notif-item">
+              <div class="notif-ico n-ok"><i class="fa-solid fa-circle-check"></i></div>
+              <div class="notif-text">
+                <p>Tu solicitud de uniforme fue aprobada</p>
+                <span>Hace 3 horas</span>
+              </div>
+            </div>
+            <div class="notif-item">
+              <div class="notif-ico n-info"><i class="fa-solid fa-calendar"></i></div>
+              <div class="notif-text">
+                <p>Recordatorio: turno de mañana inicia 7:00 AM</p>
+                <span>Ayer</span>
+              </div>
+            </div>
+          </div>
+          <div class="panel-foot">
+            <button class="btn-soft">Ver todas las notificaciones</button>
+          </div>
+        </section>
+ 
+      </div>
+    </div>
+ 
+  </main>
 </div>
-
-<div id="Servicios" class="contenido active">
-    <h3>Servicios</h3>
-
-    <div class="fila encabezado">
-        <div>Servicio</div>
-        <div>Estado</div>
-        <div>Dirección</div>
-        <div>Fecha</div>
-    </div>
-
-    <div class="fila">
-        <div>Aseo general</div>
-        <div>Pendiente</div>
-        <div>Calle 10</div>
-        <div>10/04/2026</div>
-    </div>
-
-    <div class="fila">
-        <div>Corte de césped</div>
-        <div>Finalizado</div>
-        <div>Carrera 5</div>
-        <div>08/04/2026</div>
-    </div>
-</div>
-<div id="Inventario" class="contenido">
-    <h3>Inventario</h3>
-
-    <div class="fila encabezado">
-        <div>Producto</div>
-        <div>Estado</div>
-        <div>Cantidad</div>
-        <div>Acción</div>
-    </div>
-
-    <div class="fila">
-        <div>Detergente</div>
-        <div>Disponible</div>
-        <div>25</div>
-        <div><button>Solicitar</button></div>
-    </div>
-
-    <div class="fila">
-        <div>Desinfectante</div>
-        <div>Bajo stock</div>
-        <div>5</div>
-        <div><button>Solicitar</button></div>
-    </div>
-
-    <div class="fila">
-        <div>Jabón líquido</div>
-        <div>Disponible</div>
-        <div>15</div>
-        <div><button>Solicitar</button></div>
-    </div>
-</div>
-<div id="Herramientas" class="contenido">
-    <h3>Herramientas</h3>
-
-    <div class="fila encabezado">
-        <div>Herramienta</div>
-        <div>Estado</div>
-        <div>Cantidad</div>
-        <div>Acción</div>
-    </div>
-
-    <div class="fila">
-        <div>Escoba</div>
-        <div>Disponible</div>
-        <div>10</div>
-        <div><button>Solicitar</button></div>
-    </div>
-
-    <div class="fila">
-        <div>Cortadora de césped</div>
-        <div>En uso</div>
-        <div>3</div>
-        <div><button disabled>No disponible</button></div>
-    </div>
-
-    <div class="fila">
-        <div>Trapeador</div>
-        <div>Disponible</div>
-        <div>7</div>
-        <div><button>Solicitar</button></div>
-    </div>
-</div>
-<div id="Productos" class="contenido">
-    <h3>Productos</h3>
-
-    <div class="fila encabezado">
-        <div>Producto</div>
-        <div>Estado</div>
-        <div>Cantidad</div>
-        <div>Acción</div>
-    </div>
-
-    <div class="fila">
-        <div>Detergente industrial</div>
-        <div>Disponible</div>
-        <div>30</div>
-        <div><button>Solicitar</button></div>
-    </div>
-
-    <div class="fila">
-        <div>Cloro</div>
-        <div>Bajo stock</div>
-        <div>6</div>
-        <div><button>Solicitar</button></div>
-    </div>
-
-    <div class="fila">
-        <div>Desengrasante</div>
-        <div>Disponible</div>
-        <div>18</div>
-        <div><button>Solicitar</button></div>
-    </div>
-
-    <div class="fila">
-        <div>Ambientador</div>
-        <div>Disponible</div>
-        <div>12</div>
-        <div><button>Solicitar</button></div>
-    </div>
-
-    <div class="fila">
-        <div>Jabón líquido</div>
-        <div>Agotado</div>
-        <div>0</div>
-        <div><button disabled>No disponible</button></div>
-    </div>
-</div>
-<div id="Capacitaciones" class="contenido">
-    <h3>Capacitaciones</h3>
-
-    <div class="fila encabezado">
-        <div>Capacitación</div>
-        <div>Estado</div>
-        <div>Dirección</div>
-        <div>Fecha</div>
-    </div>
-
-    <div class="fila">
-        <div>Riesgo de alturas</div>
-        <div>Activo</div>
-        <div>Calle 23</div>
-        <div>10/06/2026</div>
-    </div>
-
-    <div class="fila">
-        <div>Operación de maquinaria</div>
-        <div>Finalizado</div>
-        <div>Carrera 5</div>
-        <div>08/07/2026</div>
-    </div>
-</div>
-<div id="horas" class="contenido">
-    <h3>Horas extras</h3>
-
-    <div class="fila encabezado">
-        <div>Horas trabajadas</div>
-        <div>Precio por hora</div>
-        <div>Saldo total</div>
-        <div>Estado</div>
-    </div>
-
-    <div class="fila">
-        <div>5 horas</div>
-        <div>$10.000</div>
-        <div>$50.000</div>
-        <div>Pendiente</div>
-    </div>
-
-    <div class="fila">
-        <div>8 horas</div>
-        <div>$12.000</div>
-        <div>$96.000</div>
-        <div>Finalizado</div>
-    </div>
-
-    <div class="fila">
-        <div>3 horas</div>
-        <div>$10.000</div>
-        <div>$30.000</div>
-        <div>En proceso</div>
-    </div>
-</div>
-<div id="incapacidades" class="contenido">
-    <h3>Incapacidades</h3>
-
-    <form id="formIncapacidad">
-    <label>Tipo de incapacidad:</label><br>
-    <select id="tipo">
-        <option>Enfermedad general</option>
-        <option>Accidente laboral</option>
-    </select><br><br>
-
-    <label>Fecha inicio:</label><br>
-    <input type="date" id="inicio"><br><br>
-
-    <label>Fecha fin:</label><br>
-    <input type="date" id="fin"><br><br>
-
-    <label>Descripción:</label><br>
-    <input type="text" id="descripcion"><br><br>
-
-    <button type="submit">Guardar</button>
-</form>
-
-<h4>incapacidades</h4>
-<ul id="listaIncapacidades"></ul>
-</div>
-<script src="script.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
+ 
+<script src="empleados.js"></script>
+ 
 </body>
 </html>
