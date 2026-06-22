@@ -7,11 +7,12 @@
 }
 
 body{
-    background-image:url("image.png");
+    background-image:url("imagen.png");
     background-size:cover;
     background-position:center;
     background-repeat:no-repeat;
     min-height:100vh;
+
 }
 body::before{
     content:"";
@@ -38,6 +39,7 @@ form{
     box-shadow:0 0 15px rgba(0,0,0,0.3);
     width:450px;
     animation:aparecer 0.7s ease;
+      backdrop-filter:blur(10px);
 }
 
 h2{
@@ -51,13 +53,14 @@ label{
     margin-bottom:8px;
     color:#000000;
     font-weight:bold;
+    font-size:18px;
 }
 
 input{
     width:100%;
     padding:12px;
     margin-bottom:20px;
-    border-radius:10px;
+    border-radius:20px;
     border:1px solid #ccc;
     font-size:16px;
 }
@@ -65,19 +68,20 @@ input{
 button{
     width:100%;
     padding:12px;
-    background:#186ddb;
-    color:white;
+background: linear-gradient(135deg, #4CAF50, #2196F3);
+    color:rgb(0, 0, 0);
     border:none;
-    border-radius:10px;
     cursor:pointer;
     font-size:17px;
     margin-top:15px;
-    transition:0.3s;
+    transition:0.7s;
     height:50px;
+    border-radius:30px;
 }
 
 button:hover{
-    background:#20b2aa;
+    transform: scale(1.08);
+    color: #fff;
 }
 
 @keyframes aparecer{
@@ -85,3 +89,8 @@ button:hover{
         opacity:0;
         transform:translateY(-20px);
     }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}

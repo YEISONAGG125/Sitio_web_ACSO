@@ -7,7 +7,7 @@
 
 body{
     background:#000000;
-    background-image:url("image.png");
+    background-image:url("i.png");
     background-size:cover;
     background-position:center;
     background-repeat:no-repeat;
@@ -115,3 +115,8 @@ footer{
     padding:15px;
     border-top:1px solid rgba(255,255,255,0.3);
 }
+@keyframes aparecer{
+    from{
+        opacity:0;
+        transform:translateY(-20px);
+    }}
