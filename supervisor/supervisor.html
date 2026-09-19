@@ -8,145 +8,95 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<header class="d-flex justify-content-end align-items-center p-3">
-    <button class="btn btn-outline-light"
-        onclick="window.location.href='../inicio de sistema/login.html'">
-        ⬅ Cerrar
-    </button>
-</header>
+
+<header class="d-flex justify-content-left align-items-center p-4"></header>
+
 <div class="tabs">
-    <img src="LOGO.png" alt="LOGO" width="60" class="rounded-circle" >
-    <div class="tab active" onclick="mostrar('Inicio', this)">🏠 Inicio</div>
-    <div class="tab" onclick="mostrar('Personal', this)">👨‍💼 Personal</div>
-    <div class="tab" onclick="mostrar('Incapacidades', this)">🏥 Incapacidades</div>
-    <div class="tab" onclick="mostrar('Inventario', this)">🧰 Inventario</div>
-    <div class="tab" onclick="mostrar('Contratos', this)">📄 Contratos</div>
-    <div class="tab" onclick="mostrar('Clientes', this)">🤝 Clientes</div>
-    <div class="tab" onclick="mostrar('Alertas', this)">🚨 Alertas</div>
-    <div class="tab" onclick="mostrar('Configuracion', this)">⚙️ Configuración</div>
+  <img src="LOGO1.png" alt="Logo A C S O" class="logo-supervisor">
+    <div class="tab active" onclick="mostrar('Inicio',this)">🏠 Inicio</div>
+    <div class="tab" onclick="mostrar('Personal',this)">👨‍💼 Personal</div>
+    <div class="tab" onclick="mostrar('NovedadLaboral',this)">📋 Novedad laboral</div>
+    <div class="tab" onclick="mostrar('Inventario',this)">🧰 Productos</div>
+    <div class="tab" onclick="mostrar('Contratos',this)">📄 Contratos</div>
+    <div class="tab" onclick="mostrar('Clientes',this)">🤝 Clientes</div>
+    <div class="tab" onclick="mostrar('Notificaciones',this)">🔔 Notificaciones</div>
+    <div class="tab" onclick="mostrar('Configuracion',this)">⚙️ Configuración</div>
+    <div class="tab" onclick="window.location.href='../Reportes/reportes.html'">📊 Reportes</div>
+    <div class="inicio" onclick="window.location.href='../inicio de sistema/login.html'">⬅ Cerrar Sesión</div>
 </div>
+
 <div id="Inicio" class="contenido active">
-    <h3>Bienvenido</h3>
-    <p>Panel administrativo del sistema A C S O</p>
+    <div class="bienvenida">
+        <div class="bienvenida-icono">👋</div>
+        <h1>Bienvenido al Panel de Supervisión</h1>
+        <p>Gestiona y supervisa las operaciones de A C S O de forma rápida, eficiente y segura.</p>
+    </div>
 </div>
+
 <div id="Personal" class="contenido">
-
-    <h3>Personal</h3>
-
-    <div class="fila encabezado">
-        <div>Nombre</div>
-        <div>Cargo</div>
-        <div>Correo</div>
-        <div>Estado</div>
-    </div>
-
+    <h3>👨‍💼 Personal</h3>
+    <div class="fila encabezado"><div>Nombre</div><div>Cargo</div><div>Correo</div><div>Estado</div></div>
     <div id="listaUsuarios"></div>
+</div>
 
-</div>
-<div id="Incapacidades" class="contenido">
-    <h3>Incapacidades</h3>
-    <div class="fila encabezado">
-        <div>Empleado</div>
-        <div>Motivo</div>
-        <div>Fecha Inicio</div>
-        <div>Días</div>
-    </div>
-    <div class="fila">
-        <div>Juan Pérez</div>
-        <div>Enfermedad</div>
-        <div>2026-04-01</div>
-        <div>3</div>
+<div id="NovedadLaboral" class="contenido">
+    <h3>📋 Novedad Laboral</h3>
+    <div class="tabla-contenedor">
+        <table class="tabla-datos">
+            <thead><tr><th>ID Novedad</th><th>ID Empleado</th><th>Tipo Novedad</th></tr></thead>
+            <tbody id="tablaNovedades"><tr><td colspan="3">Cargando novedades laborales...</td></tr></tbody>
+        </table>
     </div>
 </div>
+
 <div id="Inventario" class="contenido">
-    <h3>Inventario</h3>
-    <div class="fila encabezado">
-        <div>Código</div>
-        <div>Utensilio</div>
-        <div>Estado</div>
-        <div>Responsable</div>
-    </div>
-    <div class="fila">
-        <div>001</div>
-        <div>Taladro</div>
-        <div>Disponible</div>
-        <div>Juan Pérez</div>
+    <h3>🧰 Inventario / Productos</h3>
+    <div class="tabla-contenedor">
+        <table class="tabla-datos">
+            <thead><tr><th>ID Producto</th><th>ID Proveedor</th><th>Nombre Producto</th><th>Descripción</th><th>Cantidad</th><th>Stock</th><th>Precio</th></tr></thead>
+            <tbody id="tablaProductos"><tr><td colspan="7">Cargando productos...</td></tr></tbody>
+        </table>
     </div>
 </div>
+
 <div id="Contratos" class="contenido">
-
-    <h3>Contratos</h3>
-
-    <div class="fila encabezado">
-        <div>Cliente</div>
-        <div>Servicio</div>
-        <div>Duración</div>
-        <div>Estado</div>
+    <h3>📄 Contratos</h3>
+    <div class="tabla-contenedor">
+        <table class="tabla-datos">
+            <thead><tr><th>ID Contrato</th><th>ID Cliente</th><th>Número Contrato</th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Valor Total</th><th>Ubicación</th></tr></thead>
+            <tbody id="tablaContratos"><tr><td colspan="7">Cargando contratos...</td></tr></tbody>
+        </table>
     </div>
-
-    <div class="fila">
-        <div>Carlos Ruiz</div>
-        <div>Aseo</div>
-        <div>6 meses</div>
-        <div>Activo</div>
-    </div>
-
 </div>
+
 <div id="Clientes" class="contenido">
-
-    <h3>Clientes</h3>
-
-    <div class="fila encabezado">
-        <div>Nombre</div>
-        <div>Correo</div>
-        <div>Teléfono</div>
-        <div>Estado</div>
-    </div>
-
-    <div class="fila">
-        <div>Carlos Ruiz</div>
-        <div>carlos@gmail.com</div>
-        <div>3001234567</div>
-        <div>Activo</div>
-    </div>
-
-</div>
-<div id="Alertas" class="contenido">
-
-    <h3>🚨 Alertas</h3>
-
-    <div class="fila encabezado">
-        <div>Fecha</div>
-        <div>Descripción</div>
-        <div>Empleado</div>
-        <div>Estado</div>
-    </div>
-    <div class="fila">
-        <div>2026-04-05</div>
-        <div>Retraso en servicio</div>
-        <div>Juan Pérez</div>
-        <div>Pendiente</div>
+    <h3>🤝 Clientes</h3>
+    <div class="tabla-contenedor">
+        <table class="tabla-datos">
+            <thead><tr><th>ID Cliente</th><th>ID Persona</th><th>Razón Social</th><th>Tipo Persona</th></tr></thead>
+            <tbody id="tablaClientes"><tr><td colspan="4">Cargando clientes...</td></tr></tbody>
+        </table>
     </div>
 </div>
+
+<div id="Notificaciones" class="contenido">
+    <h3>🔔 Notificaciones</h3>
+    <div id="listaNotificaciones">
+        <div class="notificacion">
+            <div class="icono-notificacion">🔔</div>
+            <div><strong>Sistema A C S O</strong><p>Las notificaciones aparecerán aquí.</p></div>
+        </div>
+    </div>
+</div>
+
 <div id="Configuracion" class="contenido">
     <h3>⚙️ Configuración</h3>
-    <div class="fila encabezado">
-        <div>Perfil</div>
-        <div>Notificaciones</div>
-        <div>Tema</div>
-        <div>Estado</div>
-    </div>
-    <div class="fila">
-        <div>Supervisor</div>
-        <div>Activadas</div>
-        <div>Claro</div>
-        <div>Activo</div>
-    </div>
+    <div class="fila encabezado"><div>Perfil</div><div>Notificaciones</div><div>Tema</div><div>Estado</div></div>
+    <div class="fila"><div>Supervisor</div><div>Activadas</div><div>Claro</div><div>Activo</div></div>
 </div>
-<footer>
-    <p>© 2026 A C S O - Experiencia y eficacia sin igual a la mano.</p>
-</footer>
-<script type="module" src="script.js"></script>
 
+<footer><p>© 2026 A C S O - Experiencia y eficacia sin igual a la mano.</p></footer>
+
+<script type="module" src="script.js"></script>
 </body>
 </html>

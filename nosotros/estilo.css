@@ -1,142 +1,104 @@
-**{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-body{
-    text-align:center;
-    font-family: Arial, Helvetica, sans-serif;
-    background-image:url("image.png");
-    background-size:cover;
-    background-position:center;
-    background-repeat:no-repeat;
-    background-attachment:fixed;
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
+body {
+    text-align: center;
+   font-family: Arial, Helvetica, sans-serif;
+    background: url("imagen.png") center/cover no-repeat fixed;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
 }
-
-body::before{
-    text-align:center;
-    content:"";
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.25);
-    z-index:-1;
-}
-
-header{
-    text-align:center;
-    width:100%;
-    padding:20px 40px;
-    display:flex;
-    justify-content:space-around;
-    align-items:center;
-    flex-wrap:wrap;
-    gap:20px;
-    background:rgba(255,255,255,0.25);
-    backdrop-filter:blur(10px);
-    border-bottom:2px solid rgba(76,175,80,0.7);
-    box-shadow:0 4px 15px rgba(0,0,0,0.15);
-}
-
-.logo{
-    height:75px;
-    width:75px;
-    border-radius:50%;
-    object-fit:cover;
-    cursor:pointer;
-    transition:all 0.4s ease;
-}
-
-.logo:hover{
-    transform:scale(1.1) rotate(5deg);
-}
-
-.login a{
-    text-decoration:none;
-    color:#222;
-    font-weight:bold;
-    font-size:18px;
-    transition:0.3s;
-}
-
-.login a:hover{
-    color:#2196f3;
-}
-
-.navbar ul{
-    display:flex;
-    justify-content:center;
-    margin-top:20px;
-}
-
-nav{
-    width:100%;
-    max-width:1200px;
-    padding:20px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:30px;
-    flex-wrap:wrap;
-}
-
-button{
-    background:none;
-    border:none;
-    cursor:pointer;
-    color:#222;
-    font-size:18px;
-    font-weight:bold;
-    transition:0.3s;
-}
-
-button:hover{
-    color:#2196f3;
-    transform:scale(1.08);
-}
-.banner-nosotros{
-    height:400px;
-    background-image:
-    linear-gradient(rgba(94, 95, 97, 0.351),
-    rgba(71, 73, 76, 0.349)),
-    url("");
-
-    background-size:cover;
-    background-position:center;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
-.nosotros{
-    padding:60px;
-}
-
-.contenedor{
-    max-width:1100px;
-    margin:auto;
-}
-
-.contenedor h2{
-    color:#000000;
-    font-size:40px;
-    margin-bottom:20px;
-}
-
-.contenedor p{
-    font-size:18px;
-    line-height:1.8;
-    margin-bottom:20px;
-    color:#000000;
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.25);
+    z-index: -1;
 }
 
 
-.mvv{
+.btn-volver {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 9999;
+
+    padding: 10px 15px;
+    background: linear-gradient(135deg, #4CAF50, #2196F3);
+    border-radius: 8px;
+
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+
+    cursor: pointer;
+    border: none;
+
+    transition: 0.3s;
+}
+
+.btn-volver:hover {
+    background: #2196f3;
+    color: white;
+    transform: scale(1.05);
+}
+
+.banner-nosotros {
+    height: 200px;
+    margin-right: 40px;
+    margin-left: 40px;
+    border-radius: 25px;
+     background: rgba(255, 255, 255, 0.25);
+    margin-top: 40px;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+     backdrop-filter: blur(12px);
+    justify-content: center;
+    align-items: center;
+}
+h1{
+    font-size: 50px;
+    color: #1565c0;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+}
+p{
+    color: #000;
+    font-size: 20px;
+    line-height: 1.8;
+    margin-top: 20px;
+}
+/* Sección Nosotros */
+.nosotros {
+    padding: 60px 20px;
+    color: white;
+}
+
+.contenedor {
+    max-width: 1100px;
+    margin: auto;
+    
+}
+
+.contenedor h2 {
+    font-size: 70px;
+    margin-bottom: 20px;
+    color:#1565c0;
+}
+
+.contenedor p {
+    font-size: 25px;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    color: #000;
+}
+
+/* Cards Misión, Visión, Valores */
+.mvv {
     display: flex;
     justify-content: center;
     gap: 30px;
@@ -144,38 +106,39 @@ button:hover{
     flex-wrap: wrap;
 }
 
-.card{
-    width: 400px;
-    background: #ffffff39;
+.card {
+    width: 320px;
+    background: rgba(255, 255, 255, 0.25);
     padding: 30px;
     border-radius: 15px;
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     text-align: center;
     transition: 0.3s;
+    backdrop-filter: blur(6px);
 }
 
-.card:hover{
+.card:hover {
     transform: translateY(-10px);
     box-shadow: 0 12px 25px rgba(0,0,0,0.25);
 }
 
-.card h2{
-    color: #000000;
+.card h2 {
+    font-size: 28px;
     margin-bottom: 15px;
-    font-size: 30px;
+      color:#1565c0;
 }
 
-.card p{
-    color: #000000;
+.card p {
+    font-size: 20px;
     line-height: 1.8;
-    font-size: 17px;
+    color: #000000;
 }
 
-footer{
-    margin-top:auto;
-    width:100%;
-    background: rgba(255, 255, 255, 0.382);
-    color: black;
-    text-align:center;
-    padding:15px;
+footer {
+    margin-top: auto;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.4);
+    color: #ffffff;
+    text-align: center;
+    padding: 15px;
 }

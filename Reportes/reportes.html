@@ -1,0 +1,208 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Reportes | ACSO</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <div class="boton" onclick="window.location.href='../supervisor/supervisor.html'">
+        ⬅ Cerrar Sesión
+    </div>
+</head>
+
+<body>
+
+<div class="contenedor">
+
+    <header class="encabezado">
+
+        <div>
+            <h1>📊 Reportes ACSO</h1>
+            <p>Resumen general de la información del sistema</p>
+        </div>
+
+        <button
+                id="btnActualizar"
+                class="boton">
+            ↻ Actualizar
+        </button>
+
+    </header>
+
+    <div
+            id="mensaje"
+            class="mensaje">
+        Cargando información...
+    </div>
+
+    <section class="tarjetas">
+
+        <div class="tarjeta">
+            <div class="icono">👤</div>
+
+            <div class="informacion">
+                <h2 id="usuarios">0</h2>
+                <p>Usuarios</p>
+            </div>
+        </div>
+
+        <div class="tarjeta">
+            <div class="icono">🔐</div>
+
+            <div class="informacion">
+                <h2 id="roles">0</h2>
+                <p>Roles</p>
+            </div>
+        </div>
+
+        <div class="tarjeta">
+            <div class="icono">👨‍💼</div>
+
+            <div class="informacion">
+                <h2 id="empleados">0</h2>
+                <p>Empleados</p>
+            </div>
+        </div>
+
+        <div class="tarjeta">
+            <div class="icono">👥</div>
+
+            <div class="informacion">
+                <h2 id="clientes">0</h2>
+                <p>Clientes</p>
+            </div>
+        </div>
+
+        <div class="tarjeta">
+            <div class="icono">🧹</div>
+
+            <div class="informacion">
+                <h2 id="servicios">0</h2>
+                <p>Servicios</p>
+            </div>
+        </div>
+
+        <div class="tarjeta">
+            <div class="icono">📄</div>
+
+            <div class="informacion">
+                <h2 id="contratos">0</h2>
+                <p>Contratos</p>
+            </div>
+        </div>
+
+        <div class="tarjeta">
+            <div class="icono">📦</div>
+
+            <div class="informacion">
+                <h2 id="productos">0</h2>
+                <p>Productos</p>
+            </div>
+        </div>
+
+        <div class="tarjeta">
+            <div class="icono">📊</div>
+
+            <div class="informacion">
+                <h2 id="reportes">0</h2>
+                <p>Reportes</p>
+            </div>
+        </div>
+
+        <div class="tarjeta">
+            <div class="icono">⚠️</div>
+
+            <div class="informacion">
+                <h2 id="novedad_laboral">0</h2>
+                <p>Novedades laborales</p>
+            </div>
+        </div>
+
+        <div class="tarjeta">
+            <div class="icono">🏢</div>
+
+            <div class="informacion">
+                <h2 id="proveedor">0</h2>
+                <p>Proveedores</p>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="zona-grafica">
+
+        <div class="tarjeta-grafica">
+
+            <h2>📊 Movimientos generales</h2>
+
+            <p>
+                Cantidad de registros existentes en cada módulo.
+            </p>
+
+            <div class="grafica">
+                <canvas id="graficaGeneral"></canvas>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="graficas-dobles">
+
+        <div class="tarjeta-grafica">
+
+            <h2>👥 Operaciones</h2>
+
+            <p>
+                Distribución de clientes, empleados,
+                servicios y contratos.
+            </p>
+
+            <div class="grafica grafica-pequena">
+                <canvas id="graficaOperaciones"></canvas>
+            </div>
+
+        </div>
+
+        <div class="tarjeta-grafica">
+
+            <h2>📦 Inventario</h2>
+
+            <p>
+                Productos y proveedores registrados.
+            </p>
+
+            <div class="grafica grafica-pequena">
+                <canvas id="graficaInventario"></canvas>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="pie">
+
+        <p>
+            Información obtenida directamente desde
+            la base de datos de ACSO.
+        </p>
+
+        <span id="ultimaActualizacion">
+            Última actualización: --:--
+        </span>
+
+    </section>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+
