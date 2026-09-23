@@ -1,144 +1,231 @@
+/* =========================================================
+   POWER CLEAN — Nosotros
+   Misma identidad "agua limpia" del resto del sitio.
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+    --verde-950: #0B3B3C;
+    --verde-800: #115353;
+    --verde-700: #166363;
+    --agua-400: #35B8AE;
+    --agua-300: #7FD6C9;
+    --agua-100: #E4F5F2;
+    --arena-050: #F6F8F7;
+    --tinta-900: #12211F;
+    --tinta-600: #4C625E;
+    --tinta-400: #7C918D;
+    --linea: #DCE6E3;
+    --blanco: #FFFFFF;
+
+    --f-display: 'Manrope', 'Inter', system-ui, sans-serif;
+    --f-texto: 'Inter', system-ui, sans-serif;
+}
+
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
 body {
-    text-align: center;
-   font-family: Arial, Helvetica, sans-serif;
-    background: url("imagen.png") center/cover no-repeat fixed;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-}
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.25);
-    z-index: -1;
+    margin: 0;
+    font-family: var(--f-texto);
+    color: var(--tinta-900);
+    background: var(--blanco);
+    -webkit-font-smoothing: antialiased;
 }
 
+h1, h2 {
+    font-family: var(--f-display);
+    margin: 0;
+    color: var(--verde-950);
+}
+
+p {
+    margin: 0;
+    color: var(--tinta-600);
+    line-height: 1.75;
+}
+
+/* =========================================================
+   BOTÓN VOLVER
+   ========================================================= */
 
 .btn-volver {
     position: fixed;
     top: 20px;
     left: 20px;
-    z-index: 9999;
-
-    padding: 10px 15px;
-    background: linear-gradient(135deg, #4CAF50, #2196F3);
-    border-radius: 8px;
-
-    font-size: 16px;
-    font-weight: bold;
-    color: #000;
-
+    z-index: 30;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--f-texto);
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--verde-950);
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(6px);
+    border: 1px solid var(--linea);
+    padding: 9px 18px;
+    border-radius: 999px;
     cursor: pointer;
-    border: none;
-
-    transition: 0.3s;
+    box-shadow: 0 4px 14px rgba(11, 59, 60, 0.14);
+    transition: background 0.15s ease, transform 0.15s ease;
 }
 
 .btn-volver:hover {
-    background: #2196f3;
-    color: white;
-    transform: scale(1.05);
+    background: var(--blanco);
+    transform: translateX(-2px);
 }
+
+.btn-volver:focus-visible {
+    outline: 2px solid var(--agua-400);
+    outline-offset: 2px;
+}
+
+/* =========================================================
+   BANNER
+   ========================================================= */
 
 .banner-nosotros {
-    height: 200px;
-    margin-right: 40px;
-    margin-left: 40px;
-    border-radius: 25px;
-     background: rgba(255, 255, 255, 0.25);
-    margin-top: 40px;
-    background: rgba(255,255,255,0.2);
+    position: relative;
+    min-height: 380px;
     display: flex;
-     backdrop-filter: blur(12px);
-    justify-content: center;
     align-items: center;
-}
-h1{
-    font-size: 50px;
-    color: #1565c0;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
-}
-p{
-    color: #000;
-    font-size: 20px;
-    line-height: 1.8;
-    margin-top: 20px;
-}
-/* Sección Nosotros */
-.nosotros {
-    padding: 60px 20px;
-    color: white;
-}
-
-.contenedor {
-    max-width: 1100px;
-    margin: auto;
-    
-}
-
-.contenedor h2 {
-    font-size: 70px;
-    margin-bottom: 20px;
-    color:#1565c0;
-}
-
-.contenedor p {
-    font-size: 25px;
-    line-height: 1.8;
-    margin-bottom: 20px;
-    color: #000;
-}
-
-/* Cards Misión, Visión, Valores */
-.mvv {
-    display: flex;
     justify-content: center;
-    gap: 30px;
-    padding: 50px 20px;
-    flex-wrap: wrap;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(127, 214, 201, 0.35), transparent 55%),
+        linear-gradient(135deg, var(--verde-950) 0%, var(--verde-700) 55%, var(--agua-400) 130%);
+    overflow: hidden;
 }
 
-.card {
-    width: 320px;
-    background: rgba(255, 255, 255, 0.25);
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+.banner-nosotros::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(11, 59, 60, 0.35), transparent 60%);
+}
+
+.banner-nosotros .overlay {
+    position: relative;
+    z-index: 1;
     text-align: center;
-    transition: 0.3s;
-    backdrop-filter: blur(6px);
+    max-width: 560px;
+    padding: 0 24px;
 }
 
-.card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+.banner-nosotros h1 {
+    color: var(--blanco);
+    font-size: 34px;
+    font-weight: 800;
+    margin-bottom: 12px;
 }
 
-.card h2 {
-    font-size: 28px;
-    margin-bottom: 15px;
-      color:#1565c0;
+.banner-nosotros p {
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 15.5px;
 }
 
-.card p {
-    font-size: 20px;
-    line-height: 1.8;
-    color: #000000;
+/* =========================================================
+   SECCIÓN "QUIÉNES SOMOS"
+   ========================================================= */
+
+.nosotros {
+    padding: 64px 24px;
 }
+
+.nosotros .contenedor {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.nosotros h2 {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    color: var(--verde-700);
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--agua-300);
+}
+
+.nosotros p {
+    font-size: 15px;
+    margin-bottom: 16px;
+}
+
+.nosotros p:last-child {
+    margin-bottom: 0;
+}
+
+/* =========================================================
+   MISIÓN / VISIÓN
+   ========================================================= */
+
+.mvv {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px 72px;
+}
+
+.mvv .card {
+    background: var(--arena-050);
+    border: 1px solid var(--linea);
+    border-left: 3px solid var(--agua-400);
+    border-radius: 12px;
+    padding: 30px 28px;
+}
+
+.mvv .card h2 {
+    font-size: 17px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.mvv .card p {
+    font-size: 14px;
+}
+
+/* =========================================================
+   PIE DE PÁGINA
+   ========================================================= */
 
 footer {
-    margin-top: auto;
-    width: 100%;
-    background: rgba(255, 255, 255, 0.4);
-    color: #ffffff;
+    background: var(--verde-950);
+    color: rgba(246, 248, 247, 0.75);
     text-align: center;
-    padding: 15px;
+    padding: 22px 20px;
+}
+
+footer p {
+    color: rgba(246, 248, 247, 0.7);
+    font-size: 12.5px;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 760px) {
+    .banner-nosotros {
+        min-height: 300px;
+    }
+
+    .banner-nosotros h1 {
+        font-size: 26px;
+    }
+
+    .mvv {
+        grid-template-columns: 1fr;
+    }
+
+    .btn-volver {
+        top: 14px;
+        left: 14px;
+        padding: 8px 14px;
+        font-size: 13px;
+    }
 }

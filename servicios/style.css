@@ -1,122 +1,259 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
+/* =========================================================
+   POWER CLEAN — Servicios
+   Misma identidad "agua limpia" del resto del sitio,
+   con un hero más expresivo (burbujas + degradado)
+   y una grilla de tarjetas de servicio con ícono propio.
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+    --verde-950: #0B3B3C;
+    --verde-800: #115353;
+    --verde-700: #166363;
+    --agua-400: #35B8AE;
+    --agua-300: #7FD6C9;
+    --agua-100: #E4F5F2;
+    --arena-050: #F6F8F7;
+    --tinta-900: #12211F;
+    --tinta-600: #4C625E;
+    --tinta-400: #7C918D;
+    --linea: #DCE6E3;
+    --blanco: #FFFFFF;
+
+    --f-display: 'Manrope', 'Inter', system-ui, sans-serif;
+    --f-texto: 'Inter', system-ui, sans-serif;
 }
 
-body{
-    background:#000000;
-    background-image:url("FONDO2.png");
-    background-size:cover;
-    background-position:center;
-    background-repeat:no-repeat;
-    background-attachment:fixed;
-    min-height:100vh;
+* {
+    box-sizing: border-box;
 }
 
-body::before{
-    content:"";
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.25);
-    z-index:-1;
-}
-.hero{
-    background-size:cover;
-    background-position:center;
-    height:200px;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    margin-top:2px;
+body {
+    margin: 0;
+    font-family: var(--f-texto);
+    color: var(--tinta-900);
+    background: var(--blanco);
+    -webkit-font-smoothing: antialiased;
 }
 
-.hero h1{
-    background:rgba(255,255,255,0.3);
-    backdrop-filter:blur(10px);
-    padding:25px 40px;
-    border-radius:20px;
-    color:rgb(0, 0, 0);
-    font-size:45px;
-    box-shadow:0 8px 25px rgba(0,0,0,0.25);
-}
-.servicios{
-    padding:60px 10%;
-    text-align:center;
-}
-.servicios h2{
-    color:rgb(0, 0, 0);
-    font-size:36px;
-    margin-bottom:40px;
-    text-shadow:2px 2px 8px rgba(0,0,0,0.5);
-}
-.contenedor-servicios{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:25px;
-}
-.servicio{
-    background:rgba(255,255,255,0.25);
-    backdrop-filter:blur(10px);
-    padding:25px;
-    border-radius:20px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.15);
-    transition:0.4s;
-    max-width:350px;
-}
-.servicio:hover{
-    transform:translateY(-10px) scale(1.03);
-    box-shadow:0 12px 30px rgba(0,0,0,0.25);
-}
-.servicio h3{
-    color:#1565c0;
-    margin-bottom:15px;
-    font-size:24px;
+h1, h2, h3 {
+    font-family: var(--f-display);
+    margin: 0;
+    color: var(--verde-950);
 }
 
-.servicio p{
-    color:#000;
-    line-height:1.6;
+p {
+    margin: 0;
+    color: var(--tinta-600);
+    line-height: 1.6;
 }
 
-
-button{
-    padding:12px 28px;
-    background:linear-gradient( 135deg, #4CAF50,#2196F3);
-    color:rgb(0, 0, 0);
-    border:none;
-    border-radius:12px;
-    cursor:pointer;
-    font-size:17px;
-    font-weight:bold;
-    margin-top:20px;
-    transition:0.3s;
+/* El formulario que envuelve el botón "Volver" no debe verse como formulario */
+form {
+    margin: 0;
 }
 
-button:hover{
-    transform:translateY(-3px);
-    box-shadow:0 8px 20px rgba(0,0,0,0.25);
+form button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 30;
+    font-family: var(--f-texto);
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--verde-950);
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(6px);
+    border: 1px solid var(--linea);
+    padding: 9px 18px;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(11, 59, 60, 0.14);
+    transition: background 0.15s ease, transform 0.15s ease;
 }
-footer{
-    position:fixed;
-    bottom:0;
-    width:100%;
-    background:rgba(255,255,255,0.25);
-    backdrop-filter:blur(10px);
-    color:white;
-    text-align:center;
-    padding:15px;
-    border-top:1px solid rgba(255,255,255,0.3);
+
+form button:hover {
+    background: var(--blanco);
+    transform: translateX(-2px);
 }
-@keyframes aparecer{
-    from{
-        opacity:0;
-        transform:translateY(-20px);
-    }}
+
+form button:focus-visible {
+    outline: 2px solid var(--agua-400);
+    outline-offset: 2px;
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero {
+    position: relative;
+    min-height: 340px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 24px;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--verde-950) 0%, var(--verde-700) 55%, var(--agua-400) 140%);
+}
+
+/* Burbujas decorativas, en tono con "limpieza" sin usar una foto */
+.hero::before,
+.hero::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0) 70%);
+    opacity: 0.5;
+}
+
+.hero::before {
+    width: 260px;
+    height: 260px;
+    top: -90px;
+    left: -60px;
+}
+
+.hero::after {
+    width: 180px;
+    height: 180px;
+    bottom: -70px;
+    right: 8%;
+}
+
+.hero h1 {
+    position: relative;
+    z-index: 1;
+    color: var(--blanco);
+    font-size: 36px;
+    font-weight: 800;
+    max-width: 18ch;
+    line-height: 1.2;
+    text-shadow: 0 2px 18px rgba(11, 59, 60, 0.25);
+}
+
+/* =========================================================
+   SECCIÓN SERVICIOS
+   ========================================================= */
+
+.servicios {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 64px 24px 80px;
+}
+
+.servicios > h2 {
+    text-align: center;
+    font-size: 27px;
+    font-weight: 800;
+    margin-bottom: 6px;
+}
+
+.servicios > h2::after {
+    content: "";
+    display: block;
+    width: 52px;
+    height: 3px;
+    background: var(--agua-400);
+    border-radius: 999px;
+    margin: 16px auto 0;
+}
+
+.contenedor-servicios {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.servicio {
+    position: relative;
+    background: var(--blanco);
+    border: 1px solid var(--linea);
+    border-radius: 16px;
+    padding: 32px 26px 28px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(11, 59, 60, 0.07);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.servicio::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--verde-700), var(--agua-400));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease;
+}
+
+.servicio:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 18px 34px rgba(11, 59, 60, 0.14);
+}
+
+.servicio:hover::before {
+    transform: scaleX(1);
+}
+
+.servicio h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    line-height: 1.3;
+}
+
+.servicio p {
+    font-size: 13.5px;
+}
+
+/* =========================================================
+   PIE DE PÁGINA
+   ========================================================= */
+
+footer {
+    background: var(--verde-950);
+    color: rgba(246, 248, 247, 0.75);
+    text-align: center;
+    padding: 22px 20px;
+}
+
+footer p {
+    color: rgba(246, 248, 247, 0.7);
+    font-size: 12.5px;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+    .contenedor-servicios {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 620px) {
+    .hero h1 {
+        font-size: 27px;
+    }
+
+    .contenedor-servicios {
+        grid-template-columns: 1fr;
+    }
+
+    form button {
+        top: 14px;
+        left: 14px;
+        padding: 8px 14px;
+        font-size: 13px;
+    }
+}
