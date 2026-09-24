@@ -1,0 +1,660 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+
+    background:
+        linear-gradient(
+            rgba(5, 20, 35, 0.78),
+            rgba(5, 20, 35, 0.82)
+        ),
+        url("FONDO2.png");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    color: #ffffff;
+
+    padding: 35px;
+}
+
+
+/* =========================================
+   CONTENEDOR
+========================================= */
+
+.contenedor {
+    width: 100%;
+    max-width: 1100px;
+    margin: auto;
+}
+
+
+/* =========================================
+   ENCABEZADO
+========================================= */
+
+.encabezado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 30px;
+}
+
+.etiqueta {
+    display: inline-block;
+    background: rgba(0, 200, 150, 0.15);
+    border: 1px solid rgba(0, 255, 190, 0.4);
+    color: #55f5c8;
+    padding: 7px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.encabezado h1 {
+    font-size: 34px;
+    margin-bottom: 8px;
+}
+
+.encabezado p {
+    color: #b7c5d8;
+}
+
+
+/* =========================================
+   ESTADO
+========================================= */
+
+.estado-cuenta {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 12px 18px;
+    border-radius: 30px;
+    color: #dbe8f5;
+    font-size: 14px;
+}
+
+.punto {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    background: #42e6a4;
+    border-radius: 50%;
+    margin-right: 8px;
+    box-shadow:
+        0 0 10px #42e6a4;
+}
+
+
+/* =========================================
+   TARJETAS
+========================================= */
+
+.tarjeta {
+
+    background:
+        rgba(17, 31, 61, 0.76);
+    border:
+        1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(14px);
+    border-radius: 22px;
+    padding: 25px;
+    margin-bottom: 22px;
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.25);
+    transition: 0.3s;
+}
+
+.tarjeta:hover {
+    transform: translateY(-2px);
+    border-color:
+        rgba(67, 235, 188, 0.3);
+}
+
+
+/* =========================================
+   TÍTULOS
+========================================= */
+
+.titulo-seccion {
+
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.icono {
+
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        rgba(52, 224, 174, 0.12);
+    border:
+        1px solid rgba(52, 224, 174, 0.3);
+    border-radius: 14px;
+    font-size: 22px;
+}
+
+.titulo-seccion h2 {
+    font-size: 19px;
+    margin-bottom: 5px;
+}
+
+.titulo-seccion p {
+    color: #9eafc5;
+    font-size: 13px;
+}
+
+
+/* =========================================
+   PERFIL
+========================================= */
+
+.perfil {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background:
+        linear-gradient(
+            135deg,
+            #16c79a,
+            #1675c9
+        );
+
+    font-size: 30px;
+    font-weight: bold;
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.3);
+}
+
+.datos-perfil {
+    flex: 1;
+}
+
+.datos-perfil h3 {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.datos-perfil p {
+
+    color: #aebed1;
+
+    margin-top: 7px;
+
+    font-size: 14px;
+}
+
+.cargo {
+    color: #55e5bd;
+    font-size: 13px;
+}
+
+
+/* =========================================
+   BOTONES
+========================================= */
+
+button {
+
+    border: none;
+    cursor: pointer;
+    transition: 0.25s;
+}
+div{
+
+    border: none;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.btn-principal {
+
+    background:
+        linear-gradient(
+            135deg,
+            #19c99b,
+            #147dc7
+        );
+
+    color: white;
+
+    padding: 12px 18px;
+
+    border-radius: 12px;
+
+    font-weight: bold;
+}
+
+.btn-principal:hover {
+    transform: scale(1.04);
+
+    box-shadow:
+        0 8px 20px rgba(21,190,151,0.25);
+}
+
+
+/* =========================================
+   OPCIONES
+========================================= */
+
+.opciones {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.opcion {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 18px;
+
+    border-radius: 15px;
+
+    background:
+        rgba(255,255,255,0.045);
+
+    border:
+        1px solid rgba(255,255,255,0.06);
+}
+
+.opcion strong {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 15px;
+}
+
+.opcion span {
+
+    color: #8fa2b9;
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   SWITCH
+========================================= */
+
+.switch {
+
+    position: relative;
+
+    width: 52px;
+    height: 28px;
+
+    flex-shrink: 0;
+}
+
+.switch input {
+    display: none;
+}
+
+.slider {
+
+    position: absolute;
+
+    inset: 0;
+
+    background: #34445d;
+
+    border-radius: 30px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.slider::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 22px;
+    height: 22px;
+
+    left: 3px;
+    top: 3px;
+
+    background: white;
+
+    border-radius: 50%;
+
+    transition: 0.3s;
+}
+
+.switch input:checked + .slider {
+
+    background:
+        linear-gradient(
+            90deg,
+            #16c79a,
+            #1684ca
+        );
+}
+
+.switch input:checked + .slider::before {
+
+    transform:
+        translateX(24px);
+}
+
+
+/* =========================================
+   SELECTOR
+========================================= */
+
+.selector {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+.selector label {
+    font-size: 15px;
+}
+
+.selector select {
+
+    background: #182944;
+
+    color: white;
+
+    border:
+        1px solid rgba(255,255,255,0.15);
+
+    padding: 12px 15px;
+
+    border-radius: 10px;
+
+    outline: none;
+
+    min-width: 220px;
+}
+
+
+/* =========================================
+   SEGURIDAD
+========================================= */
+
+.acciones-seguridad {
+
+    display: flex;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+}
+
+.btn-secundario {
+
+    padding: 12px 18px;
+
+    border-radius: 11px;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    color: white;
+
+    border:
+        1px solid rgba(255,255,255,0.13);
+}
+
+.btn-secundario:hover {
+    background:
+        rgba(255,255,255,0.14);
+}
+
+.btn-peligro {
+
+    padding: 12px 18px;
+
+    border-radius: 11px;
+
+    background:
+        rgba(255,70,70,0.12);
+
+    color: #ff8e8e;
+
+    border:
+        1px solid rgba(255,70,70,0.25);
+}
+
+.btn-peligro:hover {
+    background:
+        rgba(255,70,70,0.2);
+}
+
+
+/* =========================================
+   GUARDAR
+========================================= */
+
+.guardar {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    margin-top: 10px;
+}
+
+.btn-guardar {
+
+    padding: 14px 24px;
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #17c99b,
+            #157bc5
+        );
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: bold;
+}
+
+.btn-guardar:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 25px rgba(19,193,150,0.25);
+}
+
+.btn-restaurar {
+
+    padding: 14px 20px;
+
+    border-radius: 13px;
+
+    background:
+        rgba(255,255,255,0.07);
+
+    color: #d8e4f2;
+
+    border:
+        1px solid rgba(255,255,255,0.12);
+}
+
+
+/* =========================================
+   MENSAJE
+========================================= */
+
+.mensaje {
+
+    position: fixed;
+
+    right: 25px;
+    bottom: 25px;
+
+    padding: 15px 20px;
+
+    border-radius: 12px;
+
+    background:
+        #13243d;
+
+    border:
+        1px solid rgba(255,255,255,0.15);
+
+    color: white;
+
+    opacity: 0;
+
+    transform:
+        translateY(20px);
+
+    pointer-events: none;
+
+    transition: 0.3s;
+}
+
+.mensaje.mostrar {
+
+    opacity: 1;
+
+    transform:
+        translateY(0);
+}
+
+
+/* =========================================
+   MODO OSCURO
+========================================= */
+
+body.modo-claro {
+
+    background:
+        linear-gradient(
+            rgba(220,230,240,0.9),
+            rgba(220,230,240,0.9)
+        ),
+        url("FONDO2.png");
+
+    color: #182536;
+}
+
+body.modo-claro .tarjeta {
+
+    background:
+        rgba(255,255,255,0.88);
+
+    color: #182536;
+}
+
+body.modo-claro .titulo-seccion p,
+body.modo-claro .opcion span,
+body.modo-claro .datos-perfil p {
+
+    color: #64748b;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 700px) {
+
+    body {
+        padding: 20px;
+    }
+
+    .encabezado {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+    .perfil {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .btn-principal {
+        width: 100%;
+    }
+
+    .opcion {
+
+        align-items: flex-start;
+    }
+
+    .selector {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .selector select {
+        width: 100%;
+    }
+
+    .guardar {
+
+        flex-direction: column;
+    }
+
+    .guardar button {
+        width: 100%;
+    }
+}
+

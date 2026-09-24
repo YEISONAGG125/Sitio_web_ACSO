@@ -225,6 +225,7 @@ async function cargarNovedades() {
                     <td>${novedad.id_novedad ?? ""}</td>
                     <td>${novedad.id_empleado ?? ""}</td>
                     <td>${novedad.tipo_novedad ?? ""}</td>
+                    <td>${novedad.descripcion ?? ""}</td>
                 </tr>
             `;
         });
@@ -234,7 +235,7 @@ async function cargarNovedades() {
 
         tabla.innerHTML = `
             <tr>
-                <td colspan="3">
+                <td colspan="4">
                     ❌ Error al cargar novedades
                 </td>
             </tr>
@@ -301,8 +302,7 @@ async function cargarProductos() {
                     <td>${producto.id_proveedor ?? ""}</td>
                     <td>${producto.nombre_producto ?? ""}</td>
                     <td>${producto.descripcion ?? ""}</td>
-                    <td>${producto.cantidad ?? ""}</td>
-                    <td>${producto.stock ?? ""}</td>
+                    <td>${producto.cantidad_stock ?? ""}</td>
                     <td>${producto.precio ?? ""}</td>
                 </tr>
             `;

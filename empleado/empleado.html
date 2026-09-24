@@ -1,306 +1,481 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Panel Empleado · ACSO</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="estilos.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Panel del Empleado - ACSO</title>
+
+    <link rel="stylesheet" href="estilos.css">
 </head>
+
 <body>
 
-<div class="app">
+<div class="contenedor">
 
-    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">
-        <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-    </button>
+    <!-- ================= SIDEBAR ================= -->
 
-    <aside class="sidebar" id="sidebar">
+    <aside class="sidebar">
 
-        <div class="logo-box">
-            <img src="logo1.png" alt="ACSO" class="logo-img">
-            <div class="logo-text">
-                <h2>ACSO</h2>
-                <span>Panel de empleado</span>
-            </div>
+        <div class="logo-contenedor">
+            <img src="LOGO.png" alt="ACSO" class="logo">
+            <h2>ACSO</h2>
+            <p>Panel empleado</p>
         </div>
 
-        <nav id="navMenu">
-            <a href="#" class="nav-link active" data-section="inicio">
-                <svg viewBox="0 0 24 24"><path d="M4 11 12 4l8 7"/><path d="M6 10v9h12v-9"/></svg>
+        <nav class="menu">
+
+            <button class="menu-item activo" data-seccion="inicio">
+                <span>🏠</span>
                 Inicio
-            </a>
-            <a href="#" class="nav-link" data-section="servicios">
-                <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg>
-                Mis Servicios
-            </a>
-            <a href="#" class="nav-link" data-section="horario">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
-                Mi Horario
-            </a>
-            <a href="#" class="nav-link" data-section="productos">
-                <svg viewBox="0 0 24 24"><path d="m3 7 9-4 9 4-9 4-9-4Z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M12 11v10"/></svg>
-                Productos / Inventario
-            </a>
-            <a href="#" class="nav-link" data-section="novedad">
-                <svg viewBox="0 0 24 24"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 10v5"/><path d="M12 18h.01"/></svg>
-                Reportar Novedad
-            </a>
-            <a href="#" class="nav-link" data-section="reportes">
-                <svg viewBox="0 0 24 24"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M4 20h16"/></svg>
-                Reportes
-            </a>
-            <a href="#" class="nav-link" data-section="notificaciones">
-                <svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
+            </button>
+
+            <button class="menu-item" data-seccion="servicios">
+                <span>🧹</span>
+                Mis servicios
+            </button>
+
+            <button class="menu-item" data-seccion="novedades">
+                <span>📝</span>
+                Novedad laboral
+            </button>
+
+            <button class="menu-item" data-seccion="notificaciones">
+                <span>🔔</span>
                 Notificaciones
-                <span class="badge" id="badgeNotif">0</span>
-            </a>
-            <a href="#" class="nav-link" data-section="perfil">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c1.2-4 4-6 7-6s5.8 2 7 6"/></svg>
-                Mi Perfil
-            </a>
+                <span id="contadorNotificaciones" class="contador">0</span>
+            </button>
+
+            <button class="menu-item" data-seccion="horarios">
+                <span>🕐</span>
+                Mi horario
+            </button>
+
         </nav>
 
-        <button class="cerrar">
-            <svg viewBox="0 0 24 24"><path d="M15 4H6v16h9"/><path d="M10 12h10m-3-3 3 3-3 3"/></svg>
-            Cerrar sesión
-        </button>
+        <div class="sidebar-abajo">
+
+            <button id="cerrarSesion" class="btn-salir">
+                🚪 Cerrar sesión
+            </button>
+
+        </div>
 
     </aside>
 
-    <div class="overlay" id="overlay"></div>
 
-    <main class="main">
+    <!-- ================= CONTENIDO ================= -->
 
-        <header>
+    <main class="contenido">
+
+        <!-- HEADER -->
+
+        <header class="header">
+
             <div>
-                <p class="eyebrow" id="sectionEyebrow">Panel de trabajo</p>
-                <h1 id="sectionTitulo">Hola, María Fernanda</h1>
+                <h1 id="tituloPagina">Panel del Empleado</h1>
+                <p id="subtituloPagina">
+                    Consulta tu información laboral
+                </p>
             </div>
 
-            <div class="usuario">
-                <span class="avatar">MF</span>
-                <div class="usuario-info">
-                    <strong>María Fernanda López</strong>
-                    <small>Auxiliar de servicios generales</small>
+            <div class="empleado-info">
+
+                <div class="avatar">
+                    👤
                 </div>
+
+                <div>
+                    <strong id="nombreEmpleado">
+                        Cargando...
+                    </strong>
+
+                    <small>
+                        Empleado
+                    </small>
+                </div>
+
             </div>
+
         </header>
 
-        <!-- ===== INICIO ===== -->
-        <section class="contenido active" id="sec-inicio">
+
+        <!-- ================= INICIO ================= -->
+
+        <section id="inicio" class="seccion activa">
 
             <div class="bienvenida">
-                <h2>Todo en un solo lugar</h2>
-                <p>Consulta tus servicios, tu horario, los productos que necesitas y reporta novedades desde aquí.</p>
-            </div>
 
-            <div class="estadisticas">
-                <div class="card">
-                    <span class="card-icono card-icono--azul">
-                        <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg>
-                    </span>
-                    <div class="card-datos"><strong id="statHoy">0</strong><span>Servicios hoy</span></div>
-                </div>
-                <div class="card">
-                    <span class="card-icono card-icono--ambar">
-                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-                    </span>
-                    <div class="card-datos"><strong id="statPendientes">0</strong><span>Pendientes</span></div>
-                </div>
-                <div class="card">
-                    <span class="card-icono card-icono--verde">
-                        <svg viewBox="0 0 24 24"><path d="M4 12.5 9.5 18 20 6.5"/></svg>
-                    </span>
-                    <div class="card-datos"><strong id="statCompletados">0</strong><span>Completados</span></div>
-                </div>
-                <div class="card">
-                    <span class="card-icono card-icono--morado">
-                        <svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
-                    </span>
-                    <div class="card-datos"><strong id="statNotif">0</strong><span>Sin leer</span></div>
-                </div>
-            </div>
-
-            <div class="panel">
-                <div class="panel-header">
-                    <h3>Próximos servicios</h3>
-                    <span class="panel-count" id="conteoProximos">0 en total</span>
-                </div>
-                <div class="tabla-scroll">
-                    <table>
-                        <thead>
-                            <tr><th>Cliente</th><th>Dirección</th><th>Fecha</th><th>Hora</th><th>Estado</th></tr>
-                        </thead>
-                        <tbody id="tablaProximos"></tbody>
-                    </table>
-                </div>
-            </div>
-
-        </section>
-
-        <!-- ===== MIS SERVICIOS ===== -->
-        <section class="contenido" id="sec-servicios">
-
-            <div class="panel-tabs" id="filtroServicios">
-                <button class="tab active" data-filtro="todos">Todos</button>
-                <button class="tab" data-filtro="pendiente">Pendientes</button>
-                <button class="tab" data-filtro="en curso">En curso</button>
-                <button class="tab" data-filtro="completado">Completados</button>
-            </div>
-
-            <div class="panel">
-                <div class="panel-header">
-                    <h3>Servicios asignados</h3>
-                    <span class="panel-count" id="conteoServicios">0 en total</span>
-                </div>
-                <div class="tabla-scroll">
-                    <table>
-                        <thead>
-                            <tr><th>Cliente</th><th>Dirección</th><th>Fecha</th><th>Hora</th><th>Productos requeridos</th><th>Estado</th></tr>
-                        </thead>
-                        <tbody id="tablaServicios"></tbody>
-                    </table>
-                </div>
-            </div>
-
-        </section>
-
-        <!-- ===== MI HORARIO ===== -->
-        <section class="contenido" id="sec-horario">
-
-            <div class="panel-header suelto">
                 <div>
-                    <h3>Semana del 14 al 20 de septiembre</h3>
-                    <span class="panel-count">Horario laboral: 7:00 a.m. – 4:00 p.m.</span>
+                    <h2>Bienvenido al panel de empleado 👋</h2>
+
+                    <p>
+                        Desde aquí puedes consultar tus servicios,
+                        horarios, notificaciones y enviar novedades laborales.
+                    </p>
                 </div>
+
             </div>
 
-            <div class="semana" id="grillaHorario"></div>
+
+            <div class="tarjetas-resumen">
+
+                <div class="tarjeta-resumen">
+
+                    <div class="icono azul">
+                        🧹
+                    </div>
+
+                    <div>
+                        <span>Servicios</span>
+                        <strong id="totalServicios">0</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="tarjeta-resumen">
+
+                    <div class="icono verde">
+                        📝
+                    </div>
+
+                    <div>
+                        <span>Novedades</span>
+                        <strong id="totalNovedades">0</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="tarjeta-resumen">
+
+                    <div class="icono naranja">
+                        🔔
+                    </div>
+
+                    <div>
+                        <span>Notificaciones</span>
+                        <strong id="totalNotificaciones">0</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="tarjeta-resumen">
+
+                    <div class="icono morado">
+                        🕐
+                    </div>
+
+                    <div>
+                        <span>Horarios</span>
+                        <strong id="totalHorarios">0</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="panel-titulo">
+
+                    <h2>Información rápida</h2>
+
+                </div>
+
+                <div class="informacion-rapida">
+
+                    <div>
+                        <span>Empleado</span>
+                        <strong id="inicioNombre">
+                            -
+                        </strong>
+                    </div>
+
+                    <div>
+                        <span>ID empleado</span>
+                        <strong id="inicioId">
+                            -
+                        </strong>
+                    </div>
+
+                    <div>
+                        <span>Estado</span>
+                        <strong class="estado-activo">
+                            Activo
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
 
         </section>
 
-        <!-- ===== PRODUCTOS / INVENTARIO ===== -->
-        <section class="contenido" id="sec-productos">
 
-            <div class="bienvenida bienvenida--suave">
-                <h2>Insumos para tus servicios</h2>
-                <p>Esto es lo que necesitas llevar según tus próximos servicios asignados. Si algo está agotado, repórtalo a tu supervisor.</p>
+        <!-- ================= SERVICIOS ================= -->
+
+        <section id="servicios" class="seccion">
+
+            <div class="seccion-header">
+
+                <div>
+                    <h2>Mis servicios</h2>
+                    <p>
+                        Servicios asignados al empleado.
+                    </p>
+                </div>
+
+                <button class="btn-recargar" onclick="cargarServicios()">
+                    🔄 Actualizar
+                </button>
+
             </div>
 
-            <div class="grid-productos" id="grillaProductos"></div>
+
+            <div id="cargandoServicios" class="mensaje-cargando">
+                Cargando servicios...
+            </div>
+
+
+            <div id="listaServicios" class="tarjetas-servicios">
+                <!-- JavaScript -->
+            </div>
 
         </section>
 
-        <!-- ===== REPORTAR NOVEDAD ===== -->
-        <section class="contenido" id="sec-novedad">
 
-            <div class="panel panel-form">
-                <div class="panel-header">
-                    <h3>Reportar una novedad</h3>
+        <!-- ================= NOVEDADES ================= -->
+
+        <section id="novedades" class="seccion">
+
+            <div class="seccion-header">
+
+                <div>
+                    <h2>Novedad laboral</h2>
+
+                    <p>
+                        Envía una novedad laboral al supervisor.
+                    </p>
                 </div>
+
+            </div>
+
+
+            <div class="panel formulario-panel">
 
                 <form id="formNovedad">
-                    <div class="campo campo-ancho">
-                        <label for="tipoNovedad">Tipo de novedad</label>
+
+                    <div class="grupo-formulario">
+
+                        <label for="tipoNovedad">
+                            Tipo de novedad
+                        </label>
+
                         <select id="tipoNovedad" required>
-                            <option value="" disabled selected>Selecciona una opción</option>
-                            <option value="Ausencia">Ausencia</option>
-                            <option value="Retraso">Retraso</option>
-                            <option value="Accidente">Accidente</option>
-                            <option value="Incapacidad">Incapacidad</option>
-                            <option value="Otro">Otro</option>
+
+                            <option value="">
+                                Selecciona una opción
+                            </option>
+
+                            <option value="Incapacidad">
+                                Incapacidad
+                            </option>
+
+                            <option value="Ausencia">
+                                Ausencia
+                            </option>
+
+                            <option value="Retraso">
+                                Retraso
+                            </option>
+
+                            <option value="Accidente laboral">
+                                Accidente laboral
+                            </option>
+
+                            <option value="Problema en el servicio">
+                                Problema en el servicio
+                            </option>
+
+                            <option value="Problema con herramientas">
+                                Problema con herramientas
+                            </option>
+
+                            <option value="Otra">
+                                Otra
+                            </option>
+
                         </select>
+
                     </div>
 
-                    <div class="campo campo-ancho">
-                        <label for="descripcionNovedad">Descripción</label>
-                        <textarea id="descripcionNovedad" rows="4" placeholder="Cuéntanos qué ocurrió, con el mayor detalle posible." required></textarea>
+
+                    <div class="grupo-formulario">
+
+                        <label for="descripcionNovedad">
+                            Descripción
+                        </label>
+
+                        <textarea
+                            id="descripcionNovedad"
+                            rows="6"
+                            maxlength="1000"
+                            placeholder="Describe detalladamente la novedad..."
+                            required
+                        ></textarea>
+
+                        <div class="contador-texto">
+                            <span id="contadorCaracteres">0</span>/1000
+                        </div>
+
                     </div>
 
-                    <button type="submit" class="btn-primario">ENVIAR REPORTE</button>
-                    <p class="confirmacion" id="confirmacionNovedad">Novedad enviada. Tu supervisor la revisará pronto.</p>
+
+                    <div class="datos-empleado-form">
+
+                        <div>
+                            <span>Empleado</span>
+                            <strong id="formNombreEmpleado">
+                                -
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>ID empleado</span>
+                            <strong id="formIdEmpleado">
+                                -
+                            </strong>
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="btn-enviar"
+                        id="btnEnviarNovedad"
+                    >
+                        📤 Enviar novedad
+                    </button>
+
                 </form>
+
             </div>
 
-        </section>
-
-        <!-- ===== REPORTES ===== -->
-        <section class="contenido" id="sec-reportes">
 
             <div class="panel">
-                <div class="panel-header">
-                    <h3>Historial de novedades reportadas</h3>
-                    <span class="panel-count" id="conteoNovedades">0 registradas</span>
+
+                <div class="panel-titulo">
+
+                    <h2>Mis novedades</h2>
+
+                    <button
+                        class="btn-recargar"
+                        onclick="cargarNovedades()"
+                    >
+                        🔄 Actualizar
+                    </button>
+
                 </div>
-                <div class="tabla-scroll">
-                    <table>
-                        <thead><tr><th>Tipo</th><th>Fecha</th><th>Descripción</th><th>Estado</th></tr></thead>
-                        <tbody id="tablaNovedades"></tbody>
-                    </table>
+
+                <div id="listaNovedades">
+
+                    <div class="mensaje-vacio">
+                        No hay novedades registradas.
+                    </div>
+
                 </div>
+
             </div>
 
         </section>
 
-        <!-- ===== NOTIFICACIONES ===== -->
-        <section class="contenido" id="sec-notificaciones">
 
-            <div class="panel">
-                <div class="panel-header">
-                    <h3>Notificaciones</h3>
-                    <button class="link-btn" id="marcarTodas">Marcar todas como leídas</button>
+        <!-- ================= NOTIFICACIONES ================= -->
+
+        <section id="notificaciones" class="seccion">
+
+            <div class="seccion-header">
+
+                <div>
+                    <h2>Notificaciones</h2>
+
+                    <p>
+                        Información enviada por el sistema.
+                    </p>
                 </div>
-                <ul class="lista-notif" id="listaNotif"></ul>
+
+                <button
+                    class="btn-recargar"
+                    onclick="cargarNotificaciones()"
+                >
+                    🔄 Actualizar
+                </button>
+
+            </div>
+
+
+            <div id="listaNotificaciones">
+
+                <div class="mensaje-cargando">
+                    Cargando notificaciones...
+                </div>
+
             </div>
 
         </section>
 
-        <!-- ===== MI PERFIL ===== -->
-        <section class="contenido" id="sec-perfil">
 
-            <div class="panel panel-perfil">
+        <!-- ================= HORARIOS ================= -->
 
-                <div class="perfil-cabecera">
-                    <span class="avatar avatar--grande">MF</span>
-                    <div>
-                        <h3 id="perfilNombre">María Fernanda López</h3>
-                        <span class="panel-count">Auxiliar de servicios generales</span>
-                    </div>
-                    <button class="btn-secundario" id="btnEditar">Editar datos</button>
+        <section id="horarios" class="seccion">
+
+            <div class="seccion-header">
+
+                <div>
+                    <h2>Mi horario</h2>
+
+                    <p>
+                        Consulta tus horarios de trabajo.
+                    </p>
                 </div>
 
-                <form id="formPerfil" class="perfil-grid">
-                    <div class="campo">
-                        <label>Documento</label>
-                        <input type="text" value="1.020.456.789" disabled>
-                    </div>
-                    <div class="campo">
-                        <label>Fecha de ingreso</label>
-                        <input type="text" value="03 de marzo de 2024" disabled>
-                    </div>
-                    <div class="campo">
-                        <label>Sede</label>
-                        <input type="text" value="ACSO Bogotá — Zona Norte" disabled>
-                    </div>
-                    <div class="campo">
-                        <label for="perfilCorreo">Correo electrónico</label>
-                        <input type="email" id="perfilCorreo" value="maria.lopez@acso.com" disabled>
-                    </div>
-                    <div class="campo">
-                        <label for="perfilTelefono">Teléfono</label>
-                        <input type="tel" id="perfilTelefono" value="+57 300 555 1234" disabled>
-                    </div>
-                    <div class="campo">
-                        <label for="perfilContacto">Contacto de emergencia</label>
-                        <input type="text" id="perfilContacto" value="Luis López — 300 987 6543" disabled>
-                    </div>
+                <button
+                    class="btn-recargar"
+                    onclick="cargarHorarios()"
+                >
+                    🔄 Actualizar
+                </button>
 
-                    <button type="submit" class="btn-primario oculto" id="btnGuardarPerfil">Guardar cambios</button>
-                    <p class="confirmacion" id="confirmacionPerfil">Perfil actualizado correctamente.</p>
-                </form>
+            </div>
+
+
+            <div class="tabla-contenedor">
+
+                <table>
+
+                    <thead>
+
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Hora inicio</th>
+                        <th>Hora fin</th>
+                        <th>Turno</th>
+                        <th>Estado</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody id="tablaHorarios">
+
+                    </tbody>
+
+                </table>
+
             </div>
 
         </section>
@@ -309,6 +484,15 @@
 
 </div>
 
+
+<!-- ================= MENSAJE ================= -->
+
+<div id="mensajeSistema" class="mensaje-sistema">
+    <span id="textoMensaje"></span>
+</div>
+
+
 <script src="empleados.js"></script>
+
 </body>
 </html>
