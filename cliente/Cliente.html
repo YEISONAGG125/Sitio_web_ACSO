@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel Cliente · POWER CLEAN</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos-cliente.css">
+</head>
+<body>
+
+<div class="app">
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">
+        <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="logo-box">
+            <img src="logo1.png" alt="POWER CLEAN" class="logo-img">
+            <div class="logo-text">
+                <h2>POWER CLEAN</h2>
+                <span>Panel de cliente</span>
+            </div>
+        </div>
+
+        <nav id="navMenu">
+            <a href="#" class="nav-link active" data-section="inicio">
+                <svg viewBox="0 0 24 24"><path d="M4 11 12 4l8 7"/><path d="M6 10v9h12v-9"/></svg>
+                Inicio
+            </a>
+            <a href="#" class="nav-link" data-section="servicios">
+                <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg>
+                Mis Servicios
+            </a>
+            <a href="#" class="nav-link" data-section="contrato">
+                <svg viewBox="0 0 24 24"><path d="M9 3h6l1 3H8z"/><rect x="5" y="6" width="14" height="15" rx="1.5"/><path d="M9 12h6M9 16h6"/></svg>
+                Mi Contrato
+            </a>
+            <a href="#" class="nav-link" data-section="pagos">
+                <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><path d="M7 15h4"/></svg>
+                Mis Pagos
+            </a>
+            <a href="#" class="nav-link" data-section="notificaciones">
+                <svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
+                Notificaciones
+                <span class="badge" id="badgeNotif">0</span>
+            </a>
+            <a href="#" class="nav-link" data-section="perfil">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c1.2-4 4-6 7-6s5.8 2 7 6"/></svg>
+                Mi Perfil
+            </a>
+        </nav>
+
+        <button class="cerrar">
+            <svg viewBox="0 0 24 24"><path d="M15 4H6v16h9"/><path d="M10 12h10m-3-3 3 3-3 3"/></svg>
+            Cerrar sesión
+        </button>
+
+    </aside>
+
+    <div class="overlay" id="overlay"></div>
+
+    <main class="main">
+
+        <header>
+            <div>
+                <p class="eyebrow" id="sectionEyebrow">Panel de cliente</p>
+                <h1 id="sectionTitulo">Bienvenido, Carlos Pérez</h1>
+            </div>
+
+            <div class="usuario">
+                <span class="avatar">CP</span>
+                <div class="usuario-info">
+                    <strong>Carlos Pérez</strong>
+                    <small>Cliente · CT-001</small>
+                </div>
+            </div>
+        </header>
+
+        <!-- ===== INICIO ===== -->
+        <section class="contenido active" id="sec-inicio">
+
+            <div class="bienvenida">
+                <h2>Resumen de tu cuenta</h2>
+                <p>Aquí puedes consultar tus servicios contratados, tu contrato, tus pagos y las novedades que te enviamos.</p>
+            </div>
+
+            <div class="estadisticas estadisticas--tres">
+                <div class="card">
+                    <span class="card-icono card-icono--azul">
+                        <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg>
+                    </span>
+                    <div class="card-datos"><strong id="statServicios">0</strong><span>Servicios</span></div>
+                </div>
+                <div class="card">
+                    <span class="card-icono card-icono--verde">
+                        <svg viewBox="0 0 24 24"><path d="M9 3h6l1 3H8z"/><rect x="5" y="6" width="14" height="15" rx="1.5"/><path d="M9 12h6M9 16h6"/></svg>
+                    </span>
+                    <div class="card-datos"><strong id="statContratos">0</strong><span>Contratos</span></div>
+                </div>
+                <div class="card">
+                    <span class="card-icono card-icono--morado">
+                        <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg>
+                    </span>
+                    <div class="card-datos"><strong id="statPagos">0</strong><span>Pagos</span></div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    <h3>Tus servicios activos</h3>
+                    <span class="panel-count" id="conteoInicioServicios">0 en total</span>
+                </div>
+                <div class="tabla-scroll">
+                    <table>
+                        <thead><tr><th>Servicio</th><th>Zona</th><th>Estado</th><th>Empleado</th></tr></thead>
+                        <tbody id="tablaInicioServicios"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ===== MIS SERVICIOS ===== -->
+        <section class="contenido" id="sec-servicios">
+
+            <div class="panel">
+                <div class="panel-header">
+                    <h3>Servicios contratados</h3>
+                    <span class="panel-count" id="conteoServicios">0 en total</span>
+                </div>
+                <p class="pista">Haz clic en un servicio para ver la descripción y observaciones.</p>
+                <div class="tabla-scroll">
+                    <table>
+                        <thead><tr><th>Servicio</th><th>Zona</th><th>Estado</th><th>Empleado</th></tr></thead>
+                        <tbody id="tablaServicios"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ===== MI CONTRATO ===== -->
+        <section class="contenido" id="sec-contrato">
+
+            <div class="panel panel-contrato">
+                <div class="panel-header">
+                    <h3>Contrato CT-001</h3>
+                    <span class="pill pill--curso">Solo consulta</span>
+                </div>
+
+                <div class="contrato-grid">
+                    <div class="dato">
+                        <span>Número de contrato</span>
+                        <strong>CT-001</strong>
+                    </div>
+                    <div class="dato">
+                        <span>Ubicación</span>
+                        <strong>Bogotá</strong>
+                    </div>
+                    <div class="dato">
+                        <span>Fecha de inicio</span>
+                        <strong>01/09/2026</strong>
+                    </div>
+                    <div class="dato">
+                        <span>Fecha de finalización</span>
+                        <strong>01/12/2026</strong>
+                    </div>
+                    <div class="dato dato-ancho">
+                        <span>Valor total</span>
+                        <strong class="valor">$2.500.000</strong>
+                    </div>
+                </div>
+
+                <p class="nota-contrato">Si necesitas modificar tu contrato, comunícate con tu asesor comercial. Desde aquí solo puedes consultarlo.</p>
+            </div>
+
+        </section>
+
+        <!-- ===== MIS PAGOS ===== -->
+        <section class="contenido" id="sec-pagos">
+
+            <div class="panel">
+                <div class="panel-header">
+                    <h3>Historial de pagos</h3>
+                    <span class="panel-count" id="conteoPagos">0 registrados</span>
+                </div>
+                <div class="tabla-scroll">
+                    <table>
+                        <thead><tr><th>ID</th><th>Contrato</th><th>Método de pago</th></tr></thead>
+                        <tbody id="tablaPagos"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ===== NOTIFICACIONES ===== -->
+        <section class="contenido" id="sec-notificaciones">
+
+            <div class="panel">
+                <div class="panel-header">
+                    <h3>Notificaciones</h3>
+                    <button class="link-btn" id="marcarTodas">Marcar todas como leídas</button>
+                </div>
+                <ul class="lista-notif" id="listaNotif"></ul>
+            </div>
+
+        </section>
+
+        <!-- ===== MI PERFIL ===== -->
+        <section class="contenido" id="sec-perfil">
+
+            <div class="panel panel-perfil">
+
+                <div class="perfil-cabecera">
+                    <span class="avatar avatar--grande">CP</span>
+                    <div>
+                        <h3>Carlos Pérez</h3>
+                        <span class="panel-count">Cliente desde el 01/09/2026</span>
+                    </div>
+                    <button class="btn-secundario" id="btnEditar">Editar datos</button>
+                </div>
+
+                <form id="formPerfil" class="perfil-grid">
+                    <div class="campo">
+                        <label>Nombre</label>
+                        <input type="text" value="Carlos Pérez" disabled>
+                    </div>
+                    <div class="campo">
+                        <label>Cédula</label>
+                        <input type="text" value="100000001" disabled>
+                    </div>
+                    <div class="campo">
+                        <label for="perfilTelefono">Teléfono</label>
+                        <input type="tel" id="perfilTelefono" value="3001234567" disabled>
+                    </div>
+                    <div class="campo">
+                        <label for="perfilCorreo">Correo</label>
+                        <input type="email" id="perfilCorreo" value="carlos.perez@gmail.com" disabled>
+                    </div>
+                    <div class="campo campo-ancho">
+                        <label for="perfilDireccion">Dirección</label>
+                        <input type="text" id="perfilDireccion" value="Calle 10 # 20-30" disabled>
+                    </div>
+
+                    <button type="submit" class="btn-primario oculto" id="btnGuardarPerfil">Guardar cambios</button>
+                    <p class="confirmacion" id="confirmacionPerfil">Perfil actualizado correctamente.</p>
+                </form>
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="clientes.js"></script>
+</body>
+</html>
