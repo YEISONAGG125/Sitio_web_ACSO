@@ -1,15 +1,15 @@
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
 import {
     getDatabase,
     ref,
-    push,
     get,
-    child
+    push
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDTujbcDDXo3N2a-L5p4cEUXD-8llmtD_A",
+    apiKey: "AIzaSyDTujbcDDXoN3a-L5p4cEUXD-8llmtD_A",
     authDomain: "sitio-web-acso.firebaseapp.com",
     databaseURL: "https://sitio-web-acso-default-rtdb.firebaseio.com",
     projectId: "sitio-web-acso",
@@ -22,62 +22,287 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-document.getElementById("formRegistro").addEventListener("submit", async function(e){
+const API_BASE = "http://localhost:8080/api";
 
-    e.preventDefault();
+const formulario = document.getElementById("formRegistro");
 
-    const nombre = document.getElementById("nombre").value;
-    const cargo = document.getElementById("cargo").value;
-    const correo = document.getElementById("correo").value;
-    const usuario = document.getElementById("usuario").value;
-    const password = document.getElementById("password").value;
+if (!formulario) {
+    console.error("No se encontró el formulario con id='formRegistro'.");
+} else {
 
-    try{
+    formulario.addEventListener("submit", async function (e) {
 
-        const snapshot = await get(child(ref(db),"usuarios"));
+        e.preventDefault();
 
-        if(snapshot.exists()){
+        const nombre =
+            document.getElementById("nombre").value.trim();
 
-            const usuarios = snapshot.val();
+        const cargo =
+            document.getElementById("cargo").value.trim();
 
-            for(let id in usuarios){
+        const correo =
+            document.getElementById("correo").value.trim();
 
-                if(usuarios[id].usuario === usuario){
+        const usuario =
+            document.getElementById("usuario").value.trim();
 
-                    alert("Ese usuario ya existe.");
-                    return;
+        const password =
+            document.getElementById("password").value;
 
-                }
-
-            }
-
+        if (
+            !nombre ||
+            !cargo ||
+            !correo ||
+            !usuario ||
+            !password
+        ) {
+            alert("Todos los campos son obligatorios.");
+            return;
         }
 
-        await push(ref(db,"usuarios"),{
+        if (cargo.toLowerCase() !== "empleado") {
+            alert("Para este registro el cargo debe ser empleado.");
+            return;
+        }
 
-            nombre,
-            cargo,
-            correo,
-            usuario,
-            password,
+        if (password.length < 8) {
+            alert(
+                "La contraseña debe tener mínimo 8 caracteres."
+            );
+            return;
+        }
 
-            online:false,
-            ultimoAcceso:null
+        try {
 
-        });
+            // =====================================================
+            // COMPROBAR USUARIO EN FIREBASE
+            // =====================================================
 
-        alert("Usuario registrado correctamente.");
+            const usuariosRef = ref(db, "usuarios");
 
-        document.getElementById("formRegistro").reset();
+            const snapshot = await get(usuariosRef);
 
-        window.location.href="../inicio de sistema/login.html";
+            if (snapshot.exists()) {
 
-    }catch(error){
+                const usuarios = snapshot.val();
 
-        console.error(error);
+                const usuarioExiste =
+                    Object.values(usuarios).some(
+                        item =>
+                            item.usuario &&
+                            item.usuario.toLowerCase() ===
+                            usuario.toLowerCase()
+                    );
 
-        alert("Error al registrar el usuario.");
+                if (usuarioExiste) {
 
-    }
+                    alert(
+                        "El nombre de usuario ya está registrado."
+                    );
 
-});
+                    return;
+                }
+            }
+
+            // =====================================================
+            // ENVIAR DATOS A SPRING BOOT
+            // =====================================================
+
+            console.log(
+                "Enviando registro a:",
+                `${API_BASE}/usuarios/registro-empleado`
+            );
+
+            const respuesta = await fetch(
+                `${API_BASE}/usuarios/registro-empleado`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        nombre: nombre,
+                        cargo: cargo,
+                        correo: correo,
+                        usuario: usuario,
+                        password: password
+                    })
+                }
+            );
+
+            // =====================================================
+            // LEER RESPUESTA SIN ROMPER SI VIENE VACÍA
+            // =====================================================
+
+            const textoRespuesta =
+                await respuesta.text();
+
+            console.log(
+                "Código HTTP:",
+                respuesta.status
+            );
+
+            console.log(
+                "Respuesta del servidor:",
+                textoRespuesta
+            );
+
+            let resultado = {};
+
+            if (textoRespuesta.trim() !== "") {
+
+                try {
+
+                    resultado =
+                        JSON.parse(textoRespuesta);
+
+                } catch (errorJSON) {
+
+                    console.error(
+                        "La respuesta del servidor no es JSON:",
+                        textoRespuesta
+                    );
+                }
+            }
+
+            // =====================================================
+            // COMPROBAR ERROR HTTP
+            // =====================================================
+
+            if (!respuesta.ok) {
+
+                console.error(
+                    "Error HTTP:",
+                    respuesta.status
+                );
+
+                console.error(
+                    "Respuesta:",
+                    resultado
+                );
+
+                if (respuesta.status === 401) {
+
+                    alert(
+                        "Error 401: Spring Security rechazó la petición.\n\n" +
+                        "La petición sí llegó al servidor, pero fue rechazada."
+                    );
+
+                } else if (respuesta.status === 403) {
+
+                    alert(
+                        "Error 403: Spring Security no permite esta operación."
+                    );
+
+                } else {
+
+                    const mensaje =
+                        resultado.message ||
+                        resultado.mensaje ||
+                        `No se pudo registrar el empleado. Código HTTP: ${respuesta.status}`;
+
+                    alert(mensaje);
+                }
+
+                return;
+            }
+
+            // =====================================================
+            // OBTENER IDS GENERADOS
+            // =====================================================
+
+            const idEmpleado =
+                resultado.id_empleado;
+
+            const idPersona =
+                resultado.id_persona;
+
+            const idUsuario =
+                resultado.id_usuario;
+
+            console.log(
+                "Empleado creado:",
+                idEmpleado
+            );
+
+            console.log(
+                "Persona creada:",
+                idPersona
+            );
+
+            console.log(
+                "Usuario creado:",
+                idUsuario
+            );
+
+            // =====================================================
+            // VERIFICAR ID EMPLEADO
+            // =====================================================
+
+            if (!idEmpleado) {
+
+                console.error(
+                    "Respuesta completa del backend:",
+                    resultado
+                );
+
+                alert(
+                    "Spring Boot registró la información, pero no devolvió el id_empleado."
+                );
+
+                return;
+            }
+
+            // =====================================================
+            // GUARDAR EN FIREBASE
+            // =====================================================
+
+            await push(
+                usuariosRef,
+                {
+                    nombre: nombre,
+                    cargo: cargo,
+                    correo: correo,
+                    usuario: usuario,
+                    password: password,
+                    id_empleado: idEmpleado,
+                    id_persona: idPersona,
+                    id_usuario: idUsuario,
+                    online: false,
+                    ultimoAcceso: null
+                }
+            );
+
+            // =====================================================
+            // REGISTRO TERMINADO
+            // =====================================================
+
+            alert(
+                "Empleado registrado correctamente.\n\n" +
+                "ID empleado: " +
+                idEmpleado
+            );
+
+            formulario.reset();
+
+            window.location.href =
+                "../inicio de sistema/login.html";
+
+        } catch (error) {
+
+            console.error(
+                "Error completo:",
+                error
+            );
+
+            alert(
+                "No se pudo completar el registro.\n\n" +
+                "Revisa la consola del navegador y la consola de IntelliJ."
+            );
+        }
+    });
+}
+

@@ -1,416 +1,605 @@
-/* =========================================================
-   POWER CLEAN — Nosotros
-   Misma identidad "agua limpia" del resto del sitio.
-   ========================================================= */
-
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
-
-:root {
-    --verde-950: #0B3B3C;
-    --verde-800: #115353;
-    --verde-700: #166363;
-    --agua-400: #35B8AE;
-    --agua-300: #7FD6C9;
-    --agua-100: #E4F5F2;
-    --arena-050: #F6F8F7;
-    --tinta-900: #12211F;
-    --tinta-600: #4C625E;
-    --tinta-400: #7C918D;
-    --linea: #DCE6E3;
-    --blanco: #FFFFFF;
-
-    --f-display: 'Manrope', 'Inter', system-ui, sans-serif;
-    --f-texto: 'Inter', system-ui, sans-serif;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-* {
-    box-sizing: border-box;
+html {
+    scroll-behavior: smooth;
 }
 
 body {
-    margin: 0;
-    font-family: var(--f-texto);
-    color: var(--tinta-900);
-    background: var(--blanco);
-    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    color: white;
+    background:
+        linear-gradient(rgba(5, 18, 38, 0.88), rgba(4, 25, 35, 0.94)),
+        url("FONDO2.png");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    overflow-x: hidden;
 }
 
-h1, h2 {
-    font-family: var(--f-display);
-    margin: 0;
-    color: var(--verde-950);
-}
 
-p {
-    margin: 0;
-    color: var(--tinta-600);
-    line-height: 1.75;
-}
+/* =========================
+   FONDO DECORATIVO
+========================= */
 
-/* =========================================================
-   BOTÓN VOLVER
-   ========================================================= */
-
-.btn-volver {
+.background-effects {
     position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 30;
-    display: inline-flex;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.circle {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(5px);
+    opacity: 0.25;
+}
+
+.circle-1 {
+    width: 350px;
+    height: 350px;
+    background: #00d9a6;
+    top: 100px;
+    left: -150px;
+}
+
+.circle-2 {
+    width: 400px;
+    height: 400px;
+    background: #007bff;
+    right: -180px;
+    top: 250px;
+}
+
+.circle-3 {
+    width: 250px;
+    height: 250px;
+    background: #00ffcc;
+    bottom: -100px;
+    left: 45%;
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+    width: 100%;
+    height: 85px;
+
+    display: flex;
     align-items: center;
-    gap: 6px;
-    font-family: var(--f-texto);
-    font-size: 13.5px;
+    justify-content: space-between;
+
+    padding: 0 7%;
+
+    background: rgba(7, 22, 43, 0.72);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+
+/* Logo */
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-container img {
+    width: 50px;
+    height: 50px;
+
+    object-fit: contain;
+
+    border-radius: 50%;
+
+    filter: drop-shadow(0 0 12px rgba(0, 255, 200, 0.35));
+}
+
+.logo-container span {
+    font-size: 21px;
+    font-weight: bold;
+    letter-spacing: 5px;
+}
+
+
+/* Navegación */
+
+.navbar nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.navbar nav a {
+    color: rgba(255, 255, 255, 0.82);
+    text-decoration: none;
+
+    padding: 11px 16px;
+
+    border-radius: 12px;
+
+    font-size: 14px;
     font-weight: 600;
-    color: var(--verde-950);
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(6px);
-    border: 1px solid var(--linea);
-    padding: 9px 18px;
-    border-radius: 999px;
-    cursor: pointer;
-    box-shadow: 0 4px 14px rgba(11, 59, 60, 0.14);
-    transition: background 0.15s ease, transform 0.15s ease;
+
+    transition: 0.3s ease;
 }
 
-.btn-volver:hover {
-    background: var(--blanco);
-    transform: translateX(-2px);
+.navbar nav a:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.08);
+
+    transform: translateY(-2px);
 }
 
-.btn-volver:focus-visible {
-    outline: 2px solid var(--agua-400);
-    outline-offset: 2px;
+.navbar nav a.active {
+    color: #00e6b0;
 }
 
-/* =========================================================
-   BANNER
-   ========================================================= */
 
-.banner-nosotros {
-    position: relative;
-    min-height: 380px;
+/* Botón login */
+
+.login-btn {
+    background: linear-gradient(
+        135deg,
+        #00c896,
+        #008cff
+    ) !important;
+
+    color: white !important;
+
+    padding: 12px 20px !important;
+
+    box-shadow:
+        0 8px 25px rgba(0, 200, 150, 0.25);
+}
+
+.login-btn:hover {
+    transform: translateY(-3px) !important;
+
+    box-shadow:
+        0 12px 30px rgba(0, 200, 150, 0.4);
+}
+
+
+/* =========================
+   CONTENIDO
+========================= */
+
+main {
+    width: 100%;
+}
+
+.contacto-section {
+    width: 90%;
+    max-width: 1200px;
+
+    margin: auto;
+
+    padding: 90px 0 100px;
+}
+
+
+/* Encabezado */
+
+.contacto-header {
+    text-align: center;
+    max-width: 800px;
+    margin: auto;
+}
+
+.badge {
+    display: inline-block;
+
+    padding: 9px 17px;
+
+    border-radius: 30px;
+
+    background: rgba(0, 220, 170, 0.1);
+    border: 1px solid rgba(0, 220, 170, 0.25);
+
+    color: #00e6b0;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    margin-bottom: 20px;
+}
+
+.contacto-header h1 {
+    font-size: clamp(38px, 6vw, 68px);
+
+    line-height: 1.05;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 22px;
+}
+
+.contacto-header h1 span {
+    background: linear-gradient(
+        90deg,
+        #00e6b0,
+        #00a8ff
+    );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+}
+
+.contacto-header p {
+    color: rgba(255, 255, 255, 0.7);
+
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+
+/* =========================
+   CONTENEDOR
+========================= */
+
+.contacto-container {
+    margin-top: 55px;
+
+    display: grid;
+
+    grid-template-columns: 1.2fr 0.8fr;
+
+    gap: 30px;
+}
+
+
+/* =========================
+   TARJETAS INFORMACIÓN
+========================= */
+
+.contacto-info {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 20px;
+}
+
+.info-card {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 18px;
+
+    padding: 28px;
+
+    min-height: 150px;
+
+    background: rgba(255, 255, 255, 0.07);
+
+    border: 1px solid rgba(255, 255, 255, 0.13);
+
+    border-radius: 22px;
+
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+
+    transition: 0.35s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-6px);
+
+    background: rgba(255, 255, 255, 0.1);
+
+    border-color: rgba(0, 230, 176, 0.4);
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.25);
+}
+
+.icono {
+    min-width: 50px;
+    height: 50px;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    background:
-        radial-gradient(circle at 20% 20%, rgba(127, 214, 201, 0.35), transparent 55%),
-        linear-gradient(135deg, var(--verde-950) 0%, var(--verde-700) 55%, var(--agua-400) 130%);
-    overflow: hidden;
+
+    border-radius: 15px;
+
+    font-size: 23px;
+
+    background: linear-gradient(
+        135deg,
+        rgba(0, 230, 176, 0.18),
+        rgba(0, 140, 255, 0.18)
+    );
+
+    border: 1px solid rgba(0, 230, 176, 0.2);
 }
 
-.banner-nosotros::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(0deg, rgba(11, 59, 60, 0.35), transparent 60%);
-}
-
-.banner-nosotros .overlay {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    max-width: 560px;
-    padding: 0 24px;
-}
-
-.banner-nosotros h1 {
-    color: var(--blanco);
-    font-size: 34px;
-    font-weight: 800;
-    margin-bottom: 12px;
-}
-
-.banner-nosotros p {
-    color: rgba(255, 255, 255, 0.88);
-    font-size: 15.5px;
-}
-
-/* =========================================================
-   SECCIÓN "QUIÉNES SOMOS" — tarjeta flotante sobre el banner
-   ========================================================= */
-
-.nosotros {
-    padding: 0 24px 56px;
-    margin-top: -64px;
-    position: relative;
-    z-index: 2;
-}
-
-.nosotros .contenedor {
-    max-width: 760px;
-    margin: 0 auto;
-    background: var(--blanco);
-    border: 1px solid var(--linea);
-    border-radius: 18px;
-    padding: 44px 48px;
-    box-shadow: 0 20px 50px rgba(11, 59, 60, 0.14);
-}
-
-.nosotros h2 {
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.6px;
-    text-transform: uppercase;
-    color: var(--verde-700);
-    margin-bottom: 16px;
-    padding-bottom: 16px;
-    border-bottom: 2px solid var(--agua-300);
-}
-
-.nosotros p {
-    font-size: 15px;
-    margin-bottom: 16px;
-}
-
-.nosotros p:last-child {
-    margin-bottom: 0;
-}
-
-/* =========================================================
-   MISIÓN / VISIÓN — tarjetas con ícono y acento superior
-   ========================================================= */
-
-.mvv {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 24px;
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 0 24px 80px;
-}
-
-.mvv .card {
-    position: relative;
-    background: var(--arena-050);
-    border: 1px solid var(--linea);
-    border-radius: 16px;
-    padding: 34px 30px 30px;
-    overflow: hidden;
-    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
-}
-
-.mvv .card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--verde-700), var(--agua-400));
-}
-
-.mvv .card::after {
-    position: absolute;
-    top: 22px;
-    right: 24px;
-    font-size: 26px;
-    opacity: 0.9;
-}
-
-.mvv .card:first-child::after {
-    content: "🎯";
-}
-
-.mvv .card:last-child::after {
-    content: "🔭";
-}
-
-.mvv .card:hover {
-    background: var(--blanco);
-    transform: translateY(-5px);
-    box-shadow: 0 18px 36px rgba(11, 59, 60, 0.14);
-}
-
-.mvv .card h2 {
+.info-card h3 {
     font-size: 18px;
-    font-weight: 800;
-    margin-bottom: 12px;
-    padding-right: 40px;
+    margin-bottom: 9px;
 }
 
-.mvv .card p {
+.info-card p {
+    color: rgba(255, 255, 255, 0.65);
+
+    line-height: 1.6;
+
     font-size: 14px;
 }
 
-/* =========================================================
-   CONTACTO — barra superior tipo hero
-   ========================================================= */
 
-.navbar {
+/* =========================
+   PANEL AYUDA
+========================= */
+
+.contacto-panel {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    text-align: center;
-    min-height: 260px;
-    padding: 40px 24px;
-    overflow: hidden;
+
+    padding: 45px 38px;
+
+    border-radius: 25px;
+
     background:
-        radial-gradient(circle at 80% 20%, rgba(127, 214, 201, 0.35), transparent 55%),
-        linear-gradient(135deg, var(--verde-950) 0%, var(--verde-700) 55%, var(--agua-400) 130%);
-}
+        linear-gradient(
+            145deg,
+            rgba(0, 200, 150, 0.15),
+            rgba(0, 120, 255, 0.12)
+        );
 
-.navbar h1 {
-    position: relative;
-    z-index: 1;
-    color: var(--blanco);
-    font-size: 30px;
-    font-weight: 800;
-    letter-spacing: 0.2px;
-}
+    border: 1px solid rgba(0, 230, 176, 0.25);
 
-.navbar h4 {
-    position: relative;
-    z-index: 1;
-    margin: 0;
-    color: rgba(255, 255, 255, 0.85);
-    font-family: var(--f-texto);
-    font-size: 14.5px;
-    font-weight: 400;
-}
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
 
-/* =========================================================
-   CONTACTO — datos de contacto como tarjeta
-   ========================================================= */
-
-body > ul {
-    list-style: none;
-    max-width: 480px;
-    margin: -48px auto 64px;
-    padding: 38px 40px;
-    position: relative;
-    z-index: 2;
-    background: var(--blanco);
-    border: 1px solid var(--linea);
-    border-radius: 18px;
-    box-shadow: 0 20px 50px rgba(11, 59, 60, 0.14);
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    justify-content: center;
+
+    overflow: hidden;
 }
 
-body > ul li {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 14px 4px;
-    font-size: 14.5px;
-    font-weight: 500;
-    color: var(--tinta-900);
-    border-bottom: 1px solid var(--arena-050);
-}
+.contacto-panel::before {
+    content: "";
 
-body > ul li:last-of-type {
-    border-bottom: none;
-}
+    position: absolute;
 
-body > ul li::before {
-    content: "📍";
-    font-size: 17px;
-    flex-shrink: 0;
-    width: 34px;
-    height: 34px;
+    width: 180px;
+    height: 180px;
+
     border-radius: 50%;
-    background: var(--agua-100);
+
+    background: #00d9a6;
+
+    opacity: 0.08;
+
+    right: -70px;
+    top: -70px;
+}
+
+.panel-icon {
+    width: 65px;
+    height: 65px;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
+    border-radius: 20px;
+
+    font-size: 30px;
+
+    background: rgba(255, 255, 255, 0.08);
+
+    margin-bottom: 25px;
 }
 
-body > ul li:nth-of-type(2)::before {
-    content: "✉️";
+.contacto-panel h2 {
+    font-size: 30px;
+
+    margin-bottom: 15px;
 }
 
-body > ul li:nth-of-type(3)::before {
-    content: "📞";
+.contacto-panel p {
+    color: rgba(255, 255, 255, 0.68);
+
+    line-height: 1.7;
+
+    margin-bottom: 30px;
 }
 
-body > ul li:nth-of-type(4)::before {
-    content: "🔗";
+
+/* Botón ayuda */
+
+.btn-ayuda {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+
+    padding: 15px 20px;
+
+    text-decoration: none;
+
+    color: white;
+
+    border-radius: 14px;
+
+    background: linear-gradient(
+        135deg,
+        #00c896,
+        #008cff
+    );
+
+    font-weight: bold;
+
+    transition: 0.3s ease;
+
+    box-shadow:
+        0 10px 30px rgba(0, 150, 180, 0.25);
 }
 
-body > ul button {
-    margin: 10px 0 4px 48px;
-    align-self: flex-start;
-    font-family: var(--f-texto);
-    font-size: 13.5px;
-    font-weight: 600;
-    color: var(--blanco);
-    background: var(--verde-950);
-    border: none;
-    padding: 10px 22px;
-    border-radius: 999px;
-    cursor: pointer;
-    transition: background 0.15s ease;
+.btn-ayuda span {
+    font-size: 22px;
+
+    transition: 0.3s ease;
 }
 
-body > ul button:hover {
-    background: var(--verde-700);
+.btn-ayuda:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 15px 35px rgba(0, 200, 160, 0.35);
 }
 
-body > ul button:focus-visible {
-    outline: 2px solid var(--agua-400);
-    outline-offset: 2px;
+.btn-ayuda:hover span {
+    transform: translateX(5px);
 }
 
-/* =========================================================
-   PIE DE PÁGINA
-   ========================================================= */
+
+/* =========================
+   FOOTER
+========================= */
 
 footer {
-    background: var(--verde-950);
-    color: rgba(246, 248, 247, 0.75);
+    width: 100%;
+
+    padding: 35px 7%;
+
     text-align: center;
-    padding: 22px 20px;
+
+    background: rgba(3, 13, 28, 0.8);
+
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+    backdrop-filter: blur(15px);
+}
+
+.footer-logo {
+    font-size: 20px;
+
+    font-weight: bold;
+
+    letter-spacing: 6px;
+
+    color: #00e6b0;
+
+    margin-bottom: 12px;
 }
 
 footer p {
-    color: rgba(246, 248, 247, 0.7);
-    font-size: 12.5px;
+    color: rgba(255, 255, 255, 0.5);
+
+    font-size: 13px;
+
+    margin-bottom: 18px;
 }
 
-/* =========================================================
+.footer-links {
+    display: flex;
+
+    justify-content: center;
+
+    gap: 20px;
+
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.55);
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    transition: 0.3s;
+}
+
+.footer-links a:hover {
+    color: #00e6b0;
+}
+
+
+/* =========================
    RESPONSIVE
-   ========================================================= */
+========================= */
 
-@media (max-width: 760px) {
-    .banner-nosotros {
-        min-height: 300px;
+@media (max-width: 900px) {
+
+    .navbar {
+        height: auto;
+
+        padding: 18px 5%;
+
+        flex-direction: column;
+
+        gap: 15px;
     }
 
-    .banner-nosotros h1 {
-        font-size: 26px;
+    .navbar nav {
+        flex-wrap: wrap;
+
+        justify-content: center;
     }
 
-    .mvv {
+    .contacto-container {
         grid-template-columns: 1fr;
     }
 
-    .btn-volver {
-        top: 14px;
-        left: 14px;
-        padding: 8px 14px;
-        font-size: 13px;
+}
+
+
+@media (max-width: 650px) {
+
+    .contacto-section {
+        padding-top: 60px;
     }
 
-    .navbar {
-        min-height: 200px;
-        padding: 32px 20px;
+    .contacto-info {
+        grid-template-columns: 1fr;
     }
 
-    .navbar h1 {
-        font-size: 24px;
+    .contacto-header h1 {
+        font-size: 42px;
     }
 
-    body > ul {
-        margin: -36px 20px 56px;
-        padding: 30px 26px;
+    .contacto-header p {
+        font-size: 15px;
     }
 
-    body > ul button {
-        margin-left: 4px;
+    .navbar nav a {
+        padding: 8px 10px;
+
+        font-size: 12px;
     }
+
+    .logo-container span {
+        font-size: 17px;
+    }
+
+    .contacto-panel {
+        padding: 32px 25px;
+    }
+
 }

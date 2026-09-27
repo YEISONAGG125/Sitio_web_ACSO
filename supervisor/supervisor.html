@@ -3,100 +3,658 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Supervisores</title>
+
+    <title>ACSO | Panel de Supervisión</title>
+
     <link rel="stylesheet" href="style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
 </head>
+
 <body>
 
-<header class="d-flex justify-content-left align-items-center p-4"></header>
+<!-- =========================
+     BARRA LATERAL
+========================= -->
 
-<div class="tabs">
-  <img src="LOGO1.png" alt="Logo A C S O" class="logo-supervisor">
-    <div class="tab active" onclick="mostrar('Inicio',this)">🏠 Inicio</div>
-    <div class="tab" onclick="mostrar('Personal',this)">👨‍💼 Personal</div>
-    <div class="tab" onclick="mostrar('NovedadLaboral',this)">📋 Novedad laboral</div>
-    <div class="tab" onclick="mostrar('Inventario',this)">🧰 Productos</div>
-    <div class="tab" onclick="mostrar('Contratos',this)">📄 Contratos</div>
-    <div class="tab" onclick="mostrar('Clientes',this)">🤝 Clientes</div>
-    <div class="tab" onclick="mostrar('Notificaciones',this)">🔔 Notificaciones</div>
-  <div class="tab" onclick="window.location.href='./Configuración_supervisor/html.html'">📊 Configuracion</div>
-    <div class="tab" onclick="window.location.href='../Reportes/reportes.html'">📊 Reportes</div>
-    <div class="inicio" onclick="window.location.href='../inicio de sistema/login.html'">⬅ Cerrar Sesión</div>
-</div>
-
-<div id="Inicio" class="contenido active">
-    <div class="bienvenida">
-        <div class="bienvenida-icono">👋</div>
-        <h1>Bienvenido al Panel de Supervisión</h1>
-        <p>Gestiona y supervisa las operaciones de A C S O de forma rápida, eficiente y segura.</p>
-    </div>
-</div>
-
-<div id="Personal" class="contenido">
-    <h3>👨‍💼 Personal</h3>
-    <div class="fila encabezado"><div>Nombre</div><div>Cargo</div><div>Correo</div><div>Estado</div></div>
-    <div id="listaUsuarios"></div>
-</div>
-
-<div id="NovedadLaboral" class="contenido">
-    <h3>📋 Novedad Laboral</h3>
-    <div class="tabla-contenedor">
-        <table class="tabla-datos">
-            <thead><tr><th>ID Novedad</th><th>ID Empleado</th><th>Tipo Novedad</th><th>Descripcion</th></tr></thead>
-            <tbody id="tablaNovedades"><tr><td colspan="4">Cargando novedades laborales...</td></tr></tbody>
-        </table>
-    </div>
-</div>
-
-<div id="Inventario" class="contenido">
-    <h3>🧰 Inventario / Productos</h3>
-    <div class="tabla-contenedor">
-        <table class="tabla-datos">
-            <thead><tr><th>ID Producto</th><th>ID Proveedor</th><th>Nombre Producto</th><th>Descripción</th><th>Cantidad_stock</th><th>Precio</th></tr></thead>
-            <tbody id="tablaProductos"><tr><td colspan="7">Cargando productos...</td></tr></tbody>
-        </table>
-    </div>
-</div>
-
-<div id="Contratos" class="contenido">
-    <h3>📄 Contratos</h3>
-    <div class="tabla-contenedor">
-        <table class="tabla-datos">
-            <thead><tr><th>ID Contrato</th><th>ID Cliente</th><th>Número Contrato</th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Valor Total</th><th>Ubicación</th></tr></thead>
-            <tbody id="tablaContratos"><tr><td colspan="7">Cargando contratos...</td></tr></tbody>
-        </table>
-    </div>
-</div>
-
-<div id="Clientes" class="contenido">
-    <h3>🤝 Clientes</h3>
-    <div class="tabla-contenedor">
-        <table class="tabla-datos">
-            <thead><tr><th>ID Cliente</th><th>ID Persona</th><th>Razón Social</th><th>Tipo Persona</th></tr></thead>
-            <tbody id="tablaClientes"><tr><td colspan="4">Cargando clientes...</td></tr></tbody>
-        </table>
-    </div>
-</div>
-
-<div id="Notificaciones" class="contenido">
-    <h3>🔔 Notificaciones</h3>
-    <div id="listaNotificaciones">
-        <div class="notificacion">
-            <div class="icono-notificacion">🔔</div>
-            <div><strong>Sistema A C S O</strong><p>Las notificaciones aparecerán aquí.</p></div>
+<aside class="sidebar">
+        <div class="logo-text">
+          <span class="logo-icon">A</span>
+           <span class="logo-text">
+                C S O
+            </span>
+            <span>Panel Supervisor</span>
         </div>
+    <div class="menu">
+
+        <div class="tab active" onclick="mostrar('Inicio', this)">
+            <span>🏠</span>
+            <label>Inicio</label>
+        </div>
+
+        <div class="tab" onclick="mostrar('Personal', this)">
+            <span>👨‍💼</span>
+            <label>Personal</label>
+        </div>
+
+        <div class="tab" onclick="mostrar('NovedadLaboral', this)">
+            <span>📋</span>
+            <label>Novedad laboral</label>
+        </div>
+
+        <div class="tab" onclick="mostrar('Inventario', this)">
+            <span>🧰</span>
+            <label>Productos</label>
+        </div>
+
+        <div class="tab" onclick="mostrar('Contratos', this)">
+            <span>📄</span>
+            <label>Contratos</label>
+        </div>
+
+        <div class="tab" onclick="mostrar('Clientes', this)">
+            <span>🤝</span>
+            <label>Clientes</label>
+        </div>
+
+        <div class="tab" onclick="mostrar('Notificaciones', this)">
+            <span>🔔</span>
+            <label>Notificaciones</label>
+        </div>
+
+        <div
+            class="tab"
+            onclick="window.location.href='./Configuración_supervisor/html.html'"
+        >
+            <span>⚙️</span>
+            <label>Configuración</label>
+        </div>
+
+        <div
+            class="tab"
+            onclick="window.location.href='../Reportes/reportes.html'"
+        >
+            <span>📊</span>
+            <label>Reportes</label>
+        </div>
+
     </div>
-</div>
 
-<div id="Configuracion" class="contenido">
-    <h3>⚙️ Configuración</h3>
-    <div class="fila encabezado"><div>Perfil</div><div>Notificaciones</div><div>Tema</div><div>Estado</div></div>
-    <div class="fila"><div>Supervisor</div><div>Activadas</div><div>Claro</div><div>Activo</div></div>
-</div>
+    <div
+        class="logout"
+        onclick="window.location.href='../inicio de sistema/login.html'"
+    >
+        <span>⬅</span>
+        <label>Cerrar sesión</label>
+    </div>
 
-<footer><p>© 2026 A C S O - Experiencia y eficacia sin igual a la mano.</p></footer>
+</aside>
+
+
+<!-- =========================
+     CONTENIDO PRINCIPAL
+========================= -->
+
+<main class="main-content">
+
+    <!-- HEADER -->
+
+    <header class="top-header">
+
+        <div>
+            <span class="header-small">PANEL DE SUPERVISIÓN</span>
+            <h2>ACSO</h2>
+        </div>
+
+        <div class="header-status">
+            <span class="status-dot"></span>
+            Sistema en línea
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         INICIO
+    ========================= -->
+
+    <section id="Inicio" class="contenido active">
+
+        <div class="bienvenida">
+
+            <div class="bienvenida-icono">
+                👋
+            </div>
+
+            <div>
+
+                <span class="section-label">
+                    PANEL DE CONTROL
+                </span>
+
+                <h1>
+                    Bienvenido al Panel de Supervisión
+                </h1>
+
+                <p>
+                    Gestiona y supervisa las operaciones de
+                    A C S O de forma rápida, eficiente y segura.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- TARJETAS RESUMEN -->
+
+        <div class="dashboard-grid">
+
+            <div class="dashboard-card">
+
+                <div class="card-icon">
+                    👨‍💼
+                </div>
+
+                <div>
+                    <span>Personal</span>
+                    <strong id="totalPersonal">--</strong>
+                    <small>Registros disponibles</small>
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div class="card-icon">
+                    📋
+                </div>
+
+                <div>
+                    <span>Novedades</span>
+                    <strong id="totalNovedades">--</strong>
+                    <small>Novedades laborales</small>
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div class="card-icon">
+                    📦
+                </div>
+
+                <div>
+                    <span>Productos</span>
+                    <strong id="totalProductos">--</strong>
+                    <small>Productos registrados</small>
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div class="card-icon">
+                    📄
+                </div>
+
+                <div>
+                    <span>Contratos</span>
+                    <strong id="totalContratos">--</strong>
+                    <small>Contratos registrados</small>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="inicio-info">
+
+            <div class="info-card">
+
+                <span class="section-label">
+                    ACSO
+                </span>
+
+                <h3>
+                    Gestión centralizada
+                </h3>
+
+                <p>
+                    Desde este panel puedes consultar información
+                    del personal, novedades laborales, productos,
+                    contratos, clientes y notificaciones.
+                </p>
+
+            </div>
+
+            <div class="info-card">
+
+                <span class="section-label">
+                    ESTADO
+                </span>
+
+                <h3>
+                    Sistema funcionando
+                </h3>
+
+                <p>
+                    Utiliza el menú lateral para acceder a cada
+                    módulo de supervisión.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         PERSONAL
+    ========================= -->
+
+    <section id="Personal" class="contenido">
+
+        <div class="section-header">
+
+            <div>
+                <span class="section-label">GESTIÓN</span>
+                <h2>👨‍💼 Personal</h2>
+                <p>
+                    Consulta el personal registrado en ACSO.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="table-card">
+
+            <div class="table-title">
+                <span>Personal registrado</span>
+                <span class="table-status">● Actualizado</span>
+            </div>
+
+            <div class="tabla-contenedor">
+
+                <table class="tabla-datos">
+
+                    <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Cargo</th>
+                        <th>Correo</th>
+                        <th>Estado</th>
+                    </tr>
+                    </thead>
+
+                    <tbody id="listaUsuarios">
+
+                    <tr>
+                        <td colspan="4">
+                            Cargando personal...
+                        </td>
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         NOVEDADES
+    ========================= -->
+
+    <section id="NovedadLaboral" class="contenido">
+
+        <div class="section-header">
+
+            <div>
+                <span class="section-label">SEGUIMIENTO</span>
+
+                <h2>
+                    📋 Novedad Laboral
+                </h2>
+
+                <p>
+                    Consulta las novedades reportadas por los empleados.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="table-card">
+
+            <div class="table-title">
+                <span>Novedades registradas</span>
+                <span class="table-status">● En vivo</span>
+            </div>
+
+            <div class="tabla-contenedor">
+
+                <table class="tabla-datos">
+
+                    <thead>
+
+                    <tr>
+                        <th>ID Novedad</th>
+                        <th>ID Empleado</th>
+                        <th>Tipo Novedad</th>
+                        <th>Descripción</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody id="tablaNovedades">
+
+                    <tr>
+                        <td colspan="4">
+                            Cargando novedades laborales...
+                        </td>
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         INVENTARIO
+    ========================= -->
+
+    <section id="Inventario" class="contenido">
+
+        <div class="section-header">
+
+            <div>
+
+                <span class="section-label">
+                    RECURSOS
+                </span>
+
+                <h2>
+                    🧰 Inventario / Productos
+                </h2>
+
+                <p>
+                    Consulta los productos disponibles.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="table-card">
+
+            <div class="table-title">
+                <span>Productos registrados</span>
+                <span class="table-status">● Inventario</span>
+            </div>
+
+            <div class="tabla-contenedor">
+
+                <table class="tabla-datos">
+
+                    <thead>
+
+                    <tr>
+                        <th>ID Producto</th>
+                        <th>ID Proveedor</th>
+                        <th>Nombre Producto</th>
+                        <th>Descripción</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody id="tablaProductos">
+
+                    <tr>
+                        <td colspan="6">
+                            Cargando productos...
+                        </td>
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CONTRATOS
+    ========================= -->
+
+    <section id="Contratos" class="contenido">
+
+        <div class="section-header">
+
+            <div>
+
+                <span class="section-label">
+                    ADMINISTRACIÓN
+                </span>
+
+                <h2>
+                    📄 Contratos
+                </h2>
+
+                <p>
+                    Consulta los contratos registrados.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="table-card">
+
+            <div class="table-title">
+                <span>Contratos registrados</span>
+                <span class="table-status">● Actualizado</span>
+            </div>
+
+            <div class="tabla-contenedor">
+
+                <table class="tabla-datos">
+
+                    <thead>
+
+                    <tr>
+                        <th>ID Contrato</th>
+                        <th>ID Cliente</th>
+                        <th>Número Contrato</th>
+                        <th>Fecha Inicio</th>
+                        <th>Fecha Fin</th>
+                        <th>Valor Total</th>
+                        <th>Ubicación</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody id="tablaContratos">
+
+                    <tr>
+                        <td colspan="7">
+                            Cargando contratos...
+                        </td>
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CLIENTES
+    ========================= -->
+
+    <section id="Clientes" class="contenido">
+
+        <div class="section-header">
+
+            <div>
+
+                <span class="section-label">
+                    CLIENTES
+                </span>
+
+                <h2>
+                    🤝 Clientes
+                </h2>
+
+                <p>
+                    Consulta la información de los clientes.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="table-card">
+
+            <div class="table-title">
+                <span>Clientes registrados</span>
+                <span class="table-status">● Actualizado</span>
+            </div>
+
+            <div class="tabla-contenedor">
+
+                <table class="tabla-datos">
+
+                    <thead>
+
+                    <tr>
+                        <th>ID Cliente</th>
+                        <th>ID Persona</th>
+                        <th>Razón Social</th>
+                        <th>Tipo Persona</th>
+                    </tr>
+
+                    </thead>
+
+                    <tbody id="tablaClientes">
+
+                    <tr>
+                        <td colspan="4">
+                            Cargando clientes...
+                        </td>
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         NOTIFICACIONES
+    ========================= -->
+
+    <section id="Notificaciones" class="contenido">
+
+        <div class="section-header">
+
+            <div>
+
+                <span class="section-label">
+                    ALERTAS
+                </span>
+
+                <h2>
+                    🔔 Notificaciones
+                </h2>
+
+                <p>
+                    Consulta las notificaciones importantes del sistema.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div id="listaNotificaciones">
+
+            <div class="notificacion">
+
+                <div class="icono-notificacion">
+                    🔔
+                </div>
+
+                <div>
+
+                    <strong>
+                        Sistema A C S O
+                    </strong>
+
+                    <p>
+                        Las notificaciones aparecerán aquí.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <p>
+        © 2026 A C S O - Experiencia y eficacia sin igual a la mano.
+    </p>
+
+</footer>
+
 
 <script type="module" src="script.js"></script>
+
 </body>
 </html>

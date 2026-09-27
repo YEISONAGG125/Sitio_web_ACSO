@@ -1,31 +1,457 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>inicio de sesion</title>
-<link rel="stylesheet" href="style.css">
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>ACSO | Inicio de sesión</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css">
+
 </head>
 
+
 <body>
-<div>
+    <div class="background">
 
-<form id="loginForm">
+        <div class="background-circle circle-one"></div>
 
-    <label>Usuario:</label><br>
-    <input type="text" id="usuario" required placeholder="Nombre de usuario"><br><br>
+        <div class="background-circle circle-two"></div>
 
-    <label>Contraseña:</label><br>
-    <input type="password" id="password" required placeholder="Contraseña"><br><br>
+        <div class="background-circle circle-three"></div>
 
-    <button type="submit">Entrar</button><br><br>
+    </div>
 
-    <button type="button" onclick="window.location.href='../yeison/index.html'">Volver</button>
-    <button type="button" onclick="window.location.href='../registro/registro.html'">registrarse</button>
+    <div class="login-container">
+        <section class="info-panel">
+            <a
+                href="../yeison/index.html"
+                class="brand">
+            <span class="logo-icon">A</span>
+            <span class="logo-text">
+                C S O
+            </span>
+        </a>
 
-</form>
 
-</div>
-<script type="module" src="script.js"></script>
+            <div class="info-content">
+
+                <div class="status-badge">
+
+                    <span></span>
+
+                    Plataforma empresarial
+
+                </div>
+
+
+                <h2>
+
+                    Trabajo fácil,
+
+                    <span>rápido</span>
+
+                    y seguro.
+
+                </h2>
+
+
+                <p>
+
+                    Gestiona la información de tu empresa
+                    desde una plataforma centralizada,
+                    sencilla y segura.
+
+                </p>
+
+
+                <!-- CARACTERÍSTICAS -->
+
+                <div class="features">
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            👥
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Gestión de personal
+                            </strong>
+
+                            <span>
+                                Controla la información
+                                de tus empleados.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            📋
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Control de servicios
+                            </strong>
+
+                            <span>
+                                Organiza y realiza
+                                seguimiento.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            🔔
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Notificaciones
+                            </strong>
+
+                            <span>
+                                Recibe información
+                                importante.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- FOOTER -->
+
+            <div class="info-footer">
+
+                © 2026 ACSO
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================
+             LOGIN
+        ================================== -->
+
+        <section class="login-panel">
+
+
+            <form
+                id="loginForm"
+                class="login-card">
+
+
+            
+
+                <div class="login-header">
+
+                    <h1>
+                        Bienvenido
+                    </h1>
+
+                    <p>
+                        Inicia sesión para continuar
+                    </p>
+
+                </div>
+
+
+                <!-- MENSAJE -->
+
+                <div
+                    id="mensaje"
+                    class="mensaje">
+                </div>
+
+
+
+                <!-- =========================
+                     USUARIO
+                ========================== -->
+
+                <div class="input-group">
+
+                    <label for="usuario">
+
+                        Usuario
+
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            👤
+                        </span>
+
+
+                        <input
+                            type="text"
+                            id="usuario"
+                            name="usuario"
+                            required
+                            placeholder="Nombre de usuario"
+                            autocomplete="username">
+
+                    </div>
+
+                </div>
+
+                <div class="input-group">
+
+                    <div class="password-header">
+
+                        <label for="password">
+
+                            Contraseña
+
+                        </label>
+
+
+                        <a
+                            href="#"
+                            id="forgotPassword">
+
+                            ¿Olvidaste tu contraseña?
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            🔒
+                        </span>
+
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            required
+                            placeholder="Contraseña"
+                            autocomplete="current-password">
+
+
+                        <button
+                            type="button"
+                            class="show-password"
+                            id="mostrarPassword"
+                            aria-label="Mostrar contraseña">
+
+                            👁
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="login-options">
+
+                    <label class="remember">
+
+                        <input
+                            type="checkbox"
+                            id="recordarme">
+
+                        <span class="custom-checkbox"></span>
+
+                        <span>
+                            Recordarme
+                        </span>
+
+                    </label>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="login-button"
+                    id="btnLogin">
+
+                    <span id="btnText">
+                        Entrar
+                    </span>
+
+                    <span
+                        class="arrow"
+                        id="btnArrow">
+
+                        →
+
+                    </span>
+
+                </button>
+
+
+
+                <!-- =========================
+                     SEPARADOR
+                ========================== -->
+
+                <div class="separator">
+
+                    <span></span>
+
+                    <p>
+                        ¿No tienes una cuenta?
+                    </p>
+
+                    <span></span>
+
+                </div>
+
+
+
+                <!-- =========================
+                     BOTONES
+                ========================== -->
+
+                <div class="bottom-buttons">
+
+
+                    <button
+                        type="button"
+                        class="secondary-button"
+                        onclick="window.location.href='../Yeison/index.html'">
+
+                        ⬅ Volver
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="secondary-button register-button"
+                        onclick="window.location.href='../registro/registro.html'">
+
+                        Registrarse
+
+                    </button>
+
+
+                </div>
+
+
+
+                <!-- =========================
+                     TEXTO FINAL
+                ========================== -->
+
+                <p class="footer-text">
+
+                    ACSO • Trabajo fácil, rápido y seguro
+
+                </p>
+
+
+            </form>
+
+        </section>
+
+
+    </div>
+
+
+    <!-- =====================================
+         JAVASCRIPT FIREBASE
+    ====================================== -->
+
+    <script
+        type="module"
+        src="script.js">
+    </script>
+
+
+    <!-- =====================================
+         MOSTRAR CONTRASEÑA
+    ====================================== -->
+
+    <script>
+
+        const password =
+            document.getElementById("password");
+
+
+        const mostrarPassword =
+            document.getElementById("mostrarPassword");
+
+
+        mostrarPassword.addEventListener(
+            "click",
+            () => {
+
+                if (
+                    password.type === "password"
+                ) {
+
+                    password.type = "text";
+
+                    mostrarPassword.textContent =
+                        "🙈";
+
+                    mostrarPassword.setAttribute(
+                        "aria-label",
+                        "Ocultar contraseña"
+                    );
+
+                } else {
+
+                    password.type = "password";
+
+                    mostrarPassword.textContent =
+                        "👁";
+
+                    mostrarPassword.setAttribute(
+                        "aria-label",
+                        "Mostrar contraseña"
+                    );
+
+                }
+
+            }
+        );
+
+    </script>
+
+
 </body>
+
 </html>

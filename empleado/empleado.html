@@ -1,61 +1,149 @@
+
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Panel del Empleado - ACSO</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="estilos.css">
+    <meta
+        name="description"
+        content="Panel de empleado ACSO"
+    >
+
+    <title>ACSO | Panel del Empleado</title>
+
+    <link
+        rel="stylesheet"
+        href="estilos.css"
+    >
+
 </head>
+
 
 <body>
 
 <div class="contenedor">
 
-    <!-- ================= SIDEBAR ================= -->
+    <!-- =========================================
+         SIDEBAR
+    ========================================== -->
 
     <aside class="sidebar">
 
         <div class="logo-contenedor">
-            <img src="LOGO.png" alt="ACSO" class="logo">
+
+            <img
+                src="LOGO.png"
+                alt="ACSO"
+                class="logo"
+            >
+
             <h2>ACSO</h2>
+
             <p>Panel empleado</p>
+
         </div>
+
 
         <nav class="menu">
 
-            <button class="menu-item activo" data-seccion="inicio">
+            <button
+                type="button"
+                class="menu-item activo"
+                data-seccion="inicio"
+            >
+
                 <span>🏠</span>
-                Inicio
+
+                <span class="texto-menu">
+                    Inicio
+                </span>
+
             </button>
 
-            <button class="menu-item" data-seccion="servicios">
+
+            <button
+                type="button"
+                class="menu-item"
+                data-seccion="servicios"
+            >
+
                 <span>🧹</span>
-                Mis servicios
+
+                <span class="texto-menu">
+                    Mis servicios
+                </span>
+
             </button>
 
-            <button class="menu-item" data-seccion="novedades">
+
+            <button
+                type="button"
+                class="menu-item"
+                data-seccion="novedades"
+            >
+
                 <span>📝</span>
-                Novedad laboral
+
+                <span class="texto-menu">
+                    Novedad laboral
+                </span>
+
             </button>
 
-            <button class="menu-item" data-seccion="notificaciones">
+
+            <button
+                type="button"
+                class="menu-item"
+                data-seccion="notificaciones"
+            >
+
                 <span>🔔</span>
-                Notificaciones
-                <span id="contadorNotificaciones" class="contador">0</span>
+
+                <span class="texto-menu">
+                    Notificaciones
+                </span>
+
+                <span
+                    id="contadorNotificaciones"
+                    class="contador"
+                >
+                    0
+                </span>
+
             </button>
 
-            <button class="menu-item" data-seccion="horarios">
+
+            <button
+                type="button"
+                class="menu-item"
+                data-seccion="horarios"
+            >
+
                 <span>🕐</span>
-                Mi horario
+
+                <span class="texto-menu">
+                    Mi horario
+                </span>
+
             </button>
 
         </nav>
 
+
         <div class="sidebar-abajo">
 
-            <button id="cerrarSesion" class="btn-salir">
+            <button
+                type="button"
+                id="cerrarSesion"
+                class="btn-salir"
+            >
                 🚪 Cerrar sesión
             </button>
 
@@ -64,28 +152,49 @@
     </aside>
 
 
-    <!-- ================= CONTENIDO ================= -->
+
+    <!-- =========================================
+         CONTENIDO PRINCIPAL
+    ========================================== -->
 
     <main class="contenido">
 
-        <!-- HEADER -->
+
+        <!-- =====================================
+             HEADER
+        ====================================== -->
 
         <header class="header">
 
-            <div>
-                <h1 id="tituloPagina">Panel del Empleado</h1>
+            <div class="header-titulo">
+
+                <span class="etiqueta-header">
+                    PANEL DE EMPLEADO
+                </span>
+
+                <h1 id="tituloPagina">
+                    Panel del Empleado
+                </h1>
+
                 <p id="subtituloPagina">
                     Consulta tu información laboral
                 </p>
+
             </div>
+
 
             <div class="empleado-info">
 
-                <div class="avatar">
-                    👤
+                <div
+                    class="avatar"
+                    id="avatarEmpleado"
+                >
+                    US
                 </div>
 
-                <div>
+
+                <div class="datos-header">
+
                     <strong id="nombreEmpleado">
                         Cargando...
                     </strong>
@@ -93,6 +202,7 @@
                     <small>
                         Empleado
                     </small>
+
                 </div>
 
             </div>
@@ -100,23 +210,45 @@
         </header>
 
 
-        <!-- ================= INICIO ================= -->
 
-        <section id="inicio" class="seccion activa">
+        <!-- =========================================
+             INICIO
+        ========================================== -->
+
+        <section
+            id="inicio"
+            class="seccion activa"
+        >
 
             <div class="bienvenida">
 
+                <div class="bienvenida-icono">
+                    👋
+                </div>
+
                 <div>
-                    <h2>Bienvenido al panel de empleado 👋</h2>
+
+                    <span class="etiqueta-seccion">
+                        ÁREA DE TRABAJO
+                    </span>
+
+                    <h2 id="saludoEmpleado">
+                        Bienvenido al panel de empleado
+                    </h2>
 
                     <p>
                         Desde aquí puedes consultar tus servicios,
-                        horarios, notificaciones y enviar novedades laborales.
+                        horarios, notificaciones y enviar novedades
+                        laborales al supervisor.
                     </p>
+
                 </div>
 
             </div>
 
+
+
+            <!-- TARJETAS -->
 
             <div class="tarjetas-resumen">
 
@@ -127,8 +259,15 @@
                     </div>
 
                     <div>
-                        <span>Servicios</span>
-                        <strong id="totalServicios">0</strong>
+
+                        <span>
+                            Servicios
+                        </span>
+
+                        <strong id="totalServicios">
+                            0
+                        </strong>
+
                     </div>
 
                 </div>
@@ -141,8 +280,15 @@
                     </div>
 
                     <div>
-                        <span>Novedades</span>
-                        <strong id="totalNovedades">0</strong>
+
+                        <span>
+                            Novedades
+                        </span>
+
+                        <strong id="totalNovedades">
+                            0
+                        </strong>
+
                     </div>
 
                 </div>
@@ -155,8 +301,15 @@
                     </div>
 
                     <div>
-                        <span>Notificaciones</span>
-                        <strong id="totalNotificaciones">0</strong>
+
+                        <span>
+                            Notificaciones
+                        </span>
+
+                        <strong id="totalNotificaciones">
+                            0
+                        </strong>
+
                     </div>
 
                 </div>
@@ -169,8 +322,15 @@
                     </div>
 
                     <div>
-                        <span>Horarios</span>
-                        <strong id="totalHorarios">0</strong>
+
+                        <span>
+                            Horarios
+                        </span>
+
+                        <strong id="totalHorarios">
+                            0
+                        </strong>
+
                     </div>
 
                 </div>
@@ -178,35 +338,66 @@
             </div>
 
 
+
+            <!-- INFORMACIÓN RÁPIDA -->
+
             <div class="panel">
 
                 <div class="panel-titulo">
 
-                    <h2>Información rápida</h2>
+                    <div>
+
+                        <span class="etiqueta-seccion">
+                            INFORMACIÓN
+                        </span>
+
+                        <h2>
+                            Mi información
+                        </h2>
+
+                    </div>
 
                 </div>
+
 
                 <div class="informacion-rapida">
 
                     <div>
-                        <span>Empleado</span>
+
+                        <span>
+                            Empleado
+                        </span>
+
                         <strong id="inicioNombre">
                             -
                         </strong>
+
                     </div>
 
+
                     <div>
-                        <span>ID empleado</span>
+
+                        <span>
+                            ID empleado
+                        </span>
+
                         <strong id="inicioId">
                             -
                         </strong>
+
                     </div>
 
+
                     <div>
-                        <span>Estado</span>
+
+                        <span>
+                            Estado
+                        </span>
+
                         <strong class="estado-activo">
-                            Activo
+                            ● Activo
                         </strong>
+
                     </div>
 
                 </div>
@@ -216,50 +407,90 @@
         </section>
 
 
-        <!-- ================= SERVICIOS ================= -->
 
-        <section id="servicios" class="seccion">
+        <!-- =========================================
+             SERVICIOS
+        ========================================== -->
+
+        <section
+            id="servicios"
+            class="seccion"
+        >
 
             <div class="seccion-header">
 
                 <div>
-                    <h2>Mis servicios</h2>
+
+                    <span class="etiqueta-seccion">
+                        TRABAJO ASIGNADO
+                    </span>
+
+                    <h2>
+                        Mis servicios
+                    </h2>
+
                     <p>
-                        Servicios asignados al empleado.
+                        Consulta los servicios que tienes asignados.
                     </p>
+
                 </div>
 
-                <button class="btn-recargar" onclick="cargarServicios()">
+
+                <button
+                    type="button"
+                    class="btn-recargar"
+                    id="btnActualizarServicios"
+                >
                     🔄 Actualizar
                 </button>
 
             </div>
 
 
-            <div id="cargandoServicios" class="mensaje-cargando">
+            <div
+                id="cargandoServicios"
+                class="mensaje-cargando"
+            >
+                <span class="loader"></span>
                 Cargando servicios...
             </div>
 
 
-            <div id="listaServicios" class="tarjetas-servicios">
-                <!-- JavaScript -->
+            <div
+                id="listaServicios"
+                class="tarjetas-servicios"
+            >
             </div>
 
         </section>
 
 
-        <!-- ================= NOVEDADES ================= -->
 
-        <section id="novedades" class="seccion">
+        <!-- =========================================
+             NOVEDADES
+        ========================================== -->
+
+        <section
+            id="novedades"
+            class="seccion"
+        >
 
             <div class="seccion-header">
 
                 <div>
-                    <h2>Novedad laboral</h2>
+
+                    <span class="etiqueta-seccion">
+                        COMUNICACIÓN LABORAL
+                    </span>
+
+                    <h2>
+                        Novedad laboral
+                    </h2>
 
                     <p>
                         Envía una novedad laboral al supervisor.
                     </p>
+
                 </div>
 
             </div>
@@ -275,7 +506,10 @@
                             Tipo de novedad
                         </label>
 
-                        <select id="tipoNovedad" required>
+                        <select
+                            id="tipoNovedad"
+                            required
+                        >
 
                             <option value="">
                                 Selecciona una opción
@@ -328,8 +562,15 @@
                             required
                         ></textarea>
 
+
                         <div class="contador-texto">
-                            <span id="contadorCaracteres">0</span>/1000
+
+                            <span id="contadorCaracteres">
+                                0
+                            </span>
+
+                            /1000
+
                         </div>
 
                     </div>
@@ -338,17 +579,28 @@
                     <div class="datos-empleado-form">
 
                         <div>
-                            <span>Empleado</span>
+
+                            <span>
+                                Empleado
+                            </span>
+
                             <strong id="formNombreEmpleado">
                                 -
                             </strong>
+
                         </div>
 
+
                         <div>
-                            <span>ID empleado</span>
+
+                            <span>
+                                ID empleado
+                            </span>
+
                             <strong id="formIdEmpleado">
                                 -
                             </strong>
+
                         </div>
 
                     </div>
@@ -367,20 +619,36 @@
             </div>
 
 
+
+            <!-- HISTORIAL -->
+
             <div class="panel">
 
                 <div class="panel-titulo">
 
-                    <h2>Mis novedades</h2>
+                    <div>
+
+                        <span class="etiqueta-seccion">
+                            HISTORIAL
+                        </span>
+
+                        <h2>
+                            Mis novedades
+                        </h2>
+
+                    </div>
+
 
                     <button
+                        type="button"
                         class="btn-recargar"
-                        onclick="cargarNovedades()"
+                        id="btnActualizarNovedades"
                     >
                         🔄 Actualizar
                     </button>
 
                 </div>
+
 
                 <div id="listaNovedades">
 
@@ -395,23 +663,39 @@
         </section>
 
 
-        <!-- ================= NOTIFICACIONES ================= -->
 
-        <section id="notificaciones" class="seccion">
+        <!-- =========================================
+             NOTIFICACIONES
+        ========================================== -->
+
+        <section
+            id="notificaciones"
+            class="seccion"
+        >
 
             <div class="seccion-header">
 
                 <div>
-                    <h2>Notificaciones</h2>
+
+                    <span class="etiqueta-seccion">
+                        AVISOS
+                    </span>
+
+                    <h2>
+                        Notificaciones
+                    </h2>
 
                     <p>
                         Información enviada por el sistema.
                     </p>
+
                 </div>
 
+
                 <button
+                    type="button"
                     class="btn-recargar"
-                    onclick="cargarNotificaciones()"
+                    id="btnActualizarNotificaciones"
                 >
                     🔄 Actualizar
                 </button>
@@ -430,23 +714,39 @@
         </section>
 
 
-        <!-- ================= HORARIOS ================= -->
 
-        <section id="horarios" class="seccion">
+        <!-- =========================================
+             HORARIOS
+        ========================================== -->
+
+        <section
+            id="horarios"
+            class="seccion"
+        >
 
             <div class="seccion-header">
 
                 <div>
-                    <h2>Mi horario</h2>
+
+                    <span class="etiqueta-seccion">
+                        ORGANIZACIÓN
+                    </span>
+
+                    <h2>
+                        Mi horario
+                    </h2>
 
                     <p>
                         Consulta tus horarios de trabajo.
                     </p>
+
                 </div>
 
+
                 <button
+                    type="button"
                     class="btn-recargar"
-                    onclick="cargarHorarios()"
+                    id="btnActualizarHorarios"
                 >
                     🔄 Actualizar
                 </button>
@@ -460,15 +760,32 @@
 
                     <thead>
 
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Hora inicio</th>
-                        <th>Hora fin</th>
-                        <th>Turno</th>
-                        <th>Estado</th>
-                    </tr>
+                        <tr>
+
+                            <th>
+                                Fecha
+                            </th>
+
+                            <th>
+                                Hora inicio
+                            </th>
+
+                            <th>
+                                Hora fin
+                            </th>
+
+                            <th>
+                                Turno
+                            </th>
+
+                            <th>
+                                Estado
+                            </th>
+
+                        </tr>
 
                     </thead>
+
 
                     <tbody id="tablaHorarios">
 
@@ -483,16 +800,16 @@
     </main>
 
 </div>
-
-
-<!-- ================= MENSAJE ================= -->
-
-<div id="mensajeSistema" class="mensaje-sistema">
+<div id="mensajeSistema"
+    class="mensaje-sistema"
+>
     <span id="textoMensaje"></span>
-</div>
 
+</div>
 
 <script src="empleados.js"></script>
 
 </body>
+
 </html>
+

@@ -462,6 +462,4 @@ function mostrarMensaje(texto) {
         );
 
     }, 3000);
-}document.getElementById("btnVolver").addEventListener("click", () => {
-    window.history.back();
-});
+}

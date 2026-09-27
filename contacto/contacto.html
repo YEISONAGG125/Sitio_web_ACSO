@@ -1,33 +1,168 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
-     <link rel="stylesheet" href="estilo.css"> 
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> 📞contactos </title>
 
+    <title>📞 Contacto | A C S O</title>
+
+    <link rel="stylesheet" href="estilo.css">
 </head>
+
 <body>
-    <nav class="navbar">
-    <h1>CONTACTA CON NOSOTROS</h1>
-    <h4>diligencia tu problema y contactanos</h4>
-    </nav>
-    <ul>
-        <li>nuestra oficina </li>
-        <li>correo: acso@gmail.com </li>
-        <li>telefono:3217159844 </li>
-        <li>pagina de ayuda</li>
-    
-<button type="button" onclick="window.location.href='../ayuda/ayuda.html'">ayuda</button>
-    </ul>
+
+    <!-- Fondo decorativo -->
+    <div class="background-effects">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        <div class="circle circle-3"></div>
+    </div>
+
+    <!-- Barra de navegación -->
+    <header class="navbar">
+
+        <div class="logo-container">
+            <img src="logo1.png" alt="Logo A C S O">
+            <span>A C S O</span>
+        </div>
+
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="servicios.html">Servicios</a>
+            <a href="nosotros.html">Nosotros</a>
+            <a href="contacto.html" class="active">Contacto</a>
+            <a href="login.html" class="login-btn">Iniciar sesión</a>
+        </nav>
+
+    </header>
+
+    <!-- Contenido principal -->
+    <main>
+
+        <section class="contacto-section">
+
+            <div class="contacto-header">
+                <span class="badge">📞 Estamos para ayudarte</span>
+
+                <h1>CONTACTA <span>CON NOSOTROS</span></h1>
+
+                <p>
+                    ¿Tienes alguna pregunta, inconveniente o necesitas ayuda?
+                    Comunícate con nosotros y estaremos disponibles para atenderte.
+                </p>
+            </div>
+
+
+            <div class="contacto-container">
+
+                <!-- Información -->
+                <div class="contacto-info">
+
+                    <div class="info-card">
+
+                        <div class="icono">🏢</div>
+
+                        <div>
+                            <h3>Nuestra oficina</h3>
+                            <p>
+                                Visítanos y recibe atención personalizada
+                                sobre nuestros servicios.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-card">
+
+                        <div class="icono">📧</div>
+
+                        <div>
+                            <h3>Correo electrónico</h3>
+                            <p>acso@gmail.com</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-card">
+
+                        <div class="icono">📱</div>
+
+                        <div>
+                            <h3>Teléfono</h3>
+                            <p>321 715 9844</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-card">
+
+                        <div class="icono">🆘</div>
+
+                        <div>
+                            <h3>¿Necesitas ayuda?</h3>
+                            <p>
+                                Consulta nuestra página de ayuda
+                                para resolver tus dudas.
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Panel de ayuda -->
+                <div class="contacto-panel">
+
+                    <div class="panel-icon">💬</div>
+
+                    <h2>¿Tienes algún problema?</h2>
+
+                    <p>
+                        Diligencia tu solicitud o consulta nuestra página
+                        de ayuda para encontrar la información que necesitas.
+                    </p>
+
+                    <a href="../ayuda/ayuda.html" class="btn-ayuda">
+                        Ir a página de ayuda
+                        <span>→</span>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- Footer -->
     <footer>
+
+        <div class="footer-logo">
+            A C S O
+        </div>
+
         <p>
-              © 2026 A C S O. todos los derechos reservados sobre la empresa
+            © 2026 A C S O. Todos los derechos reservados sobre la empresa.
         </p>
+
+        <div class="footer-links">
+            <a href="index.html">Inicio</a>
+            <a href="servicios.html">Servicios</a>
+            <a href="nosotros.html">Nosotros</a>
+            <a href="contacto.html">Contacto</a>
+        </div>
+
     </footer>
-        
+
+
+    <script src="contacto.js"></script>
+
 </body>
 </html>
-
-
