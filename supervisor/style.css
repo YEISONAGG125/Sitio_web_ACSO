@@ -97,8 +97,8 @@ body::before {
 ======================================== */
 
 .logo-supervisor {
-    width: 58px;
-    height: 58px;
+    width: 90px;
+    height: 90px;
 
     object-fit: contain;
 
@@ -442,6 +442,7 @@ body::before {
         clamp(25px, 3vw, 38px);
 
     font-weight: 700;
+    color: #b9c8d6;
 }
 
 .bienvenida p {
@@ -580,7 +581,9 @@ body::before {
 .info-card h3 {
     margin-top: 10px;
 
+
     font-size: 22px;
+    color: #b9c8d6;
 }
 
 .info-card p {
@@ -604,6 +607,7 @@ body::before {
     font-size: 30px;
 
     margin-top: 7px;
+    color: #b9c8d6;
 }
 
 .section-header p {
