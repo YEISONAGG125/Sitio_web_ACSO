@@ -148,7 +148,7 @@ function crearGraficaGeneral(datos) {
             plugins: {
                 legend: {
                     labels: {
-                        color: "white"
+                        color: "#31504b"
                     }
                 }
             },
@@ -156,7 +156,7 @@ function crearGraficaGeneral(datos) {
             scales: {
                 x: {
                     ticks: {
-                        color: "white"
+                        color: "#31504b"
                     }
                 },
 
@@ -164,7 +164,7 @@ function crearGraficaGeneral(datos) {
                     beginAtZero: true,
 
                     ticks: {
-                        color: "white",
+                        color: "#31504b",
                         precision: 0
                     }
                 }
@@ -219,7 +219,7 @@ function crearGraficaOperaciones(datos) {
                     position: "bottom",
 
                     labels: {
-                        color: "white"
+                        color: "#31504b"
                     }
                 }
             }
@@ -267,7 +267,7 @@ function crearGraficaInventario(datos) {
             plugins: {
                 legend: {
                     labels: {
-                        color: "white"
+                        color: "#31504b"
                     }
                 }
             },
@@ -275,7 +275,7 @@ function crearGraficaInventario(datos) {
             scales: {
                 x: {
                     ticks: {
-                        color: "white"
+                        color: "#31504b"
                     }
                 },
 
@@ -283,7 +283,7 @@ function crearGraficaInventario(datos) {
                     beginAtZero: true,
 
                     ticks: {
-                        color: "white",
+                        color: "#31504b",
                         precision: 0
                     }
                 }

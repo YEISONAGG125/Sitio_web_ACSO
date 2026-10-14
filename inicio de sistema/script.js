@@ -1,40 +1,12 @@
 
 import {
-    initializeApp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-
-import {
-    getDatabase,
+    rtdb as db,
     ref,
     get,
     child,
     update,
     onDisconnect
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-
-
-// ======================================
-// FIREBASE
-// ======================================
-
-const firebaseConfig = {
-    apiKey: "AIzaSyDTujbcDDXoN3a-L5p4cEUXD-8llmtD_A",
-    authDomain: "sitio-web-acso.firebaseapp.com",
-    databaseURL: "https://sitio-web-acso-default-rtdb.firebaseio.com",
-    projectId: "sitio-web-acso",
-    storageBucket: "sitio-web-acso.firebasestorage.app",
-    messagingSenderId: "916869190856",
-    appId: "1:916869190856:web:13a6a0f9926139c8f481fd",
-    measurementId: "G-3CFS0H850L"
-};
-
-
-// ======================================
-// INICIALIZAR FIREBASE
-// ======================================
-
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+} from "../FIREBASE/firebase.js";
 
 
 // ======================================
@@ -426,7 +398,7 @@ loginForm.addEventListener("submit", async (event) => {
             if (cargo === "cliente") {
 
                 window.location.href =
-                    "../cliente/cliente.html";
+                    "../cliente/Cliente.html";
 
                 return;
             }

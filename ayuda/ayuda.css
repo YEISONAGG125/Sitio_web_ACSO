@@ -559,3 +559,65 @@ footer {
     }
 }
 
+/* =====================================================
+   PALETA ACSO (misma del inicio)
+===================================================== */
+:root {
+    --acso-fondo: #f8fbfa;
+    --acso-texto: #102d2b;
+    --acso-texto-suave: #627570;
+    --acso-texto-tenue: #71837f;
+    --acso-primario: #0b3b3c;
+    --acso-primario-hover: #166363;
+    --acso-acento: #35b8ae;
+    --acso-suave: #e4f5f2;
+    --acso-suave-2: #edf7ff;
+    --acso-borde: #e1ebe8;
+    --acso-borde-2: #ccece7;
+    --acso-blanco: #ffffff;
+    --acso-degradado: linear-gradient(90deg, #065f4a, #00a8ff);
+    --acso-sombra: 0 10px 30px rgba(11, 59, 60, 0.08);
+    --acso-peligro: #c2410c;
+    --acso-peligro-fondo: #fff1ec;
+    --acso-aviso: #a16207;
+    --acso-aviso-fondo: #fef6dc;
+    --acso-azul: #0369a1;
+    --acso-azul-fondo: #e6f3fb;
+    --acso-ok: #166363;
+    --acso-ok-fondo: #e4f5f2;
+}
+
+
+/* =====================================================
+   TEMA ACSO CLARO (misma paleta de la página de inicio)
+===================================================== */
+
+body { background: #f8fbfa; color: #102d2b; }
+.header { border-bottom: 1px solid #dce6e3; }
+.logo-icon { background: #0b3b3c; color: #fff; box-shadow: 0 7px 18px rgba(11,59,60,.18); }
+.logo-text { color: #0b3b3c; }
+.logo:hover .logo-icon { background: #166363; box-shadow: 0 7px 18px rgba(11,59,60,.25); }
+.logo:hover .logo-text { color: #166363; }
+.btn-volver { color: #31504b; background: #fff; border: 1px solid #d5e3df; }
+.btn-volver:hover { color: #0b3b3c; background: #e4f5f2; border-color: #bfe4de; }
+.etiqueta { color: #166363; }
+.hero h2 { color: #0b3b3c; }
+.hero p { color: #627570; }
+.ayuda-card { background: #fff; border: 1px solid #e1ebe8; box-shadow: 0 10px 30px rgba(11,59,60,.06); backdrop-filter: none; }
+.ayuda-card::before { background: rgba(53,184,174,.10); }
+.ayuda-card:hover { border-color: #bfe4de; box-shadow: 0 18px 40px rgba(11,59,60,.12); }
+.ayuda-card:hover::before { background: rgba(53,184,174,.18); }
+.icono.servicio, .icono.whatsapp { color: #166363; background: #e4f5f2; border: 1px solid #ccece7; }
+.icono.navegacion { color: #0369a1; background: #e6f3fb; border: 1px solid #bfdff2; }
+.numero { color: #82938e; }
+.contenido-card h3 { color: #0b3b3c; }
+.contenido-card p { color: #627570; }
+.accion-card { border-top: 1px solid #e1ebe8; color: #166363; }
+.btn-whatsapp { color: #fff; background: #0b3b3c; }
+.btn-whatsapp:hover { background: #166363; box-shadow: 0 10px 25px rgba(11,59,60,.2); }
+.informacion { background: #fff; border: 1px solid #e1ebe8; backdrop-filter: none; box-shadow: 0 10px 30px rgba(11,59,60,.06); }
+.info-icono { color: #166363; background: #e4f5f2; }
+.info-texto span { color: #166363; }
+.info-texto h3 { color: #0b3b3c; }
+.info-texto p { color: #627570; }
+footer { color: #82938e; }

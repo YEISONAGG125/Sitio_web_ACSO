@@ -323,3 +323,30 @@ El proyecto contiene archivos destinados a facilitar su desarrollo y pruebas:
 ##  Proyecto académico
 
 Proyecto desarrollado como parte del proceso de formación en **Análisis y Desarrollo de Software (ADSO)**.
+
+
+---
+
+## Novedades laborales e incapacidades (Firebase / Cloud Firestore)
+
+Flujo: **Empleado → Cloud Firestore → Supervisor**, en tiempo real.
+
+* El empleado envía la novedad desde `empleado/empleado.html` (si el tipo es *Incapacidad* se piden fechas, días calculados automáticamente y EPS/ARL).
+* Se guarda en la colección `novedades_laborales` con estado `Pendiente`.
+* El supervisor la ve al instante en `supervisor/supervisor.html` → *Novedad laboral* (con aviso emergente y contador en el menú) y puede marcarla como **Pendiente, Visto, En revisión, Aprobada o Rechazada**, con un comentario opcional.
+* Cada cambio de estado crea una notificación en la colección `notificaciones` que el empleado ve en su panel.
+
+### Puesta en marcha
+
+1. En la consola de Firebase crea la base **Cloud Firestore** (proyecto `sitio-web-acso`).
+2. Publica las reglas del archivo `firestore.rules` (pestaña *Reglas*).
+3. Abre el sitio con **Live Server** (puerto 5501) o cualquier servidor HTTP. Los módulos de Firebase no funcionan abriendo el HTML con doble clic (`file://`).
+4. Inicia sesión con un usuario de cargo `empleado` y otro con cargo `supervisor`.
+
+### Archivos clave
+
+* `FIREBASE/firebase.js` – configuración única de Firebase (login, empleado y supervisor la importan).
+* `empleado/empleados.js` – envío de novedades, historial y notificaciones.
+* `supervisor/script.js` – recepción, filtros, cambio de estado y notificaciones.
+
+Los servicios, horarios, contratos, clientes y productos siguen leyéndose de la API Spring Boot (`localhost:8080`). Si el backend está apagado, esas secciones muestran un aviso y el resto sigue funcionando.

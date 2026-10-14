@@ -7,11 +7,6 @@
     <title>ACSO | Panel de Supervisión</title>
 
     <link rel="stylesheet" href="style.css">
-
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
 </head>
 
 <body>
@@ -40,6 +35,7 @@
         <div class="tab" onclick="mostrar('NovedadLaboral', this)">
             <span>📋</span>
             <label>Novedad laboral</label>
+            <span id="badgeNovedades" class="badge-menu oculto">0</span>
         </div>
 
         <div class="tab" onclick="mostrar('Inventario', this)">
@@ -60,6 +56,7 @@
         <div class="tab" onclick="mostrar('Notificaciones', this)">
             <span>🔔</span>
             <label>Notificaciones</label>
+            <span id="badgeNotificaciones" class="badge-menu oculto">0</span>
         </div>
 
         <div
@@ -80,10 +77,7 @@
 
     </div>
 
-    <div
-        class="logout"
-        onclick="window.location.href='../inicio de sistema/login.html'"
-    >
+    <div class="logout" id="btnCerrarSesion">
         <span>⬅</span>
         <label>Cerrar sesión</label>
     </div>
@@ -319,59 +313,44 @@
     <section id="NovedadLaboral" class="contenido">
 
         <div class="section-header">
-
             <div>
                 <span class="section-label">SEGUIMIENTO</span>
-
-                <h2>
-                    📋 Novedad Laboral
-                </h2>
-
+                <h2>📋 Novedad Laboral</h2>
                 <p>
-                    Consulta las novedades reportadas por los empleados.
+                    Novedades e incapacidades enviadas por los empleados.
+                    Cámbiales el estado y deja una respuesta.
                 </p>
-
             </div>
-
+            <span class="table-status">● En vivo</span>
         </div>
 
+        <!-- RESUMEN POR ESTADO -->
+        <div class="chips-estado" id="chipsEstado">
+            <button type="button" class="chip activo" data-estado="">Todas <b id="cntTodas">0</b></button>
+            <button type="button" class="chip" data-estado="Pendiente">Pendientes <b id="cntPendiente">0</b></button>
+            <button type="button" class="chip" data-estado="Visto">Vistas <b id="cntVisto">0</b></button>
+            <button type="button" class="chip" data-estado="En revisión">En revisión <b id="cntRevision">0</b></button>
+            <button type="button" class="chip" data-estado="Aprobada">Aprobadas <b id="cntAprobada">0</b></button>
+            <button type="button" class="chip" data-estado="Rechazada">Rechazadas <b id="cntRechazada">0</b></button>
+        </div>
 
-        <div class="table-card">
+        <!-- FILTROS -->
+        <div class="filtros">
+            <input type="search" id="buscarNovedad" placeholder="🔍 Buscar por empleado o texto...">
+            <select id="filtroTipo">
+                <option value="">Todos los tipos</option>
+                <option value="Incapacidad">Incapacidad</option>
+                <option value="Ausencia">Ausencia</option>
+                <option value="Retraso">Retraso</option>
+                <option value="Accidente laboral">Accidente laboral</option>
+                <option value="Problema en el servicio">Problema en el servicio</option>
+                <option value="Problema con herramientas">Problema con herramientas</option>
+                <option value="Otra">Otra</option>
+            </select>
+        </div>
 
-            <div class="table-title">
-                <span>Novedades registradas</span>
-                <span class="table-status">● En vivo</span>
-            </div>
-
-            <div class="tabla-contenedor">
-
-                <table class="tabla-datos">
-
-                    <thead>
-
-                    <tr>
-                        <th>ID Novedad</th>
-                        <th>ID Empleado</th>
-                        <th>Tipo Novedad</th>
-                        <th>Descripción</th>
-                    </tr>
-
-                    </thead>
-
-                    <tbody id="tablaNovedades">
-
-                    <tr>
-                        <td colspan="4">
-                            Cargando novedades laborales...
-                        </td>
-                    </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
+        <div id="listaNovedadesSup" class="lista-novedades">
+            <div class="vacio">Cargando novedades...</div>
         </div>
 
     </section>
@@ -593,54 +572,23 @@
     <section id="Notificaciones" class="contenido">
 
         <div class="section-header">
-
             <div>
-
-                <span class="section-label">
-                    ALERTAS
-                </span>
-
-                <h2>
-                    🔔 Notificaciones
-                </h2>
-
-                <p>
-                    Consulta las notificaciones importantes del sistema.
-                </p>
-
+                <span class="section-label">ALERTAS</span>
+                <h2>🔔 Notificaciones</h2>
+                <p>Aquí llegan las novedades e incapacidades nuevas de los empleados.</p>
             </div>
-
         </div>
 
-
         <div id="listaNotificaciones">
-
-            <div class="notificacion">
-
-                <div class="icono-notificacion">
-                    🔔
-                </div>
-
-                <div>
-
-                    <strong>
-                        Sistema A C S O
-                    </strong>
-
-                    <p>
-                        Las notificaciones aparecerán aquí.
-                    </p>
-
-                </div>
-
-            </div>
-
+            <div class="vacio">No hay notificaciones por ahora.</div>
         </div>
 
     </section>
 
 </main>
 
+
+<div id="toast" class="toast"></div>
 
 <footer>
 

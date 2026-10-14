@@ -335,3 +335,56 @@ body::before {
 }
 
 
+/* =====================================================
+   PALETA ACSO (misma del inicio)
+===================================================== */
+:root {
+    --acso-fondo: #f8fbfa;
+    --acso-texto: #102d2b;
+    --acso-texto-suave: #627570;
+    --acso-texto-tenue: #71837f;
+    --acso-primario: #0b3b3c;
+    --acso-primario-hover: #166363;
+    --acso-acento: #35b8ae;
+    --acso-suave: #e4f5f2;
+    --acso-suave-2: #edf7ff;
+    --acso-borde: #e1ebe8;
+    --acso-borde-2: #ccece7;
+    --acso-blanco: #ffffff;
+    --acso-degradado: linear-gradient(90deg, #065f4a, #00a8ff);
+    --acso-sombra: 0 10px 30px rgba(11, 59, 60, 0.08);
+    --acso-peligro: #c2410c;
+    --acso-peligro-fondo: #fff1ec;
+    --acso-aviso: #a16207;
+    --acso-aviso-fondo: #fef6dc;
+    --acso-azul: #0369a1;
+    --acso-azul-fondo: #e6f3fb;
+    --acso-ok: #166363;
+    --acso-ok-fondo: #e4f5f2;
+}
+
+
+/* =====================================================
+   TEMA ACSO CLARO (misma paleta de la página de inicio)
+===================================================== */
+
+body { background: #f8fbfa; background-image: none; color: #102d2b; }
+body::before { background: transparent; }
+.contenedor { background: #fff; border: 1px solid #e1ebe8; box-shadow: 0 20px 60px rgba(11,59,60,.10); backdrop-filter: none; -webkit-backdrop-filter: none; }
+.contenedor::before { background: radial-gradient(circle, rgba(0,168,255,.12), transparent 70%); }
+.contenedor::after { background: radial-gradient(circle, rgba(53,184,174,.18), transparent 70%); }
+.encabezado h1 { color: #0b3b3c; text-shadow: none; }
+.encabezado p { color: #627570; }
+.boton { background: #0b3b3c; color: #fff; box-shadow: 0 8px 20px rgba(11,59,60,.2); }
+.boton:hover { background: #166363; box-shadow: 0 12px 26px rgba(11,59,60,.28); }
+.mensaje { background: #fff; border: 1px solid #e1ebe8; color: #31504b; box-shadow: 0 5px 15px rgba(11,59,60,.06); backdrop-filter: none; }
+.mensaje.exito { color: #166363; border-color: #ccece7; background: #e4f5f2; }
+.mensaje.error { color: #b4380f; border-color: #f6cdbd; background: #fff1ec; }
+.tarjeta, .tarjeta-grafica { background: #fff; border: 1px solid #e1ebe8; color: #102d2b; box-shadow: 0 10px 30px rgba(11,59,60,.06); backdrop-filter: none; }
+.tarjeta:hover { background: #fff; border-color: #bfe4de; box-shadow: 0 14px 34px rgba(11,59,60,.12); }
+.icono { background: #e4f5f2; box-shadow: none; }
+.informacion h2 { color: #0b3b3c; text-shadow: none; }
+.informacion p { color: #627570; }
+.tarjeta-grafica h2 { color: #0b3b3c; }
+.tarjeta-grafica p { color: #627570; }
+.pie { background: #f8fbfa; border: 1px solid #e1ebe8; color: #627570; box-shadow: none; backdrop-filter: none; }

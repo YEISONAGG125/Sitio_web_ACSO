@@ -1,0 +1,25 @@
+rules_version = '2';
+
+// Pega esto en: Firebase Console -> Firestore Database -> Reglas -> Publicar
+//
+// OJO: el login de ACSO usa la tabla "usuarios" de Realtime Database y NO
+// Firebase Authentication, por eso Firestore no puede saber quién es quién
+// y las reglas quedan abiertas solo para estas dos colecciones.
+// Sirve para el proyecto/demostración. Para producción hay que migrar el
+// login a Firebase Authentication y restringir por rol.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /novedades_laborales/{id} {
+      allow read, create, update: if true;
+      allow delete: if false;
+    }
+
+    match /notificaciones/{id} {
+      allow read, create, update: if true;
+      allow delete: if false;
+    }
+
+  }
+}

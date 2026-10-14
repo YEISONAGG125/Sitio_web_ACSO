@@ -19,17 +19,9 @@
 
 
 <body>
-    <div class="background">
-
-        <div class="background-circle circle-one"></div>
-
-        <div class="background-circle circle-two"></div>
-
-        <div class="background-circle circle-three"></div>
-
-    </div>
-
-<section class="login-container">
+        <!-- =================================
+             LOGIN
+        ================================== -->
 
         <section class="login-panel">
 
@@ -63,7 +55,9 @@
 
 
 
-                
+                <!-- =========================
+                     USUARIO
+                ========================== -->
 
                 <div class="input-group">
 
@@ -76,7 +70,9 @@
 
                     <div class="input-wrapper">
 
-                        
+                        <span class="input-icon">
+                            👤
+                        </span>
 
 
                         <input
@@ -115,6 +111,10 @@
 
                     <div class="input-wrapper">
 
+                        <span class="input-icon">
+                            🔒
+                        </span>
+
 
                         <input
                             type="password"
@@ -140,7 +140,23 @@
                 </div>
 
 
-              
+                <div class="login-options">
+
+                    <label class="remember">
+
+                        <input
+                            type="checkbox"
+                            id="recordarme">
+
+                        <span class="custom-checkbox"></span>
+
+                        <span>
+                            Recordarme
+                        </span>
+
+                    </label>
+
+                </div>
 
 
                 <button
@@ -163,6 +179,10 @@
                 </button>
 
 
+                <!-- =========================
+                     SEPARADOR
+                ========================== -->
+
                 <div class="separator">
 
                     <span></span>
@@ -175,6 +195,11 @@
 
                 </div>
 
+
+
+                <!-- =========================
+                     BOTONES
+                ========================== -->
 
                 <div class="bottom-buttons">
 
@@ -202,6 +227,11 @@
                 </div>
 
 
+
+                <!-- =========================
+                     TEXTO FINAL
+                ========================== -->
+
                 <p class="footer-text">
 
                     ACSO • Trabajo fácil, rápido y seguro
@@ -212,16 +242,24 @@
             </form>
 
         </section>
-    </section>
 
 
     </div>
 
 
+    <!-- =====================================
+         JAVASCRIPT FIREBASE
+    ====================================== -->
+
     <script
         type="module"
         src="script.js">
     </script>
+
+
+    <!-- =====================================
+         MOSTRAR CONTRASEÑA
+    ====================================== -->
 
     <script>
 

@@ -602,4 +602,69 @@ footer p {
         padding: 32px 25px;
     }
 
+}/* =====================================================
+   PALETA ACSO (misma del inicio)
+===================================================== */
+:root {
+    --acso-fondo: #f8fbfa;
+    --acso-texto: #102d2b;
+    --acso-texto-suave: #627570;
+    --acso-texto-tenue: #71837f;
+    --acso-primario: #0b3b3c;
+    --acso-primario-hover: #166363;
+    --acso-acento: #35b8ae;
+    --acso-suave: #e4f5f2;
+    --acso-suave-2: #edf7ff;
+    --acso-borde: #e1ebe8;
+    --acso-borde-2: #ccece7;
+    --acso-blanco: #ffffff;
+    --acso-degradado: linear-gradient(90deg, #065f4a, #00a8ff);
+    --acso-sombra: 0 10px 30px rgba(11, 59, 60, 0.08);
+    --acso-peligro: #c2410c;
+    --acso-peligro-fondo: #fff1ec;
+    --acso-aviso: #a16207;
+    --acso-aviso-fondo: #fef6dc;
+    --acso-azul: #0369a1;
+    --acso-azul-fondo: #e6f3fb;
+    --acso-ok: #166363;
+    --acso-ok-fondo: #e4f5f2;
 }
+
+
+/* =====================================================
+   TEMA ACSO CLARO (misma paleta de la página de inicio)
+===================================================== */
+
+body { background: #f8fbfa; color: #102d2b; }
+.circle-1 { background: #35b8ae; opacity: .15; }
+.circle-2 { background: #00a8ff; opacity: .10; }
+.circle-3 { background: #35b8ae; opacity: .10; }
+.navbar { background: rgba(255,255,255,.82); border-bottom: 1px solid rgba(220,230,227,.7); }
+.logo-container span { color: #0b3b3c; }
+.logo-container img { filter: none; }
+.navbar nav a { color: #31504b; }
+.navbar nav a:hover { color: #0b3b3c; background: #e4f5f2; }
+.navbar nav a.active { color: #166363; background: #e4f5f2; }
+.login-btn { background: #0b3b3c !important; color: #fff !important; box-shadow: 0 8px 25px rgba(11,59,60,.18); }
+.login-btn:hover { background: #166363 !important; box-shadow: 0 12px 30px rgba(11,59,60,.25); }
+.badge { background: #e4f5f2; border: 1px solid #ccece7; color: #166363; }
+.contacto-header h1 { color: #0b3b3c; }
+.contacto-header h1 span { background: linear-gradient(90deg, #065f4a, #00a8ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.contacto-header p { color: #627570; }
+.info-card { background: #fff; border: 1px solid #e1ebe8; box-shadow: 0 10px 30px rgba(11,59,60,.06); backdrop-filter: none; }
+.info-card:hover { background: #fff; border-color: #bfe4de; box-shadow: 0 15px 35px rgba(11,59,60,.12); }
+.info-card h3 { color: #0b3b3c; }
+.info-card p { color: #627570; }
+.icono { background: #e4f5f2; border: 1px solid #ccece7; }
+.contacto-panel { background: linear-gradient(145deg, #e4f5f2, #edf7ff); border: 1px solid #ccece7; }
+.contacto-panel::before { background: #35b8ae; opacity: .12; }
+.panel-icon { background: #fff; }
+.contacto-panel h2 { color: #0b3b3c; }
+.contacto-panel p { color: #627570; }
+.btn-ayuda { background: #0b3b3c; color: #fff; box-shadow: 0 10px 30px rgba(11,59,60,.18); }
+.btn-ayuda:hover { background: #166363; box-shadow: 0 15px 35px rgba(11,59,60,.25); }
+footer { background: #fff; border-top: 1px solid #e1ebe8; backdrop-filter: none; }
+.footer-logo { color: #166363; }
+footer p { color: #627570; }
+.footer-links a { color: #627570; }
+.footer-links a:hover { color: #166363; }

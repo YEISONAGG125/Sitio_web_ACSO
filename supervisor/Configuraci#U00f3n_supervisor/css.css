@@ -658,3 +658,59 @@ body.modo-claro .datos-perfil p {
     }
 }
 
+/* =====================================================
+   PALETA ACSO (misma del inicio)
+===================================================== */
+:root {
+    --acso-fondo: #f8fbfa;
+    --acso-texto: #102d2b;
+    --acso-texto-suave: #627570;
+    --acso-texto-tenue: #71837f;
+    --acso-primario: #0b3b3c;
+    --acso-primario-hover: #166363;
+    --acso-acento: #35b8ae;
+    --acso-suave: #e4f5f2;
+    --acso-suave-2: #edf7ff;
+    --acso-borde: #e1ebe8;
+    --acso-borde-2: #ccece7;
+    --acso-blanco: #ffffff;
+    --acso-degradado: linear-gradient(90deg, #065f4a, #00a8ff);
+    --acso-sombra: 0 10px 30px rgba(11, 59, 60, 0.08);
+    --acso-peligro: #c2410c;
+    --acso-peligro-fondo: #fff1ec;
+    --acso-aviso: #a16207;
+    --acso-aviso-fondo: #fef6dc;
+    --acso-azul: #0369a1;
+    --acso-azul-fondo: #e6f3fb;
+    --acso-ok: #166363;
+    --acso-ok-fondo: #e4f5f2;
+}
+
+
+/* =====================================================
+   TEMA ACSO CLARO (misma paleta de la página de inicio)
+===================================================== */
+
+/* Solo en modo claro (el modo oscuro de la página se conserva) */
+body.modo-claro { background: #f8fbfa; color: #102d2b; }
+body.modo-claro .etiqueta { background: #e4f5f2; border-color: #ccece7; color: #166363; }
+body.modo-claro .encabezado h1, body.modo-claro .titulo-seccion h2, body.modo-claro .tarjeta h2, body.modo-claro .tarjeta h3 { color: #0b3b3c; }
+body.modo-claro .encabezado p { color: #627570; }
+body.modo-claro .estado-cuenta { background: #e4f5f2; border-color: #ccece7; color: #166363; }
+body.modo-claro .punto { background: #35b8ae; box-shadow: 0 0 0 4px rgba(53,184,174,.2); }
+body.modo-claro .tarjeta { background: #fff; border: 1px solid #e1ebe8; color: #102d2b; box-shadow: 0 10px 30px rgba(11,59,60,.06); }
+body.modo-claro .tarjeta:hover { border-color: #bfe4de; }
+body.modo-claro .icono { background: #e4f5f2; border-color: #ccece7; }
+body.modo-claro .titulo-seccion p, body.modo-claro .opcion span, body.modo-claro .datos-perfil p { color: #627570; }
+body.modo-claro .avatar { background: #0b3b3c; color: #fff; box-shadow: 0 8px 20px rgba(11,59,60,.18); }
+body.modo-claro .cargo { color: #166363; }
+body.modo-claro .btn-principal, body.modo-claro .btn-guardar { background: #0b3b3c; color: #fff; }
+body.modo-claro .btn-principal:hover, body.modo-claro .btn-guardar:hover { background: #166363; box-shadow: 0 10px 25px rgba(11,59,60,.22); }
+body.modo-claro .opcion { background: #f8fbfa; border: 1px solid #e1ebe8; }
+body.modo-claro .slider { background: #cfdcd8; }
+body.modo-claro .switch input:checked + .slider { background: #35b8ae; }
+body.modo-claro .selector select { background: #fff; color: #102d2b; border: 1px solid #d5e3df; }
+body.modo-claro .btn-secundario, body.modo-claro .btn-restaurar { background: #e4f5f2; color: #166363; border: 1px solid #ccece7; }
+body.modo-claro .btn-secundario:hover, body.modo-claro .btn-restaurar:hover { background: #d8f1eb; }
+body.modo-claro .btn-peligro { background: #fff1ec; color: #b4380f; border: 1px solid #f6cdbd; }
+body.modo-claro .mensaje { background: #0b3b3c; color: #fff; border: none; }
