@@ -1978,3 +1978,179 @@ footer strong { color: #31504b; }
 .menu-toggle { background: #fff; border: 1px solid #e1ebe8; }
 .menu-toggle span { background: #0b3b3c; }
 .overlay { background: rgba(11,59,60,.35); }
+
+
+/* =====================================================
+   SOLICITUDES DE SERVICIO Y CONTRATO
+===================================================== */
+
+.oculto { display: none !important; }
+
+.sol-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 18px 0 22px;
+}
+
+.sol-tab {
+    padding: 11px 20px;
+    border-radius: 30px;
+    border: 1px solid #ccece7;
+    background: #fff;
+    color: #31504b;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.sol-tab:hover { background: #e4f5f2; }
+
+.sol-tab.activo {
+    background: #0b3b3c;
+    border-color: #0b3b3c;
+    color: #fff;
+}
+
+.sol-form { max-width: 820px; }
+
+.sol-fila {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.sol-form .campo { margin-bottom: 16px; }
+
+.sol-form .campo label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #31504b;
+}
+
+.sol-form .campo input,
+.sol-form .campo select,
+.sol-form .campo textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 11px;
+    border: 1px solid #d5e3df;
+    background: #fff;
+    color: #102d2b;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: 0.2s;
+}
+
+.sol-form .campo textarea { resize: vertical; min-height: 100px; }
+
+.sol-form .campo input:focus,
+.sol-form .campo select:focus,
+.sol-form .campo textarea:focus {
+    border-color: #35b8ae;
+    box-shadow: 0 0 0 4px rgba(53, 184, 174, 0.15);
+}
+
+.sol-form .btn-primario {
+    padding: 14px 26px;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.sol-form .btn-primario:disabled { opacity: 0.6; cursor: wait; }
+
+/* ---------- lista de solicitudes ---------- */
+
+.sol-item {
+    padding: 20px 22px;
+    margin-bottom: 14px;
+    background: #fff;
+    border: 1px solid #e1ebe8;
+    border-left: 5px solid #35b8ae;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(11, 59, 60, 0.06);
+}
+
+.sol-item.es-contrato { border-left-color: #0369a1; }
+
+.sol-item-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.sol-item-top h4 { font-size: 16px; color: #0b3b3c; }
+
+.sol-datos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    padding: 10px 14px;
+    margin-bottom: 10px;
+    background: #e4f5f2;
+    border-radius: 11px;
+    font-size: 13px;
+    color: #31504b;
+}
+
+.sol-lugar { margin-bottom: 8px; font-size: 13px; color: #627570; }
+
+.sol-texto {
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #31504b;
+    white-space: pre-wrap;
+}
+
+.sol-respuesta {
+    margin: 12px 0 8px;
+    padding: 12px 14px;
+    background: #f8fbfa;
+    border-left: 3px solid #35b8ae;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #31504b;
+}
+
+.sol-fecha { color: #82938e; font-size: 12px; }
+
+.sol-vacio {
+    padding: 28px;
+    text-align: center;
+    background: #f8fbfa;
+    border: 1px dashed #ccece7;
+    border-radius: 14px;
+    color: #627570;
+    font-size: 14px;
+}
+
+.sol-error { background: #fff1ec; border-color: #f6cdbd; color: #b4380f; }
+
+.badge-estado {
+    padding: 5px 12px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.estado-pendiente { background: #fef6dc; color: #a16207; }
+.estado-visto { background: #e6f3fb; color: #0369a1; }
+.estado-en-revision { background: #efeafc; color: #6d3fd1; }
+.estado-aprobada { background: #e4f5f2; color: #166363; }
+.estado-rechazada { background: #fff1ec; color: #b4380f; }
+
+@media (max-width: 700px) {
+    .sol-fila { grid-template-columns: 1fr; }
+}

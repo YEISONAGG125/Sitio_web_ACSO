@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>ACSO | Registro</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css">
+
+</head>
+
+
+<body>
+
+    <div class="background">
+
+        <div class="background-circle circle-one"></div>
+
+        <div class="background-circle circle-two"></div>
+
+        <div class="background-circle circle-three"></div>
+
+    </div>
+
+
+
+    <div class="register-container">
+
+        <section class="info-panel">
+
+            <a
+                href="../yeison/index.html"
+                class="brand">
+                <span>
+                    A C S O
+                </span>
+
+            </a>
+
+            <div class="info-content">
+
+                <div class="status-badge">
+
+                    <span></span>
+
+                    Únete a ACSO
+
+                </div>
+
+
+                <h2>
+
+                    Crea tu
+
+                    <span>cuenta</span>
+
+                    y empieza con nosotros.
+
+                </h2>
+
+
+                <p>
+
+                    Regístrate en ACSO y accede a las
+                    herramientas necesarias para gestionar
+                    tus actividades de forma organizada y segura.
+
+                </p>
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            👥
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Gestión organizada
+                            </strong>
+
+                            <span>
+                                Toda tu información
+                                en un solo lugar.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            📋
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Servicios
+                            </strong>
+
+                            <span>
+                                Consulta y gestiona
+                                tus actividades.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="feature">
+
+                        <div class="feature-icon">
+                            🔔
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Información actualizada
+                            </strong>
+
+                            <span>
+                                Mantente informado
+                                sobre novedades.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- FOOTER -->
+
+            <div class="info-footer">
+
+                © 2026 ACSO · Trabajo fácil, rápido y seguro.
+
+            </div>
+
+
+        </section>
+
+
+        <section class="register-panel">
+
+
+            <form
+                id="formRegistro"
+                class="register-card">
+                <!-- TITULO -->
+
+                <div class="register-header">
+
+                    <h1>
+                        Crear cuenta
+                    </h1>
+
+                    <p>
+                        Completa los datos para registrarte
+                    </p>
+
+                </div>
+
+
+                <!-- MENSAJE -->
+
+                <div
+                    id="mensaje"
+                    class="mensaje">
+                </div>
+
+
+                <!-- =================================
+                     NOMBRE
+                ================================== -->
+
+                <div class="input-group">
+
+                    <label for="nombre">
+                        Nombre y apellido
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            👤
+                        </span>
+
+                        <input
+                            type="text"
+                            id="nombre"
+                            required
+                            placeholder="Ingresa tu nombre completo"
+                            autocomplete="name">
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================
+                     CARGO
+                ================================== -->
+
+                <div class="input-group">
+
+                    <label for="cargo">
+                        Cargo
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            💼
+                        </span>
+
+                        <select
+                            id="cargo"
+                            required>
+
+                            <option value="">
+                                Seleccione su cargo
+                            </option>
+
+                            <option value="empleado">
+                                Empleado
+                            </option>
+
+                            <option value="supervisor">
+                                Supervisor
+                            </option>
+
+                            <option value="cliente">
+                                Cliente
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================
+                     CORREO
+                ================================== -->
+
+                <div class="input-group">
+
+                    <label for="correo">
+                        Correo electrónico
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            ✉️
+                        </span>
+
+                        <input
+                            type="email"
+                            id="correo"
+                            required
+                            placeholder="correo@ejemplo.com"
+                            autocomplete="email">
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================
+                     USUARIO
+                ================================== -->
+
+                <div class="input-group">
+
+                    <label for="usuario">
+                        Usuario
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            🔑
+                        </span>
+
+                        <input
+                            type="text"
+                            id="usuario"
+                            required
+                            placeholder="Crea tu nombre de usuario"
+                            autocomplete="username">
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================
+                     CONTRASEÑA
+                ================================== -->
+
+                <div class="input-group">
+
+                    <label for="password">
+                        Contraseña
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            🔒
+                        </span>
+
+                        <input
+                            type="password"
+                            id="password"
+                            required
+                            placeholder="Crea una contraseña"
+                            autocomplete="new-password">
+
+                        <button
+                            type="button"
+                            class="show-password"
+                            id="mostrarPassword">
+
+                            👁
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================
+                     BOTÓN REGISTRARSE
+                ================================== -->
+
+                <button
+                    type="submit"
+                    class="register-button"
+                    id="btnRegistro">
+
+                    <span id="btnText">
+                        Crear cuenta
+                    </span>
+
+                    <span
+                        class="arrow"
+                        id="btnArrow">
+
+                        →
+
+                    </span>
+
+                </button>
+
+
+                <!-- =================================
+                     SEPARADOR
+                ================================== -->
+
+                <div class="separator">
+
+                    <span></span>
+
+                    <p>
+                        ¿Ya tienes una cuenta?
+                    </p>
+
+                    <span></span>
+
+                </div>
+
+
+                <!-- =================================
+                     VOLVER AL LOGIN
+                ================================== -->
+
+                <a
+                    href="../inicio de sistema/login.html"
+                    class="login-link">
+
+                    ← Iniciar sesión
+
+                </a>
+
+
+                <!-- =================================
+                     VOLVER AL INICIO
+                ================================== -->
+
+                <a
+                    href="../yeison/index.html"
+                    class="back-home">
+
+                    Volver al inicio
+
+                </a>
+
+
+                <!-- FOOTER -->
+
+                <p class="footer-text">
+
+                    ACSO • Trabajo fácil, rápido y seguro
+
+                </p>
+
+
+            </form>
+
+        </section>
+
+
+    </div>
+
+</body>
+<script type="module" src="javascript.js"></script>
+</html>

@@ -1,0 +1,481 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Configuración | ACSO</title>
+
+    <link rel="stylesheet" href="css.css">
+</head>
+
+<body>
+
+<div class="contenedor">
+
+    <!-- =========================================
+         ENCABEZADO
+    ========================================== -->
+
+    <header class="encabezado">
+
+        <div>
+            <span class="etiqueta">ACSO</span>
+
+            <h1>⚙️ Configuración</h1>
+
+            <p>
+                Administra tu cuenta y las preferencias
+                del panel de supervisor.
+            </p>
+        </div>
+
+        <div class="estado-cuenta">
+            <span class="punto"></span>
+            Cuenta activa
+        </div>
+
+    </header>
+
+
+    <!-- =========================================
+         PERFIL
+    ========================================== -->
+
+    <section class="tarjeta">
+
+        <div class="titulo-seccion">
+            <div class="icono">👤</div>
+
+            <div>
+                <h2>Perfil del supervisor</h2>
+                <p>Información de tu cuenta</p>
+            </div>
+        </div>
+
+
+        <div class="perfil">
+
+            <div class="avatar" id="avatarSupervisor">
+                S
+            </div>
+
+            <div class="datos-perfil">
+
+                <h3 id="nombreSupervisor">
+                    Supervisor
+                </h3>
+
+                <span class="cargo">
+                    Supervisor
+                </span>
+
+                <p>
+                    🆔 ID:
+                    <strong id="idSupervisor">-</strong>
+                </p>
+
+                <p>
+                    📧
+                    <span id="correoSupervisor">
+                        No registrado
+                    </span>
+                </p>
+
+            </div>
+
+            <button
+                class="btn-principal"
+                id="btnEditarPerfil">
+
+                ✏️ Editar perfil
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         NOTIFICACIONES
+    ========================================== -->
+
+    <section class="tarjeta">
+
+        <div class="titulo-seccion">
+
+            <div class="icono">
+                🔔
+            </div>
+
+            <div>
+                <h2>Notificaciones</h2>
+
+                <p>
+                    Decide qué alertas quieres recibir
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="opciones">
+
+            <div class="opcion">
+
+                <div>
+                    <strong>
+                        Nuevas novedades laborales
+                    </strong>
+
+                    <span>
+                        Recibir alertas cuando un empleado
+                        registre una novedad.
+                    </span>
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="notificacionesNovedades"
+                        checked>
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="opcion">
+
+                <div>
+                    <strong>
+                        Incapacidades
+                    </strong>
+
+                    <span>
+                        Recibir alertas sobre incapacidades
+                        y ausencias.
+                    </span>
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="notificacionesIncapacidades"
+                        checked>
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="opcion">
+
+                <div>
+                    <strong>
+                        Solicitudes de servicio
+                    </strong>
+
+                    <span>
+                        Avisos cuando llegue una nueva
+                        solicitud.
+                    </span>
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="notificacionesServicios"
+                        checked>
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="opcion">
+
+                <div>
+                    <strong>
+                        Alertas de inventario
+                    </strong>
+
+                    <span>
+                        Avisos cuando un producto tenga
+                        poco stock.
+                    </span>
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="notificacionesInventario">
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         SISTEMA
+    ========================================== -->
+
+    <section class="tarjeta">
+
+        <div class="titulo-seccion">
+
+            <div class="icono">
+                🖥️
+            </div>
+
+            <div>
+                <h2>Preferencias del sistema</h2>
+
+                <p>
+                    Personaliza el funcionamiento del panel
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="opciones">
+
+            <div class="opcion">
+
+                <div>
+                    <strong>
+                        Actualización automática
+                    </strong>
+
+                    <span>
+                        Actualizar la información del panel
+                        automáticamente.
+                    </span>
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="actualizacionAutomatica"
+                        checked>
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="opcion">
+
+                <div>
+                    <strong>
+                        Mostrar servicios completados
+                    </strong>
+
+                    <span>
+                        Mostrar servicios que ya fueron
+                        finalizados.
+                    </span>
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="mostrarCompletados">
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="opcion">
+
+                <div>
+
+                    <strong>
+                        Modo oscuro
+                    </strong>
+
+                    <span>
+                        Cambia la apariencia del panel.
+                    </span>
+
+                </div>
+
+                <label class="switch">
+
+                    <input
+                        type="checkbox"
+                        id="modoOscuro">
+
+                    <span class="slider"></span>
+
+                </label>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         ACTUALIZACIÓN
+    ========================================== -->
+
+    <section class="tarjeta">
+
+        <div class="titulo-seccion">
+
+            <div class="icono">
+                🔄
+            </div>
+
+            <div>
+                <h2>Actualización de información</h2>
+
+                <p>
+                    Controla cada cuánto se actualiza
+                    el panel.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="selector">
+
+            <label for="intervaloActualizacion">
+                Intervalo de actualización
+            </label>
+
+            <select id="intervaloActualizacion">
+
+                <option value="30">
+                    Cada 30 segundos
+                </option>
+
+                <option value="60" selected>
+                    Cada 1 minuto
+                </option>
+
+                <option value="300">
+                    Cada 5 minutos
+                </option>
+
+                <option value="600">
+                    Cada 10 minutos
+                </option>
+
+            </select>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================
+         SEGURIDAD
+    ========================================== -->
+
+    <section class="tarjeta seguridad">
+
+        <div class="titulo-seccion">
+
+            <div class="icono">
+                🔐
+            </div>
+
+            <div>
+                <h2>Seguridad</h2>
+
+                <p>
+                    Protege tu cuenta de supervisor.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="acciones-seguridad">
+
+            <button
+                class="btn-secundario"
+                id="btnCambiarPassword">
+
+                🔑 Cambiar contraseña
+
+            </button>
+
+<div class="tab" onclick="window.location.href='/inicio de sistema/login.html'"> ⬅ Cerrar sesión</div>
+
+
+    </section>
+
+
+    <!-- =========================================
+         GUARDAR
+    ========================================== -->
+
+    <div class="guardar">
+
+        <button
+            class="btn-guardar"
+            id="btnGuardar">
+
+            💾 Guardar configuración
+
+        </button>
+
+        <button
+            class="btn-restaurar"
+            id="btnRestaurar">
+
+            ↩ Restaurar
+
+        </button>
+
+    </div>
+
+
+    <!-- =========================================
+         MENSAJE
+    ========================================== -->
+
+    <div
+        id="mensaje"
+        class="mensaje">
+
+    </div>
+
+</div>
+
+
+<script src="javascript.js"></script>
+
+</body>
+</html>

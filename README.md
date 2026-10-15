@@ -350,3 +350,17 @@ Flujo: **Empleado → Cloud Firestore → Supervisor**, en tiempo real.
 * `supervisor/script.js` – recepción, filtros, cambio de estado y notificaciones.
 
 Los servicios, horarios, contratos, clientes y productos siguen leyéndose de la API Spring Boot (`localhost:8080`). Si el backend está apagado, esas secciones muestran un aviso y el resto sigue funcionando.
+
+
+---
+
+## Solicitudes de clientes (servicios y contratos)
+
+Flujo: **Cliente → Cloud Firestore → Supervisor**, en tiempo real.
+
+* En `cliente/Cliente.html` → *Solicitar*, el cliente elige **Pedir un servicio** (tipo, fecha, jornada, dirección) o **Pedir un contrato** (servicio, frecuencia, inicio, duración, ubicación, m²).
+* Se guarda en la colección `solicitudes` con estado `Pendiente`.
+* El supervisor la ve en *Solicitudes* (contador rojo y aviso emergente) y la marca como **Pendiente, Visto, En revisión, Aprobada o Rechazada**, con una respuesta para el cliente.
+* Cada cambio crea un documento en `notificaciones` con `id_cliente`, que el cliente ve en su panel y en *Mis solicitudes*.
+
+Colección nueva: **`solicitudes`**. Hay que volver a publicar `firestore.rules` para que Firestore la permita.

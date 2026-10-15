@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - Power Clean</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="perfil-container">
+
+    <div class="perfil-card">
+        <a href="empleado.html" class="volver"> ← Volver</a>
+
+        <div class="foto">
+    <img id="preview" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Perfil">
+
+    <input type="file" id="imagen" accept="image/*" hidden>
+
+    <label for="imagen" class="btn-foto">
+        Cambiar Foto
+    </label>
+</div><br></br>
+
+        <h2>Mi Perfil</h2>
+
+        <form>
+
+            <div class="grupo">
+                <label>Nombre Completo</label>
+                <input type="text" value="Juan Pérez">
+            </div>
+
+            <div class="grupo">
+                <label>Correo Electrónico</label>
+                <input type="email" value="juan@gmail.com">
+            </div>
+
+            <div class="grupo">
+                <label>Teléfono</label>
+                <input type="text" value="3101234567">
+            </div>
+
+            <div class="grupo">
+                <label>Dirección</label>
+                <input type="text" value="Tunja, Boyacá">
+            </div>
+
+            <div class="grupo">
+                <label>Tipo de Cliente</label>
+                <input type="text" value="Empresarial">
+            </div>
+
+            <button type="submit"> Guardar Cambios</button>
+
+        </form>
+
+    </div>
+
+</div>
+<script src="java.js"></script>
+
+
+
+</body>
+</html>

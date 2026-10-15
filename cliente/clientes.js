@@ -339,6 +339,16 @@ const titulos = {
         titulo: "Centro de notificaciones"
     },
 
+    solicitar: {
+        eyebrow: "NUEVA SOLICITUD",
+        titulo: "Solicitar servicio o contrato"
+    },
+
+    solicitudes: {
+        eyebrow: "SEGUIMIENTO",
+        titulo: "Mis solicitudes"
+    },
+
     perfil: {
         eyebrow: "MI PERFIL",
         titulo: "Información de mi cuenta"
@@ -1056,130 +1066,70 @@ function cargarPagos() {
    NOTIFICACIONES
 ================================= */
 
+function esc(valor) {
+    const div = document.createElement("div");
+    div.textContent = valor ?? "";
+    return div.innerHTML;
+}
+
 function cargarNotificaciones() {
 
-    const lista =
-        document.getElementById(
-            "listaNotif"
-        );
-
+    const lista = document.getElementById("listaNotif");
 
     if (!lista) {
         return;
     }
 
-
     lista.innerHTML = "";
 
+    // Las de la nube (Firestore) llegan desde solicitudes.js
+    const todas = [
+        ...(window.notificacionesNube || []),
+        ...notificaciones
+    ];
 
-    const noLeidas =
-        notificaciones.filter(
-            n => !n.leida
-        ).length;
+    const noLeidas = todas.filter(n => !n.leida).length;
 
-
-    const badge =
-        document.getElementById(
-            "badgeNotif"
-        );
-
+    const badge = document.getElementById("badgeNotif");
 
     if (badge) {
-
-        if (noLeidas > 0) {
-
-            badge.textContent =
-                noLeidas;
-
-            badge.classList.add(
-                "visible"
-            );
-
-        } else {
-
-            badge.textContent =
-                "0";
-
-            badge.classList.remove(
-                "visible"
-            );
-
-        }
-
+        badge.textContent = noLeidas > 0 ? noLeidas : "0";
+        badge.classList.toggle("visible", noLeidas > 0);
     }
 
+    todas.forEach(notificacion => {
 
-    notificaciones.forEach(
-        notificacion => {
+        const li = document.createElement("li");
+        li.className = "notificacion";
 
-            const li =
-                document.createElement(
-                    "li"
-                );
+        li.innerHTML = `
+            <span class="notificacion-icono">
+                ${notificacion.leida ? "✓" : "!"}
+            </span>
+            <div>
+                <strong>${esc(notificacion.titulo)}</strong>
+                <p>${esc(notificacion.mensaje)}</p>
+            </div>
+            <small>${esc(notificacion.fecha)}</small>
+        `;
 
+        li.addEventListener("click", () => {
 
-            li.className =
-                "notificacion";
-
-
-            li.innerHTML = `
-
-                <span class="notificacion-icono">
-                    ${
-                        notificacion.leida
-                            ? "✓"
-                            : "!"
-                    }
-                </span>
-
-                <div>
-
-                    <strong>
-                        ${notificacion.titulo}
-                    </strong>
-
-                    <p>
-                        ${notificacion.mensaje}
-                    </p>
-
-                </div>
-
-                <small>
-                    ${notificacion.fecha}
-                </small>
-
-            `;
-
-
-            li.addEventListener(
-                "click",
-                () => {
-
-                    notificacion.leida =
-                        true;
-
-
-                    cargarNotificaciones();
-
-
-                    mostrarToast(
-                        "Notificación",
-                        "Marcada como leída"
-                    );
-
+            if (notificacion.nube) {
+                if (window.marcarLeidaNube) {
+                    window.marcarLeidaNube(notificacion.id);
                 }
-            );
+            } else {
+                notificacion.leida = true;
+                cargarNotificaciones();
+            }
 
+            mostrarToast("Notificación", "Marcada como leída");
+        });
 
-            lista.appendChild(
-                li
-            );
-
-        }
-    );
-
+        lista.appendChild(li);
+    });
 }
-
 
 /* =================================
    MARCAR TODAS
@@ -1190,6 +1140,10 @@ if (marcarTodas) {
     marcarTodas.addEventListener(
         "click",
         () => {
+            if (window.marcarTodasNube) {
+                window.marcarTodasNube();
+            }
+
 
             notificaciones.forEach(
                 notificacion => {
