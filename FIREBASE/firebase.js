@@ -16,6 +16,7 @@ import {
     ref,
     get,
     child,
+    push,
     update,
     onValue,
     onDisconnect
@@ -56,6 +57,7 @@ const db = getFirestore(app);
 // Nombres de las colecciones de Firestore
 const COL_NOVEDADES = "novedades_laborales";
 const COL_NOTIFICACIONES = "notificaciones";
+const COL_SOLICITUDES = "solicitudes";   // pedidos de servicio y contrato de los clientes
 
 // Estados que puede tener una novedad
 const ESTADOS_NOVEDAD = [
@@ -72,12 +74,14 @@ export {
     db,
     COL_NOVEDADES,
     COL_NOTIFICACIONES,
+    COL_SOLICITUDES,
     ESTADOS_NOVEDAD,
 
     // Realtime Database
     ref,
     get,
     child,
+    push,
     update,
     onValue,
     onDisconnect,

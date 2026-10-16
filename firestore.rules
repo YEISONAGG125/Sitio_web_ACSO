@@ -16,6 +16,11 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    match /solicitudes/{id} {
+      allow read, create, update: if true;
+      allow delete: if false;
+    }
+
     match /notificaciones/{id} {
       allow read, create, update: if true;
       allow delete: if false;

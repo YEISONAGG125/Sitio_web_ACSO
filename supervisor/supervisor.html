@@ -32,10 +32,15 @@
             <label>Personal</label>
         </div>
 
-        <div class="tab" onclick="mostrar('NovedadLaboral', this)">
+        <div class="tab" id="tabNovedades" onclick="mostrar('NovedadLaboral', this)">
             <span>📋</span>
             <label>Novedad laboral</label>
             <span id="badgeNovedades" class="badge-menu oculto">0</span>
+        </div>
+        <div class="tab" id="tabSolicitudes" onclick="mostrar('Solicitudes', this)">
+            <span>📑</span>
+            <label>Solicitudes</label>
+            <span id="badgeSolicitudes" class="badge-menu oculto">0</span>
         </div>
 
         <div class="tab" onclick="mostrar('Inventario', this)">
@@ -172,6 +177,17 @@
                     <small>Novedades laborales</small>
                 </div>
 
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-icon">
+                    📑
+                </div>
+                <div>
+                    <span>Solicitudes</span>
+                    <strong id="totalSolicitudes">--</strong>
+                    <small>Contratos y servicios pedidos</small>
+                </div>
             </div>
 
 
@@ -356,6 +372,47 @@
 
     </section>
 
+
+    <!-- =========================
+         SOLICITUDES DE CLIENTES
+    ========================= -->
+    <section id="Solicitudes" class="contenido">
+
+        <div class="section-header">
+            <div>
+                <span class="section-label">CLIENTES</span>
+                <h2>📑 Solicitudes de clientes</h2>
+                <p>
+                    Pedidos de contrato y de servicio enviados por los clientes.
+                    Cámbiales el estado y respóndeles.
+                </p>
+            </div>
+            <span class="table-status">● En vivo</span>
+        </div>
+
+        <div class="chips-estado" id="chipsEstadoSol">
+            <button type="button" class="chip activo" data-estado="">Todas <b id="cntSolTodas">0</b></button>
+            <button type="button" class="chip" data-estado="Pendiente">Pendientes <b id="cntSolPendiente">0</b></button>
+            <button type="button" class="chip" data-estado="Visto">Vistas <b id="cntSolVisto">0</b></button>
+            <button type="button" class="chip" data-estado="En revisión">En revisión <b id="cntSolRevision">0</b></button>
+            <button type="button" class="chip" data-estado="Aprobada">Aprobadas <b id="cntSolAprobada">0</b></button>
+            <button type="button" class="chip" data-estado="Rechazada">Rechazadas <b id="cntSolRechazada">0</b></button>
+        </div>
+
+        <div class="filtros">
+            <input type="search" id="buscarSolicitud" placeholder="🔍 Buscar por cliente, dirección o servicio...">
+            <select id="filtroTipoSol">
+                <option value="">Contratos y servicios</option>
+                <option value="Contrato">Solo contratos</option>
+                <option value="Servicio">Solo servicios</option>
+            </select>
+        </div>
+
+        <div id="listaSolicitudesSup" class="lista-novedades">
+            <div class="vacio">Cargando solicitudes...</div>
+        </div>
+
+    </section>
 
     <!-- =========================
          INVENTARIO
@@ -576,7 +633,7 @@
             <div>
                 <span class="section-label">ALERTAS</span>
                 <h2>🔔 Notificaciones</h2>
-                <p>Aquí llegan las novedades e incapacidades nuevas de los empleados.</p>
+                <p>Aquí llegan las novedades de los empleados y las solicitudes de los clientes.</p>
             </div>
         </div>
 

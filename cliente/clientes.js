@@ -1,11 +1,6 @@
 
 const API_BASE = "http://localhost:8080/api";
 
-
-/* =================================
-   ELEMENTOS DEL DOM
-================================= */
-
 const navLinks = document.querySelectorAll(".nav-link");
 const secciones = document.querySelectorAll(".contenido");
 
@@ -36,11 +31,6 @@ const sectionTitulo =
 
 const sectionEyebrow =
     document.getElementById("sectionEyebrow");
-
-
-/* =================================
-   USUARIO QUE INICIÓ SESIÓN
-================================= */
 
 const usuarioGuardado =
     localStorage.getItem("usuarioLogueado");
@@ -82,22 +72,11 @@ try {
     );
 }
 
-
-/* =================================
-   INFORMACIÓN DEL USUARIO
-================================= */
-
 const nombreUsuario =
     usuario.nombre ||
     usuario.nombre_completo ||
     usuario.nombre_usuario ||
     "Cliente";
-
-
-/* =================================
-   AVATAR
-================================= */
-
 function obtenerIniciales(nombre) {
 
     if (!nombre) {
@@ -123,18 +102,10 @@ function obtenerIniciales(nombre) {
     ).toUpperCase();
 }
 
-
-/* =================================
-   MOSTRAR IDENTIDAD
-================================= */
-
 function actualizarIdentidad() {
 
     const iniciales =
         obtenerIniciales(nombreUsuario);
-
-
-    /* Avatar principal */
 
     const avatar =
         document.getElementById("avatar");
@@ -143,9 +114,6 @@ function actualizarIdentidad() {
         avatar.textContent =
             iniciales;
     }
-
-
-    /* Nombre superior */
 
     const nombreElemento =
         document.getElementById(
@@ -158,19 +126,12 @@ function actualizarIdentidad() {
             nombreUsuario;
     }
 
-
-    /* Título principal */
-
     if (sectionTitulo) {
 
         sectionTitulo.textContent =
             "Bienvenido, " +
             nombreUsuario;
     }
-
-
-    /* Nombre del perfil */
-
     const perfilNombre =
         document.getElementById(
             "perfilNombre"
@@ -181,10 +142,6 @@ function actualizarIdentidad() {
         perfilNombre.value =
             nombreUsuario;
     }
-
-
-    /* Si existe un avatar adicional */
-
     const avatarPerfil =
         document.getElementById(
             "avatarPerfil"
@@ -195,10 +152,6 @@ function actualizarIdentidad() {
         avatarPerfil.textContent =
             iniciales;
     }
-
-
-    /* Si existe otro nombre de perfil */
-
     const nombrePerfil =
         document.getElementById(
             "nombrePerfil"
@@ -210,115 +163,16 @@ function actualizarIdentidad() {
             nombreUsuario;
     }
 }
-
-
-/* =================================
-   DATOS DE EJEMPLO
-================================= */
-
-let servicios = [
-
-    {
-        id: 1,
-        nombre: "Limpieza general",
-        zona: "Bogotá",
-        estado: "Activo",
-        empleado: "Juan Rodríguez"
-    },
-
-    {
-        id: 2,
-        nombre: "Limpieza profunda",
-        zona: "Norte",
-        estado: "Pendiente",
-        empleado: "María López"
-    },
-
-    {
-        id: 3,
-        nombre: "Mantenimiento",
-        zona: "Centro",
-        estado: "Finalizado",
-        empleado: "Pedro Gómez"
-    }
-
-];
-
-
-let contratos = [
-
-    {
-        id: 1,
-        numero: "CT-001",
-        ubicacion: "Bogotá",
-        fechaInicio: "2026-09-01",
-        fechaFin: "2026-12-01",
-        valorTotal: 2500000
-    }
-
-];
-
-
-let pagos = [
-
-    {
-        id: 1,
-        contrato: "CT-001",
-        metodo: "Transferencia"
-    },
-
-    {
-        id: 2,
-        contrato: "CT-001",
-        metodo: "PSE"
-    }
-
-];
-
-
-let notificaciones = [
-
-    {
-        id: 1,
-        titulo: "Servicio programado",
-        mensaje:
-            "Tu servicio de limpieza está programado.",
-        fecha: "Hoy",
-        leida: false
-    },
-
-    {
-        id: 2,
-        titulo: "Contrato vigente",
-        mensaje:
-            "Tu contrato continúa activo.",
-        fecha: "Ayer",
-        leida: false
-    },
-
-    {
-        id: 3,
-        titulo: "POWER CLEAN",
-        mensaje:
-            "Gracias por utilizar nuestros servicios.",
-        fecha: "Hace 2 días",
-        leida: true
-    }
-
-];
-
-
-/* =================================
-   NAVEGACIÓN
-================================= */
-
+let servicios = [];
+let contratos = [];
+let pagos = [];
+let notificaciones = [];
 const titulos = {
 
     inicio: {
         eyebrow: "PANEL DE CLIENTE",
         titulo: "Bienvenido, "
     },
-
     servicios: {
         eyebrow: "MIS SERVICIOS",
         titulo: "Servicios contratados"
@@ -328,17 +182,22 @@ const titulos = {
         eyebrow: "MI CONTRATO",
         titulo: "Información del contrato"
     },
-
     pagos: {
         eyebrow: "MIS PAGOS",
         titulo: "Historial de pagos"
     },
-
     notificaciones: {
         eyebrow: "NOTIFICACIONES",
         titulo: "Centro de notificaciones"
     },
-
+    solicitar: {
+        eyebrow: "NUEVA SOLICITUD",
+        titulo: "Solicitar servicio o contrato"
+    },
+    solicitudes: {
+        eyebrow: "SEGUIMIENTO",
+        titulo: "Mis solicitudes"
+    },
     perfil: {
         eyebrow: "MI PERFIL",
         titulo: "Información de mi cuenta"
@@ -405,11 +264,6 @@ function mostrarSeccion(nombre) {
     });
 }
 
-
-/* =================================
-   EVENTOS DE NAVEGACIÓN
-================================= */
-
 navLinks.forEach(link => {
 
     link.addEventListener(
@@ -427,13 +281,8 @@ navLinks.forEach(link => {
 
 });
 
-
-/* =================================
-   BOTONES DE ACCIONES
-================================= */
-
 document
-    .querySelectorAll(".accion")
+    .querySelectorAll(".accion, .btn-ir")
     .forEach(button => {
 
         button.addEventListener(
@@ -468,10 +317,6 @@ if (btnVerServicios) {
 
 }
 
-
-/* =================================
-   MENÚ MÓVIL
-================================= */
 
 if (menuToggle) {
 
@@ -522,12 +367,6 @@ function cerrarMenuMovil() {
     }
 
 }
-
-
-/* =================================
-   ESTADÍSTICAS
-================================= */
-
 function animarNumero(
     elemento,
     destino
@@ -611,12 +450,6 @@ function actualizarEstadisticas() {
     );
 
 }
-
-
-/* =================================
-   SERVICIOS
-================================= */
-
 function claseEstado(estado) {
 
     const valor =
@@ -631,7 +464,8 @@ function claseEstado(estado) {
 
 
     if (
-        valor.includes("activo")
+        valor.includes("activo") ||
+        valor.includes("programado")
     ) {
 
         return "activo";
@@ -670,139 +504,72 @@ function claseEstado(estado) {
 }
 
 
-function crearFilaServicio(
-    servicio
-) {
+function crearFilaServicio(servicio) {
 
-    const tr =
-        document.createElement(
-            "tr"
-        );
-
+    const tr = document.createElement("tr");
 
     tr.innerHTML = `
-
+        <td><strong>${esc(servicio.nombre)}</strong></td>
+        <td>${esc(servicio.direccion)}</td>
         <td>
-            <strong>
-                ${servicio.nombre}
-            </strong>
-        </td>
-
-        <td>
-            ${servicio.zona}
-        </td>
-
-        <td>
-            <span class="estado ${claseEstado(
-                servicio.estado
-            )}">
-                ${servicio.estado}
+            <span class="estado ${claseEstado(servicio.estado)}">
+                ${esc(servicio.estado)}
             </span>
         </td>
-
-        <td>
-            ${servicio.empleado}
-        </td>
-
+        <td>${esc(servicio.fecha)}</td>
     `;
 
-
-    tr.addEventListener(
-        "click",
-        () => {
-
-            mostrarToast(
-                "Servicio",
-                `${servicio.nombre} · ${servicio.estado}`
-            );
-
-        }
-    );
-
+    tr.addEventListener("click", () => {
+        mostrarToast(
+            "Servicio",
+            `${servicio.nombre} · ${servicio.estado}`
+        );
+    });
 
     return tr;
 }
 
+function filaVacia(columnas, texto) {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td class="tabla-vacia" colspan="${columnas}">${texto}</td>`;
+    return tr;
+}
 
 function cargarServicios() {
 
-    const tablaInicio =
-        document.getElementById(
-            "tablaInicioServicios"
-        );
+    const tablaInicio = document.getElementById("tablaInicioServicios");
+    const tablaServicios = document.getElementById("tablaServicios");
 
-    const tablaServicios =
-        document.getElementById(
-            "tablaServicios"
-        );
-
-
-    if (!tablaInicio ||
-        !tablaServicios) {
-
+    if (!tablaInicio || !tablaServicios) {
         return;
     }
 
-
     tablaInicio.innerHTML = "";
-
     tablaServicios.innerHTML = "";
 
+    if (servicios.length === 0) {
+        const msg = "Aún no tienes servicios aprobados. Pídelos en «Solicitar» y revisa «Mis solicitudes».";
+        tablaInicio.appendChild(filaVacia(4, msg));
+        tablaServicios.appendChild(filaVacia(4, msg));
+    }
 
-    servicios.forEach(
-        servicio => {
+    servicios.forEach(servicio => {
+        tablaInicio.appendChild(crearFilaServicio(servicio));
+        tablaServicios.appendChild(crearFilaServicio(servicio));
+    });
 
-            tablaInicio.appendChild(
-                crearFilaServicio(
-                    servicio
-                )
-            );
+    const total = servicios.length;
 
-            tablaServicios.appendChild(
-                crearFilaServicio(
-                    servicio
-                )
-            );
-
-        }
-    );
-
-
-    const total =
-        servicios.length;
-
-
-    const conteoInicio =
-        document.getElementById(
-            "conteoInicioServicios"
-        );
-
+    const conteoInicio = document.getElementById("conteoInicioServicios");
     if (conteoInicio) {
-
-        conteoInicio.textContent =
-            `${total} en total`;
-
+        conteoInicio.textContent = `${total} en total`;
     }
 
-
-    const conteoServicios =
-        document.getElementById(
-            "conteoServicios"
-        );
-
+    const conteoServicios = document.getElementById("conteoServicios");
     if (conteoServicios) {
-
-        conteoServicios.textContent =
-            `${total} en total`;
-
+        conteoServicios.textContent = `${total} en total`;
     }
-
 }
-
-
-/* =================================
-   CONTRATO
-================================= */
 
 function formatearFecha(fecha) {
 
@@ -842,354 +609,165 @@ function formatearMoneda(valor) {
 
 function cargarContrato() {
 
-    const contrato =
-        contratos[0];
+    const contrato = contratos[0];
 
+    const vacio = document.getElementById("contratoVacio");
+    const datos = document.getElementById("contratoDatos");
+    const estado = document.getElementById("estadoContrato");
 
     if (!contrato) {
+        if (vacio) vacio.classList.remove("oculto");
+        if (datos) datos.classList.add("oculto");
+        if (estado) estado.classList.add("oculto");
         return;
     }
 
+    if (vacio) vacio.classList.add("oculto");
+    if (datos) datos.classList.remove("oculto");
 
-    const numero =
-        document.getElementById(
-            "contratoNumero"
-        );
+    const poner = (id, valor) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = valor;
+    };
 
-    if (numero) {
-
-        numero.textContent =
-            contrato.numero;
-
-    }
-
-
-    const ubicacion =
-        document.getElementById(
-            "contratoUbicacion"
-        );
-
-    if (ubicacion) {
-
-        ubicacion.textContent =
-            contrato.ubicacion;
-
-    }
-
-
-    const inicio =
-        document.getElementById(
-            "contratoInicio"
-        );
-
-    if (inicio) {
-
-        inicio.textContent =
-            formatearFecha(
-                contrato.fechaInicio
-            );
-
-    }
-
-
-    const fin =
-        document.getElementById(
-            "contratoFin"
-        );
-
-    if (fin) {
-
-        fin.textContent =
-            formatearFecha(
-                contrato.fechaFin
-            );
-
-    }
-
-
-    const valor =
-        document.getElementById(
-            "contratoValor"
-        );
-
-    if (valor) {
-
-        valor.textContent =
-            formatearMoneda(
-                contrato.valorTotal
-            );
-
-    }
-
-
-    actualizarEstadoContrato(
-        contrato.fechaFin
+    poner("contratoNumero", contrato.numero);
+    poner("contratoServicio", contrato.servicio || "-");
+    poner("contratoUbicacion", contrato.ubicacion);
+    poner("contratoFrecuencia", contrato.frecuencia || "-");
+    poner("contratoInicio", formatearFecha(contrato.fechaInicio));
+    poner("contratoFin", formatearFecha(contrato.fechaFin));
+    poner(
+        "contratoValor",
+        contrato.valorTotal ? formatearMoneda(contrato.valorTotal) : "Por definir con el supervisor"
     );
 
-}
+    if (estado) {
+        const hoy = new Date().toISOString().slice(0, 10);
+        const vencido = contrato.fechaFin && contrato.fechaFin < hoy;
+        const porIniciar = contrato.fechaInicio && contrato.fechaInicio > hoy;
 
-
-function actualizarEstadoContrato(
-    fechaFin
-) {
-
-    const elemento =
-        document.getElementById(
-            "estadoContrato"
-        );
-
-
-    if (!elemento ||
-        !fechaFin) {
-
-        return;
+        estado.classList.remove("oculto");
+        estado.textContent = vencido ? "● Finalizado" : porIniciar ? "● Por iniciar" : "● Vigente";
     }
-
-
-    const hoy =
-        new Date();
-
-
-    const fin =
-        new Date(
-            fechaFin +
-            "T00:00:00"
-        );
-
-
-    if (fin < hoy) {
-
-        elemento.textContent =
-            "● Vencido";
-
-        elemento.style.color =
-            "#ff9696";
-
-        elemento.style.background =
-            "rgba(255,70,70,0.08)";
-
-    } else {
-
-        elemento.textContent =
-            "● Vigente";
-
-    }
-
 }
-
-
-/* =================================
-   PAGOS
-================================= */
 
 function cargarPagos() {
 
-    const tabla =
-        document.getElementById(
-            "tablaPagos"
-        );
-
+    const tabla = document.getElementById("tablaPagos");
 
     if (!tabla) {
         return;
     }
 
-
     tabla.innerHTML = "";
 
-
-    pagos.forEach(
-        pago => {
-
-            const fila =
-                document.createElement(
-                    "tr"
-                );
-
-
-            fila.innerHTML = `
-
-                <td>
-                    #${pago.id}
-                </td>
-
-                <td>
-                    ${pago.contrato}
-                </td>
-
-                <td>
-
-                    <span class="estado activo">
-                        ${pago.metodo}
-                    </span>
-
-                </td>
-
-            `;
-
-
-            tabla.appendChild(
-                fila
-            );
-
-        }
-    );
-
-
-    const conteo =
-        document.getElementById(
-            "conteoPagos"
-        );
-
-
-    if (conteo) {
-
-        conteo.textContent =
-            `${pagos.length} registrados`;
-
+    if (pagos.length === 0) {
+        tabla.appendChild(filaVacia(3, "Aún no tienes pagos registrados."));
     }
 
-}
+    pagos.forEach(pago => {
 
+        const fila = document.createElement("tr");
+
+        fila.innerHTML = `
+            <td>#${esc(pago.id)}</td>
+            <td>${esc(pago.contrato)}</td>
+            <td><span class="estado activo">${esc(pago.metodo)}</span></td>
+        `;
+
+        tabla.appendChild(fila);
+    });
+
+    const conteo = document.getElementById("conteoPagos");
+
+    if (conteo) {
+        conteo.textContent = `${pagos.length} registrados`;
+    }
+}
 
 /* =================================
    NOTIFICACIONES
 ================================= */
 
+function esc(valor) {
+    const div = document.createElement("div");
+    div.textContent = valor ?? "";
+    return div.innerHTML;
+}
+
 function cargarNotificaciones() {
 
-    const lista =
-        document.getElementById(
-            "listaNotif"
-        );
-
+    const lista = document.getElementById("listaNotif");
 
     if (!lista) {
         return;
     }
 
-
     lista.innerHTML = "";
 
+    // Las de la nube (Firestore) llegan desde solicitudes.js
+    const todas = [
+        ...(window.notificacionesNube || []),
+        ...notificaciones
+    ];
 
-    const noLeidas =
-        notificaciones.filter(
-            n => !n.leida
-        ).length;
+    const noLeidas = todas.filter(n => !n.leida).length;
 
-
-    const badge =
-        document.getElementById(
-            "badgeNotif"
-        );
-
+    const badge = document.getElementById("badgeNotif");
 
     if (badge) {
-
-        if (noLeidas > 0) {
-
-            badge.textContent =
-                noLeidas;
-
-            badge.classList.add(
-                "visible"
-            );
-
-        } else {
-
-            badge.textContent =
-                "0";
-
-            badge.classList.remove(
-                "visible"
-            );
-
-        }
-
+        badge.textContent = noLeidas > 0 ? noLeidas : "0";
+        badge.classList.toggle("visible", noLeidas > 0);
     }
 
+    if (todas.length === 0) {
+        lista.innerHTML = `<li class="vacio-bloque">No tienes notificaciones por ahora.</li>`;
+        return;
+    }
 
-    notificaciones.forEach(
-        notificacion => {
+    todas.forEach(notificacion => {
 
-            const li =
-                document.createElement(
-                    "li"
-                );
+        const li = document.createElement("li");
+        li.className = "notificacion";
 
+        li.innerHTML = `
+            <span class="notificacion-icono">
+                ${notificacion.leida ? "✓" : "!"}
+            </span>
+            <div>
+                <strong>${esc(notificacion.titulo)}</strong>
+                <p>${esc(notificacion.mensaje)}</p>
+            </div>
+            <small>${esc(notificacion.fecha)}</small>
+        `;
 
-            li.className =
-                "notificacion";
+        li.addEventListener("click", () => {
 
-
-            li.innerHTML = `
-
-                <span class="notificacion-icono">
-                    ${
-                        notificacion.leida
-                            ? "✓"
-                            : "!"
-                    }
-                </span>
-
-                <div>
-
-                    <strong>
-                        ${notificacion.titulo}
-                    </strong>
-
-                    <p>
-                        ${notificacion.mensaje}
-                    </p>
-
-                </div>
-
-                <small>
-                    ${notificacion.fecha}
-                </small>
-
-            `;
-
-
-            li.addEventListener(
-                "click",
-                () => {
-
-                    notificacion.leida =
-                        true;
-
-
-                    cargarNotificaciones();
-
-
-                    mostrarToast(
-                        "Notificación",
-                        "Marcada como leída"
-                    );
-
+            if (notificacion.nube) {
+                if (window.marcarLeidaNube) {
+                    window.marcarLeidaNube(notificacion.id);
                 }
-            );
+            } else {
+                notificacion.leida = true;
+                cargarNotificaciones();
+            }
 
+            mostrarToast("Notificación", "Marcada como leída");
+        });
 
-            lista.appendChild(
-                li
-            );
-
-        }
-    );
-
+        lista.appendChild(li);
+    });
 }
-
-
-/* =================================
-   MARCAR TODAS
-================================= */
 
 if (marcarTodas) {
 
     marcarTodas.addEventListener(
         "click",
         () => {
+            if (window.marcarTodasNube) {
+                window.marcarTodasNube();
+            }
+
 
             notificaciones.forEach(
                 notificacion => {
@@ -1215,10 +793,6 @@ if (marcarTodas) {
 }
 
 
-/* =================================
-   PERFIL
-================================= */
-
 let modoEdicion = false;
 
 
@@ -1238,9 +812,7 @@ if (btnEditar) {
 
 
             const campos =
-                formPerfil.querySelectorAll(
-                    "input"
-                );
+                formPerfil.querySelectorAll("input:not([data-fijo])");
 
 
             campos.forEach(
@@ -1289,7 +861,6 @@ if (formPerfil) {
             event.preventDefault();
 
 
-            /* Nombre */
 
             const campoNombre =
                 document.getElementById(
@@ -1305,7 +876,6 @@ if (formPerfil) {
             }
 
 
-            /* Teléfono */
 
             const campoTelefono =
                 document.getElementById(
@@ -1321,7 +891,6 @@ if (formPerfil) {
             }
 
 
-            /* Correo */
 
             const campoCorreo =
                 document.getElementById(
@@ -1337,7 +906,6 @@ if (formPerfil) {
             }
 
 
-            /* Dirección */
 
             const campoDireccion =
                 document.getElementById(
@@ -1353,8 +921,6 @@ if (formPerfil) {
             }
 
 
-            /* Guardar cambios localmente */
-
             localStorage.setItem(
                 "usuarioLogueado",
                 JSON.stringify(
@@ -1362,16 +928,18 @@ if (formPerfil) {
                 )
             );
 
+            window.dispatchEvent(
+                new CustomEvent("perfil-guardado", { detail: usuario })
+            );
 
-            /* Actualizar pantalla */
+
+
 
             actualizarIdentidad();
 
 
             const campos =
-                formPerfil.querySelectorAll(
-                    "input"
-                );
+                formPerfil.querySelectorAll("input:not([data-fijo])");
 
 
             campos.forEach(
@@ -1445,10 +1013,6 @@ if (formPerfil) {
 }
 
 
-/* =================================
-   TOAST
-================================= */
-
 let toastTimeout;
 
 
@@ -1521,10 +1085,6 @@ function mostrarToast(
 }
 
 
-/* =================================
-   REFRESCAR
-================================= */
-
 if (btnRefrescar) {
 
     btnRefrescar.addEventListener(
@@ -1575,11 +1135,6 @@ if (btnRefrescar) {
 
 }
 
-
-/* =================================
-   CERRAR SESIÓN
-================================= */
-
 if (btnCerrarSesion) {
 
     btnCerrarSesion.addEventListener(
@@ -1596,15 +1151,9 @@ if (btnCerrarSesion) {
                 return;
             }
 
-
-            /* Eliminar sesión actual */
-
             localStorage.removeItem(
                 "usuarioLogueado"
             );
-
-
-            /* Limpiar posibles sesiones antiguas */
 
             localStorage.removeItem(
                 "usuario"
@@ -1619,8 +1168,6 @@ if (btnCerrarSesion) {
             );
 
 
-            /* Volver al login */
-
             window.location.href =
                 "../inicio de sistema/login.html";
 
@@ -1630,13 +1177,33 @@ if (btnCerrarSesion) {
 }
 
 
-/* =================================
-   CARGAR DATOS INICIALES
-================================= */
+function rellenarPerfil() {
+
+    const poner = (id, valor) => {
+        const el = document.getElementById(id);
+        if (el) el.value = valor || "";
+    };
+
+    poner("perfilUsuario", usuario.usuario);
+    poner("perfilTelefono", usuario.telefono);
+    poner("perfilCorreo", usuario.correo);
+    poner("perfilDireccion", usuario.direccion);
+}
+
+window.actualizarDatosCliente = function (nuevosServicios, nuevosContratos, nuevosPagos) {
+    servicios = nuevosServicios || [];
+    contratos = nuevosContratos || [];
+    pagos = nuevosPagos || [];
+
+    cargarServicios();
+    cargarContrato();
+    cargarPagos();
+    actualizarEstadisticas();
+};
 
 function iniciarPanel() {
-
     actualizarIdentidad();
+    rellenarPerfil();
 
     cargarServicios();
 
@@ -1652,11 +1219,6 @@ function iniciarPanel() {
 
 
 iniciarPanel();
-
-
-/* =================================
-   ACTUALIZACIÓN AUTOMÁTICA
-================================= */
 
 setInterval(
     () => {

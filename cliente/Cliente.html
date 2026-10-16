@@ -77,6 +77,25 @@
                 <span>Mi Contrato</span>
 
             </a>
+            <a
+                href="#"
+                class="nav-link"
+                data-section="solicitar">
+                <span class="nav-icon">+</span>
+                <span>Solicitar</span>
+            </a>
+            <a
+                href="#"
+                class="nav-link"
+                data-section="solicitudes">
+                <span class="nav-icon">≡</span>
+                <span>Mis solicitudes</span>
+                <span
+                    class="badge"
+                    id="badgeSolicitudes">
+                    0
+                </span>
+            </a>
 
 
             <a
@@ -185,7 +204,7 @@
 
                 <h1 id="sectionTitulo">
 
-                    Bienvenido, Carlos Pérez
+                    Bienvenido
 
                 </h1>
 
@@ -207,7 +226,7 @@
                     class="avatar"
                     id="avatar">
 
-                    CP
+                    CL
 
                 </div>
 
@@ -215,13 +234,13 @@
 
                     <strong id="nombreUsuario">
 
-                        Carlos Pérez
+                        Cliente
 
                     </strong>
 
                     <small>
 
-                        Cliente · CT-001
+                        Cliente
 
                     </small>
 
@@ -441,11 +460,11 @@
 
                             <th>Servicio</th>
 
-                            <th>Zona</th>
+                            <th>Dirección</th>
 
                             <th>Estado</th>
 
-                            <th>Empleado</th>
+                            <th>Fecha</th>
 
                         </tr>
 
@@ -466,6 +485,20 @@
             <!-- ACCIONES RÁPIDAS -->
 
             <div class="acciones">
+                <button
+                    class="accion"
+                    data-go="solicitar">
+                    <span>+</span>
+                    <div>
+                        <strong>
+                            Solicitar servicio o contrato
+                        </strong>
+                        <small>
+                            Envía tu pedido al supervisor
+                        </small>
+                    </div>
+                    <b>→</b>
+                </button>
 
                 <button
                     class="accion"
@@ -593,11 +626,11 @@
 
                             <th>Servicio</th>
 
-                            <th>Zona</th>
+                            <th>Dirección</th>
 
                             <th>Estado</th>
 
-                            <th>Empleado</th>
+                            <th>Fecha</th>
 
                         </tr>
 
@@ -628,115 +661,74 @@
             <div class="panel panel-contrato">
 
                 <div class="panel-header">
-
                     <div>
-
-                        <span class="panel-etiqueta">
-                            DOCUMENTO
-                        </span>
-
-                        <h3>
-                            Mi contrato
-                        </h3>
-
+                        <span class="panel-etiqueta">DOCUMENTO</span>
+                        <h3>Mi contrato</h3>
                     </div>
-
-                    <span
-                        class="pill pill--curso">
-
-                        ● Vigente
-
-                    </span>
-
+                    <span class="pill pill--curso oculto" id="estadoContrato">● Vigente</span>
                 </div>
 
-
-                <div class="contrato-grid">
-
-
-                    <div class="dato">
-
-                        <span>
-                            Número de contrato
-                        </span>
-
-                        <strong id="contratoNumero">
-                            CT-001
-                        </strong>
-
-                    </div>
-
-
-                    <div class="dato">
-
-                        <span>
-                            Ubicación
-                        </span>
-
-                        <strong id="contratoUbicacion">
-                            Bogotá
-                        </strong>
-
-                    </div>
-
-
-                    <div class="dato">
-
-                        <span>
-                            Fecha de inicio
-                        </span>
-
-                        <strong id="contratoInicio">
-                            01/09/2026
-                        </strong>
-
-                    </div>
-
-
-                    <div class="dato">
-
-                        <span>
-                            Fecha de finalización
-                        </span>
-
-                        <strong id="contratoFin">
-                            01/12/2026
-                        </strong>
-
-                    </div>
-
-
-                    <div class="dato dato-ancho">
-
-                        <span>
-                            Valor total
-                        </span>
-
-                        <strong
-                            class="valor"
-                            id="contratoValor">
-
-                            $2.500.000
-
-                        </strong>
-
-                    </div>
-
+                <!-- Sin contrato aprobado -->
+                <div class="vacio-bloque" id="contratoVacio">
+                    <strong>Aún no tienes un contrato aprobado</strong>
+                    Cuando el supervisor apruebe tu solicitud de contrato,
+                    aquí verás sus datos.
+                    <br>
+                    <button type="button" class="btn-ir" data-go="solicitar">
+                        Pedir un contrato
+                    </button>
                 </div>
 
+                <!-- Con contrato aprobado -->
+                <div id="contratoDatos" class="oculto">
 
-                <div class="contrato-nota">
+                    <div class="contrato-grid">
 
-                    <span>ℹ</span>
+                        <div class="dato">
+                            <span>Número de contrato</span>
+                            <strong id="contratoNumero">-</strong>
+                        </div>
 
-                    <p>
+                        <div class="dato">
+                            <span>Servicio</span>
+                            <strong id="contratoServicio">-</strong>
+                        </div>
 
-                        Si necesitas modificar tu contrato,
-                        comunícate con tu asesor comercial.
-                        Desde aquí puedes consultar la
-                        información de tu contrato.
+                        <div class="dato">
+                            <span>Ubicación</span>
+                            <strong id="contratoUbicacion">-</strong>
+                        </div>
 
-                    </p>
+                        <div class="dato">
+                            <span>Frecuencia</span>
+                            <strong id="contratoFrecuencia">-</strong>
+                        </div>
+
+                        <div class="dato">
+                            <span>Fecha de inicio</span>
+                            <strong id="contratoInicio">-</strong>
+                        </div>
+
+                        <div class="dato">
+                            <span>Fecha de finalización</span>
+                            <strong id="contratoFin">-</strong>
+                        </div>
+
+                        <div class="dato dato-ancho">
+                            <span>Valor total</span>
+                            <strong class="valor" id="contratoValor">-</strong>
+                        </div>
+
+                    </div>
+
+                    <div class="contrato-nota">
+                        <span>ℹ</span>
+                        <p>
+                            Si necesitas modificar tu contrato,
+                            envía una nueva solicitud o comunícate
+                            con tu asesor comercial.
+                        </p>
+                    </div>
 
                 </div>
 
@@ -744,6 +736,204 @@
 
         </section>
 
+
+
+        <!-- ==================================================
+             SOLICITAR SERVICIO / CONTRATO
+        =================================================== -->
+        <section
+            class="contenido"
+            id="sec-solicitar">
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <div>
+                        <span class="panel-etiqueta">NUEVA SOLICITUD</span>
+                        <h3>¿Qué necesitas?</h3>
+                    </div>
+                </div>
+
+                <p class="pista">
+                    Tu solicitud le llega al supervisor de POWER CLEAN.
+                    Él la revisa y te responde por la sección de
+                    notificaciones.
+                </p>
+
+                <div class="sol-tabs">
+                    <button type="button" class="sol-tab activo" data-form="servicio">
+                        🧹 Pedir un servicio
+                    </button>
+                    <button type="button" class="sol-tab" data-form="contrato">
+                        📄 Pedir un contrato
+                    </button>
+                </div>
+
+                <!-- ============ FORMULARIO SERVICIO ============ -->
+                <form id="formServicio" class="sol-form">
+
+                    <div class="sol-fila">
+                        <div class="campo">
+                            <label for="srvTipo">Tipo de servicio</label>
+                            <select id="srvTipo" required>
+                                <option value="">Selecciona una opción</option>
+                                <option>Limpieza general</option>
+                                <option>Limpieza profunda</option>
+                                <option>Desinfección</option>
+                                <option>Lavado de vidrios</option>
+                                <option>Mantenimiento</option>
+                                <option>Otro</option>
+                            </select>
+                        </div>
+
+                        <div class="campo">
+                            <label for="srvFecha">Fecha deseada</label>
+                            <input type="date" id="srvFecha" required>
+                        </div>
+                    </div>
+
+                    <div class="sol-fila">
+                        <div class="campo">
+                            <label for="srvJornada">Jornada</label>
+                            <select id="srvJornada" required>
+                                <option value="">Selecciona una opción</option>
+                                <option>Mañana</option>
+                                <option>Tarde</option>
+                                <option>Noche</option>
+                            </select>
+                        </div>
+
+                        <div class="campo">
+                            <label for="srvTelefono">Teléfono de contacto</label>
+                            <input type="tel" id="srvTelefono" maxlength="20" placeholder="300 000 0000" required>
+                        </div>
+                    </div>
+
+                    <div class="campo">
+                        <label for="srvDireccion">Dirección del servicio</label>
+                        <input type="text" id="srvDireccion" maxlength="150" placeholder="Calle, barrio, ciudad" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="srvDescripcion">Detalles</label>
+                        <textarea id="srvDescripcion" rows="4" maxlength="800"
+                            placeholder="Cuéntanos qué necesitas: tamaño del lugar, zonas, tareas especiales..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primario" id="btnEnviarServicio">
+                        📤 Enviar solicitud de servicio
+                    </button>
+                </form>
+
+                <!-- ============ FORMULARIO CONTRATO ============ -->
+                <form id="formContrato" class="sol-form oculto">
+
+                    <div class="sol-fila">
+                        <div class="campo">
+                            <label for="conServicio">Servicio principal</label>
+                            <select id="conServicio" required>
+                                <option value="">Selecciona una opción</option>
+                                <option>Limpieza general</option>
+                                <option>Limpieza profunda</option>
+                                <option>Desinfección</option>
+                                <option>Lavado de vidrios</option>
+                                <option>Mantenimiento</option>
+                                <option>Paquete completo</option>
+                            </select>
+                        </div>
+
+                        <div class="campo">
+                            <label for="conFrecuencia">Frecuencia</label>
+                            <select id="conFrecuencia" required>
+                                <option value="">Selecciona una opción</option>
+                                <option>Diaria</option>
+                                <option>Semanal</option>
+                                <option>Quincenal</option>
+                                <option>Mensual</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="sol-fila">
+                        <div class="campo">
+                            <label for="conInicio">Fecha de inicio deseada</label>
+                            <input type="date" id="conInicio" required>
+                        </div>
+
+                        <div class="campo">
+                            <label for="conDuracion">Duración</label>
+                            <select id="conDuracion" required>
+                                <option value="">Selecciona una opción</option>
+                                <option value="3">3 meses</option>
+                                <option value="6">6 meses</option>
+                                <option value="12">12 meses</option>
+                                <option value="24">24 meses</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="sol-fila">
+                        <div class="campo">
+                            <label for="conArea">Área aproximada en m² (opcional)</label>
+                            <input type="number" id="conArea" min="1" max="100000" placeholder="Ej: 250">
+                        </div>
+
+                        <div class="campo">
+                            <label for="conTelefono">Teléfono de contacto</label>
+                            <input type="tel" id="conTelefono" maxlength="20" placeholder="300 000 0000" required>
+                        </div>
+                    </div>
+
+                    <div class="campo">
+                        <label for="conUbicacion">Ubicación del contrato</label>
+                        <input type="text" id="conUbicacion" maxlength="150" placeholder="Dirección o sede donde se prestará el servicio" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="conDescripcion">Detalles</label>
+                        <textarea id="conDescripcion" rows="4" maxlength="800"
+                            placeholder="Cuéntanos qué esperas del contrato, horarios, requisitos especiales..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primario" id="btnEnviarContrato">
+                        📤 Enviar solicitud de contrato
+                    </button>
+                </form>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             MIS SOLICITUDES
+        =================================================== -->
+        <section
+            class="contenido"
+            id="sec-solicitudes">
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <div>
+                        <span class="panel-etiqueta">SEGUIMIENTO</span>
+                        <h3>Mis solicitudes</h3>
+                    </div>
+                    <span class="panel-count" id="conteoSolicitudes">0 en total</span>
+                </div>
+
+                <p class="pista">
+                    Aquí ves en qué estado está cada pedido. Se actualiza
+                    solo cuando el supervisor lo revisa.
+                </p>
+
+                <div id="listaSolicitudes">
+                    <div class="sol-vacio">Aún no has enviado solicitudes.</div>
+                </div>
+
+            </div>
+
+        </section>
 
         <!-- ==================================================
              PAGOS
@@ -874,7 +1064,7 @@
                         <span
                             class="avatar avatar--grande">
 
-                            CP
+                            CL
 
                         </span>
 
@@ -885,11 +1075,11 @@
                             </span>
 
                             <h3>
-                                Carlos Pérez
+                                Cliente
                             </h3>
 
                             <span class="panel-count">
-                                Cliente desde el 01/09/2026
+                                Cliente ACSO
                             </span>
 
                         </div>
@@ -912,96 +1102,40 @@
                     id="formPerfil"
                     class="perfil-grid">
 
-
                     <div class="campo">
-
-                        <label>
-                            Nombre
-                        </label>
-
-                        <input
-                            type="text"
-                            value="Carlos Pérez"
-                            disabled>
-
+                        <label for="perfilNombre">Nombre</label>
+                        <input type="text" id="perfilNombre" disabled>
                     </div>
 
-
                     <div class="campo">
-
-                        <label>
-                            Cédula
-                        </label>
-
-                        <input
-                            type="text"
-                            value="100000001"
-                            disabled>
-
+                        <label for="perfilUsuario">Usuario</label>
+                        <input type="text" id="perfilUsuario" data-fijo disabled>
                     </div>
 
-
                     <div class="campo">
-
-                        <label for="perfilTelefono">
-                            Teléfono
-                        </label>
-
-                        <input
-                            type="tel"
-                            id="perfilTelefono"
-                            value="3001234567"
-                            disabled>
-
+                        <label for="perfilTelefono">Teléfono</label>
+                        <input type="tel" id="perfilTelefono" placeholder="Sin registrar" disabled>
                     </div>
 
-
                     <div class="campo">
-
-                        <label for="perfilCorreo">
-                            Correo
-                        </label>
-
-                        <input
-                            type="email"
-                            id="perfilCorreo"
-                            value="carlos.perez@gmail.com"
-                            disabled>
-
+                        <label for="perfilCorreo">Correo</label>
+                        <input type="email" id="perfilCorreo" placeholder="Sin registrar" disabled>
                     </div>
-
 
                     <div class="campo campo-ancho">
-
-                        <label for="perfilDireccion">
-                            Dirección
-                        </label>
-
-                        <input
-                            type="text"
-                            id="perfilDireccion"
-                            value="Calle 10 # 20-30"
-                            disabled>
-
+                        <label for="perfilDireccion">Dirección</label>
+                        <input type="text" id="perfilDireccion" placeholder="Sin registrar" disabled>
                     </div>
-
 
                     <button
                         type="submit"
                         class="btn-primario oculto"
                         id="btnGuardarPerfil">
-
                         ✓ Guardar cambios
-
                     </button>
 
-
-                    <p
-                        class="confirmacion"
-                        id="confirmacionPerfil">
-
+                    <p class="confirmacion" id="confirmacionPerfil">
                         Perfil actualizado correctamente.
-
                     </p>
 
                 </form>
@@ -1055,6 +1189,7 @@
 
 
 <script src="clientes.js"></script>
+<script type="module" src="solicitudes.js"></script>
 
 </body>
 </html>
