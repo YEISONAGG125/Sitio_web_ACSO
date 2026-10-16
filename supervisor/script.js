@@ -20,7 +20,8 @@ import {
     orderBy,
     serverTimestamp,
     COL_NOVEDADES,
-    COL_NOTIFICACIONES
+    COL_NOTIFICACIONES,
+    COL_SOLICITUDES
 } from "../FIREBASE/firebase.js";
 
 
@@ -194,8 +195,18 @@ function pintarContadores() {
 
     actualizarContador("totalNovedades", novedades.length);
 
-    ponerBadge("badgeNovedades", pendientes);
-    ponerBadge("badgeNotificaciones", pendientes);
+    actualizarBadges();
+}
+
+// Contadores rojos del menú (novedades + solicitudes pendientes)
+function actualizarBadges() {
+
+    const pendNov = novedades.filter(n => n.estado === "Pendiente").length;
+    const pendSol = solicitudes.filter(s => s.estado === "Pendiente").length;
+
+    ponerBadge("badgeNovedades", pendNov);
+    ponerBadge("badgeSolicitudes", pendSol);
+    ponerBadge("badgeNotificaciones", pendNov + pendSol);
 }
 
 function pintarNovedades() {
@@ -217,7 +228,7 @@ function pintarNovedades() {
 
     // Conservar foco / cursor si el supervisor está escribiendo
     const activo = document.activeElement;
-    const enfoque = activo && activo.classList?.contains("comentario-input")
+    const enfoque = activo && activo.classList?.contains("comentario-input") && lista.contains(activo)
         ? { id: activo.dataset.id, pos: activo.selectionStart }
         : null;
 
@@ -370,38 +381,338 @@ function pintarNotificaciones() {
 
     const lista = $("listaNotificaciones");
 
-    const recientes = novedades
-        .slice()
+    const items = [
+        ...novedades.map(n => ({ ...n, kind: "novedad" })),
+        ...solicitudes.map(s => ({ ...s, kind: "solicitud" }))
+    ]
         .sort((a, b) => ms(b.fecha_envio) - ms(a.fecha_envio))
-        .slice(0, 25);
+        .slice(0, 30);
 
-    if (recientes.length === 0) {
+    if (items.length === 0) {
         lista.innerHTML = `<div class="vacio">No hay notificaciones por ahora.</div>`;
         return;
     }
 
-    lista.innerHTML = recientes.map(n => `
-        <div class="notificacion ${n.estado === "Pendiente" ? "nueva" : ""}">
-            <div class="icono-notificacion">${n.es_incapacidad ? "🩺" : "🔔"}</div>
-            <div class="notificacion-texto">
-                <strong>
-                    ${n.es_incapacidad ? "Incapacidad" : "Novedad"} de ${esc(n.nombre_empleado || "empleado")}
-                    <span class="badge-estado ${claseEstado(n.estado)}">${esc(n.estado)}</span>
-                </strong>
-                <p>${esc(n.tipo_novedad)}${n.es_incapacidad && n.dias_incapacidad ? ` · ${n.dias_incapacidad} día(s)` : ""}: ${esc((n.descripcion || "").slice(0, 140))}${(n.descripcion || "").length > 140 ? "…" : ""}</p>
-                <small>${formatearFecha(n.fecha_envio)}</small>
-            </div>
-            <button type="button" class="btn-ver" data-ir="1">Ver</button>
-        </div>
-    `).join("");
+    lista.innerHTML = items.map(n => {
+
+        let icono, titulo, detalle, quien;
+
+        if (n.kind === "novedad") {
+            icono = n.es_incapacidad ? "🩺" : "🔔";
+            quien = n.nombre_empleado || "empleado";
+            titulo = `${n.es_incapacidad ? "Incapacidad" : "Novedad"} de ${esc(quien)}`;
+            detalle = `${esc(n.tipo_novedad)}${n.es_incapacidad && n.dias_incapacidad ? ` · ${n.dias_incapacidad} día(s)` : ""}: ${esc((n.descripcion || "").slice(0, 140))}${(n.descripcion || "").length > 140 ? "…" : ""}`;
+        } else {
+            icono = n.tipo === "Contrato" ? "📄" : "🧹";
+            quien = n.nombre_cliente || "cliente";
+            titulo = `Solicitud de ${n.tipo === "Contrato" ? "contrato" : "servicio"} de ${esc(quien)}`;
+            detalle = `${esc(n.servicio)} · ${esc(n.direccion)}`;
+        }
+
+        return `
+            <div class="notificacion ${n.estado === "Pendiente" ? "nueva" : ""}">
+                <div class="icono-notificacion">${icono}</div>
+                <div class="notificacion-texto">
+                    <strong>
+                        ${titulo}
+                        <span class="badge-estado ${claseEstado(n.estado)}">${esc(n.estado)}</span>
+                    </strong>
+                    <p>${detalle}</p>
+                    <small>${formatearFecha(n.fecha_envio)}</small>
+                </div>
+                <button type="button" class="btn-ver" data-ir="${n.kind}">Ver</button>
+            </div>`;
+    }).join("");
 }
 
 function configurarNotificaciones() {
     $("listaNotificaciones").addEventListener("click", (e) => {
-        if (!e.target.closest(".btn-ver")) return;
-        const tab = document.querySelectorAll(".tab")[2];     // Novedad laboral
-        window.mostrar("NovedadLaboral", tab);
+        const btn = e.target.closest(".btn-ver");
+        if (!btn) return;
+
+        if (btn.dataset.ir === "solicitud") {
+            window.mostrar("Solicitudes", $("tabSolicitudes"));
+        } else {
+            window.mostrar("NovedadLaboral", $("tabNovedades"));
+        }
     });
+}
+
+
+// =====================================================
+// SOLICITUDES DE CLIENTES (CONTRATOS Y SERVICIOS)
+// =====================================================
+
+let solicitudes = [];
+let primeraCargaSol = true;
+let filtroEstadoSol = "";
+const valoresBorrador = {};          // valores de contrato a medio escribir
+
+function escucharSolicitudes() {
+
+    const q = query(
+        collection(db, COL_SOLICITUDES),
+        orderBy("fecha_envio", "desc")
+    );
+
+    onSnapshot(q, (snap) => {
+
+        if (!primeraCargaSol) {
+            snap.docChanges().forEach(cambio => {
+                if (cambio.type === "added" && !cambio.doc.metadata.hasPendingWrites) {
+                    const s = cambio.doc.data();
+                    mostrarToast(
+                        `📑 Nueva solicitud de ${s.tipo === "Contrato" ? "contrato" : "servicio"} de ${s.nombre_cliente || "un cliente"}`
+                    );
+                }
+            });
+        }
+        primeraCargaSol = false;
+
+        solicitudes = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+        pintarContadoresSol();
+        pintarSolicitudes();
+        pintarNotificaciones();
+
+    }, (error) => {
+        console.error("Error Firestore (solicitudes):", error);
+        $("listaSolicitudesSup").innerHTML = `
+            <div class="vacio error">
+                ❌ No se pudieron cargar las solicitudes.
+                Revisa las reglas de Firestore (archivo firestore.rules).
+            </div>`;
+    });
+}
+
+function pintarContadoresSol() {
+
+    const cuenta = (e) => solicitudes.filter(s => s.estado === e).length;
+
+    actualizarContador("cntSolTodas", solicitudes.length);
+    actualizarContador("cntSolPendiente", cuenta("Pendiente"));
+    actualizarContador("cntSolVisto", cuenta("Visto"));
+    actualizarContador("cntSolRevision", cuenta("En revisión"));
+    actualizarContador("cntSolAprobada", cuenta("Aprobada"));
+    actualizarContador("cntSolRechazada", cuenta("Rechazada"));
+
+    actualizarContador("totalSolicitudes", solicitudes.length);
+
+    actualizarBadges();
+}
+
+function pintarSolicitudes() {
+
+    const lista = $("listaSolicitudesSup");
+
+    const texto = $("buscarSolicitud").value.trim().toLowerCase();
+    const tipo = $("filtroTipoSol").value;
+
+    const filtradas = solicitudes.filter(s => {
+        if (filtroEstadoSol && s.estado !== filtroEstadoSol) return false;
+        if (tipo && s.tipo !== tipo) return false;
+        if (texto) {
+            const pajar = `${s.nombre_cliente} ${s.direccion} ${s.servicio} ${s.descripcion} ${s.id_cliente}`.toLowerCase();
+            if (!pajar.includes(texto)) return false;
+        }
+        return true;
+    });
+
+    const activo = document.activeElement;
+    const enfoque = activo && activo.classList?.contains("comentario-input") && lista.contains(activo)
+        ? { id: activo.dataset.id, pos: activo.selectionStart }
+        : null;
+
+    const enfoqueValor = activo && activo.classList?.contains("valor-input") && lista.contains(activo)
+        ? activo.dataset.id
+        : null;
+
+    if (filtradas.length === 0) {
+        lista.innerHTML = `<div class="vacio">No hay solicitudes con esos filtros.</div>`;
+        return;
+    }
+
+    lista.innerHTML = filtradas.map(s => {
+
+        const esContrato = s.tipo === "Contrato";
+
+        const datos = esContrato
+            ? `<div class="datos-incapacidad">
+                   <span>🧹 ${esc(s.servicio)}</span>
+                   <span>🔁 ${esc(s.frecuencia)}</span>
+                   <span>📅 Inicio: ${formatearDia(s.fecha_inicio)}</span>
+                   <span>⏳ <b>${esc(s.duracion_meses)}</b> meses</span>
+                   ${s.area_m2 ? `<span>📐 ${esc(s.area_m2)} m²</span>` : ""}
+               </div>`
+            : `<div class="datos-incapacidad">
+                   <span>🧹 ${esc(s.servicio)}</span>
+                   <span>📅 ${formatearDia(s.fecha_deseada)}</span>
+                   <span>🕐 ${esc(s.jornada)}</span>
+               </div>`;
+
+        const comentario = borradores[s.id] ?? s.comentario_supervisor ?? "";
+
+        const botones = ESTADOS.map(e => `
+            <button type="button"
+                class="btn-estado ${claseEstado(e)} ${s.estado === e ? "actual" : ""}"
+                data-id="${s.id}" data-estado="${e}">
+                ${e}
+            </button>`).join("");
+
+        return `
+            <article class="novedad-card ${esContrato ? "es-contrato" : ""} ${s.estado === "Pendiente" ? "sin-revisar" : ""}">
+
+                <div class="novedad-cabecera">
+                    <div class="novedad-quien">
+                        <div class="avatar-mini">${esc((s.nombre_cliente || "?").charAt(0).toUpperCase())}</div>
+                        <div>
+                            <strong>${esc(s.nombre_cliente || "Cliente")}</strong>
+                            <small>ID ${esc(s.id_cliente)} · ${formatearFecha(s.fecha_envio)}</small>
+                        </div>
+                    </div>
+
+                    <div class="novedad-etiquetas">
+                        <span class="tipo-pill">${esContrato ? "📄 Contrato" : "🧹 Servicio"}</span>
+                        <span class="badge-estado ${claseEstado(s.estado)}">${esc(s.estado)}</span>
+                    </div>
+                </div>
+
+                ${datos}
+
+                <div class="contacto-sol">
+                    <span>📍 ${esc(s.direccion)}</span>
+                    ${s.telefono ? `<span>📞 ${esc(s.telefono)}</span>` : ""}
+                    ${s.correo ? `<span>✉️ ${esc(s.correo)}</span>` : ""}
+                </div>
+
+                ${s.descripcion ? `<p class="novedad-texto">${esc(s.descripcion)}</p>` : ""}
+
+                ${esContrato ? `
+                <div class="valor-contrato">
+                    <label>💰 Valor total del contrato (COP)</label>
+                    <input type="number" class="valor-input" data-id="${s.id}" min="0" step="1000"
+                        placeholder="Ej: 2500000"
+                        value="${esc(valoresBorrador[s.id] ?? s.valor_total ?? "")}">
+                </div>` : ""}
+
+                <textarea class="comentario-input"
+                    data-id="${s.id}"
+                    rows="2"
+                    placeholder="Respuesta para el cliente (precio, fecha confirmada, motivo...)">${esc(comentario)}</textarea>
+
+                <div class="acciones-estado">
+                    <span class="acciones-label">Marcar como:</span>
+                    ${botones}
+                </div>
+
+            </article>`;
+    }).join("");
+
+    if (enfoque) {
+        const el = lista.querySelector(`.comentario-input[data-id="${enfoque.id}"]`);
+        if (el) {
+            el.focus();
+            el.setSelectionRange(enfoque.pos, enfoque.pos);
+        }
+    }
+
+    if (enfoqueValor) {
+        lista.querySelector(`.valor-input[data-id="${enfoqueValor}"]`)?.focus();
+    }
+}
+
+async function cambiarEstadoSolicitud(idDoc, nuevoEstado) {
+
+    const s = solicitudes.find(x => x.id === idDoc);
+    if (!s) return;
+
+    const comentario = (borradores[idDoc] ?? s.comentario_supervisor ?? "").trim();
+
+    const valorPendiente = valoresBorrador[idDoc] !== undefined && valoresBorrador[idDoc] !== ""
+        && Number(valoresBorrador[idDoc]) !== Number(s.valor_total || 0);
+
+    if (s.estado === nuevoEstado && comentario === (s.comentario_supervisor || "") && !valorPendiente) {
+        return;
+    }
+
+    const queEs = s.tipo === "Contrato" ? "contrato" : "servicio";
+
+    const cambios = {
+        estado: nuevoEstado,
+        comentario_supervisor: comentario,
+        revisado_por: nombreSupervisor,
+        fecha_actualizacion: serverTimestamp()
+    };
+
+    // Valor del contrato (solo contratos y si el supervisor lo escribió)
+    const valorTexto = valoresBorrador[idDoc];
+    if (s.tipo === "Contrato" && valorTexto !== undefined && valorTexto !== "") {
+        const valor = Number(valorTexto);
+        if (isNaN(valor) || valor < 0) {
+            mostrarToast("❌ El valor del contrato no es válido");
+            return;
+        }
+        cambios.valor_total = valor;
+    }
+
+    try {
+        await updateDoc(doc(db, COL_SOLICITUDES, idDoc), cambios);
+
+        delete valoresBorrador[idDoc];
+
+        delete borradores[idDoc];
+
+        // Notificar al cliente
+        if (s.estado !== nuevoEstado || comentario) {
+            await addDoc(collection(db, COL_NOTIFICACIONES), {
+                id_cliente: String(s.id_cliente),
+                id_solicitud: idDoc,
+                titulo: `Tu solicitud de ${queEs} está: ${nuevoEstado}`,
+                mensaje: comentario
+                    ? `${s.servicio}: ${comentario}`
+                    : `El supervisor marcó tu solicitud de ${queEs} (${s.servicio}) como ${nuevoEstado}.`,
+                leida: false,
+                fecha: serverTimestamp()
+            });
+        }
+
+        mostrarToast(`✅ Solicitud marcada como ${nuevoEstado}`);
+
+    } catch (error) {
+        console.error("Error cambiando estado de solicitud:", error);
+        mostrarToast("❌ No se pudo actualizar. Revisa las reglas de Firestore.");
+    }
+}
+
+function configurarSolicitudes() {
+
+    const lista = $("listaSolicitudesSup");
+
+    lista.addEventListener("click", (e) => {
+        const btn = e.target.closest(".btn-estado");
+        if (btn) cambiarEstadoSolicitud(btn.dataset.id, btn.dataset.estado);
+    });
+
+    lista.addEventListener("input", (e) => {
+        if (e.target.classList.contains("comentario-input")) {
+            borradores[e.target.dataset.id] = e.target.value;
+        }
+        if (e.target.classList.contains("valor-input")) {
+            valoresBorrador[e.target.dataset.id] = e.target.value;
+        }
+    });
+
+    $("chipsEstadoSol").addEventListener("click", (e) => {
+        const chip = e.target.closest(".chip");
+        if (!chip) return;
+        document.querySelectorAll("#chipsEstadoSol .chip").forEach(c => c.classList.remove("activo"));
+        chip.classList.add("activo");
+        filtroEstadoSol = chip.dataset.estado;
+        pintarSolicitudes();
+    });
+
+    $("buscarSolicitud").addEventListener("input", pintarSolicitudes);
+    $("filtroTipoSol").addEventListener("change", pintarSolicitudes);
 }
 
 
@@ -576,7 +887,9 @@ async function cerrarSesion() {
 
 configurarNovedades();
 configurarNotificaciones();
+configurarSolicitudes();
 escucharNovedades();
+escucharSolicitudes();
 
 cargarPersonal();
 cargarContratos();

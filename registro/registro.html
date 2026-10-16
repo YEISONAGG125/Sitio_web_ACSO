@@ -1,21 +1,33 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>ACSO | Crear cuenta</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-    <!-- Hoja de estilos -->
-    <link rel="stylesheet" href="style.css">
+    <title>ACSO | Registro</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css">
+
 </head>
+
 
 <body>
 
-    <!-- Fondo decorativo -->
     <div class="background">
-        <div class="circle circle-1"></div>
-        <div class="circle circle-2"></div>
+
+        <div class="background-circle circle-one"></div>
+
+        <div class="background-circle circle-two"></div>
+
+        <div class="background-circle circle-three"></div>
+
     </div>
 
 
@@ -25,7 +37,7 @@
         <section class="info-panel">
 
             <a
-                href="../yeison/index.html"
+                href="../Yeison/index.html"
                 class="brand">
                 <span>
                     A C S O
@@ -147,152 +159,280 @@
 
         <section class="register-panel">
 
-            <form id="formRegistro" class="register-card">
 
-                <!-- Encabezado -->
-                <header class="register-header">
-                    <h1>Crear cuenta</h1>
-                    <p>Completa los datos para registrarte</p>
-                </header>
+            <form
+                id="formRegistro"
+                class="register-card">
+                <!-- TITULO -->
 
-                <!-- Mensajes de respuesta -->
-                <div id="mensaje" class="mensaje" role="status"
-                     aria-live="polite"></div>
+                <div class="register-header">
 
-                <!-- Nombre completo -->
+                    <h1>
+                        Crear cuenta
+                    </h1>
+
+                    <p>
+                        Completa los datos para registrarte
+                    </p>
+
+                </div>
+
+
+                <!-- MENSAJE -->
+
+                <div
+                    id="mensaje"
+                    class="mensaje">
+                </div>
+
+
+                <!-- =================================
+                     NOMBRE
+                ================================== -->
+
                 <div class="input-group">
-                    <label for="nombre">Nombre y apellido</label>
+
+                    <label for="nombre">
+                        Nombre y apellido
+                    </label>
 
                     <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            👤
+                        </span>
+
                         <input
                             type="text"
                             id="nombre"
-                            name="nombre"
-                            placeholder="Ingresa tu nombre completo"
-                            autocomplete="name"
                             required
-                        >
+                            placeholder="Ingresa tu nombre completo"
+                            autocomplete="name">
+
                     </div>
+
                 </div>
 
-                <!-- Cargo -->
+
+                <!-- =================================
+                     CARGO
+                ================================== -->
+
                 <div class="input-group">
-                    <label for="cargo">Cargo</label>
+
+                    <label for="cargo">
+                        Cargo
+                    </label>
 
                     <div class="input-wrapper">
-                        <select id="cargo" name="cargo" required>
-                            <option value="" disabled selected>
+
+                        <span class="input-icon">
+                            💼
+                        </span>
+
+                        <select
+                            id="cargo"
+                            required>
+
+                            <option value="">
                                 Seleccione su cargo
                             </option>
 
-                            <option value="empleado">Empleado</option>
-                            <option value="supervisor">Supervisor</option>
-                            <option value="cliente">Cliente</option>
+                            <option value="empleado">
+                                Empleado
+                            </option>
+
+                            <option value="supervisor">
+                                Supervisor
+                            </option>
+
+                            <option value="cliente">
+                                Cliente
+                            </option>
+
                         </select>
+
                     </div>
+
                 </div>
 
-                <!-- Correo electrónico -->
+
+                <!-- =================================
+                     CORREO
+                ================================== -->
+
                 <div class="input-group">
-                    <label for="correo">Correo electrónico</label>
+
+                    <label for="correo">
+                        Correo electrónico
+                    </label>
 
                     <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            ✉️
+                        </span>
+
                         <input
                             type="email"
                             id="correo"
-                            name="correo"
-                            placeholder="correo@ejemplo.com"
-                            autocomplete="email"
                             required
-                        >
+                            placeholder="correo@ejemplo.com"
+                            autocomplete="email">
+
                     </div>
+
                 </div>
 
-                <!-- Nombre de usuario -->
+
+                <!-- =================================
+                     USUARIO
+                ================================== -->
+
                 <div class="input-group">
-                    <label for="usuario">Usuario</label>
+
+                    <label for="usuario">
+                        Usuario
+                    </label>
 
                     <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            🔑
+                        </span>
+
                         <input
                             type="text"
                             id="usuario"
-                            name="usuario"
-                            placeholder="Crea tu nombre de usuario"
-                            autocomplete="username"
                             required
-                        >
+                            placeholder="Crea tu nombre de usuario"
+                            autocomplete="username">
+
                     </div>
+
                 </div>
 
-                <!-- Contraseña -->
+
+                <!-- =================================
+                     CONTRASEÑA
+                ================================== -->
+
                 <div class="input-group">
-                    <label for="password">Contraseña</label>
+
+                    <label for="password">
+                        Contraseña
+                    </label>
 
                     <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            🔒
+                        </span>
+
                         <input
                             type="password"
                             id="password"
-                            name="password"
-                            placeholder="Crea una contraseña"
-                            autocomplete="new-password"
                             required
-                        >
+                            placeholder="Crea una contraseña"
+                            autocomplete="new-password">
 
                         <button
                             type="button"
                             class="show-password"
-                            id="mostrarPassword"
-                            aria-label="Mostrar contraseña"
-                            aria-pressed="false"
-                        >
+                            id="mostrarPassword">
+
                             👁
+
                         </button>
+
                     </div>
+
                 </div>
 
-                <!-- Botón de registro -->
+
+                <!-- =================================
+                     BOTÓN REGISTRARSE
+                ================================== -->
+
                 <button
                     type="submit"
                     class="register-button"
-                    id="btnRegistro"
-                >
-                    <span id="btnText">Crear cuenta</span>
-                    <span class="arrow" id="btnArrow">→</span>
+                    id="btnRegistro">
+
+                    <span id="btnText">
+                        Crear cuenta
+                    </span>
+
+                    <span
+                        class="arrow"
+                        id="btnArrow">
+
+                        →
+
+                    </span>
+
                 </button>
 
-                <!-- Enlace para iniciar sesión -->
+
+                <!-- =================================
+                     SEPARADOR
+                ================================== -->
+
                 <div class="separator">
-                    ¿Ya tienes una cuenta?
+
+                    <span></span>
+
+                    <p>
+                        ¿Ya tienes una cuenta?
+                    </p>
+
+                    <span></span>
+
                 </div>
+
+
+                <!-- =================================
+                     VOLVER AL LOGIN
+                ================================== -->
 
                 <a
                     href="../inicio de sistema/login.html"
-                    class="login-link"
-                >
+                    class="login-link">
+
                     ← Iniciar sesión
+
                 </a>
 
-                <!-- Volver al inicio -->
+
+                <!-- =================================
+                     VOLVER AL INICIO
+                ================================== -->
+
                 <a
-                    href="../yeison/index.html"
+                    href="../Yeison/index.html"
                     class="back-home">
 
                     Volver al inicio
+
                 </a>
 
-                <!-- Pie de página -->
-                <footer class="footer-text">
+
+                <!-- FOOTER -->
+
+                <p class="footer-text">
+
                     ACSO • Trabajo fácil, rápido y seguro
-                </footer>
+
+                </p>
+
 
             </form>
 
         </section>
 
-    </main>
 
-    <!-- JavaScript del registro -->
-    <script src="javascript.js"></script>
+    </div>
 
 </body>
+<script type="module" src="javascript.js"></script>
 </html>

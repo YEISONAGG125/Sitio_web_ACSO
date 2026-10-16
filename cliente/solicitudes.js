@@ -1,12 +1,9 @@
-// =====================================================
-// PANEL DEL CLIENTE - SOLICITUDES DE SERVICIO Y CONTRATO
-// - Guarda cada pedido en Cloud Firestore (colección "solicitudes")
-// - Muestra el estado en vivo (Pendiente, Visto, Aprobada...)
-// - Recibe las respuestas del supervisor como notificaciones
-// =====================================================
 
 import {
     db,
+    rtdb,
+    ref,
+    update,
     collection,
     addDoc,
     updateDoc,
@@ -18,12 +15,6 @@ import {
     COL_SOLICITUDES,
     COL_NOTIFICACIONES
 } from "../FIREBASE/firebase.js";
-
-
-// =====================================================
-// SESIÓN DEL CLIENTE
-// =====================================================
-
 function leerSesion() {
     try {
         return JSON.parse(localStorage.getItem("usuarioLogueado")) || {};
@@ -31,14 +22,11 @@ function leerSesion() {
         return {};
     }
 }
-
 const sesion = leerSesion();
 
 if (String(sesion.cargo || localStorage.getItem("cargo") || "").toLowerCase() !== "cliente") {
     window.location.href = "../inicio de sistema/login.html";
 }
-
-// ID del cliente: id_cliente si existe; si no, el id del usuario en Firebase
 const idCliente = String(
     sesion.id_cliente ||
     sesion.id_usuario ||
@@ -52,12 +40,6 @@ const nombreCliente =
     sesion.nombre ||
     sesion.usuario ||
     "Cliente";
-
-
-// =====================================================
-// UTILIDADES
-// =====================================================
-
 const $ = (id) => document.getElementById(id);
 
 function esc(valor) {
@@ -65,12 +47,10 @@ function esc(valor) {
     div.textContent = valor ?? "";
     return div.innerHTML;
 }
-
 function ms(valor) {
     if (!valor) return 0;
     return valor.toMillis ? valor.toMillis() : new Date(valor).getTime();
 }
-
 function formatearFecha(valor) {
     if (!valor) return "ahora";
     const f = valor.toDate ? valor.toDate() : new Date(valor);
@@ -80,13 +60,11 @@ function formatearFecha(valor) {
         hour: "2-digit", minute: "2-digit"
     });
 }
-
 function formatearDia(iso) {
     if (!iso) return "-";
     const [a, m, d] = iso.split("-");
     return `${d}/${m}/${a}`;
 }
-
 function claseEstado(estado) {
     return "estado-" + String(estado || "Pendiente")
         .toLowerCase()
@@ -94,67 +72,50 @@ function claseEstado(estado) {
         .replace(/[\u0300-\u036f]/g, "")
         .replace(/\s+/g, "-");
 }
-
 function aviso(titulo, mensaje) {
     if (typeof window.mostrarToast === "function") {
         window.mostrarToast(titulo, mensaje);
     }
 }
-
+function sumarMeses(iso, meses) {
+    if (!iso || !meses) return "";
+    const [a, m, d] = iso.split("-").map(Number);
+    const f = new Date(a, m - 1 + meses, d);
+    const mm = String(f.getMonth() + 1).padStart(2, "0");
+    const dd = String(f.getDate()).padStart(2, "0");
+    return `${f.getFullYear()}-${mm}-${dd}`;
+}
 function hoyISO() {
     const h = new Date();
     h.setMinutes(h.getMinutes() - h.getTimezoneOffset());
     return h.toISOString().slice(0, 10);
 }
-
-
-// =====================================================
-// PESTAÑAS: SERVICIO / CONTRATO
-// =====================================================
-
 function configurarPestanas() {
 
     const tabs = document.querySelectorAll(".sol-tab");
-
     tabs.forEach(tab => {
         tab.addEventListener("click", () => {
-
             tabs.forEach(t => t.classList.remove("activo"));
             tab.classList.add("activo");
-
             $("formServicio").classList.toggle("oculto", tab.dataset.form !== "servicio");
             $("formContrato").classList.toggle("oculto", tab.dataset.form !== "contrato");
         });
     });
-
-    // No se puede pedir algo para una fecha pasada
     $("srvFecha").min = hoyISO();
     $("conInicio").min = hoyISO();
-
-    // Teléfono que ya tengamos en la sesión
     if (sesion.telefono) {
         $("srvTelefono").value = sesion.telefono;
         $("conTelefono").value = sesion.telefono;
     }
-
-    // Si el cliente llega desde el botón "Solicitar", se abre la pestaña de servicio
 }
-
-
-// =====================================================
-// ENVIAR SOLICITUD
-// =====================================================
-
 async function enviarSolicitud(datos, boton, textoBoton, formulario) {
 
     if (!idCliente) {
         aviso("Sesión", "No se encontró tu ID. Vuelve a iniciar sesión.");
         return;
     }
-
     boton.disabled = true;
     boton.textContent = "Enviando...";
-
     try {
         await addDoc(collection(db, COL_SOLICITUDES), {
             id_cliente: idCliente,
@@ -178,8 +139,6 @@ async function enviarSolicitud(datos, boton, textoBoton, formulario) {
             "Solicitud enviada",
             "El supervisor la recibirá y te responderá pronto."
         );
-
-        // Llevar al cliente a ver el seguimiento
         document.querySelector('.nav-link[data-section="solicitudes"]')?.click();
 
     } catch (error) {
@@ -195,8 +154,6 @@ async function enviarSolicitud(datos, boton, textoBoton, formulario) {
 }
 
 function configurarFormularios() {
-
-    // ------------ SERVICIO ------------
     $("formServicio").addEventListener("submit", (e) => {
         e.preventDefault();
 
@@ -215,8 +172,6 @@ function configurarFormularios() {
             $("formServicio")
         );
     });
-
-    // ------------ CONTRATO ------------
     $("formContrato").addEventListener("submit", (e) => {
         e.preventDefault();
 
@@ -240,12 +195,6 @@ function configurarFormularios() {
         );
     });
 }
-
-
-// =====================================================
-// MIS SOLICITUDES (TIEMPO REAL)
-// =====================================================
-
 function escucharSolicitudes() {
 
     const contenedor = $("listaSolicitudes");
@@ -254,21 +203,41 @@ function escucharSolicitudes() {
         contenedor.innerHTML = `<div class="sol-vacio">No se encontró tu ID de cliente.</div>`;
         return;
     }
-
     const q = query(
         collection(db, COL_SOLICITUDES),
         where("id_cliente", "==", idCliente)
     );
-
     onSnapshot(q, (snap) => {
-
         const lista = snap.docs
             .map(d => ({ id: d.id, ...d.data() }))
             .sort((a, b) => ms(b.fecha_envio) - ms(a.fecha_envio));
-
         $("conteoSolicitudes").textContent = `${lista.length} en total`;
+        const aprobadas = lista.filter(s => s.estado === "Aprobada");
+        const serviciosReales = aprobadas
+            .filter(s => s.tipo === "Servicio")
+            .map(s => ({
+                id: s.id,
+                nombre: s.servicio,
+                direccion: s.direccion,
+                fecha: formatearDia(s.fecha_deseada) + (s.jornada ? " · " + s.jornada : ""),
+                estado: "Programado"
+            }));
+        const contratosReales = aprobadas
+            .filter(s => s.tipo === "Contrato")
+            .map(s => ({
+                id: s.id,
+                numero: "CT-" + String(s.id).slice(-6).toUpperCase(),
+                servicio: s.servicio,
+                frecuencia: s.frecuencia,
+                ubicacion: s.direccion,
+                fechaInicio: s.fecha_inicio,
+                fechaFin: sumarMeses(s.fecha_inicio, s.duracion_meses),
+                valorTotal: Number(s.valor_total) || 0
+            }));
 
-        // Contador del menú: solicitudes que siguen en trámite
+        if (typeof window.actualizarDatosCliente === "function") {
+            window.actualizarDatosCliente(serviciosReales, contratosReales, []);
+        }
         const enTramite = lista.filter(s => s.estado === "Pendiente" || s.estado === "Visto" || s.estado === "En revisión").length;
         const badge = $("badgeSolicitudes");
         badge.textContent = enTramite;
@@ -278,28 +247,25 @@ function escucharSolicitudes() {
             contenedor.innerHTML = `<div class="sol-vacio">Aún no has enviado solicitudes.</div>`;
             return;
         }
-
         contenedor.innerHTML = lista.map(s => {
-
             const detalles = s.tipo === "Contrato"
                 ? `
                     <span>🧹 ${esc(s.servicio)}</span>
                     <span>🔁 ${esc(s.frecuencia)}</span>
                     <span>📅 Inicio: ${formatearDia(s.fecha_inicio)}</span>
                     <span>⏳ ${esc(s.duracion_meses)} meses</span>
-                    ${s.area_m2 ? `<span>📐 ${esc(s.area_m2)} m²</span>` : ""}`
+                    ${s.area_m2 ? `<span>📐 ${esc(s.area_m2)} m²</span>` : ""}
+                    ${s.valor_total ? `<span>💰 ${esc(Number(s.valor_total).toLocaleString("es-CO", { style: "currency", currency: "COP", maximumFractionDigits: 0 }))}</span>` : ""}`
                 : `
                     <span>🧹 ${esc(s.servicio)}</span>
                     <span>📅 ${formatearDia(s.fecha_deseada)}</span>
                     <span>🕐 ${esc(s.jornada)}</span>`;
-
             const respuesta = s.comentario_supervisor
                 ? `<div class="sol-respuesta">
                        <strong>Respuesta del supervisor:</strong>
                        ${esc(s.comentario_supervisor)}
                    </div>`
                 : "";
-
             return `
                 <div class="sol-item ${s.tipo === "Contrato" ? "es-contrato" : ""}">
                     <div class="sol-item-top">
@@ -313,7 +279,6 @@ function escucharSolicitudes() {
                     <small class="sol-fecha">Enviada: ${formatearFecha(s.fecha_envio)}</small>
                 </div>`;
         }).join("");
-
     }, (error) => {
         console.error("Error escuchando solicitudes:", error);
         contenedor.innerHTML = `
@@ -323,12 +288,6 @@ function escucharSolicitudes() {
             </div>`;
     });
 }
-
-
-// =====================================================
-// NOTIFICACIONES DEL SUPERVISOR -> CLIENTE
-// =====================================================
-
 let notifAnteriores = null;
 
 function escucharNotificaciones() {
@@ -354,8 +313,6 @@ function escucharNotificaciones() {
             }
         }
         notifAnteriores = lista.map(n => n.id);
-
-        // clientes.js las mezcla con las demás
         window.notificacionesNube = lista.map(n => ({
             id: n.id,
             nube: true,
@@ -387,12 +344,23 @@ function escucharNotificaciones() {
         }
     };
 }
+window.addEventListener("perfil-guardado", async (e) => {
 
+    const u = e.detail || {};
 
-// =====================================================
-// INICIO
-// =====================================================
+    if (!sesion.id) return;
 
+    try {
+        await update(ref(rtdb, "usuarios/" + sesion.id), {
+            nombre: u.nombre || "",
+            telefono: u.telefono || "",
+            correo: u.correo || "",
+            direccion: u.direccion || ""
+        });
+    } catch (error) {
+        console.error("No se pudo guardar el perfil en Firebase:", error);
+    }
+});
 configurarPestanas();
 configurarFormularios();
 escucharSolicitudes();

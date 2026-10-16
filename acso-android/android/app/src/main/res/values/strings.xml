@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">ACSO</string>
-    <string name="title_activity_main">ACSO</string>
-    <string name="package_name">com.acso.app</string>
-    <string name="custom_url_scheme">com.acso.app</string>
-</resources>

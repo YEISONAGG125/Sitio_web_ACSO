@@ -204,7 +204,7 @@
 
                 <h1 id="sectionTitulo">
 
-                    Bienvenido, Carlos Pérez
+                    Bienvenido
 
                 </h1>
 
@@ -226,7 +226,7 @@
                     class="avatar"
                     id="avatar">
 
-                    CP
+                    CL
 
                 </div>
 
@@ -234,13 +234,13 @@
 
                     <strong id="nombreUsuario">
 
-                        Carlos Pérez
+                        Cliente
 
                     </strong>
 
                     <small>
 
-                        Cliente · CT-001
+                        Cliente
 
                     </small>
 
@@ -460,11 +460,11 @@
 
                             <th>Servicio</th>
 
-                            <th>Zona</th>
+                            <th>Dirección</th>
 
                             <th>Estado</th>
 
-                            <th>Empleado</th>
+                            <th>Fecha</th>
 
                         </tr>
 
@@ -626,11 +626,11 @@
 
                             <th>Servicio</th>
 
-                            <th>Zona</th>
+                            <th>Dirección</th>
 
                             <th>Estado</th>
 
-                            <th>Empleado</th>
+                            <th>Fecha</th>
 
                         </tr>
 
@@ -661,115 +661,74 @@
             <div class="panel panel-contrato">
 
                 <div class="panel-header">
-
                     <div>
-
-                        <span class="panel-etiqueta">
-                            DOCUMENTO
-                        </span>
-
-                        <h3>
-                            Mi contrato
-                        </h3>
-
+                        <span class="panel-etiqueta">DOCUMENTO</span>
+                        <h3>Mi contrato</h3>
                     </div>
-
-                    <span
-                        class="pill pill--curso">
-
-                        ● Vigente
-
-                    </span>
-
+                    <span class="pill pill--curso oculto" id="estadoContrato">● Vigente</span>
                 </div>
 
-
-                <div class="contrato-grid">
-
-
-                    <div class="dato">
-
-                        <span>
-                            Número de contrato
-                        </span>
-
-                        <strong id="contratoNumero">
-                            CT-001
-                        </strong>
-
-                    </div>
-
-
-                    <div class="dato">
-
-                        <span>
-                            Ubicación
-                        </span>
-
-                        <strong id="contratoUbicacion">
-                            Bogotá
-                        </strong>
-
-                    </div>
-
-
-                    <div class="dato">
-
-                        <span>
-                            Fecha de inicio
-                        </span>
-
-                        <strong id="contratoInicio">
-                            01/09/2026
-                        </strong>
-
-                    </div>
-
-
-                    <div class="dato">
-
-                        <span>
-                            Fecha de finalización
-                        </span>
-
-                        <strong id="contratoFin">
-                            01/12/2026
-                        </strong>
-
-                    </div>
-
-
-                    <div class="dato dato-ancho">
-
-                        <span>
-                            Valor total
-                        </span>
-
-                        <strong
-                            class="valor"
-                            id="contratoValor">
-
-                            $2.500.000
-
-                        </strong>
-
-                    </div>
-
+                <!-- Sin contrato aprobado -->
+                <div class="vacio-bloque" id="contratoVacio">
+                    <strong>Aún no tienes un contrato aprobado</strong>
+                    Cuando el supervisor apruebe tu solicitud de contrato,
+                    aquí verás sus datos.
+                    <br>
+                    <button type="button" class="btn-ir" data-go="solicitar">
+                        Pedir un contrato
+                    </button>
                 </div>
 
+                <!-- Con contrato aprobado -->
+                <div id="contratoDatos" class="oculto">
 
-                <div class="contrato-nota">
+                    <div class="contrato-grid">
 
-                    <span>ℹ</span>
+                        <div class="dato">
+                            <span>Número de contrato</span>
+                            <strong id="contratoNumero">-</strong>
+                        </div>
 
-                    <p>
+                        <div class="dato">
+                            <span>Servicio</span>
+                            <strong id="contratoServicio">-</strong>
+                        </div>
 
-                        Si necesitas modificar tu contrato,
-                        comunícate con tu asesor comercial.
-                        Desde aquí puedes consultar la
-                        información de tu contrato.
+                        <div class="dato">
+                            <span>Ubicación</span>
+                            <strong id="contratoUbicacion">-</strong>
+                        </div>
 
-                    </p>
+                        <div class="dato">
+                            <span>Frecuencia</span>
+                            <strong id="contratoFrecuencia">-</strong>
+                        </div>
+
+                        <div class="dato">
+                            <span>Fecha de inicio</span>
+                            <strong id="contratoInicio">-</strong>
+                        </div>
+
+                        <div class="dato">
+                            <span>Fecha de finalización</span>
+                            <strong id="contratoFin">-</strong>
+                        </div>
+
+                        <div class="dato dato-ancho">
+                            <span>Valor total</span>
+                            <strong class="valor" id="contratoValor">-</strong>
+                        </div>
+
+                    </div>
+
+                    <div class="contrato-nota">
+                        <span>ℹ</span>
+                        <p>
+                            Si necesitas modificar tu contrato,
+                            envía una nueva solicitud o comunícate
+                            con tu asesor comercial.
+                        </p>
+                    </div>
 
                 </div>
 
@@ -1105,7 +1064,7 @@
                         <span
                             class="avatar avatar--grande">
 
-                            CP
+                            CL
 
                         </span>
 
@@ -1116,11 +1075,11 @@
                             </span>
 
                             <h3>
-                                Carlos Pérez
+                                Cliente
                             </h3>
 
                             <span class="panel-count">
-                                Cliente desde el 01/09/2026
+                                Cliente ACSO
                             </span>
 
                         </div>
@@ -1143,96 +1102,40 @@
                     id="formPerfil"
                     class="perfil-grid">
 
-
                     <div class="campo">
-
-                        <label>
-                            Nombre
-                        </label>
-
-                        <input
-                            type="text"
-                            value="Carlos Pérez"
-                            disabled>
-
+                        <label for="perfilNombre">Nombre</label>
+                        <input type="text" id="perfilNombre" disabled>
                     </div>
 
-
                     <div class="campo">
-
-                        <label>
-                            Cédula
-                        </label>
-
-                        <input
-                            type="text"
-                            value="100000001"
-                            disabled>
-
+                        <label for="perfilUsuario">Usuario</label>
+                        <input type="text" id="perfilUsuario" data-fijo disabled>
                     </div>
 
-
                     <div class="campo">
-
-                        <label for="perfilTelefono">
-                            Teléfono
-                        </label>
-
-                        <input
-                            type="tel"
-                            id="perfilTelefono"
-                            value="3001234567"
-                            disabled>
-
+                        <label for="perfilTelefono">Teléfono</label>
+                        <input type="tel" id="perfilTelefono" placeholder="Sin registrar" disabled>
                     </div>
 
-
                     <div class="campo">
-
-                        <label for="perfilCorreo">
-                            Correo
-                        </label>
-
-                        <input
-                            type="email"
-                            id="perfilCorreo"
-                            value="carlos.perez@gmail.com"
-                            disabled>
-
+                        <label for="perfilCorreo">Correo</label>
+                        <input type="email" id="perfilCorreo" placeholder="Sin registrar" disabled>
                     </div>
-
 
                     <div class="campo campo-ancho">
-
-                        <label for="perfilDireccion">
-                            Dirección
-                        </label>
-
-                        <input
-                            type="text"
-                            id="perfilDireccion"
-                            value="Calle 10 # 20-30"
-                            disabled>
-
+                        <label for="perfilDireccion">Dirección</label>
+                        <input type="text" id="perfilDireccion" placeholder="Sin registrar" disabled>
                     </div>
-
 
                     <button
                         type="submit"
                         class="btn-primario oculto"
                         id="btnGuardarPerfil">
-
                         ✓ Guardar cambios
-
                     </button>
 
-
-                    <p
-                        class="confirmacion"
-                        id="confirmacionPerfil">
-
+                    <p class="confirmacion" id="confirmacionPerfil">
                         Perfil actualizado correctamente.
-
                     </p>
 
                 </form>

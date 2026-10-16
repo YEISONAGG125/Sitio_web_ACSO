@@ -730,3 +730,35 @@ footer {
     .bienvenida { flex-direction: column; align-items: flex-start; }
     .notificacion { flex-wrap: wrap; }
 }
+
+
+/* ---------------- SOLICITUDES DE CLIENTES ---------------- */
+
+.novedad-card.es-contrato { border-left-color: var(--acso-azul); }
+.novedad-card.es-contrato.sin-revisar { border-left-color: #e8590c; }
+
+.contacto-sol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: var(--acso-texto-suave);
+}
+
+
+.valor-contrato { margin-bottom: 14px; }
+.valor-contrato label { display: block; margin-bottom: 6px; font-size: 12px; font-weight: 700; color: var(--acso-texto-suave); }
+.valor-input {
+    width: 100%;
+    max-width: 280px;
+    padding: 11px 14px;
+    border-radius: 12px;
+    border: 1px solid #d5e3df;
+    background: var(--acso-fondo);
+    color: var(--acso-texto);
+    font-size: 14px;
+    outline: none;
+    transition: 0.2s;
+}
+.valor-input:focus { border-color: var(--acso-acento); background: #fff; box-shadow: 0 0 0 4px rgba(53, 184, 174, 0.15); }
