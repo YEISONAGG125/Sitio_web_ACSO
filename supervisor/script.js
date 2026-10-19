@@ -897,3 +897,17 @@ cargarClientes();
 cargarProductos();
 
 $("btnCerrarSesion").addEventListener("click", cerrarSesion);
+
+
+const btnMenu = document.getElementById("btnMenu");
+
+if (btnMenu) {
+    btnMenu.addEventListener("click", () => {
+        document.body.classList.toggle("menu-cerrado");
+
+        btnMenu.setAttribute(
+            "aria-expanded",
+            String(!document.body.classList.contains("menu-cerrado"))
+        );
+    });
+}

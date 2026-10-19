@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -11,653 +12,557 @@
 
 <body>
 
-<!-- =========================
-     BARRA LATERAL
-========================= -->
+    <!-- ENCABEZADO PRINCIPAL -->
+    <header class="main-header">
 
-<aside class="sidebar">
-      <div class="logo">
-    <div class="logo-icon">A</div>
-    <div class="logo-text">CSO</div>
-</div>
-    <div class="menu">
+        <div class="left">
+            <button
+                type="button"
+                class="menu-container"
+                id="btnMenu"
+                aria-label="Abrir o cerrar menú"
+                aria-controls="sidebar"
+                aria-expanded="true">
 
-        <div class="tab active" onclick="mostrar('Inicio', this)">
-            <span>🏠</span>
-            <label>Inicio</label>
+                <span class="menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </button>
         </div>
 
-        <div class="tab" onclick="mostrar('Personal', this)">
-            <span>👨‍💼</span>
-            <label>Personal</label>
+        <div class="brand">
+            <div class="logo-icon">A</div>
+            <div class="logo-text">CSO</div>
         </div>
 
-        <div class="tab" id="tabNovedades" onclick="mostrar('NovedadLaboral', this)">
-            <span>📋</span>
-            <label>Novedad laboral</label>
-            <span id="badgeNovedades" class="badge-menu oculto">0</span>
-        </div>
-        <div class="tab" id="tabSolicitudes" onclick="mostrar('Solicitudes', this)">
-            <span>📑</span>
-            <label>Solicitudes</label>
-            <span id="badgeSolicitudes" class="badge-menu oculto">0</span>
-        </div>
-
-        <div class="tab" onclick="mostrar('Inventario', this)">
-            <span>🧰</span>
-            <label>Productos</label>
-        </div>
-
-        <div class="tab" onclick="mostrar('Contratos', this)">
-            <span>📄</span>
-            <label>Contratos</label>
-        </div>
-
-        <div class="tab" onclick="mostrar('Clientes', this)">
-            <span>🤝</span>
-            <label>Clientes</label>
-        </div>
-
-        <div class="tab" onclick="mostrar('Notificaciones', this)">
-            <span>🔔</span>
-            <label>Notificaciones</label>
-            <span id="badgeNotificaciones" class="badge-menu oculto">0</span>
-        </div>
-
-        <div
-            class="tab"
-            onclick="window.location.href='../Configuración_supervisor/html.html'"
-        >
-            <span>⚙️</span>
-            <label>Configuración</label>
-            
-        </div>
-
-        <div
-            class="tab"
-            onclick="window.location.href='../Reportes/reportes.html'"
-        >
-            <span>📊</span>
-            <label>Reportes</label>
-        </div>
-
-    </div>
-
-    <div class="logout" id="btnCerrarSesion">
-        <span>⬅</span>
-        <label>Cerrar sesión</label>
-    </div>
-
-</aside>
-
-
-<!-- =========================
-     CONTENIDO PRINCIPAL
-========================= -->
-
-<main class="main-content">
-
-    <!-- HEADER -->
-
-    <header class="top-header">
-
-        <div>
-            <span class="header-small">PANEL DE SUPERVISIÓN</span>
-            <h2>ACSO</h2>
-        </div>
-
-        <div class="header-status">
-            <span class="status-dot"></span>
-            Sistema en línea
+        <div class="right">
+            <span id="usuarioNombre">Supervisor</span>
+            <span id="usuarioCargo">Cargo</span>
         </div>
 
     </header>
 
+    <!-- BARRA LATERAL -->
+    <aside class="sidebar" id="sidebar">
+        <nav aria-label="Menú principal">
+            <ul>
 
-    <!-- =========================
-         INICIO
-    ========================= -->
+                <li>
+                    <div class="tab active"
+                         onclick="mostrar('Inicio', this)">
+                        <span>🏠</span>
+                        <label>Inicio</label>
+                    </div>
+                </li>
 
-    <section id="Inicio" class="contenido active">
+                <li>
+                    <div class="tab"
+                         onclick="mostrar('Personal', this)">
+                        <span>👨‍💼</span>
+                        <label>Personal</label>
+                    </div>
+                </li>
 
-        <div class="bienvenida">
+                <li>
+                    <div class="tab"
+                         id="tabNovedades"
+                         onclick="mostrar('NovedadLaboral', this)">
+                        <span>📋</span>
+                        <label>Novedad laboral</label>
+                        <span id="badgeNovedades"
+                              class="badge-menu oculto">0</span>
+                    </div>
+                </li>
 
-            <div class="bienvenida-icono">
-                👋
-            </div>
+                <li>
+                    <div class="tab"
+                         id="tabSolicitudes"
+                         onclick="mostrar('Solicitudes', this)">
+                        <span>📑</span>
+                        <label>Solicitudes</label>
+                        <span id="badgeSolicitudes"
+                              class="badge-menu oculto">0</span>
+                    </div>
+                </li>
 
+                <li>
+                    <div class="tab"
+                         onclick="mostrar('Inventario', this)">
+                        <span>🧰</span>
+                        <label>Productos</label>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="tab"
+                         onclick="mostrar('Contratos', this)">
+                        <span>📄</span>
+                        <label>Contratos</label>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="tab"
+                         onclick="mostrar('Clientes', this)">
+                        <span>🤝</span>
+                        <label>Clientes</label>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="tab"
+                         onclick="mostrar('Notificaciones', this)">
+                        <span>🔔</span>
+                        <label>Notificaciones</label>
+                        <span id="badgeNotificaciones"
+                              class="badge-menu oculto">0</span>
+                    </div>
+                </li>
+
+    <li>
+    <div class="tab"
+         onclick="window.location.href='./Configuración_supervisor/html.html'">
+        <span>⚙️</span>
+        <label>Configuración</label>
+    </div>
+</li>
+
+                <li>
+                    <div class="tab"
+                         onclick="window.location.href='../Reportes/reportes.html'">
+                        <span>📊</span>
+                        <label>Reportes</label>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="logout" id="btnCerrarSesion" role="button" tabindex="0">
+                        <span>⬅</span>
+                        <label>Cerrar sesión</label>
+                    </div>
+                </li>
+
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-content">
+
+        <header class="top-header">
             <div>
-
-                <span class="section-label">
-                    PANEL DE CONTROL
-                </span>
-
-                <h1>
-                    Bienvenido al Panel de Supervisión
-                </h1>
-
-                <p>
-                    Gestiona y supervisa las operaciones de
-                    A C S O de forma rápida, eficiente y segura.
-                </p>
-
+                <span class="header-small">PANEL DE SUPERVISIÓN</span>
+                <h2>ACSO</h2>
             </div>
 
-        </div>
+            <div class="header-status">
+                <span class="status-dot"></span>
+                Sistema en línea
+            </div>
+        </header>
 
+        <!-- INICIO -->
+        <section id="Inicio" class="contenido active">
 
-        <!-- TARJETAS RESUMEN -->
-
-        <div class="dashboard-grid">
-
-            <div class="dashboard-card">
-
-                <div class="card-icon">
-                    👨‍💼
-                </div>
+            <div class="bienvenida">
+                <div class="bienvenida-icono">👋</div>
 
                 <div>
-                    <span>Personal</span>
-                    <strong id="totalPersonal">--</strong>
-                    <small>Registros disponibles</small>
+                    <span class="section-label">PANEL DE CONTROL</span>
+                    <h1>Bienvenido al Panel de Supervisión</h1>
+
+                    <p>
+                        Gestiona y supervisa las operaciones de ACSO
+                        de forma rápida, eficiente y segura.
+                    </p>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+
+                <div class="dashboard-card">
+                    <div class="card-icon">👨‍💼</div>
+                    <div>
+                        <span>Personal</span>
+                        <strong id="totalPersonal">--</strong>
+                        <small>Registros disponibles</small>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-icon">📋</div>
+                    <div>
+                        <span>Novedades</span>
+                        <strong id="totalNovedades">--</strong>
+                        <small>Novedades laborales</small>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-icon">📑</div>
+                    <div>
+                        <span>Solicitudes</span>
+                        <strong id="totalSolicitudes">--</strong>
+                        <small>Contratos y servicios pedidos</small>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-icon">📦</div>
+                    <div>
+                        <span>Productos</span>
+                        <strong id="totalProductos">--</strong>
+                        <small>Productos registrados</small>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-icon">📄</div>
+                    <div>
+                        <span>Contratos</span>
+                        <strong id="totalContratos">--</strong>
+                        <small>Contratos registrados</small>
+                    </div>
                 </div>
 
             </div>
 
+            <div class="inicio-info">
 
-            <div class="dashboard-card">
-
-                <div class="card-icon">
-                    📋
+                <div class="info-card">
+                    <span class="section-label">ACSO</span>
+                    <h3>Gestión centralizada</h3>
+                    <p>
+                        Desde este panel puedes consultar información
+                        del personal, novedades laborales, productos,
+                        contratos, clientes y notificaciones.
+                    </p>
                 </div>
 
+                <div class="info-card">
+                    <span class="section-label">ESTADO</span>
+                    <h3>Sistema funcionando</h3>
+                    <p>
+                        Utiliza el menú lateral para acceder a cada
+                        módulo de supervisión.
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- PERSONAL -->
+        <section id="Personal" class="contenido">
+
+            <div class="section-header">
                 <div>
-                    <span>Novedades</span>
-                    <strong id="totalNovedades">--</strong>
-                    <small>Novedades laborales</small>
+                    <span class="section-label">GESTIÓN</span>
+                    <h2>👨‍💼 Personal</h2>
+                    <p>Consulta el personal registrado en ACSO.</p>
                 </div>
-
             </div>
 
-            <div class="dashboard-card">
-                <div class="card-icon">
-                    📑
+            <div class="table-card">
+                <div class="table-title">
+                    <span>Personal registrado</span>
+                    <span class="table-status">● Actualizado</span>
                 </div>
+
+                <div class="tabla-contenedor">
+                    <table class="tabla-datos">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Cargo</th>
+                                <th>Correo</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="listaUsuarios">
+                            <tr>
+                                <td colspan="4">Cargando personal...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- NOVEDADES LABORALES -->
+        <section id="NovedadLaboral" class="contenido">
+
+            <div class="section-header">
                 <div>
-                    <span>Solicitudes</span>
-                    <strong id="totalSolicitudes">--</strong>
-                    <small>Contratos y servicios pedidos</small>
+                    <span class="section-label">SEGUIMIENTO</span>
+                    <h2>📋 Novedad laboral</h2>
+                    <p>
+                        Novedades e incapacidades enviadas por los empleados.
+                        Cambia su estado y deja una respuesta.
+                    </p>
                 </div>
+
+                <span class="table-status">● En vivo</span>
             </div>
 
+            <div class="chips-estado" id="chipsEstado">
+                <button type="button" class="chip activo" data-estado="">
+                    Todas <b id="cntTodas">0</b>
+                </button>
+                <button type="button" class="chip" data-estado="Pendiente">
+                    Pendientes <b id="cntPendiente">0</b>
+                </button>
+                <button type="button" class="chip" data-estado="Visto">
+                    Vistas <b id="cntVisto">0</b>
+                </button>
+                <button type="button" class="chip" data-estado="En revisión">
+                    En revisión <b id="cntRevision">0</b>
+                </button>
+                <button type="button" class="chip" data-estado="Aprobada">
+                    Aprobadas <b id="cntAprobada">0</b>
+                </button>
+                <button type="button" class="chip" data-estado="Rechazada">
+                    Rechazadas <b id="cntRechazada">0</b>
+                </button>
+            </div>
 
-            <div class="dashboard-card">
+            <div class="filtros">
+                <input type="search"
+                       id="buscarNovedad"
+                       placeholder="🔍 Buscar por empleado o texto..."
+                       aria-label="Buscar novedades">
 
-                <div class="card-icon">
-                    📦
-                </div>
+                <select id="filtroTipo" aria-label="Filtrar por tipo">
+                    <option value="">Todos los tipos</option>
+                    <option value="Incapacidad">Incapacidad</option>
+                    <option value="Ausencia">Ausencia</option>
+                    <option value="Retraso">Retraso</option>
+                    <option value="Accidente laboral">Accidente laboral</option>
+                    <option value="Problema en el servicio">Problema en el servicio</option>
+                    <option value="Problema con herramientas">Problema con herramientas</option>
+                    <option value="Otra">Otra</option>
+                </select>
+            </div>
 
+            <div id="listaNovedadesSup" class="lista-novedades">
+                <div class="vacio">Cargando novedades...</div>
+            </div>
+
+        </section>
+
+        <!-- SOLICITUDES -->
+        <section id="Solicitudes" class="contenido">
+
+            <div class="section-header">
                 <div>
-                    <span>Productos</span>
-                    <strong id="totalProductos">--</strong>
-                    <small>Productos registrados</small>
+                    <span class="section-label">CLIENTES</span>
+                    <h2>📑 Solicitudes de clientes</h2>
+                    <p>
+                        Pedidos de contrato y de servicio enviados por los
+                        clientes. Cambia su estado y responde las solicitudes.
+                    </p>
                 </div>
 
+                <span class="table-status">● En vivo</span>
             </div>
 
+            <div class="chips-estado" id="chipsEstadoSol">
+                <button type="button" class="chip activo" data-estado="">
+                    Todas <b id="cntSolTodas">0</b>
+                </button>
+                <button type="button" class="chip" data-estado="Pendiente">
+                    Pendientes <b id="cntSolPendiente">0</b>
+                </button>
+                <button type="button" class="chip" data-estado="Visto">
+                    Vistas <b id="cntSolVisto">0</b>
+                </button>
+                <button type="button" class="chip" data-estado="En revisión">
+                    En revisión <b id="cntSolRevision">0</b>
+                </button>
+                <button type="button" class="chip" data-estado="Aprobada">
+                    Aprobadas <b id="cntSolAprobada">0</b>
+                </button>
+                <button type="button" class="chip" data-estado="Rechazada">
+                    Rechazadas <b id="cntSolRechazada">0</b>
+                </button>
+            </div>
 
-            <div class="dashboard-card">
+            <div class="filtros">
+                <input type="search"
+                       id="buscarSolicitud"
+                       placeholder="🔍 Buscar por cliente, dirección o servicio..."
+                       aria-label="Buscar solicitudes">
 
-                <div class="card-icon">
-                    📄
-                </div>
+                <select id="filtroTipoSol" aria-label="Filtrar solicitudes">
+                    <option value="">Contratos y servicios</option>
+                    <option value="Contrato">Solo contratos</option>
+                    <option value="Servicio">Solo servicios</option>
+                </select>
+            </div>
 
+            <div id="listaSolicitudesSup" class="lista-novedades">
+                <div class="vacio">Cargando solicitudes...</div>
+            </div>
+
+        </section>
+
+        <!-- INVENTARIO -->
+        <section id="Inventario" class="contenido">
+
+            <div class="section-header">
                 <div>
-                    <span>Contratos</span>
-                    <strong id="totalContratos">--</strong>
-                    <small>Contratos registrados</small>
+                    <span class="section-label">RECURSOS</span>
+                    <h2>🧰 Inventario / Productos</h2>
+                    <p>Consulta los productos disponibles.</p>
+                </div>
+            </div>
+
+            <div class="table-card">
+                <div class="table-title">
+                    <span>Productos registrados</span>
+                    <span class="table-status">● Inventario</span>
                 </div>
 
+                <div class="tabla-contenedor">
+                    <table class="tabla-datos">
+                        <thead>
+                            <tr>
+                                <th>ID Producto</th>
+                                <th>ID Proveedor</th>
+                                <th>Nombre producto</th>
+                                <th>Descripción</th>
+                                <th>Cantidad</th>
+                                <th>Precio</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tablaProductos">
+                            <tr>
+                                <td colspan="6">Cargando productos...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-        </div>
+        </section>
 
+        <!-- CONTRATOS -->
+        <section id="Contratos" class="contenido">
 
-        <div class="inicio-info">
-
-            <div class="info-card">
-
-                <span class="section-label">
-                    ACSO
-                </span>
-
-                <h3>
-                    Gestión centralizada
-                </h3>
-
-                <p>
-                    Desde este panel puedes consultar información
-                    del personal, novedades laborales, productos,
-                    contratos, clientes y notificaciones.
-                </p>
-
+            <div class="section-header">
+                <div>
+                    <span class="section-label">ADMINISTRACIÓN</span>
+                    <h2>📄 Contratos</h2>
+                    <p>Consulta los contratos registrados.</p>
+                </div>
             </div>
 
-            <div class="info-card">
+            <div class="table-card">
+                <div class="table-title">
+                    <span>Contratos registrados</span>
+                    <span class="table-status">● Actualizado</span>
+                </div>
 
-                <span class="section-label">
-                    ESTADO
-                </span>
+                <div class="tabla-contenedor">
+                    <table class="tabla-datos">
+                        <thead>
+                            <tr>
+                                <th>ID Contrato</th>
+                                <th>ID Cliente</th>
+                                <th>Número contrato</th>
+                                <th>Fecha inicio</th>
+                                <th>Fecha fin</th>
+                                <th>Valor total</th>
+                                <th>Ubicación</th>
+                            </tr>
+                        </thead>
 
-                <h3>
-                    Sistema funcionando
-                </h3>
-
-                <p>
-                    Utiliza el menú lateral para acceder a cada
-                    módulo de supervisión.
-                </p>
-
+                        <tbody id="tablaContratos">
+                            <tr>
+                                <td colspan="7">Cargando contratos...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-        </div>
+        </section>
 
-    </section>
+        <!-- CLIENTES -->
+        <section id="Clientes" class="contenido">
 
-
-    <!-- =========================
-         PERSONAL
-    ========================= -->
-
-    <section id="Personal" class="contenido">
-
-        <div class="section-header">
-
-            <div>
-                <span class="section-label">GESTIÓN</span>
-                <h2>👨‍💼 Personal</h2>
-                <p>
-                    Consulta el personal registrado en ACSO.
-                </p>
+            <div class="section-header">
+                <div>
+                    <span class="section-label">CLIENTES</span>
+                    <h2>🤝 Clientes</h2>
+                    <p>Consulta la información de los clientes.</p>
+                </div>
             </div>
 
-        </div>
+            <div class="table-card">
+                <div class="table-title">
+                    <span>Clientes registrados</span>
+                    <span class="table-status">● Actualizado</span>
+                </div>
 
+                <div class="tabla-contenedor">
+                    <table class="tabla-datos">
+                        <thead>
+                            <tr>
+                                <th>ID Cliente</th>
+                                <th>ID Persona</th>
+                                <th>Razón social</th>
+                                <th>Tipo persona</th>
+                            </tr>
+                        </thead>
 
-        <div class="table-card">
-
-            <div class="table-title">
-                <span>Personal registrado</span>
-                <span class="table-status">● Actualizado</span>
+                        <tbody id="tablaClientes">
+                            <tr>
+                                <td colspan="4">Cargando clientes...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-            <div class="tabla-contenedor">
+        </section>
 
-                <table class="tabla-datos">
+        <!-- NOTIFICACIONES -->
+        <section id="Notificaciones" class="contenido">
 
-                    <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Cargo</th>
-                        <th>Correo</th>
-                        <th>Estado</th>
-                    </tr>
-                    </thead>
-
-                    <tbody id="listaUsuarios">
-
-                    <tr>
-                        <td colspan="4">
-                            Cargando personal...
-                        </td>
-                    </tr>
-
-                    </tbody>
-
-                </table>
-
+            <div class="section-header">
+                <div>
+                    <span class="section-label">ALERTAS</span>
+                    <h2>🔔 Notificaciones</h2>
+                    <p>
+                        Aquí llegan las novedades de los empleados y las
+                        solicitudes de los clientes.
+                    </p>
+                </div>
             </div>
 
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         NOVEDADES
-    ========================= -->
-
-    <section id="NovedadLaboral" class="contenido">
-
-        <div class="section-header">
-            <div>
-                <span class="section-label">SEGUIMIENTO</span>
-                <h2>📋 Novedad Laboral</h2>
-                <p>
-                    Novedades e incapacidades enviadas por los empleados.
-                    Cámbiales el estado y deja una respuesta.
-                </p>
-            </div>
-            <span class="table-status">● En vivo</span>
-        </div>
-
-        <!-- RESUMEN POR ESTADO -->
-        <div class="chips-estado" id="chipsEstado">
-            <button type="button" class="chip activo" data-estado="">Todas <b id="cntTodas">0</b></button>
-            <button type="button" class="chip" data-estado="Pendiente">Pendientes <b id="cntPendiente">0</b></button>
-            <button type="button" class="chip" data-estado="Visto">Vistas <b id="cntVisto">0</b></button>
-            <button type="button" class="chip" data-estado="En revisión">En revisión <b id="cntRevision">0</b></button>
-            <button type="button" class="chip" data-estado="Aprobada">Aprobadas <b id="cntAprobada">0</b></button>
-            <button type="button" class="chip" data-estado="Rechazada">Rechazadas <b id="cntRechazada">0</b></button>
-        </div>
-
-        <!-- FILTROS -->
-        <div class="filtros">
-            <input type="search" id="buscarNovedad" placeholder="🔍 Buscar por empleado o texto...">
-            <select id="filtroTipo">
-                <option value="">Todos los tipos</option>
-                <option value="Incapacidad">Incapacidad</option>
-                <option value="Ausencia">Ausencia</option>
-                <option value="Retraso">Retraso</option>
-                <option value="Accidente laboral">Accidente laboral</option>
-                <option value="Problema en el servicio">Problema en el servicio</option>
-                <option value="Problema con herramientas">Problema con herramientas</option>
-                <option value="Otra">Otra</option>
-            </select>
-        </div>
-
-        <div id="listaNovedadesSup" class="lista-novedades">
-            <div class="vacio">Cargando novedades...</div>
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         SOLICITUDES DE CLIENTES
-    ========================= -->
-    <section id="Solicitudes" class="contenido">
-
-        <div class="section-header">
-            <div>
-                <span class="section-label">CLIENTES</span>
-                <h2>📑 Solicitudes de clientes</h2>
-                <p>
-                    Pedidos de contrato y de servicio enviados por los clientes.
-                    Cámbiales el estado y respóndeles.
-                </p>
-            </div>
-            <span class="table-status">● En vivo</span>
-        </div>
-
-        <div class="chips-estado" id="chipsEstadoSol">
-            <button type="button" class="chip activo" data-estado="">Todas <b id="cntSolTodas">0</b></button>
-            <button type="button" class="chip" data-estado="Pendiente">Pendientes <b id="cntSolPendiente">0</b></button>
-            <button type="button" class="chip" data-estado="Visto">Vistas <b id="cntSolVisto">0</b></button>
-            <button type="button" class="chip" data-estado="En revisión">En revisión <b id="cntSolRevision">0</b></button>
-            <button type="button" class="chip" data-estado="Aprobada">Aprobadas <b id="cntSolAprobada">0</b></button>
-            <button type="button" class="chip" data-estado="Rechazada">Rechazadas <b id="cntSolRechazada">0</b></button>
-        </div>
-
-        <div class="filtros">
-            <input type="search" id="buscarSolicitud" placeholder="🔍 Buscar por cliente, dirección o servicio...">
-            <select id="filtroTipoSol">
-                <option value="">Contratos y servicios</option>
-                <option value="Contrato">Solo contratos</option>
-                <option value="Servicio">Solo servicios</option>
-            </select>
-        </div>
-
-        <div id="listaSolicitudesSup" class="lista-novedades">
-            <div class="vacio">Cargando solicitudes...</div>
-        </div>
-
-    </section>
-
-    <!-- =========================
-         INVENTARIO
-    ========================= -->
-
-    <section id="Inventario" class="contenido">
-
-        <div class="section-header">
-
-            <div>
-
-                <span class="section-label">
-                    RECURSOS
-                </span>
-
-                <h2>
-                    🧰 Inventario / Productos
-                </h2>
-
-                <p>
-                    Consulta los productos disponibles.
-                </p>
-
+            <div id="listaNotificaciones">
+                <div class="vacio">No hay notificaciones por ahora.</div>
             </div>
 
-        </div>
+        </section>
 
+    </main>
 
-        <div class="table-card">
+    <!-- MENSAJES EMERGENTES -->
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-            <div class="table-title">
-                <span>Productos registrados</span>
-                <span class="table-status">● Inventario</span>
-            </div>
+    <!-- PIE DE PÁGINA -->
+    <footer>
+        <p>© 2026 ACSO - Experiencia y eficacia sin igual a la mano.</p>
+    </footer>
 
-            <div class="tabla-contenedor">
-
-                <table class="tabla-datos">
-
-                    <thead>
-
-                    <tr>
-                        <th>ID Producto</th>
-                        <th>ID Proveedor</th>
-                        <th>Nombre Producto</th>
-                        <th>Descripción</th>
-                        <th>Cantidad</th>
-                        <th>Precio</th>
-                    </tr>
-
-                    </thead>
-
-                    <tbody id="tablaProductos">
-
-                    <tr>
-                        <td colspan="6">
-                            Cargando productos...
-                        </td>
-                    </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         CONTRATOS
-    ========================= -->
-
-    <section id="Contratos" class="contenido">
-
-        <div class="section-header">
-
-            <div>
-
-                <span class="section-label">
-                    ADMINISTRACIÓN
-                </span>
-
-                <h2>
-                    📄 Contratos
-                </h2>
-
-                <p>
-                    Consulta los contratos registrados.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="table-card">
-
-            <div class="table-title">
-                <span>Contratos registrados</span>
-                <span class="table-status">● Actualizado</span>
-            </div>
-
-            <div class="tabla-contenedor">
-
-                <table class="tabla-datos">
-
-                    <thead>
-
-                    <tr>
-                        <th>ID Contrato</th>
-                        <th>ID Cliente</th>
-                        <th>Número Contrato</th>
-                        <th>Fecha Inicio</th>
-                        <th>Fecha Fin</th>
-                        <th>Valor Total</th>
-                        <th>Ubicación</th>
-                    </tr>
-
-                    </thead>
-
-                    <tbody id="tablaContratos">
-
-                    <tr>
-                        <td colspan="7">
-                            Cargando contratos...
-                        </td>
-                    </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         CLIENTES
-    ========================= -->
-
-    <section id="Clientes" class="contenido">
-
-        <div class="section-header">
-
-            <div>
-
-                <span class="section-label">
-                    CLIENTES
-                </span>
-
-                <h2>
-                    🤝 Clientes
-                </h2>
-
-                <p>
-                    Consulta la información de los clientes.
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="table-card">
-
-            <div class="table-title">
-                <span>Clientes registrados</span>
-                <span class="table-status">● Actualizado</span>
-            </div>
-
-            <div class="tabla-contenedor">
-
-                <table class="tabla-datos">
-
-                    <thead>
-
-                    <tr>
-                        <th>ID Cliente</th>
-                        <th>ID Persona</th>
-                        <th>Razón Social</th>
-                        <th>Tipo Persona</th>
-                    </tr>
-
-                    </thead>
-
-                    <tbody id="tablaClientes">
-
-                    <tr>
-                        <td colspan="4">
-                            Cargando clientes...
-                        </td>
-                    </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         NOTIFICACIONES
-    ========================= -->
-
-    <section id="Notificaciones" class="contenido">
-
-        <div class="section-header">
-            <div>
-                <span class="section-label">ALERTAS</span>
-                <h2>🔔 Notificaciones</h2>
-                <p>Aquí llegan las novedades de los empleados y las solicitudes de los clientes.</p>
-            </div>
-        </div>
-
-        <div id="listaNotificaciones">
-            <div class="vacio">No hay notificaciones por ahora.</div>
-        </div>
-
-    </section>
-
-</main>
-
-
-<div id="toast" class="toast"></div>
-
-<footer>
-
-    <p>
-        © 2026 A C S O - Experiencia y eficacia sin igual a la mano.
-    </p>
-
-</footer>
-
-
-<script type="module" src="script.js"></script>
+    <script type="module" src="script.js"></script>
 
 </body>
 </html>
