@@ -8,6 +8,7 @@
     <title>ACSO | Panel de Supervisión</title>
 
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../FIREBASE/perfil.css">
 </head>
 
 <body>
@@ -37,12 +38,18 @@
             <div class="logo-text">CSO</div>
         </div>
 
-        <div class="right">
-            <span id="usuarioNombre">Supervisor</span>
-            <span id="usuarioCargo">Cargo</span>
+        <div class="right" id="abrirPerfil" role="button" tabindex="0" title="Ir a mi perfil">
+            <span class="header-avatar" data-pf-avatar>S</span>
+            <span class="right-textos">
+                <span id="usuarioNombre">Supervisor</span>
+                <span id="usuarioCargo">Supervisor</span>
+            </span>
         </div>
 
     </header>
+
+    <!-- Fondo oscuro detrás del menú en pantallas pequeñas -->
+    <div class="menu-overlay" id="menuOverlay"></div>
 
     <!-- BARRA LATERAL -->
     <aside class="sidebar" id="sidebar">
@@ -121,13 +128,14 @@
                     </div>
                 </li>
 
-    <li>
-    <div class="tab"
-         onclick="window.location.href='./Configuración_supervisor/html.html'">
-        <span>⚙️</span>
-        <label>Configuración</label>
-    </div>
-</li>
+                <li>
+                    <div class="tab"
+                         id="tabPerfil"
+                         onclick="mostrar('Perfil', this)">
+                        <span>👤</span>
+                        <label>Mi perfil</label>
+                    </div>
+                </li>
 
                 <li>
                     <div class="tab"
@@ -548,6 +556,121 @@
 
             <div id="listaNotificaciones">
                 <div class="vacio">No hay notificaciones por ahora.</div>
+            </div>
+
+        </section>
+
+
+        <!-- ================= PERFIL ================= -->
+        <section id="Perfil" class="contenido">
+
+            <div class="section-header">
+                <div>
+                    <span class="section-label">CUENTA</span>
+                    <h2>👤 Mi perfil</h2>
+                    <p>Consulta y actualiza tus datos personales.</p>
+                </div>
+            </div>
+
+            <div class="pf-card">
+
+                <div class="pf-cabecera">
+                    <div class="pf-avatar" data-pf-avatar>US</div>
+
+                    <div class="pf-identidad">
+                        <span class="pf-etiqueta">MI CUENTA</span>
+                        <h2 data-pf-nombre>Usuario</h2>
+                        <span class="pf-rol" data-pf-rol>Supervisor</span>
+
+                        <div class="pf-foto-acciones">
+                            <label for="pfFoto" class="pf-btn pf-btn-sec">📷 Cambiar foto</label>
+                            <input type="file" id="pfFoto" accept="image/*" hidden>
+                            <button type="button" id="pfQuitarFoto" class="pf-btn pf-btn-texto">Quitar foto</button>
+                        </div>
+                    </div>
+
+                    <button type="button" id="pfEditar" class="pf-btn pf-btn-sec">✎ Editar datos</button>
+                </div>
+
+                <form id="pfForm" class="pf-grid" novalidate>
+
+                    <div class="pf-campo">
+                        <label for="pfNombre">Nombre completo</label>
+                        <input type="text" id="pfNombre" maxlength="80" autocomplete="name" disabled>
+                    </div>
+
+                    <div class="pf-campo">
+                        <label for="pfUsuario">Usuario</label>
+                        <input type="text" id="pfUsuario" disabled>
+                    </div>
+
+                    <div class="pf-campo">
+                        <label for="pfId">ID de usuario</label>
+                        <input type="text" id="pfId" disabled>
+                    </div>
+
+                    <div class="pf-campo">
+                        <label for="pfTelefono">Teléfono</label>
+                        <input type="tel" id="pfTelefono" maxlength="20" placeholder="Sin registrar" autocomplete="tel" disabled>
+                    </div>
+
+                    <div class="pf-campo pf-campo-ancho">
+                        <label for="pfCorreo">Correo electrónico</label>
+                        <input type="email" id="pfCorreo" maxlength="100" placeholder="Sin registrar" autocomplete="email" disabled>
+                    </div>
+
+                    <div class="pf-campo pf-campo-ancho">
+                        <label for="pfDireccion">Dirección</label>
+                        <input type="text" id="pfDireccion" maxlength="120" placeholder="Sin registrar" autocomplete="street-address" disabled>
+                    </div>
+
+                    <div class="pf-acciones">
+                        <button type="submit" id="pfGuardar" class="pf-btn pf-btn-prim pf-oculto">✓ Guardar cambios</button>
+                        <button type="button" id="pfCancelar" class="pf-btn pf-btn-texto pf-oculto">Cancelar</button>
+                        <span id="pfMsg" class="pf-msg" role="status"></span>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="pf-card">
+
+                <h3 class="pf-titulo-card">🔒 Cambiar contraseña</h3>
+
+                <form id="pfPassForm" class="pf-grid" novalidate>
+
+                    <div class="pf-campo pf-campo-ancho">
+                        <label for="pfPassActual">Contraseña actual</label>
+                        <div class="pf-pass-fila">
+                            <input type="password" id="pfPassActual" autocomplete="current-password">
+                            <button type="button" class="pf-ver" data-pf-ver-pass="pfPassActual" aria-label="Mostrar contraseña">👁</button>
+                        </div>
+                    </div>
+
+                    <div class="pf-campo">
+                        <label for="pfPassNueva">Nueva contraseña</label>
+                        <div class="pf-pass-fila">
+                            <input type="password" id="pfPassNueva" autocomplete="new-password" minlength="6">
+                            <button type="button" class="pf-ver" data-pf-ver-pass="pfPassNueva" aria-label="Mostrar contraseña">👁</button>
+                        </div>
+                    </div>
+
+                    <div class="pf-campo">
+                        <label for="pfPassConfirmar">Confirmar contraseña</label>
+                        <div class="pf-pass-fila">
+                            <input type="password" id="pfPassConfirmar" autocomplete="new-password" minlength="6">
+                            <button type="button" class="pf-ver" data-pf-ver-pass="pfPassConfirmar" aria-label="Mostrar contraseña">👁</button>
+                        </div>
+                    </div>
+
+                    <p class="pf-nota">Mínimo 6 caracteres. Úsala la próxima vez que inicies sesión.</p>
+
+                    <div class="pf-acciones">
+                        <button type="submit" id="pfPassGuardar" class="pf-btn pf-btn-prim">Actualizar contraseña</button>
+                        <span id="pfPassMsg" class="pf-msg" role="status"></span>
+                    </div>
+
+                </form>
             </div>
 
         </section>

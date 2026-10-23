@@ -767,3 +767,115 @@ td {
     .fila-dos { grid-template-columns: 1fr; }
     .bienvenida { flex-direction: column; align-items: flex-start; }
 }
+
+
+/* =====================================================
+   MENÚ HAMBURGUESA
+   - Escritorio: contrae / expande la barra lateral
+   - Móvil (<= 900px): la barra se desliza sobre el contenido
+===================================================== */
+
+.header-izq {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+}
+
+.btn-hamburguesa {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    border: 1px solid var(--acso-borde);
+    border-radius: 13px;
+    background: #fff;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.btn-hamburguesa:hover {
+    background: var(--acso-suave);
+    border-color: var(--acso-borde-2);
+}
+
+.btn-hamburguesa span {
+    display: block;
+    width: 19px;
+    height: 2px;
+    border-radius: 3px;
+    background: var(--acso-primario);
+    transition: transform 0.25s, opacity 0.2s;
+}
+
+/* Las tres rayas se vuelven una X cuando el menú está abierto en móvil */
+body.menu-abierto .btn-hamburguesa span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+body.menu-abierto .btn-hamburguesa span:nth-child(2) { opacity: 0; }
+body.menu-abierto .btn-hamburguesa span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.menu-overlay { display: none; }
+
+.sidebar { transition: margin-left 0.25s ease, transform 0.25s ease; }
+
+/* Escritorio: contraído */
+body.menu-cerrado .sidebar {
+    margin-left: -260px;
+    visibility: hidden;
+}
+
+@media (max-width: 900px) {
+
+    .contenedor { flex-direction: row; }
+
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 100;
+        width: min(280px, 84vw);
+        height: 100vh;
+        height: 100dvh;
+        padding: 22px 16px;
+        overflow-y: auto;
+        transform: translateX(-100%);
+        visibility: hidden;
+        box-shadow: none;
+    }
+
+    body.menu-abierto .sidebar {
+        transform: translateX(0);
+        visibility: visible;
+        box-shadow: 15px 0 50px rgba(11, 59, 60, 0.2);
+    }
+
+    /* En móvil manda menu-abierto, no menu-cerrado */
+    body.menu-cerrado .sidebar { margin-left: 0; }
+
+    .logo-contenedor { padding-bottom: 26px; }
+
+    .menu { flex-direction: column; overflow-x: visible; flex: 1; padding-bottom: 0; }
+    .menu-item { width: 100%; white-space: normal; }
+    .sidebar-abajo { display: block; }
+
+    body.menu-abierto { overflow: hidden; }
+
+    body.menu-abierto .menu-overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 90;
+        background: rgba(11, 59, 60, 0.35);
+    }
+
+    .header { flex-direction: row; align-items: center; flex-wrap: wrap; }
+}
+
+@media (max-width: 560px) {
+    .header { flex-direction: column; align-items: flex-start; }
+    .empleado-info { align-self: stretch; }
+}

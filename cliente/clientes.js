@@ -72,7 +72,7 @@ try {
     );
 }
 
-const nombreUsuario =
+let nombreUsuario =
     usuario.nombre ||
     usuario.nombre_completo ||
     usuario.nombre_usuario ||
@@ -103,6 +103,13 @@ function obtenerIniciales(nombre) {
 }
 
 function actualizarIdentidad() {
+
+    // Se recalcula cada vez, para que el nombre cambie al guardar el perfil
+    nombreUsuario =
+        usuario.nombre ||
+        usuario.nombre_completo ||
+        usuario.nombre_usuario ||
+        "Cliente";
 
     const iniciales =
         obtenerIniciales(nombreUsuario);
@@ -845,6 +852,12 @@ if (btnEditar) {
                 modoEdicion
                     ? "✕ Cancelar"
                     : "✎ Editar datos";
+
+            // Al cancelar se descartan los cambios escritos
+            if (!modoEdicion) {
+                actualizarIdentidad();
+                rellenarPerfil();
+            }
 
         }
     );

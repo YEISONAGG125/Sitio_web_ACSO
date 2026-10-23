@@ -24,6 +24,8 @@ import {
     COL_SOLICITUDES
 } from "../FIREBASE/firebase.js";
 
+import { montarPerfil } from "../FIREBASE/perfil.js";
+
 
 const API_BASE = "http://localhost:8080/api";
 
@@ -47,7 +49,7 @@ if (String(localStorage.getItem("cargo") || "").toLowerCase() !== "supervisor") 
     window.location.href = "../inicio de sistema/login.html";
 }
 
-const nombreSupervisor =
+let nombreSupervisor =
     sesion.nombre_completo || sesion.nombre || sesion.usuario || "Supervisor";
 
 
@@ -899,15 +901,97 @@ cargarProductos();
 $("btnCerrarSesion").addEventListener("click", cerrarSesion);
 
 
+// =====================================================
+// MENÚ HAMBURGUESA
+// =====================================================
+// La barra lateral se oculta con body.menu-cerrado.
+//  - Escritorio: arranca abierta.
+//  - Móvil / tablet (<= 1100px): arranca cerrada, se abre encima del
+//    contenido con un fondo oscuro, y se cierra sola al elegir una
+//    opción, al tocar el fondo o con Esc.
+
 const btnMenu = document.getElementById("btnMenu");
+const consultaMovil = window.matchMedia("(max-width: 1100px)");
 
-if (btnMenu) {
-    btnMenu.addEventListener("click", () => {
-        document.body.classList.toggle("menu-cerrado");
+const esMovil = () => consultaMovil.matches;
 
-        btnMenu.setAttribute(
-            "aria-expanded",
-            String(!document.body.classList.contains("menu-cerrado"))
-        );
-    });
+function actualizarAriaMenu() {
+    btnMenu?.setAttribute(
+        "aria-expanded",
+        String(!document.body.classList.contains("menu-cerrado"))
+    );
 }
+
+function cerrarMenuMovil() {
+    if (!esMovil()) return;
+    document.body.classList.add("menu-cerrado");
+    actualizarAriaMenu();
+}
+
+// Estado inicial según el tamaño de pantalla
+document.body.classList.toggle("menu-cerrado", esMovil());
+actualizarAriaMenu();
+
+btnMenu?.addEventListener("click", () => {
+    document.body.classList.toggle("menu-cerrado");
+    actualizarAriaMenu();
+});
+
+$("menuOverlay")?.addEventListener("click", cerrarMenuMovil);
+
+document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") cerrarMenuMovil();
+});
+
+// Al elegir una opción del menú, en móvil se cierra
+document.querySelector(".sidebar")?.addEventListener("click", (e) => {
+    if (e.target.closest(".tab, .logout")) cerrarMenuMovil();
+});
+
+// Al girar el teléfono o redimensionar, se reajusta
+consultaMovil.addEventListener("change", () => {
+    document.body.classList.toggle("menu-cerrado", esMovil());
+    actualizarAriaMenu();
+});
+
+
+// =====================================================
+// PERFIL
+// =====================================================
+
+function pintarEncabezado() {
+    const s = leerSesion();
+
+    nombreSupervisor =
+        s.nombre_completo || s.nombre || s.usuario || "Supervisor";
+
+    $("usuarioNombre").textContent = nombreSupervisor;
+    $("usuarioCargo").textContent = "Supervisor";
+}
+
+pintarEncabezado();
+
+// Foto, datos personales y contraseña (FIREBASE/perfil.js)
+montarPerfil({
+    alGuardar: () => {
+        pintarEncabezado();
+        mostrarToast("Perfil actualizado correctamente.");
+    }
+});
+
+// Clic en el usuario del encabezado -> Mi perfil
+function abrirPerfil() {
+    window.mostrar("Perfil", $("tabPerfil"));
+    cerrarMenuMovil();
+}
+
+$("abrirPerfil")?.addEventListener("click", abrirPerfil);
+$("abrirPerfil")?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        abrirPerfil();
+    }
+});
+
+// Se puede entrar directo con supervisor.html#perfil
+if (location.hash.toLowerCase() === "#perfil") abrirPerfil();

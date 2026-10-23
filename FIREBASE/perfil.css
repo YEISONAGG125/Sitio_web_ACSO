@@ -1,0 +1,220 @@
+/* =====================================================
+   PERFIL - ESTILOS COMPARTIDOS (Empleado / Supervisor / Cliente)
+===================================================== */
+
+.pf-card {
+    background: #ffffff;
+    border: 1px solid var(--acso-borde, #e1ebe8);
+    border-radius: 20px;
+    padding: 26px;
+    margin-bottom: 20px;
+    box-shadow: var(--acso-sombra, 0 10px 30px rgba(11, 59, 60, 0.08));
+}
+
+.pf-cabecera {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding-bottom: 22px;
+    margin-bottom: 22px;
+    border-bottom: 1px solid var(--acso-borde, #e1ebe8);
+}
+
+.pf-avatar {
+    width: 88px;
+    height: 88px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 24px;
+    background: var(--acso-suave, #e4f5f2) center / cover no-repeat;
+    border: 2px solid var(--acso-borde-2, #ccece7);
+    color: var(--acso-primario-hover, #166363);
+    font-size: 28px;
+    font-weight: 800;
+}
+
+/* Cuando hay foto se oculta la inicial */
+.pf-con-foto {
+    color: transparent !important;
+    font-size: 0 !important;
+    background-size: cover !important;
+    background-position: center !important;
+}
+
+.pf-identidad { flex: 1; min-width: 200px; }
+
+.pf-etiqueta {
+    display: block;
+    color: var(--acso-primario-hover, #166363);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.6px;
+}
+
+.pf-identidad h2 {
+    margin: 4px 0 6px;
+    font-size: 24px;
+    color: var(--acso-primario, #0b3b3c);
+    overflow-wrap: anywhere;
+}
+
+.pf-rol {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: var(--acso-suave, #e4f5f2);
+    color: var(--acso-primario-hover, #166363);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.pf-foto-acciones {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+}
+
+.pf-titulo-card {
+    margin-bottom: 18px;
+    font-size: 18px;
+    color: var(--acso-primario, #0b3b3c);
+}
+
+.pf-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.pf-campo { display: flex; flex-direction: column; gap: 6px; }
+.pf-campo-ancho { grid-column: 1 / -1; }
+
+.pf-campo label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--acso-texto-suave, #627570);
+}
+
+.pf-campo input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--acso-borde-2, #ccece7);
+    border-radius: 12px;
+    background: #ffffff;
+    color: var(--acso-texto, #102d2b);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.pf-campo input:focus {
+    border-color: var(--acso-acento, #35b8ae);
+    box-shadow: 0 0 0 3px rgba(53, 184, 174, 0.18);
+}
+
+.pf-campo input:disabled {
+    background: var(--acso-fondo, #f8fbfa);
+    color: var(--acso-texto-suave, #627570);
+    cursor: not-allowed;
+}
+
+.pf-pass-fila { position: relative; }
+.pf-pass-fila input { padding-right: 46px; }
+
+.pf-ver {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 6px;
+}
+
+.pf-acciones {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.pf-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 11px 18px;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s, background 0.2s, opacity 0.2s;
+}
+
+.pf-btn:hover { transform: translateY(-1px); }
+.pf-btn:disabled { opacity: 0.6; cursor: wait; transform: none; }
+
+.pf-btn-prim { background: var(--acso-primario, #0b3b3c); color: #ffffff; }
+.pf-btn-prim:hover { background: var(--acso-primario-hover, #166363); }
+
+.pf-btn-sec {
+    background: var(--acso-suave, #e4f5f2);
+    border-color: var(--acso-borde-2, #ccece7);
+    color: var(--acso-primario, #0b3b3c);
+}
+
+.pf-btn-texto {
+    background: transparent;
+    color: var(--acso-texto-suave, #627570);
+}
+
+.pf-oculto { display: none !important; }
+
+.pf-msg {
+    display: none;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.pf-msg--ver { display: block; }
+
+.pf-msg--ok {
+    background: var(--acso-ok-fondo, #e4f5f2);
+    color: var(--acso-ok, #166363);
+}
+
+.pf-msg--error {
+    background: var(--acso-peligro-fondo, #fff1ec);
+    color: var(--acso-peligro, #c2410c);
+}
+
+.pf-nota {
+    grid-column: 1 / -1;
+    font-size: 12px;
+    color: var(--acso-texto-tenue, #71837f);
+}
+
+/* Botón de usuario en el encabezado (abre el perfil) */
+.pf-abrir {
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.pf-abrir:hover { border-color: var(--acso-acento, #35b8ae); }
+
+@media (max-width: 640px) {
+    .pf-card { padding: 18px; }
+    .pf-grid { grid-template-columns: 1fr; }
+    .pf-avatar { width: 72px; height: 72px; font-size: 24px; }
+    .pf-acciones .pf-btn { flex: 1; }
+}

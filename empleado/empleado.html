@@ -6,18 +6,18 @@
     <meta name="description" content="Panel de empleado ACSO">
     <title>ACSO | Panel del Empleado</title>
     <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="../FIREBASE/perfil.css">
 </head>
 
 <body>
-<header >
-    <div class="left">
-    </div>
-</header>
- <div class="right"></div>
+
+<!-- Fondo oscuro que aparece detrás del menú en pantallas pequeñas -->
+<div class="menu-overlay" id="menuOverlay"></div>
+
 <div class="contenedor">
 
     <!-- ================= SIDEBAR ================= -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
 
         <div class="logo-contenedor">
             <a href="#inicio" class="logo">
@@ -49,6 +49,10 @@
                 <span>🕐</span><span class="texto-menu">Mi horario</span>
             </button>
 
+            <button type="button" class="menu-item" data-seccion="perfil">
+                <span>👤</span><span class="texto-menu">Mi perfil</span>
+            </button>
+
         </nav>
 
         <div class="sidebar-abajo">
@@ -63,14 +67,26 @@
 
         <header class="header">
 
-            <div class="header-titulo">
-                <span class="etiqueta-header">PANEL DE EMPLEADO</span>
-                <h1 id="tituloPagina">Panel del Empleado</h1>
-                <p id="subtituloPagina">Consulta tu información laboral</p>
+            <div class="header-izq">
+                <button
+                    type="button"
+                    class="btn-hamburguesa"
+                    id="btnMenu"
+                    aria-label="Abrir o cerrar menú"
+                    aria-controls="sidebar"
+                    aria-expanded="true">
+                    <span></span><span></span><span></span>
+                </button>
+
+                <div class="header-titulo">
+                    <span class="etiqueta-header">PANEL DE EMPLEADO</span>
+                    <h1 id="tituloPagina">Panel del Empleado</h1>
+                    <p id="subtituloPagina">Consulta tu información laboral</p>
+                </div>
             </div>
 
-            <div class="empleado-info">
-                <div class="avatar" id="avatarEmpleado">US</div>
+            <div class="empleado-info pf-abrir" id="abrirPerfil" role="button" tabindex="0" title="Ir a mi perfil">
+                <div class="avatar" id="avatarEmpleado" data-pf-avatar>US</div>
                 <div class="datos-header">
                     <strong id="nombreEmpleado">Cargando...</strong>
                     <small>Empleado</small>
@@ -305,6 +321,121 @@
                     </thead>
                     <tbody id="tablaHorarios"></tbody>
                 </table>
+            </div>
+
+        </section>
+
+
+        <!-- ================= PERFIL ================= -->
+        <section id="perfil" class="seccion">
+
+            <div class="seccion-header">
+                <div>
+                    <span class="etiqueta-seccion">CUENTA</span>
+                    <h2>Mi perfil</h2>
+                    <p>Consulta y actualiza tus datos personales.</p>
+                </div>
+            </div>
+
+            <div class="pf-card">
+
+                <div class="pf-cabecera">
+                    <div class="pf-avatar" data-pf-avatar>US</div>
+
+                    <div class="pf-identidad">
+                        <span class="pf-etiqueta">MI CUENTA</span>
+                        <h2 data-pf-nombre>Usuario</h2>
+                        <span class="pf-rol" data-pf-rol>Empleado</span>
+
+                        <div class="pf-foto-acciones">
+                            <label for="pfFoto" class="pf-btn pf-btn-sec">📷 Cambiar foto</label>
+                            <input type="file" id="pfFoto" accept="image/*" hidden>
+                            <button type="button" id="pfQuitarFoto" class="pf-btn pf-btn-texto">Quitar foto</button>
+                        </div>
+                    </div>
+
+                    <button type="button" id="pfEditar" class="pf-btn pf-btn-sec">✎ Editar datos</button>
+                </div>
+
+                <form id="pfForm" class="pf-grid" novalidate>
+
+                    <div class="pf-campo">
+                        <label for="pfNombre">Nombre completo</label>
+                        <input type="text" id="pfNombre" maxlength="80" autocomplete="name" disabled>
+                    </div>
+
+                    <div class="pf-campo">
+                        <label for="pfUsuario">Usuario</label>
+                        <input type="text" id="pfUsuario" disabled>
+                    </div>
+
+                    <div class="pf-campo">
+                        <label for="pfId">ID empleado</label>
+                        <input type="text" id="pfId" disabled>
+                    </div>
+
+                    <div class="pf-campo">
+                        <label for="pfTelefono">Teléfono</label>
+                        <input type="tel" id="pfTelefono" maxlength="20" placeholder="Sin registrar" autocomplete="tel" disabled>
+                    </div>
+
+                    <div class="pf-campo pf-campo-ancho">
+                        <label for="pfCorreo">Correo electrónico</label>
+                        <input type="email" id="pfCorreo" maxlength="100" placeholder="Sin registrar" autocomplete="email" disabled>
+                    </div>
+
+                    <div class="pf-campo pf-campo-ancho">
+                        <label for="pfDireccion">Dirección</label>
+                        <input type="text" id="pfDireccion" maxlength="120" placeholder="Sin registrar" autocomplete="street-address" disabled>
+                    </div>
+
+                    <div class="pf-acciones">
+                        <button type="submit" id="pfGuardar" class="pf-btn pf-btn-prim pf-oculto">✓ Guardar cambios</button>
+                        <button type="button" id="pfCancelar" class="pf-btn pf-btn-texto pf-oculto">Cancelar</button>
+                        <span id="pfMsg" class="pf-msg" role="status"></span>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="pf-card">
+
+                <h3 class="pf-titulo-card">🔒 Cambiar contraseña</h3>
+
+                <form id="pfPassForm" class="pf-grid" novalidate>
+
+                    <div class="pf-campo pf-campo-ancho">
+                        <label for="pfPassActual">Contraseña actual</label>
+                        <div class="pf-pass-fila">
+                            <input type="password" id="pfPassActual" autocomplete="current-password">
+                            <button type="button" class="pf-ver" data-pf-ver-pass="pfPassActual" aria-label="Mostrar contraseña">👁</button>
+                        </div>
+                    </div>
+
+                    <div class="pf-campo">
+                        <label for="pfPassNueva">Nueva contraseña</label>
+                        <div class="pf-pass-fila">
+                            <input type="password" id="pfPassNueva" autocomplete="new-password" minlength="6">
+                            <button type="button" class="pf-ver" data-pf-ver-pass="pfPassNueva" aria-label="Mostrar contraseña">👁</button>
+                        </div>
+                    </div>
+
+                    <div class="pf-campo">
+                        <label for="pfPassConfirmar">Confirmar contraseña</label>
+                        <div class="pf-pass-fila">
+                            <input type="password" id="pfPassConfirmar" autocomplete="new-password" minlength="6">
+                            <button type="button" class="pf-ver" data-pf-ver-pass="pfPassConfirmar" aria-label="Mostrar contraseña">👁</button>
+                        </div>
+                    </div>
+
+                    <p class="pf-nota">Mínimo 6 caracteres. Úsala la próxima vez que inicies sesión.</p>
+
+                    <div class="pf-acciones">
+                        <button type="submit" id="pfPassGuardar" class="pf-btn pf-btn-prim">Actualizar contraseña</button>
+                        <span id="pfPassMsg" class="pf-msg" role="status"></span>
+                    </div>
+
+                </form>
             </div>
 
         </section>
