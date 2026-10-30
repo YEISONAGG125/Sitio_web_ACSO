@@ -14,6 +14,12 @@ import {
     push
 } from "../FIREBASE/firebase.js";
 
+import {
+    verificarCodigoAutorizacion,
+    crearHashClave,
+    validarClaveSupervisor
+} from "../FIREBASE/seguridad.js";
+
 
 const API_BASE = "http://localhost:8080/api";
 
@@ -29,6 +35,13 @@ const NOMBRE_CARGO = {
 // =====================================================
 // ELEMENTOS
 // =====================================================
+
+const bloqueSupervisor = document.getElementById("bloqueSupervisor");
+const selectCargo = document.getElementById("cargo");
+
+selectCargo.addEventListener("change", () => {
+    bloqueSupervisor.hidden = selectCargo.value !== "supervisor";
+});
 
 const formulario = document.getElementById("formRegistro");
 const mensaje = document.getElementById("mensaje");
@@ -166,9 +179,58 @@ formulario.addEventListener("submit", async (e) => {
         return;
     }
 
+    // ---------- SUPERVISOR: AUTORIZACIÓN ----------
+
+    let claveSupervisor = null;
+
+    if (cargo === "supervisor") {
+
+        const codigo = document.getElementById("codigoAut").value;
+        const claveSup = document.getElementById("claveSup").value;
+        const claveSupConf = document.getElementById("claveSupConfirmar").value;
+
+        if (!codigo || !claveSup || !claveSupConf) {
+            mostrarMensaje("Para registrarte como supervisor completa el código y la clave de supervisor.", "error");
+            return;
+        }
+
+        const errorClave = validarClaveSupervisor(claveSup, { password, usuario });
+
+        if (errorClave) {
+            mostrarMensaje(errorClave, "error");
+            return;
+        }
+
+        if (claveSup !== claveSupConf) {
+            mostrarMensaje("Las claves de supervisor no coinciden.", "error");
+            return;
+        }
+
+        claveSupervisor = claveSup;
+    }
+
     cargando(true);
 
     try {
+
+        // ---------- SUPERVISOR: VERIFICAR CÓDIGO ----------
+
+        if (cargo === "supervisor") {
+
+            const estado = await verificarCodigoAutorizacion(document.getElementById("codigoAut").value);
+
+            if (estado === "no_configurado") {
+                mostrarMensaje("El registro de supervisores no está habilitado todavía. Contacta al administrador.", "error");
+                cargando(false);
+                return;
+            }
+
+            if (estado !== "ok") {
+                mostrarMensaje("Código de autorización incorrecto.", "error");
+                cargando(false);
+                return;
+            }
+        }
 
         // ---------- ¿YA EXISTE? ----------
 
@@ -204,6 +266,15 @@ formulario.addEventListener("submit", async (e) => {
             ultimoAcceso: null
         };
 
+        // ---------- SUPERVISOR: GUARDAR SOLO EL HASH DE LA CLAVE ----------
+
+        if (claveSupervisor) {
+            const h = await crearHashClave(claveSupervisor);
+            registro.clave_hash = h.hash;
+            registro.clave_salt = h.salt;
+            registro.clave_iter = h.iter;
+        }
+
         // ---------- EMPLEADO: SPRING BOOT (SI ESTÁ ENCENDIDO) ----------
 
         if (cargo === "empleado") {
@@ -236,6 +307,7 @@ formulario.addEventListener("submit", async (e) => {
         );
 
         formulario.reset();
+        bloqueSupervisor.hidden = true;
         btnText.textContent = "Cuenta creada";
         btnArrow.textContent = "✓";
 

@@ -364,3 +364,10 @@ Flujo: **Cliente → Cloud Firestore → Supervisor**, en tiempo real.
 * Cada cambio crea un documento en `notificaciones` con `id_cliente`, que el cliente ve en su panel y en *Mis solicitudes*.
 
 Colección nueva: **`solicitudes`**. Hay que volver a publicar `firestore.rules` para que Firestore la permita.
+
+
+---
+
+## Seguridad del acceso de supervisor
+
+El ingreso como supervisor usa un segundo paso (clave de supervisor), código de autorización para registrarse, bloqueo por intentos y sesión con token. Guía de puesta en marcha y limitaciones en [`SEGURIDAD.md`](SEGURIDAD.md).

@@ -7,6 +7,7 @@
 
     <title>Configuración | ACSO</title>
 
+    <style id="guard-style">html{visibility:hidden}</style>
     <link rel="stylesheet" href="css.css">
 </head>
 
@@ -474,6 +475,12 @@
 
 </div>
 
+
+<script type="module">
+    // Solo supervisores con sesión verificada pueden ver esta página
+    import { protegerSupervisor } from "../../FIREBASE/seguridad.js";
+    await protegerSupervisor();
+</script>
 
 <script src="javascript.js"></script>
 

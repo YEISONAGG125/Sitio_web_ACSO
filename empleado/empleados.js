@@ -22,6 +22,8 @@ import {
     COL_NOTIFICACIONES
 } from "../FIREBASE/firebase.js";
 
+import { montarPerfil } from "../FIREBASE/perfil.js";
+
 
 // =====================================================
 // CONFIGURACIÓN
@@ -61,7 +63,7 @@ const idEmpleado = String(
     ""
 );
 
-const nombreEmpleado =
+let nombreEmpleado =
     localStorage.getItem("nombre_empleado") ||
     sesion.nombre_empleado ||
     sesion.nombre_completo ||
@@ -138,14 +140,7 @@ function mostrarDatosEmpleado() {
     $("inicioId").textContent = idEmpleado || "-";
     $("formIdEmpleado").textContent = idEmpleado || "-";
 
-    const iniciales = nombreEmpleado
-        .split(" ")
-        .filter(Boolean)
-        .slice(0, 2)
-        .map(p => p[0].toUpperCase())
-        .join("");
-
-    $("avatarEmpleado").textContent = iniciales || "US";
+    // El avatar (foto o iniciales) lo pinta FIREBASE/perfil.js
 }
 
 
@@ -158,35 +153,117 @@ const TITULOS = {
     servicios: ["Mis servicios", "Servicios asignados"],
     novedades: ["Novedad laboral", "Envía una novedad o incapacidad al supervisor"],
     notificaciones: ["Notificaciones", "Información importante"],
-    horarios: ["Mi horario", "Consulta tus horarios de trabajo"]
+    horarios: ["Mi horario", "Consulta tus horarios de trabajo"],
+    perfil: ["Mi perfil", "Consulta y actualiza tus datos personales"]
 };
 
-function configurarMenu() {
+function irASeccion(seccion) {
+
     const botones = document.querySelectorAll(".menu-item");
     const secciones = document.querySelectorAll(".seccion");
 
-    botones.forEach(boton => {
-        boton.addEventListener("click", () => {
+    if (!$(seccion)) return;
 
-            const seccion = boton.dataset.seccion;
+    botones.forEach(b => b.classList.toggle("activo", b.dataset.seccion === seccion));
 
-            botones.forEach(b => b.classList.remove("activo"));
-            boton.classList.add("activo");
+    secciones.forEach(s => s.classList.remove("activa"));
+    $(seccion).classList.add("activa");
 
-            secciones.forEach(s => s.classList.remove("activa"));
-            $(seccion)?.classList.add("activa");
+    if (TITULOS[seccion]) {
+        $("tituloPagina").textContent = TITULOS[seccion][0];
+        $("subtituloPagina").textContent = TITULOS[seccion][1];
+    }
 
-            if (TITULOS[seccion]) {
-                $("tituloPagina").textContent = TITULOS[seccion][0];
-                $("subtituloPagina").textContent = TITULOS[seccion][1];
-            }
+    // Al abrir notificaciones se marcan como leídas
+    if (seccion === "notificaciones") {
+        marcarNotificacionesLeidas();
+    }
 
-            // Al abrir notificaciones se marcan como leídas
-            if (seccion === "notificaciones") {
-                marcarNotificacionesLeidas();
-            }
-        });
+    // En móvil el menú se cierra solo al elegir una opción
+    if (esMovil()) cerrarMenuMovil();
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function configurarMenu() {
+
+    document.querySelectorAll(".menu-item").forEach(boton => {
+        boton.addEventListener("click", () => irASeccion(boton.dataset.seccion));
     });
+
+    // Tarjeta de usuario del encabezado -> Mi perfil
+    const tarjeta = $("abrirPerfil");
+    tarjeta?.addEventListener("click", () => irASeccion("perfil"));
+    tarjeta?.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            irASeccion("perfil");
+        }
+    });
+
+    // Se puede entrar directo con empleado.html#perfil
+    const hash = location.hash.replace("#", "");
+    if (hash && $(hash)?.classList.contains("seccion")) irASeccion(hash);
+}
+
+
+// =====================================================
+// MENÚ HAMBURGUESA
+// =====================================================
+// Escritorio: body.menu-cerrado contrae la barra lateral.
+// Móvil (<= 900px): body.menu-abierto la muestra sobre el contenido.
+
+const consultaMovil = window.matchMedia("(max-width: 900px)");
+
+function esMovil() {
+    return consultaMovil.matches;
+}
+
+function cerrarMenuMovil() {
+    document.body.classList.remove("menu-abierto");
+    actualizarAriaMenu();
+}
+
+function actualizarAriaMenu() {
+    const boton = $("btnMenu");
+    if (!boton) return;
+
+    const abierto = esMovil()
+        ? document.body.classList.contains("menu-abierto")
+        : !document.body.classList.contains("menu-cerrado");
+
+    boton.setAttribute("aria-expanded", String(abierto));
+}
+
+function configurarHamburguesa() {
+
+    const boton = $("btnMenu");
+    if (!boton) return;
+
+    boton.addEventListener("click", () => {
+        if (esMovil()) {
+            document.body.classList.toggle("menu-abierto");
+        } else {
+            document.body.classList.toggle("menu-cerrado");
+        }
+        actualizarAriaMenu();
+    });
+
+    // Tocar el fondo oscuro cierra el menú
+    $("menuOverlay")?.addEventListener("click", cerrarMenuMovil);
+
+    // Esc cierra el menú en móvil
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && esMovil()) cerrarMenuMovil();
+    });
+
+    // Al cambiar de móvil a escritorio (o al revés) se limpia el estado
+    consultaMovil.addEventListener("change", () => {
+        document.body.classList.remove("menu-abierto");
+        actualizarAriaMenu();
+    });
+
+    actualizarAriaMenu();
 }
 
 
@@ -583,7 +660,18 @@ async function cerrarSesion() {
 
 mostrarDatosEmpleado();
 configurarMenu();
+configurarHamburguesa();
 configurarFormulario();
+
+// Perfil: foto, datos personales y contraseña (FIREBASE/perfil.js)
+montarPerfil({
+    alGuardar: (nueva) => {
+        nombreEmpleado =
+            nueva.nombre_empleado || nueva.nombre_completo || nueva.nombre || nombreEmpleado;
+        mostrarDatosEmpleado();
+        mostrarMensaje("Perfil actualizado.", "exito");
+    }
+});
 
 escucharNovedades();
 escucharNotificaciones();

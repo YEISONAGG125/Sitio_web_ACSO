@@ -704,3 +704,21 @@ body {
         animation: none;
     }
 }
+
+
+/* =====================================
+   SEGUNDO PASO DE SUPERVISOR
+===================================== */
+
+.login-card[hidden],
+.input-group[hidden],
+.ayuda-clave[hidden] {
+    display: none;
+}
+
+.ayuda-clave {
+    font-size: 0.82rem;
+    opacity: 0.75;
+    margin: -4px 0 14px;
+    line-height: 1.4;
+}

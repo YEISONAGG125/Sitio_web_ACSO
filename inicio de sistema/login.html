@@ -241,6 +241,97 @@
 
             </form>
 
+
+            <!-- =================================
+                 SEGUNDO PASO: SUPERVISOR
+            ================================== -->
+
+            <form
+                id="supervisorForm"
+                class="login-card"
+                hidden>
+
+                <div class="login-header">
+
+                    <h1 id="supTitulo">
+                        Verificación de supervisor
+                    </h1>
+
+                    <p id="supSubtitulo">
+                        Ingresa tu clave de supervisor para continuar
+                    </p>
+
+                </div>
+
+                <div
+                    id="mensajeSup"
+                    class="mensaje">
+                </div>
+
+                <!-- Solo en la primera activación -->
+                <div class="input-group" id="grupoCodigo" hidden>
+                    <label for="codigoAut">Código de autorización</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">🛡️</span>
+                        <input
+                            type="password"
+                            id="codigoAut"
+                            placeholder="Te lo entrega el administrador"
+                            autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="claveSup" id="labelClaveSup">Clave de supervisor</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">🔑</span>
+                        <input
+                            type="password"
+                            id="claveSup"
+                            placeholder="Clave de supervisor"
+                            autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="input-group" id="grupoClaveConfirmar" hidden>
+                    <label for="claveSupConfirmar">Confirmar clave</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">🔑</span>
+                        <input
+                            type="password"
+                            id="claveSupConfirmar"
+                            placeholder="Repite la clave"
+                            autocomplete="off">
+                    </div>
+                </div>
+
+                <p class="ayuda-clave" id="ayudaClave" hidden>
+                    Mínimo 10 caracteres, con letras y números, y distinta a tu contraseña.
+                </p>
+
+                <button
+                    type="submit"
+                    class="login-button"
+                    id="btnSup">
+
+                    <span id="btnSupText">Verificar</span>
+                    <span class="arrow" id="btnSupArrow">→</span>
+
+                </button>
+
+                <div class="bottom-buttons">
+                    <button
+                        type="button"
+                        class="secondary-button"
+                        id="btnCancelarSup">
+
+                        ⬅ Cancelar
+
+                    </button>
+                </div>
+
+            </form>
+
         </section>
 
 

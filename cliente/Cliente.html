@@ -8,6 +8,7 @@
     <title>Panel Cliente | POWER CLEAN</title>
 
     <link rel="stylesheet" href="estilos-cliente.css">
+    <link rel="stylesheet" href="../FIREBASE/perfil.css">
 </head>
 
 <body>
@@ -143,11 +144,6 @@
 
         </nav>
 
-
-        <!-- =========================
-             INFORMACIÓN SIDEBAR
-        ========================== -->
-
         <div class="sidebar-info">
 
             <span>POWER CLEAN</span>
@@ -158,10 +154,6 @@
 
         </div>
 
-
-        <!-- =========================
-             CERRAR SESIÓN
-        ========================== -->
 
         <button
             class="cerrar"
@@ -182,9 +174,6 @@
     </div>
 
 
-    <!-- =========================
-         CONTENIDO PRINCIPAL
-    ========================== -->
 
     <main class="main">
 
@@ -218,13 +207,13 @@
             </div>
 
 
-            <!-- Usuario -->
 
             <div class="usuario">
 
                 <div
                     class="avatar"
-                    id="avatar">
+                    id="avatar"
+                    data-pf-avatar>
 
                     CL
 
@@ -253,9 +242,8 @@
         </header>
 
 
-        <!-- ==================================================
-             INICIO
-        =================================================== -->
+
+    
 
         <section
             class="contenido active"
@@ -328,10 +316,6 @@
                 </div>
 
             </div>
-
-
-            <!-- ESTADÍSTICAS -->
-
             <div class="estadisticas">
 
 
@@ -1062,7 +1046,8 @@
                     <div class="perfil-identidad">
 
                         <span
-                            class="avatar avatar--grande">
+                            class="avatar avatar--grande"
+                            data-pf-avatar>
 
                             CL
 
@@ -1074,13 +1059,20 @@
                                 CUENTA
                             </span>
 
-                            <h3>
+                            <h3 data-pf-nombre>
                                 Cliente
                             </h3>
 
                             <span class="panel-count">
                                 Cliente ACSO
                             </span>
+
+                            <div class="pf-foto-acciones">
+                                <label for="pfFoto" class="pf-btn pf-btn-sec">📷 Cambiar foto</label>
+                                <input type="file" id="pfFoto" accept="image/*" hidden>
+                                <button type="button" id="pfQuitarFoto" class="pf-btn pf-btn-texto">Quitar foto</button>
+                            </div>
+                            <span id="pfMsg" class="pf-msg" role="status" style="margin-top:10px"></span>
 
                         </div>
 
@@ -1142,6 +1134,46 @@
 
             </div>
 
+            <div class="pf-card" style="margin-top:20px">
+
+                <h3 class="pf-titulo-card">🔒 Cambiar contraseña</h3>
+
+                <form id="pfPassForm" class="pf-grid" novalidate>
+
+                    <div class="pf-campo pf-campo-ancho">
+                        <label for="pfPassActual">Contraseña actual</label>
+                        <div class="pf-pass-fila">
+                            <input type="password" id="pfPassActual" autocomplete="current-password">
+                            <button type="button" class="pf-ver" data-pf-ver-pass="pfPassActual" aria-label="Mostrar contraseña">👁</button>
+                        </div>
+                    </div>
+
+                    <div class="pf-campo">
+                        <label for="pfPassNueva">Nueva contraseña</label>
+                        <div class="pf-pass-fila">
+                            <input type="password" id="pfPassNueva" autocomplete="new-password" minlength="6">
+                            <button type="button" class="pf-ver" data-pf-ver-pass="pfPassNueva" aria-label="Mostrar contraseña">👁</button>
+                        </div>
+                    </div>
+
+                    <div class="pf-campo">
+                        <label for="pfPassConfirmar">Confirmar contraseña</label>
+                        <div class="pf-pass-fila">
+                            <input type="password" id="pfPassConfirmar" autocomplete="new-password" minlength="6">
+                            <button type="button" class="pf-ver" data-pf-ver-pass="pfPassConfirmar" aria-label="Mostrar contraseña">👁</button>
+                        </div>
+                    </div>
+
+                    <p class="pf-nota">Mínimo 6 caracteres. Úsala la próxima vez que inicies sesión.</p>
+
+                    <div class="pf-acciones">
+                        <button type="submit" id="pfPassGuardar" class="pf-btn pf-btn-prim">Actualizar contraseña</button>
+                        <span id="pfPassMsg" class="pf-msg" role="status"></span>
+                    </div>
+
+                </form>
+            </div>
+
         </section>
 
 
@@ -1161,9 +1193,6 @@
     </main>
 
 </div>
-
-
-<!-- TOAST -->
 
 <div
     class="toast"
@@ -1189,6 +1218,7 @@
 
 
 <script src="clientes.js"></script>
+<script type="module" src="perfil-cliente.js"></script>
 <script type="module" src="solicitudes.js"></script>
 
 </body>
