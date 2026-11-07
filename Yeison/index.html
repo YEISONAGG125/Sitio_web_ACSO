@@ -1,291 +1,183 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>ACSO | Gestión de servicios</title>
-
+    <title>ACSO | Control y Seguimiento Operativo</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
     <header class="header">
         <a href="#inicio" class="logo">
             <span class="logo-icon">A</span>
-            <span class="logo-text">C S O</span>
+            <span class="logo-text">ACSO<small>Plataforma de gestión de servicios</small></span>
         </a>
 
-        <nav class="nav">
+        <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false">☰</button>
+
+        <nav class="nav" id="nav">
             <a href="#inicio">Inicio</a>
-            <a href="#nosotros">Nosotros</a>
-            <a href="#servicios">Servicios</a>
+            <a href="#acerca">Acerca de</a>
+            <a href="#oferta">Servicios</a>
             <a href="#contacto">Contacto</a>
-            <a href="../inicio de sistema/login.html" class="btn-login">
-                Iniciar sesión
-            </a>
+            <a href="../ayuda/ayuda.html">Ayuda y soporte</a>
+            <a href="../inicio de sistema/login.html" class="btn btn-solid">Ingresar</a>
+            <a href="../registro/registro.html" class="btn btn-outline">Registrarse</a>
         </nav>
     </header>
 
     <main>
-
         <section class="hero" id="inicio">
-            <div class="hero-background"></div>
-
-            <div class="hero-content">
-                <h1>
-                    Trabajo
-                    <span>fácil</span>
-                    de manera rápida.
-                </h1>
-
-                <p class="hero-description">
-                    ACSO es una plataforma digital diseñada para mejorar
-                    la calidad y eficiencia de la gestión de servicios,
-                    permitiendo optimizar los procesos y brindar un mejor
-                    servicio a los clientes.
-                </p>
+            <div class="hero-bg"></div>
+            <div class="hero-inner">
+                <div class="hero-text">
+                    <h1>¿Qué necesitas<br><span>gestionar hoy?</span></h1>
+                    <p>Bienvenidos a la página oficial de ACSO, dedicada a brindar servicios de aseo y mantenimiento de calidad a nuestros clientes.</p>
+                    <div class="hero-actions">
+                        <a href="../inicio de sistema/login.html" class="btn btn-solid btn-lg">Ingresar</a>
+                        <a href="../registro/registro.html" class="btn btn-ghost btn-lg">Registrarse</a>
+                    </div>
+                </div>
+                <div class="hero-art" aria-hidden="true">
+                    <div class="art-card art-a"><b></b> Servicio aprobado</div>
+                    <div class="art-card art-b"><b></b> Nueva novedad</div>
+                    <div class="art-card art-c"><b></b> Reporte listo</div>
+                    <div class="art-circle">A</div>
+                </div>
             </div>
         </section>
-        <section class="about" id="nosotros">
-            <div class="section-label">
-                ¿QUÉ ES ACSO?
-            </div>
 
-            <h2>
-                Un sitio web de gestión de servicios.
-            </h2>
+        <!-- OFERTA -->
+        <section class="section" id="oferta">
+            <h2 class="section-title">Nuestras soluciones por rol</h2>
+            <p class="section-sub">Cada usuario accede a las herramientas que necesita: solicitudes, contratos, horarios, novedades y seguimiento.</p>
 
-            <p>
-                ACSO es un sistema de gestión de servicios dedicado a
-                mejorar la calidad y eficiencia de los procesos,
-                permitiendo optimizar la gestión y brindar un mejor
-                servicio a los clientes.
-            </p>
-
-            <div class="feature-grid">
-
-                <article class="feature-card">
-                    <div class="feature-icon">👥</div>
-
-                    <h3>Personal</h3>
-
-                    <p>
-                        Consulta y administra la información de los
-                        empleados de manera organizada.
-                    </p>
-                </article>
-
-                <article class="feature-card">
-                    <div class="feature-icon">📋</div>
-
-                    <h3>Servicios</h3>
-
-                    <p>
-                        Controla solicitudes, actividades y servicios
-                        pendientes.
-                    </p>
-                </article>
-
-                <article class="feature-card">
-                    <div class="feature-icon">📊</div>
-
-                    <h3>Reportes</h3>
-
-                    <p>
-                        Obtén información clara para facilitar el
-                        seguimiento de las operaciones.
-                    </p>
-                </article>
-
-                <article class="feature-card">
-                    <div class="feature-icon">🔔</div>
-
-                    <h3>Notificaciones</h3>
-
-                    <p>
-                        Recibe notificaciones sobre las novedades
-                        y actividades de las diferentes áreas.
-                    </p>
-                </article>
-
+            <div class="cards-4">
+                <a href="../inicio de sistema/login.html" class="offer-card">
+                    <span class="offer-icon">C</span>
+                    <h3>Cliente</h3>
+                    <p>Solicita servicios y contratos, y consulta el estado de cada solicitud.</p>
+                </a>
+                <a href="../inicio de sistema/login.html" class="offer-card">
+                    <span class="offer-icon">E</span>
+                    <h3>Empleado</h3>
+                    <p>Consulta tus horarios y reporta novedades e incapacidades.</p>
+                </a>
+                <a href="../inicio de sistema/login.html" class="offer-card">
+                    <span class="offer-icon">S</span>
+                    <h3>Supervisor</h3>
+                    <p>Revisa solicitudes y novedades en tiempo real y responde a cada una.</p>
+                </a>
+                <a href="../inicio de sistema/login.html" class="offer-card">
+                    <span class="offer-icon">A</span>
+                    <h3>Administrador</h3>
+                    <p>Gestiona usuarios, zonas, proveedores, productos, pagos y reportes.</p>
+                </a>
             </div>
         </section>
-        <section class="services" id="servicios">
 
-            <div class="services-text">
-                <div class="section-label">
-                    TODO EN UN SOLO LUGAR
+        <!-- FECHAS / PASOS -->
+        <section class="section section-alt" id="pasos">
+            <div class="dates">
+                <div class="dates-text">
+                    <h2 class="section-title left">Empieza en tres pasos</h2>
+                    <p class="section-sub left">Crear tu cuenta y pedir tu primer servicio toma pocos minutos.</p>
+                    <a href="../registro/registro.html" class="btn btn-solid btn-lg">Registrarse ahora</a>
                 </div>
-
-                <h2>
-                    Menos desorden.
-                    <br>
-                    Más control.
-                </h2>
-
-                <p>
-                    ACSO conecta las diferentes áreas de la organización
-                    para que la información pueda ser consultada y
-                    gestionada desde una misma plataforma.
-                </p>
-            </div>
-
-            <div class="services-list">
-
-                <div class="service-row">
-                    <span>01</span>
-
-                    <div>
-                        <h3>Gestión de empleados</h3>
-
-                        <p>
-                            Información y seguimiento del personal de
-                            forma sencilla y organizada.
-                        </p>
-                    </div>
+                <div class="dates-card">
+                    <span class="tag">Cómo funciona</span>
+                    <ol class="steps">
+                        <li><b>1</b><div><h3>Regístrate</h3><p>Crea tu usuario según tu rol.</p></div></li>
+                        <li><b>2</b><div><h3>Inicia sesión</h3><p>Accede a tu panel personalizado.</p></div></li>
+                        <li><b>3</b><div><h3>Solicita y haz seguimiento</h3><p>Recibe respuestas y notificaciones al instante.</p></div></li>
+                    </ol>
                 </div>
-
-                <div class="service-row">
-                    <span>02</span>
-
-                    <div>
-                        <h3>Control de servicios</h3>
-
-                        <p>
-                            Organiza las solicitudes y actividades de
-                            cada servicio realizado o pendiente.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="service-row">
-                    <span>03</span>
-
-                    <div>
-                        <h3>Inventario</h3>
-
-                        <p>
-                            Controla productos y materiales de forma
-                            eficiente.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="service-row">
-                    <span>04</span>
-
-                    <div>
-                        <h3>Reportes</h3>
-
-                        <p>
-                            Consulta reportes para realizar el
-                            seguimiento de las operaciones y obtener
-                            información relevante.
-                        </p>
-                    </div>
-                </div>
-
             </div>
         </section>
-        <section class="contacto-section" id="contacto">
 
-            <div class="contacto-header">
-                <h1>
-                    CONTACTA
-                    <span>CON NOSOTROS</span>
-                </h1>
-
-                <p>
-                    ¿Tienes alguna pregunta, inconveniente o necesitas
-                    ayuda? Comunícate con nosotros y estaremos
-                    disponibles para atenderte.
-                </p>
+        <!-- CARRUSEL -->
+        <section class="section" aria-label="Destacados">
+            <div class="carousel" id="carousel">
+                <div class="slides">
+                    <article class="slide slide-1">
+                        <div>
+                            <h3>¿Necesitas un servicio de aseo?</h3>
+                            <p>Pide un servicio puntual o un contrato desde tu panel de cliente.</p>
+                            <a href="../inicio de sistema/login.html" class="btn btn-light">Solicitar</a>
+                        </div>
+                    </article>
+                    <article class="slide slide-2">
+                        <div>
+                            <h3>¿Eres parte del equipo?</h3>
+                            <p>Reporta novedades e incapacidades y recibe la respuesta de tu supervisor.</p>
+                            <a href="../inicio de sistema/login.html" class="btn btn-light">Ingresar</a>
+                        </div>
+                    </article>
+                </div>
+                <div class="dots" role="tablist">
+                    <button class="dot active" aria-label="Imagen 1 de 2"></button>
+                    <button class="dot" aria-label="Imagen 2 de 2"></button>
+                </div>
             </div>
+        </section>
 
-            <div class="contacto-container">
-                <div class="contacto-info">
+        <!-- ACERCA DE -->
+        <section class="section about" id="acerca">
+            <div class="about-box">
+                <span class="tag">Acerca de</span>
+                <h2 class="section-title left">Comprometidos con la excelencia y la satisfacción del cliente</h2>
+                <p>Somos una empresa de aseo y mantenimiento. Con ACSO ofrecemos soluciones eficientes para organizar servicios, contratos, personal y novedades, y así atender mejor las necesidades de nuestros usuarios.</p>
+            </div>
+        </section>
 
-                    <div class="info-card">
-                        <div class="icono">🏢</div>
+        <!-- CIFRAS -->
+        <section class="stats">
+            <h2 class="section-title light">ACSO en números</h2>
+            <div class="stats-row">
+                <div><strong>4</strong><span>roles de usuario</span></div>
+                <div><strong>16</strong><span>módulos de información</span></div>
+                <div><strong>24/7</strong><span>acceso a tu panel</span></div>
+                <div><strong>Vivo</strong><span>seguimiento en tiempo real</span></div>
+            </div>
+        </section>
 
-                        <div>
-                            <h3>Nuestra oficina</h3>
-
-                            <p>
-                                Visítanos y recibe atención personalizada
-                                sobre nuestros servicios.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="info-card">
-                        <div class="icono">📧</div>
-
-                        <div>
-                            <h3>Correo electrónico</h3>
-
-                            <p>acso@gmail.com</p>
-                        </div>
-                    </div>
-
-                    <div class="info-card">
-                        <div class="icono">📱</div>
-
-                        <div>
-                            <h3>Teléfono</h3>
-
-                            <p>320 9869163</p>
-                        </div>
-                    </div>
-
-                    <div class="info-card">
-                        <div class="icono">🆘</div>
-
-                        <div>
-                            <h3>¿Necesitas ayuda?</h3>
-
-                            <p>
-                                Consulta nuestra página de ayuda para
-                                resolver tus dudas.
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-
-        
-                <div class="contacto-panel">
-                    <div class="panel-icon">💬</div>
-
-                    <h2>¿Tienes algún problema?</h2>
-
-                    <p>
-                        Diligencia tu solicitud o consulta nuestra
-                        página de ayuda para encontrar la información
-                        que necesitas.
-                    </p>
-
-                    <a href="../ayuda/ayuda.html" class="btn-ayuda">
-                        Ir a página de ayuda
-                        <span>→</span>
-                    </a>
-                </div>
-
+        <!-- SOLUCIONES -->
+        <section class="section" id="soluciones">
+            <h2 class="section-title">Soluciones para la comunidad</h2>
+            <p class="section-sub">Encuentra rápido lo que necesitas para resolver tus dudas y trámites.</p>
+            <div class="cards-4 small">
+                <a href="../inicio de sistema/login.html" class="sol-card"><span>🔑</span>Ingresar a mi cuenta</a>
+                <a href="../ayuda/ayuda.html" class="sol-card"><span>❓</span>Preguntas frecuentes</a>
+                <a href="../registro/registro.html" class="sol-card"><span>📝</span>Crear una cuenta</a>
+                <a href="#contacto" class="sol-card"><span>📞</span>Contáctanos</a>
             </div>
         </section>
 
     </main>
-    <footer>
-        <div class="footer-logo">ACSO</div>
 
-        <p>Trabajo fácil, rápido y seguro.</p>
-
-        <span>
-            © 2026 ACSO. Todos los derechos reservados.
-        </span>
+    <!-- PIE -->
+    <footer id="contacto">
+        <div class="footer-grid">
+            <div>
+                <div class="footer-logo">ACSO</div>
+                <p>Aplicación Web de Control y Seguimiento Operativo para Power Clean.</p>
+            </div>
+            <div>
+                <h4>Contacto</h4>
+                <p>📧 acso@gmail.com</p>
+                <p>📱 320 9869163</p>
+                <p>🆘 <a href="../ayuda/ayuda.html">Ayuda y soporte</a>: escríbenos o llámanos y te atendemos.</p>
+            </div>
+            <div>
+                <h4>Enlaces</h4>
+                <p><a href="../ayuda/ayuda.html">Ayuda y soporte</a></p>
+                <p><a href="../inicio de sistema/login.html">Ingresar</a></p>
+                <p><a href="../registro/registro.html">Registrarme</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">© 2026 ACSO. Todos los derechos reservados.</div>
     </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>

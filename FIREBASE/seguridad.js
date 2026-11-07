@@ -1,20 +1,4 @@
-// =====================================================
-// SEGURIDAD DEL SUPERVISOR
-// =====================================================
-// Capas que protegen el acceso de supervisor:
-//
-//  1. Código de autorización (lo define el administrador con
-//     herramientas/generar-codigo.js). Sin él NO se puede crear
-//     una cuenta de supervisor ni activar su clave.
-//  2. Segundo paso en el login: "clave de supervisor", distinta
-//     a la contraseña. Se guarda con PBKDF2 (nunca en texto plano).
-//  3. Bloqueo tras 3 intentos fallidos (15 min), guardado en la
-//     base de datos para que borrar el navegador no lo evite.
-//  4. Sesión con token aleatorio: solo su hash vive en la base de
-//     datos. Ya no basta con escribir cargo="supervisor" en la
-//     consola del navegador.
-//  5. La sesión vence a las 8 h o tras 15 min sin actividad.
-// =====================================================
+
 
 import { rtdb, ref, get, update } from "./firebase.js";
 import {
@@ -133,9 +117,6 @@ export async function guardarClaveSupervisor(idUsuario, clave) {
 }
 
 
-// =====================================================
-// SESIÓN CON TOKEN
-// =====================================================
 
 // Se llama SOLO cuando el segundo paso salió bien.
 export async function abrirSesionSupervisor(idUsuario) {
@@ -187,14 +168,6 @@ export async function cerrarSesionSupervisor() {
 }
 
 
-// =====================================================
-// GUARD: protege las páginas de supervisor
-// =====================================================
-// Uso:  const acceso = await protegerSupervisor();
-//
-// Si no hay sesión válida redirige al login y NO deja que
-// el resto de la página se ejecute. Mientras verifica, la
-// página permanece oculta (ver <style id="guard-style">).
 
 function expulsar(motivo) {
 
@@ -249,9 +222,6 @@ export async function protegerSupervisor() {
 }
 
 
-// =====================================================
-// CIERRE POR INACTIVIDAD
-// =====================================================
 
 export function vigilarInactividad(alExpirar) {
 

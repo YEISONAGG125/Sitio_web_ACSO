@@ -1,21 +1,8 @@
-// =====================================================
-// GENERADOR DEL CÓDIGO DE AUTORIZACIÓN DE SUPERVISORES
-// =====================================================
-// Uso:   node herramientas/generar-codigo.js
-//
-// 1. Te pide el código que TÚ eliges (mínimo 12 caracteres).
-// 2. Imprime un JSON con el hash (el código NO se guarda en ningún archivo).
-// 3. Pega ese JSON en Firebase Console -> Realtime Database
-//    en la ruta:  config/seguridad
-//
-// Ese código solo lo conoce quien autoriza supervisores. Sin él
-// nadie puede registrarse como supervisor ni activar su clave.
-// =====================================================
 
 const crypto = require("crypto");
 const readline = require("readline");
 
-const ITERACIONES = 210000;   // debe coincidir con FIREBASE/cripto.js
+const ITERACIONES = 210000;
 
 function generar(codigo) {
     const salt = crypto.randomBytes(16);

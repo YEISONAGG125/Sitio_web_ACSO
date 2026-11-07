@@ -1,6 +1,4 @@
-/* =====================================================
-   PALETA ACSO (misma del inicio)
-===================================================== */
+
 :root {
     --acso-fondo: #f8fbfa;
     --acso-texto: #102d2b;
@@ -767,13 +765,6 @@ td {
     .fila-dos { grid-template-columns: 1fr; }
     .bienvenida { flex-direction: column; align-items: flex-start; }
 }
-
-
-/* =====================================================
-   MENÚ HAMBURGUESA
-   - Escritorio: contrae / expande la barra lateral
-   - Móvil (<= 900px): la barra se desliza sobre el contenido
-===================================================== */
 
 .header-izq {
     display: flex;

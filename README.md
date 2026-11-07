@@ -8,7 +8,7 @@ El sistema busca centralizar y organizar diferentes procesos operativos y admini
 
 La aplicación cuenta con diferentes roles de usuario y un sistema de autenticación que permite controlar el acceso a las funcionalidades según el tipo de usuario.
 
----
+
 
 ## Objetivo
 
@@ -30,7 +30,7 @@ El sistema permite gestionar información de:
 * Novedades laborales.
 * Productos asociados a servicios.
 
----
+
 
 ## Roles del sistema
 
@@ -43,7 +43,6 @@ El sistema maneja cuatro roles principales:
 
 El acceso a las funcionalidades está controlado mediante autenticación y permisos según el rol del usuario.
 
----
 
 ##  Arquitectura del proyecto
 

@@ -1,9 +1,4 @@
-// =====================================================
-// PANEL DEL SUPERVISOR
-// - Novedades / incapacidades -> Cloud Firestore (tiempo real)
-// - Personal                  -> Realtime Database (usuarios)
-// - Contratos, clientes y productos -> API Spring Boot (opcional)
-// =====================================================
+
 
 import {
     db,
@@ -35,11 +30,6 @@ import {
 
 const API_BASE = "http://localhost:8080/api";
 
-
-// =====================================================
-// SESIÓN
-// =====================================================
-
 function leerSesion() {
     try {
         return JSON.parse(localStorage.getItem("usuarioLogueado")) || {};
@@ -48,8 +38,6 @@ function leerSesion() {
     }
 }
 
-// Verifica la sesión REAL contra la base de datos (token + vencimiento).
-// Si no es válida, redirige al login y el resto del módulo no se ejecuta.
 const acceso = await protegerSupervisor();
 
 const sesionLocal = leerSesion();
@@ -66,10 +54,6 @@ const sesion = sesionLocal.id
 let nombreSupervisor =
     sesion.nombre_completo || sesion.nombre || sesion.usuario || "Supervisor";
 
-
-// =====================================================
-// UTILIDADES
-// =====================================================
 
 const $ = (id) => document.getElementById(id);
 
@@ -129,10 +113,6 @@ function ponerBadge(id, cantidad) {
 }
 
 
-// =====================================================
-// CAMBIAR DE SECCIÓN
-// =====================================================
-
 window.mostrar = function (id, elemento) {
 
     document.querySelectorAll(".contenido").forEach(s => s.classList.remove("active"));
@@ -148,15 +128,11 @@ window.mostrar = function (id, elemento) {
 };
 
 
-// =====================================================
-// NOVEDADES E INCAPACIDADES (FIRESTORE EN TIEMPO REAL)
-// =====================================================
-
 const ESTADOS = ["Pendiente", "Visto", "En revisión", "Aprobada", "Rechazada"];
 
 let novedades = [];
 let primeraCarga = true;
-const borradores = {};               // comentarios a medio escribir
+const borradores = {};            
 let filtroEstado = "";
 
 function escucharNovedades() {
@@ -168,7 +144,7 @@ function escucharNovedades() {
 
     onSnapshot(q, (snap) => {
 
-        // Aviso en vivo cuando llega una nueva (no en la primera carga)
+    
         if (!primeraCarga) {
             snap.docChanges().forEach(cambio => {
                 if (cambio.type === "added" && !cambio.doc.metadata.hasPendingWrites) {
@@ -214,7 +190,6 @@ function pintarContadores() {
     actualizarBadges();
 }
 
-// Contadores rojos del menú (novedades + solicitudes pendientes)
 function actualizarBadges() {
 
     const pendNov = novedades.filter(n => n.estado === "Pendiente").length;
@@ -241,8 +216,6 @@ function pintarNovedades() {
         }
         return true;
     });
-
-    // Conservar foco / cursor si el supervisor está escribiendo
     const activo = document.activeElement;
     const enfoque = activo && activo.classList?.contains("comentario-input") && lista.contains(activo)
         ? { id: activo.dataset.id, pos: activo.selectionStart }
@@ -315,8 +288,6 @@ function pintarNovedades() {
         }
     }
 }
-
-// Cambiar estado (delegación de eventos)
 async function cambiarEstado(idDoc, nuevoEstado) {
 
     const n = novedades.find(x => x.id === idDoc);
@@ -337,8 +308,6 @@ async function cambiarEstado(idDoc, nuevoEstado) {
         });
 
         delete borradores[idDoc];
-
-        // Notificar al empleado
         if (n.estado !== nuevoEstado) {
             await addDoc(collection(db, COL_NOTIFICACIONES), {
                 id_empleado: String(n.id_empleado),
@@ -387,11 +356,6 @@ function configurarNovedades() {
     $("buscarNovedad").addEventListener("input", pintarNovedades);
     $("filtroTipo").addEventListener("change", pintarNovedades);
 }
-
-
-// =====================================================
-// NOTIFICACIONES DEL SUPERVISOR
-// =====================================================
 
 function pintarNotificaciones() {
 
@@ -454,15 +418,10 @@ function configurarNotificaciones() {
     });
 }
 
-
-// =====================================================
-// SOLICITUDES DE CLIENTES (CONTRATOS Y SERVICIOS)
-// =====================================================
-
 let solicitudes = [];
 let primeraCargaSol = true;
 let filtroEstadoSol = "";
-const valoresBorrador = {};          // valores de contrato a medio escribir
+const valoresBorrador = {};        
 
 function escucharSolicitudes() {
 
@@ -659,8 +618,6 @@ async function cambiarEstadoSolicitud(idDoc, nuevoEstado) {
         revisado_por: nombreSupervisor,
         fecha_actualizacion: serverTimestamp()
     };
-
-    // Valor del contrato (solo contratos y si el supervisor lo escribió)
     const valorTexto = valoresBorrador[idDoc];
     if (s.tipo === "Contrato" && valorTexto !== undefined && valorTexto !== "") {
         const valor = Number(valorTexto);
@@ -677,8 +634,6 @@ async function cambiarEstadoSolicitud(idDoc, nuevoEstado) {
         delete valoresBorrador[idDoc];
 
         delete borradores[idDoc];
-
-        // Notificar al cliente
         if (s.estado !== nuevoEstado || comentario) {
             await addDoc(collection(db, COL_NOTIFICACIONES), {
                 id_cliente: String(s.id_cliente),
@@ -731,11 +686,6 @@ function configurarSolicitudes() {
     $("filtroTipoSol").addEventListener("change", pintarSolicitudes);
 }
 
-
-// =====================================================
-// PERSONAL (REALTIME DATABASE)
-// =====================================================
-
 let escuchandoPersonal = false;
 
 function cargarPersonal() {
@@ -784,11 +734,6 @@ function cargarPersonal() {
         lista.innerHTML = `<tr><td colspan="4">❌ No se pudo cargar el personal</td></tr>`;
     });
 }
-
-
-// =====================================================
-// CONTRATOS / CLIENTES / PRODUCTOS (API SPRING BOOT)
-// =====================================================
 
 async function cargarTabla({ endpoint, tablaId, columnas, filaHTML, contadorId, nombre }) {
 
@@ -913,15 +858,6 @@ cargarProductos();
 $("btnCerrarSesion").addEventListener("click", cerrarSesion);
 
 
-// =====================================================
-// MENÚ HAMBURGUESA
-// =====================================================
-// La barra lateral se oculta con body.menu-cerrado.
-//  - Escritorio: arranca abierta.
-//  - Móvil / tablet (<= 1100px): arranca cerrada, se abre encima del
-//    contenido con un fondo oscuro, y se cierra sola al elegir una
-//    opción, al tocar el fondo o con Esc.
-
 const btnMenu = document.getElementById("btnMenu");
 const consultaMovil = window.matchMedia("(max-width: 1100px)");
 
@@ -939,8 +875,6 @@ function cerrarMenuMovil() {
     document.body.classList.add("menu-cerrado");
     actualizarAriaMenu();
 }
-
-// Estado inicial según el tamaño de pantalla
 document.body.classList.toggle("menu-cerrado", esMovil());
 actualizarAriaMenu();
 
@@ -954,22 +888,14 @@ $("menuOverlay")?.addEventListener("click", cerrarMenuMovil);
 document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") cerrarMenuMovil();
 });
-
-// Al elegir una opción del menú, en móvil se cierra
 document.querySelector(".sidebar")?.addEventListener("click", (e) => {
     if (e.target.closest(".tab, .logout")) cerrarMenuMovil();
 });
 
-// Al girar el teléfono o redimensionar, se reajusta
 consultaMovil.addEventListener("change", () => {
     document.body.classList.toggle("menu-cerrado", esMovil());
     actualizarAriaMenu();
 });
-
-
-// =====================================================
-// PERFIL
-// =====================================================
 
 function pintarEncabezado() {
     const s = leerSesion();
@@ -982,16 +908,12 @@ function pintarEncabezado() {
 }
 
 pintarEncabezado();
-
-// Foto, datos personales y contraseña (FIREBASE/perfil.js)
 montarPerfil({
     alGuardar: () => {
         pintarEncabezado();
         mostrarToast("Perfil actualizado correctamente.");
     }
 });
-
-// Clic en el usuario del encabezado -> Mi perfil
 function abrirPerfil() {
     window.mostrar("Perfil", $("tabPerfil"));
     cerrarMenuMovil();
@@ -1005,5 +927,4 @@ $("abrirPerfil")?.addEventListener("keydown", (e) => {
     }
 });
 
-// Se puede entrar directo con supervisor.html#perfil
 if (location.hash.toLowerCase() === "#perfil") abrirPerfil();
