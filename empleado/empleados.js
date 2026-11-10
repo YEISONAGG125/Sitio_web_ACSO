@@ -1,9 +1,4 @@
-// =====================================================
-// PANEL DEL EMPLEADO
-// - Novedades / incapacidades  -> Cloud Firestore (tiempo real)
-// - Notificaciones             -> Cloud Firestore (tiempo real)
-// - Servicios y horarios       -> API Spring Boot (opcional)
-// =====================================================
+
 
 import {
     db,
@@ -23,21 +18,7 @@ import {
 } from "../FIREBASE/firebase.js";
 
 import { montarPerfil } from "../FIREBASE/perfil.js";
-
-
-// =====================================================
-// CONFIGURACIÓN
-// =====================================================
-
-// Solo se usa para servicios y horarios. Si el backend no está
-// encendido, esas dos secciones muestran un aviso y el resto sigue
-// funcionando.
 const API_BASE = "http://localhost:8080/api";
-
-
-// =====================================================
-// SESIÓN DEL EMPLEADO
-// =====================================================
 
 function leerSesion() {
     try {
@@ -53,8 +34,6 @@ const sesion = leerSesion();
 if (String(sesion.cargo || localStorage.getItem("cargo") || "").toLowerCase() !== "empleado") {
     window.location.href = "../inicio de sistema/login.html";
 }
-
-// ID: id_empleado si existe; si no, el id del usuario en Firebase
 const idEmpleado = String(
     localStorage.getItem("id_empleado") ||
     sesion.id_empleado ||

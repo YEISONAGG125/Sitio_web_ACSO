@@ -102,18 +102,6 @@
             <a
                 href="#"
                 class="nav-link"
-                data-section="pagos">
-
-                <span class="nav-icon">▣</span>
-
-                <span>Mis Pagos</span>
-
-            </a>
-
-
-            <a
-                href="#"
-                class="nav-link"
                 data-section="notificaciones">
 
                 <span class="nav-icon">♢</span>
@@ -144,17 +132,6 @@
 
         </nav>
 
-        <div class="sidebar-info">
-
-            <span>POWER CLEAN</span>
-
-            <p>
-                Gestión fácil, rápida y segura.
-            </p>
-
-        </div>
-
-
         <button
             class="cerrar"
             id="btnCerrarSesion">
@@ -177,8 +154,6 @@
 
     <main class="main">
 
-        <!-- HEADER -->
-
         <header>
 
             <div class="header-titulo">
@@ -197,13 +172,7 @@
 
                 </h1>
 
-                <p class="header-subtitulo">
-
-                    Consulta y administra la información
-                    de tus servicios.
-
-                </p>
-
+    
             </div>
 
 
@@ -248,17 +217,13 @@
         <section
             class="contenido active"
             id="sec-inicio">
-
-
-            <!-- HERO -->
-
             <div class="bienvenida">
 
                 <div class="bienvenida-texto">
 
                     <span class="mini-etiqueta">
 
-                        ✦ POWER CLEAN
+                        -POWER CLEAN
 
                     </span>
 
@@ -272,7 +237,7 @@
                     <p>
 
                         Aquí puedes consultar tus servicios,
-                        contrato, pagos y recibir información
+                        contrato y recibir información
                         importante de POWER CLEAN.
 
                     </p>
@@ -282,7 +247,7 @@
                         class="btn-hero"
                         id="btnVerServicios">
 
-                        Ver mis servicios
+                        mis servicios
 
                         <span>→</span>
 
@@ -384,17 +349,6 @@
 
                     </div>
 
-                    <div class="card-datos">
-
-                        <strong id="statPagos">
-                            0
-                        </strong>
-
-                        <span>
-                            Pagos
-                        </span>
-
-                    </div>
 
                     <span class="card-decoracion">
                         $
@@ -403,10 +357,6 @@
                 </div>
 
             </div>
-
-
-            <!-- SERVICIOS ACTIVOS -->
-
             <div class="panel">
 
                 <div class="panel-header">
@@ -464,11 +414,7 @@
                 </div>
 
             </div>
-
-
-            <!-- ACCIONES RÁPIDAS -->
-
-            <div class="acciones">
+        <div class="acciones">
                 <button
                     class="accion"
                     data-go="solicitar">
@@ -556,12 +502,7 @@
 
         </section>
 
-
-        <!-- ==================================================
-             SERVICIOS
-        =================================================== -->
-
-        <section
+ <section
             class="contenido"
             id="sec-servicios">
 
@@ -632,12 +573,6 @@
             </div>
 
         </section>
-
-
-        <!-- ==================================================
-             CONTRATO
-        =================================================== -->
-
         <section
             class="contenido"
             id="sec-contrato">
@@ -652,7 +587,6 @@
                     <span class="pill pill--curso oculto" id="estadoContrato">● Vigente</span>
                 </div>
 
-                <!-- Sin contrato aprobado -->
                 <div class="vacio-bloque" id="contratoVacio">
                     <strong>Aún no tienes un contrato aprobado</strong>
                     Cuando el supervisor apruebe tu solicitud de contrato,
@@ -663,7 +597,6 @@
                     </button>
                 </div>
 
-                <!-- Con contrato aprobado -->
                 <div id="contratoDatos" class="oculto">
 
                     <div class="contrato-grid">
@@ -720,11 +653,6 @@
 
         </section>
 
-
-
-        <!-- ==================================================
-             SOLICITAR SERVICIO / CONTRATO
-        =================================================== -->
         <section
             class="contenido"
             id="sec-solicitar">
@@ -752,8 +680,6 @@
                         📄 Pedir un contrato
                     </button>
                 </div>
-
-                <!-- ============ FORMULARIO SERVICIO ============ -->
                 <form id="formServicio" class="sol-form">
 
                     <div class="sol-fila">
@@ -805,11 +731,9 @@
                     </div>
 
                     <button type="submit" class="btn-primario" id="btnEnviarServicio">
-                        📤 Enviar solicitud de servicio
+                        Enviar
                     </button>
                 </form>
-
-                <!-- ============ FORMULARIO CONTRATO ============ -->
                 <form id="formContrato" class="sol-form oculto">
 
                     <div class="sol-fila">
@@ -856,12 +780,7 @@
                         </div>
                     </div>
 
-                    <div class="sol-fila">
-                        <div class="campo">
-                            <label for="conArea">Área aproximada en m² (opcional)</label>
-                            <input type="number" id="conArea" min="1" max="100000" placeholder="Ej: 250">
-                        </div>
-
+                 
                         <div class="campo">
                             <label for="conTelefono">Teléfono de contacto</label>
                             <input type="tel" id="conTelefono" maxlength="20" placeholder="300 000 0000" required>
@@ -880,18 +799,13 @@
                     </div>
 
                     <button type="submit" class="btn-primario" id="btnEnviarContrato">
-                        📤 Enviar solicitud de contrato
+                         Enviar 
                     </button>
                 </form>
 
             </div>
 
         </section>
-
-
-        <!-- ==================================================
-             MIS SOLICITUDES
-        =================================================== -->
         <section
             class="contenido"
             id="sec-solicitudes">
@@ -907,8 +821,7 @@
                 </div>
 
                 <p class="pista">
-                    Aquí ves en qué estado está cada pedido. Se actualiza
-                    solo cuando el supervisor lo revisa.
+                    Aquí ves en qué estado está cada pedido. 
                 </p>
 
                 <div id="listaSolicitudes">
@@ -919,75 +832,7 @@
 
         </section>
 
-        <!-- ==================================================
-             PAGOS
-        =================================================== -->
-
-        <section
-            class="contenido"
-            id="sec-pagos">
-
-            <div class="panel">
-
-                <div class="panel-header">
-
-                    <div>
-
-                        <span class="panel-etiqueta">
-                            FINANZAS
-                        </span>
-
-                        <h3>
-                            Historial de pagos
-                        </h3>
-
-                    </div>
-
-                    <span
-                        class="panel-count"
-                        id="conteoPagos">
-
-                        0 registrados
-
-                    </span>
-
-                </div>
-
-
-                <div class="tabla-scroll">
-
-                    <table>
-
-                        <thead>
-
-                        <tr>
-
-                            <th>ID</th>
-
-                            <th>Contrato</th>
-
-                            <th>Método de pago</th>
-
-                        </tr>
-
-                        </thead>
-
-                        <tbody id="tablaPagos">
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- ==================================================
-             NOTIFICACIONES
-        =================================================== -->
+        
 
         <section
             class="contenido"
@@ -1029,11 +874,6 @@
             </div>
 
         </section>
-
-
-        <!-- ==================================================
-             PERFIL
-        =================================================== -->
 
         <section
             class="contenido"
@@ -1177,14 +1017,12 @@
         </section>
 
 
-        <!-- FOOTER -->
-
         <footer>
 
             <div class="footer-line"></div>
 
             <p>
-                © 2026 <strong>POWER CLEAN</strong>
+                © 2026 <strong>A C S O</strong>
                 · Gestión fácil, rápida y segura.
             </p>
 
@@ -1205,7 +1043,7 @@
     <div>
 
         <strong id="toastTitulo">
-            POWER CLEAN
+            A C S O
         </strong>
 
         <p id="toastMensaje">

@@ -8,6 +8,8 @@ import {
     onDisconnect
 } from "../FIREBASE/firebase.js";
 
+import { passwordCorrecta } from "../FIREBASE/passwords.js";
+
 import {
     verificarCodigoAutorizacion,
     minutosBloqueado,
@@ -179,7 +181,7 @@ loginForm.addEventListener("submit", async (event) => {
 
             if (
                 usuarioFirebase === usuarioIngresado &&
-                passwordFirebase === passwordIngresada
+                await passwordCorrecta(datos, passwordIngresada)
             ) {
 
                 usuarioEncontrado = {
@@ -195,6 +197,12 @@ loginForm.addEventListener("submit", async (event) => {
         // ======================================
         // USUARIO NO ENCONTRADO
         // ======================================
+
+        if (usuarioEncontrado && usuarioEncontrado.activo === false) {
+            mostrarMensaje("Tu cuenta está desactivada. Contacta al administrador.", "error");
+            restaurarBoton();
+            return;
+        }
 
         if (!usuarioEncontrado) {
 
@@ -239,7 +247,7 @@ loginForm.addEventListener("submit", async (event) => {
         // ======================================
         // Todavía NO se guarda ninguna sesión.
 
-        if (cargo === "supervisor") {
+        if (cargo === "supervisor" || cargo === "administrador") {
 
             await iniciarSegundoPaso(usuarioEncontrado);
             return;
@@ -689,7 +697,7 @@ async function completarLogin(usuarioEncontrado, destinoMensaje = mensaje) {
     // LOGIN CORRECTO
     // ======================================
 
-    if (cargo !== "supervisor") {
+    if (cargo !== "supervisor" && cargo !== "administrador") {
 
         mostrarMensaje(
             "Inicio de sesión correcto. Redirigiendo...",
@@ -715,6 +723,11 @@ async function completarLogin(usuarioEncontrado, destinoMensaje = mensaje) {
 
         if (cargo === "supervisor") {
             window.location.href = "../supervisor/supervisor.html";
+            return;
+        }
+
+        if (cargo === "administrador") {
+            window.location.href = "../admin/admin.html";
             return;
         }
 
@@ -765,29 +778,4 @@ function restaurarBotonSup() {
             : "Verificar";
 
     btnSupArrow.textContent = "→";
-}
-
-
-// ======================================
-// OLVIDÉ CONTRASEÑA
-// ======================================
-
-const forgotPassword =
-    document.getElementById("forgotPassword");
-
-
-if (forgotPassword) {
-
-    forgotPassword.addEventListener(
-        "click",
-        (event) => {
-
-            event.preventDefault();
-
-            mostrarMensaje(
-                "Para recuperar tu contraseña, comunícate con el administrador del sistema.",
-                "error"
-            );
-        }
-    );
 }

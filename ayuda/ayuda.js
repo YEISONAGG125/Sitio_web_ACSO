@@ -31,9 +31,6 @@ function inicializarAyuda() {
 
 }
 
-
-/* ================= ANIMACIONES ================= */
-
 function agregarAnimaciones() {
 
     const tarjetas =

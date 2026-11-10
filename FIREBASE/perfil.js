@@ -1,27 +1,7 @@
-// =====================================================
-// PERFIL DE USUARIO - MÓDULO COMPARTIDO
-// =====================================================
-// Lo usan los paneles de Empleado, Supervisor y Cliente.
-//
-//  - Lee y guarda los datos en Realtime Database (usuarios/{id}),
-//    la misma tabla que usa el login, así los cambios sobreviven
-//    al cerrar sesión.
-//  - Foto de perfil: se reduce a 256 px y se guarda como texto
-//    (data URL) en el campo "foto" del usuario.
-//  - Cambio de contraseña: verifica la contraseña actual.
-//
-// Cómo se conecta con la página: busca elementos por id
-// (pfForm, pfNombre, pfFoto, pfPassForm...) y por atributos
-// data-pf-avatar / data-pf-nombre. Si un elemento no existe,
-// simplemente se ignora.
-// =====================================================
+
 
 import { rtdb, ref, get, update } from "./firebase.js";
 
-
-// =====================================================
-// SESIÓN
-// =====================================================
 
 export function leerSesion() {
     try {

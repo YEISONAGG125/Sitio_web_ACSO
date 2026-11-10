@@ -370,3 +370,13 @@ Colección nueva: **`solicitudes`**. Hay que volver a publicar `firestore.rules`
 ## Seguridad del acceso de supervisor
 
 El ingreso como supervisor usa un segundo paso (clave de supervisor), código de autorización para registrarse, bloqueo por intentos y sesión con token. Guía de puesta en marcha y limitaciones en [`SEGURIDAD.md`](SEGURIDAD.md).
+
+
+---
+
+## Panel de administrador y recuperación de contraseña
+
+* **Admin:** `admin/admin.html` (cargo `administrador`, con segundo paso de clave como el supervisor). Gestiona usuarios, recuperaciones y datos de Firebase y de la API.
+* **Primer administrador:** `node herramientas/crear-admin.js` y pegar el JSON como nuevo hijo de `usuarios` en Realtime Database.
+* **Recuperar contraseña:** `recuperar/recuperar.html`. La persona pide la recuperación, el admin verifica su identidad y genera un código de un solo uso (30 min); con ese código crea su nueva contraseña.
+* Las contraseñas nuevas se guardan con hash (PBKDF2); las cuentas antiguas en texto plano siguen entrando.

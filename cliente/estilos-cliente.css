@@ -1,7 +1,3 @@
-/* =====================================================
-   CLIENTE - TEMA CLARO ACSO
-   (mismo estilo que el panel de empleado y supervisor)
-===================================================== */
 
 :root {
     --acso-fondo: #f8fbfa;
@@ -47,7 +43,6 @@ button, input, select, textarea { font-family: inherit; }
 
 .app { position: relative; min-height: 100vh; }
 
-/* ---------------- SIDEBAR ---------------- */
 
 .sidebar {
     position: fixed;

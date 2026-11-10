@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ACSO | Panel de administración</title>
+<style id="guard-style">html{visibility:hidden}</style>
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+<aside>
+    <div class="brand">ACSO<small>Panel de administración</small></div>
+    <nav id="nav">
+        <button data-v="resumen" class="on">Resumen</button>
+        <button data-v="usuarios">Usuarios</button>
+        <button data-v="recup">Recuperar contraseñas</button>
+        <button data-v="datos">Datos del sistema</button>
+    </nav>
+    <div id="yo"></div>
+    <button id="salir">Cerrar sesión</button>
+</aside>
+<main>
+    <section id="v-resumen">
+        <h1>Resumen</h1>
+        <p class="nota">Aquí controlas las cuentas de los paneles de supervisor, empleado y cliente, y los datos que manejan.</p>
+        <div id="kpis" class="kpis"></div>
+    </section>
+
+    <section id="v-usuarios" hidden>
+        <h1>Usuarios</h1>
+        <div class="bar">
+            <input id="q" type="search" placeholder="Buscar por nombre, usuario o correo">
+            <select id="fRol"><option value="">Todos los cargos</option><option value="administrador">Administradores</option><option value="supervisor">Supervisores</option><option value="empleado">Empleados</option><option value="cliente">Clientes</option></select>
+            <button id="nuevo" class="pri">Nuevo usuario</button>
+        </div>
+        <div class="tw"><table id="tUsers"></table></div>
+    </section>
+
+    <section id="v-recup" hidden>
+        <h1>Recuperar contraseñas</h1>
+        <p class="nota">Verifica la identidad de la persona (llamada o mensaje) antes de generar su código. El código se muestra una sola vez y vence en 30 minutos.</p>
+        <div class="tw"><table id="tRecup"></table></div>
+    </section>
+
+    <section id="v-datos" hidden>
+        <h1>Datos del sistema</h1>
+        <div class="bar">
+            <select id="fuente">
+                <optgroup label="Firebase">
+                    <option value="fs:novedades_laborales">Novedades laborales</option>
+                    <option value="fs:solicitudes">Solicitudes de clientes</option>
+                    <option value="fs:notificaciones">Notificaciones</option>
+                </optgroup>
+                <optgroup label="API Spring Boot">
+                    <option value="api:contratos">Contratos</option><option value="api:servicios">Servicios</option>
+                    <option value="api:clientes">Clientes</option><option value="api:empleados">Empleados</option>
+                    <option value="api:supervisores">Supervisores</option><option value="api:zonas">Zonas</option>
+                    <option value="api:proveedores">Proveedores</option><option value="api:productos">Productos</option>
+                    <option value="api:horarios">Horarios</option><option value="api:pagos">Pagos</option>
+                    <option value="api:personas">Personas</option><option value="api:roles">Roles</option>
+                    <option value="api:novedades">Novedades</option><option value="api:notificaciones">Notificaciones</option>
+                    <option value="api:productos-servicios">Productos por servicio</option>
+                </optgroup>
+            </select>
+            <button id="nuevoDato" class="pri">Nuevo registro</button>
+        </div>
+        <div class="tw"><table id="tDatos"></table></div>
+    </section>
+</main>
+
+<dialog id="dlg"><form method="dialog" id="fDlg"><h2 id="dT"></h2><div id="dB"></div>
+    <menu><button value="x" formnovalidate>Cancelar</button><button value="ok" class="pri">Guardar</button></menu></form></dialog>
+<div id="toast" role="status"></div>
+<script type="module" src="admin.js"></script>
+</body>
+</html>

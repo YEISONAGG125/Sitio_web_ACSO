@@ -1,13 +1,3 @@
-// =====================================================
-// FIREBASE - CONFIGURACIÓN ÚNICA PARA TODO EL PROYECTO
-// =====================================================
-// Todas las páginas importan desde aquí. Así hay una sola
-// configuración y una sola versión del SDK.
-//
-//  - Realtime Database  -> usuarios / login (ya existente)
-//  - Cloud Firestore    -> novedades laborales, incapacidades
-//                          y notificaciones
-// =====================================================
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 

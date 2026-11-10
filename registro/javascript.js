@@ -1,26 +1,14 @@
-// =====================================================
-// REGISTRO ACSO
-// Permite crear cuentas de: empleado, supervisor y cliente
-// - Los usuarios se guardan en Realtime Database ("usuarios")
-// - Para empleados, si el servidor Spring Boot está encendido,
-//   también se registra allí (si está apagado, el registro
-//   continúa solo en Firebase).
-// =====================================================
-
 import {
     rtdb as db,
     ref,
     get,
     push
 } from "../FIREBASE/firebase.js";
-
 import {
     verificarCodigoAutorizacion,
     crearHashClave,
     validarClaveSupervisor
 } from "../FIREBASE/seguridad.js";
-
-
 const API_BASE = "http://localhost:8080/api";
 
 const CARGOS = ["empleado", "supervisor", "cliente"];
@@ -30,12 +18,6 @@ const NOMBRE_CARGO = {
     supervisor: "Supervisor",
     cliente: "Cliente"
 };
-
-
-// =====================================================
-// ELEMENTOS
-// =====================================================
-
 const bloqueSupervisor = document.getElementById("bloqueSupervisor");
 const selectCargo = document.getElementById("cargo");
 
@@ -50,12 +32,6 @@ const btnText = document.getElementById("btnText");
 const btnArrow = document.getElementById("btnArrow");
 const passwordInput = document.getElementById("password");
 const mostrarPassword = document.getElementById("mostrarPassword");
-
-
-// =====================================================
-// MENSAJES EN PANTALLA
-// =====================================================
-
 function mostrarMensaje(texto, tipo) {
     mensaje.textContent = texto;
     mensaje.className = "mensaje " + tipo;
@@ -73,11 +49,6 @@ function cargando(activo) {
     btnArrow.textContent = activo ? "⏳" : "→";
 }
 
-
-// =====================================================
-// MOSTRAR / OCULTAR CONTRASEÑA
-// =====================================================
-
 if (mostrarPassword) {
     mostrarPassword.addEventListener("click", () => {
         const visible = passwordInput.type === "text";
@@ -85,14 +56,6 @@ if (mostrarPassword) {
         mostrarPassword.textContent = visible ? "👁" : "🙈";
     });
 }
-
-
-// =====================================================
-// REGISTRO EN SPRING BOOT (SOLO EMPLEADOS, OPCIONAL)
-// Devuelve:  { estado: "ok", datos }  |  { estado: "offline" }
-//            { estado: "error", mensaje }
-// =====================================================
-
 async function registrarEmpleadoEnServidor(datos) {
 
     let respuesta;
@@ -107,7 +70,6 @@ async function registrarEmpleadoEnServidor(datos) {
             body: JSON.stringify(datos)
         });
     } catch (error) {
-        // Servidor apagado o sin conexión: se continúa solo con Firebase
         console.warn("Servidor Spring Boot no disponible:", error);
         return { estado: "offline" };
     }
@@ -135,12 +97,6 @@ async function registrarEmpleadoEnServidor(datos) {
 
     return { estado: "ok", datos: json };
 }
-
-
-// =====================================================
-// REGISTRAR
-// =====================================================
-
 formulario.addEventListener("submit", async (e) => {
 
     e.preventDefault();
@@ -151,9 +107,6 @@ formulario.addEventListener("submit", async (e) => {
     const correo = document.getElementById("correo").value.trim().toLowerCase();
     const usuario = document.getElementById("usuario").value.trim();
     const password = passwordInput.value;
-
-    // ---------- VALIDACIONES ----------
-
     if (!nombre || !cargo || !correo || !usuario || !password) {
         mostrarMensaje("Todos los campos son obligatorios.", "error");
         return;
@@ -178,9 +131,6 @@ formulario.addEventListener("submit", async (e) => {
         mostrarMensaje("La contraseña debe tener mínimo 8 caracteres.", "error");
         return;
     }
-
-    // ---------- SUPERVISOR: AUTORIZACIÓN ----------
-
     let claveSupervisor = null;
 
     if (cargo === "supervisor") {
@@ -212,9 +162,6 @@ formulario.addEventListener("submit", async (e) => {
     cargando(true);
 
     try {
-
-        // ---------- SUPERVISOR: VERIFICAR CÓDIGO ----------
-
         if (cargo === "supervisor") {
 
             const estado = await verificarCodigoAutorizacion(document.getElementById("codigoAut").value);
@@ -231,9 +178,6 @@ formulario.addEventListener("submit", async (e) => {
                 return;
             }
         }
-
-        // ---------- ¿YA EXISTE? ----------
-
         const usuariosRef = ref(db, "usuarios");
         const snapshot = await get(usuariosRef);
 
@@ -253,9 +197,6 @@ formulario.addEventListener("submit", async (e) => {
                 return;
             }
         }
-
-        // ---------- DATOS BASE ----------
-
         const registro = {
             nombre: nombre,
             cargo: cargo,
@@ -265,18 +206,12 @@ formulario.addEventListener("submit", async (e) => {
             online: false,
             ultimoAcceso: null
         };
-
-        // ---------- SUPERVISOR: GUARDAR SOLO EL HASH DE LA CLAVE ----------
-
         if (claveSupervisor) {
             const h = await crearHashClave(claveSupervisor);
             registro.clave_hash = h.hash;
             registro.clave_salt = h.salt;
             registro.clave_iter = h.iter;
         }
-
-        // ---------- EMPLEADO: SPRING BOOT (SI ESTÁ ENCENDIDO) ----------
-
         if (cargo === "empleado") {
 
             const resultado = await registrarEmpleadoEnServidor({
@@ -288,7 +223,6 @@ formulario.addEventListener("submit", async (e) => {
                 cargando(false);
                 return;
             }
-
             if (resultado.estado === "ok") {
                 const d = resultado.datos || {};
                 if (d.id_empleado != null) registro.id_empleado = d.id_empleado;
@@ -296,9 +230,6 @@ formulario.addEventListener("submit", async (e) => {
                 if (d.id_usuario != null) registro.id_usuario = d.id_usuario;
             }
         }
-
-        // ---------- GUARDAR EN FIREBASE ----------
-
         await push(usuariosRef, registro);
 
         mostrarMensaje(

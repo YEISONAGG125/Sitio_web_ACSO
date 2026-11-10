@@ -104,7 +104,6 @@ function obtenerIniciales(nombre) {
 
 function actualizarIdentidad() {
 
-    // Se recalcula cada vez, para que el nombre cambie al guardar el perfil
     nombreUsuario =
         usuario.nombre ||
         usuario.nombre_completo ||

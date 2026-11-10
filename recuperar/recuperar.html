@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACSO | Recuperar contraseña</title>
+<link rel="stylesheet" href="../inicio%20de%20sistema/style.css">
+</head>
+<body>
+<section class="login-panel">
+
+<form id="fSol" class="login-card">
+    <div class="login-header"><h1>Recuperar contraseña</h1><p>Escribe tu usuario y tu correo. El administrador revisará tu solicitud.</p></div>
+    <div id="m1" class="mensaje"></div>
+    <div class="input-group"><label for="sUsuario">Usuario</label><div class="input-wrapper"><span class="input-icon">👤</span><input id="sUsuario" required autocomplete="username" placeholder="Nombre de usuario"></div></div>
+    <div class="input-group"><label for="sCorreo">Correo registrado</label><div class="input-wrapper"><span class="input-icon">✉️</span><input id="sCorreo" type="email" required autocomplete="email" placeholder="correo@ejemplo.com"></div></div>
+    <button type="submit" class="login-button"><span>Enviar solicitud</span></button>
+    <div class="bottom-buttons">
+        <button type="button" class="secondary-button" id="aCod">Ya tengo mi código</button>
+        <button type="button" class="secondary-button" onclick="location.href='../inicio de sistema/login.html'">⬅ Volver</button>
+    </div>
+</form>
+
+<form id="fCod" class="login-card" hidden>
+    <div class="login-header"><h1>Crea tu nueva contraseña</h1><p>Usa el código de 8 caracteres que te dio el administrador. Vence en 30 minutos.</p></div>
+    <div id="m2" class="mensaje"></div>
+    <div class="input-group"><label for="cUsuario">Usuario</label><div class="input-wrapper"><span class="input-icon">👤</span><input id="cUsuario" required autocomplete="username"></div></div>
+    <div class="input-group"><label for="cCodigo">Código</label><div class="input-wrapper"><span class="input-icon">🔑</span><input id="cCodigo" required maxlength="8" autocomplete="off" placeholder="XXXXXXXX"></div></div>
+    <div class="input-group"><label for="cPass">Nueva contraseña</label><div class="input-wrapper"><span class="input-icon">🔒</span><input id="cPass" type="password" minlength="8" required autocomplete="new-password" placeholder="Mínimo 8 caracteres"></div></div>
+    <div class="input-group"><label for="cPass2">Repite la contraseña</label><div class="input-wrapper"><span class="input-icon">🔒</span><input id="cPass2" type="password" minlength="8" required autocomplete="new-password"></div></div>
+    <button type="submit" class="login-button"><span>Cambiar contraseña</span></button>
+    <div class="bottom-buttons"><button type="button" class="secondary-button" id="aSol">⬅ Pedir un código</button></div>
+</form>
+
+</section>
+<script type="module">
+import { rtdb, ref, get, push, update } from "../FIREBASE/firebase.js";
+import { verificarHashClave } from "../FIREBASE/cripto.js";
+import { hashPassword } from "../FIREBASE/passwords.js";
+
+const $ = (id) => document.getElementById(id);
+const msg = (id, t, tipo) => { $(id).textContent = t; $(id).className = "mensaje " + tipo; };
+const ver = (cod) => { $("fSol").hidden = cod; $("fCod").hidden = !cod; };
+$("aCod").onclick = () => ver(true);
+$("aSol").onclick = () => ver(false);
+
+async function buscar(usuario, correo) {
+    const s = await get(ref(rtdb, "usuarios"));
+    return Object.entries(s.val() || {}).find(([, u]) => u && String(u.usuario || "").trim() === usuario
+        && (correo === null || String(u.correo || "").toLowerCase() === correo));
+}
+
+$("fSol").onsubmit = async (e) => {
+    e.preventDefault();
+    const usuario = $("sUsuario").value.trim(), correo = $("sCorreo").value.trim().toLowerCase();
+    try {
+        const hit = await buscar(usuario, correo);
+        if (hit) {
+            const rs = (await get(ref(rtdb, "recuperaciones"))).val() || {};
+            const hay = Object.values(rs).some((r) => r.id_usuario === hit[0] && r.estado === "pendiente");
+            if (!hay) await push(ref(rtdb, "recuperaciones"), { id_usuario: hit[0], usuario, correo, cargo: hit[1].cargo || "", estado: "pendiente", creado: Date.now() });
+        }
+        // Mismo mensaje exista o no la cuenta, para no revelar qué usuarios hay
+        msg("m1", "Si los datos coinciden, el administrador ya recibió tu solicitud. Cuando la apruebe te entregará un código.", "success");
+    } catch (x) { console.error(x); msg("m1", "No se pudo enviar. Revisa tu conexión e inténtalo de nuevo.", "error"); }
+};
+
+$("fCod").onsubmit = async (e) => {
+    e.preventDefault();
+    const usuario = $("cUsuario").value.trim(), codigo = $("cCodigo").value.trim().toUpperCase();
+    const p1 = $("cPass").value, p2 = $("cPass2").value;
+    if (p1.length < 8) return msg("m2", "La contraseña necesita mínimo 8 caracteres.", "error");
+    if (p1 !== p2) return msg("m2", "Las contraseñas no coinciden.", "error");
+    const malo = () => msg("m2", "Código incorrecto o vencido. Pide uno nuevo al administrador si hace falta.", "error");
+    try {
+        const hit = await buscar(usuario, null);
+        if (!hit) return malo();
+        const rs = (await get(ref(rtdb, "recuperaciones"))).val() || {};
+        const [rid, r] = Object.entries(rs).filter(([, x]) => x.id_usuario === hit[0] && x.estado === "aprobada")
+            .sort((a, b) => b[1].creado - a[1].creado)[0] || [];
+        if (!r || Number(r.expira) < Date.now()) return malo();
+        if (Number(r.intentos || 0) >= 5) { await update(ref(rtdb, "recuperaciones/" + rid), { estado: "bloqueada" }); return malo(); }
+        const ok = await verificarHashClave(codigo, { hash: r.codigo_hash, salt: r.codigo_salt, iter: r.codigo_iter });
+        if (!ok) { await update(ref(rtdb, "recuperaciones/" + rid), { intentos: Number(r.intentos || 0) + 1 }); return malo(); }
+        await update(ref(rtdb, "usuarios/" + hit[0]), { ...(await hashPassword(p1)), intentos_fallidos: 0, bloqueado_hasta: null, sesion_hash: null, sesion_expira: null });
+        await update(ref(rtdb, "recuperaciones/" + rid), { estado: "usada", codigo_hash: null, codigo_salt: null, usada: Date.now() });
+        msg("m2", "Listo. Tu contraseña cambió. Te llevamos al inicio de sesión...", "success");
+        setTimeout(() => location.href = "../inicio de sistema/login.html", 1800);
+    } catch (x) { console.error(x); msg("m2", "No se pudo cambiar la contraseña. Inténtalo de nuevo.", "error"); }
+};
+</script>
+</body>
+</html>
