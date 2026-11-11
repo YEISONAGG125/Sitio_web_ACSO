@@ -5,47 +5,150 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ACSO | Panel de administración</title>
 <style id="guard-style">html{visibility:hidden}</style>
+<script src="../FIREBASE/menu.js"></script>
 <link rel="stylesheet" href="admin.css">
+<link rel="stylesheet" href="../FIREBASE/menu.css">
+    <link rel="stylesheet" href="../FIREBASE/paneles.css">
 </head>
 <body>
-<aside>
-    <div class="brand">ACSO<small>Panel de administración</small></div>
-    <nav id="nav">
-        <button data-v="resumen" class="on">Resumen</button>
-        <button data-v="usuarios">Usuarios</button>
-        <button data-v="recup">Recuperar contraseñas</button>
-        <button data-v="datos">Datos del sistema</button>
+
+<!-- ================= BARRA SUPERIOR ================= -->
+<div class="acso-topbar">
+
+    <button type="button" class="btn-hamburguesa" id="btnMenu"
+            aria-label="Abrir o cerrar menú" aria-controls="sidebar" aria-expanded="true">
+        <span></span><span></span><span></span>
+    </button>
+
+    <a class="acso-marca" href="#resumen" data-ir="resumen">
+        <span class="acso-marca-icono">A</span>
+        <span class="acso-marca-texto">CSO</span>
+    </a>
+
+    <div class="yo-chip">
+        <span class="yo-avatar" id="yoAvatar" aria-hidden="true">AD</span>
+        <span class="yo-textos">
+            <strong id="yo">Administrador</strong>
+            <small>Administrador</small>
+        </span>
+    </div>
+
+</div>
+
+<div class="menu-overlay" id="menuOverlay"></div>
+
+<!-- ================= BARRA LATERAL ================= -->
+<aside class="sidebar" id="sidebar">
+    <nav id="nav" aria-label="Menú principal">
+        <button type="button" class="tab on" data-v="resumen">
+            <span class="ico">📊</span><span class="txt">Resumen</span>
+        </button>
+        <button type="button" class="tab" data-v="usuarios">
+            <span class="ico">👥</span><span class="txt">Usuarios</span>
+            <span class="cuenta oculto" id="cUsuarios">0</span>
+        </button>
+        <button type="button" class="tab" data-v="recup">
+            <span class="ico">🔑</span><span class="txt">Recuperar contraseñas</span>
+            <span class="cuenta alerta oculto" id="cRecup">0</span>
+        </button>
+        <button type="button" class="tab" data-v="datos">
+            <span class="ico">🗂️</span><span class="txt">Datos del sistema</span>
+        </button>
     </nav>
-    <div id="yo"></div>
-    <button id="salir">Cerrar sesión</button>
+
+    <div class="sidebar-abajo">
+        <button type="button" id="salir" class="btn-salir">🚪 Cerrar sesión</button>
+    </div>
 </aside>
-<main>
-    <section id="v-resumen">
-        <h1>Resumen</h1>
-        <p class="nota">Aquí controlas las cuentas de los paneles de supervisor, empleado y cliente, y los datos que manejan.</p>
-        <div id="kpis" class="kpis"></div>
-    </section>
 
-    <section id="v-usuarios" hidden>
-        <h1>Usuarios</h1>
-        <div class="bar">
-            <input id="q" type="search" placeholder="Buscar por nombre, usuario o correo">
-            <select id="fRol"><option value="">Todos los cargos</option><option value="administrador">Administradores</option><option value="supervisor">Supervisores</option><option value="empleado">Empleados</option><option value="cliente">Clientes</option></select>
-            <button id="nuevo" class="pri">Nuevo usuario</button>
+<!-- ================= CONTENIDO ================= -->
+<main class="acso-contenido">
+
+    <!-- ---------- RESUMEN ---------- -->
+    <section id="v-resumen" class="vista">
+        <header class="cab">
+            <p class="eyebrow">PANEL DE ADMINISTRACIÓN</p>
+            <h1 id="saludo">Resumen</h1>
+            <p class="nota">Aquí controlas las cuentas de los paneles de supervisor, empleado y cliente, y los datos que manejan.</p>
+        </header>
+
+        <div id="atencion" class="atencion" hidden></div>
+
+        <h2 class="sub">Cuentas</h2>
+        <div id="kCuentas" class="kpis"></div>
+
+        <div class="dos-col">
+            <div class="tarjeta">
+                <h2 class="sub">Distribución por cargo</h2>
+                <div id="distribucion"></div>
+            </div>
+            <div class="tarjeta">
+                <h2 class="sub">Últimos accesos</h2>
+                <ul id="accesos" class="lista"></ul>
+            </div>
         </div>
-        <div class="tw"><table id="tUsers"></table></div>
+
+        <h2 class="sub">Pendientes y actividad</h2>
+        <div id="kActividad" class="kpis"></div>
     </section>
 
-    <section id="v-recup" hidden>
-        <h1>Recuperar contraseñas</h1>
-        <p class="nota">Verifica la identidad de la persona (llamada o mensaje) antes de generar su código. El código se muestra una sola vez y vence en 30 minutos.</p>
-        <div class="tw"><table id="tRecup"></table></div>
-    </section>
+    <!-- ---------- USUARIOS ---------- -->
+    <section id="v-usuarios" class="vista" hidden>
+        <header class="cab">
+            <p class="eyebrow">CUENTAS</p>
+            <h1>Usuarios</h1>
+            <p class="nota" id="notaUsuarios"></p>
+        </header>
 
-    <section id="v-datos" hidden>
-        <h1>Datos del sistema</h1>
         <div class="bar">
-            <select id="fuente">
+            <input id="q" type="search" placeholder="Buscar por nombre, usuario o correo" aria-label="Buscar usuarios">
+            <select id="fRol" aria-label="Filtrar por cargo">
+                <option value="">Todos los cargos</option>
+                <option value="administrador">Administradores</option>
+                <option value="supervisor">Supervisores</option>
+                <option value="empleado">Empleados</option>
+                <option value="cliente">Clientes</option>
+            </select>
+            <select id="fEstado" aria-label="Filtrar por estado">
+                <option value="">Todos los estados</option>
+                <option value="online">En línea</option>
+                <option value="offline">Fuera de línea</option>
+                <option value="off">Desactivados</option>
+                <option value="bloq">Bloqueados</option>
+            </select>
+            <button id="csv" type="button">⬇ Exportar CSV</button>
+            <button id="nuevo" type="button" class="pri">＋ Nuevo usuario</button>
+        </div>
+        <div class="tw"><table id="tUsers" class="resp"></table></div>
+    </section>
+
+    <!-- ---------- RECUPERAR CONTRASEÑAS ---------- -->
+    <section id="v-recup" class="vista" hidden>
+        <header class="cab">
+            <p class="eyebrow">SEGURIDAD</p>
+            <h1>Recuperar contraseñas</h1>
+            <p class="nota">Verifica la identidad de la persona (llamada o mensaje) antes de generar su código. El código se muestra una sola vez y vence en 30 minutos.</p>
+        </header>
+
+        <div class="bar">
+            <select id="fRecup" aria-label="Filtrar solicitudes">
+                <option value="abiertas">Por atender</option>
+                <option value="">Todas</option>
+            </select>
+        </div>
+        <div class="tw"><table id="tRecup" class="resp"></table></div>
+    </section>
+
+    <!-- ---------- DATOS DEL SISTEMA ---------- -->
+    <section id="v-datos" class="vista" hidden>
+        <header class="cab">
+            <p class="eyebrow">INFORMACIÓN</p>
+            <h1>Datos del sistema</h1>
+            <p class="nota" id="notaDatos">Elige una lista para consultarla y editarla.</p>
+        </header>
+
+        <div class="bar">
+            <select id="fuente" aria-label="Lista de datos">
                 <optgroup label="Firebase">
                     <option value="fs:novedades_laborales">Novedades laborales</option>
                     <option value="fs:solicitudes">Solicitudes de clientes</option>
@@ -62,15 +165,27 @@
                     <option value="api:productos-servicios">Productos por servicio</option>
                 </optgroup>
             </select>
-            <button id="nuevoDato" class="pri">Nuevo registro</button>
+            <input id="qDatos" type="search" placeholder="Filtrar en la lista" aria-label="Filtrar registros">
+            <button id="nuevoDato" type="button" class="pri">＋ Nuevo registro</button>
         </div>
-        <div class="tw"><table id="tDatos"></table></div>
+        <div class="tw"><table id="tDatos" class="resp"></table></div>
     </section>
 </main>
 
-<dialog id="dlg"><form method="dialog" id="fDlg"><h2 id="dT"></h2><div id="dB"></div>
-    <menu><button value="x" formnovalidate>Cancelar</button><button value="ok" class="pri">Guardar</button></menu></form></dialog>
-<div id="toast" role="status"></div>
+<!-- ================= DIÁLOGO ================= -->
+<dialog id="dlg">
+    <form method="dialog" id="fDlg">
+        <h2 id="dT"></h2>
+        <div id="dB"></div>
+        <menu>
+            <button value="x" id="dNo" formnovalidate>Cancelar</button>
+            <button value="ok" id="dSi" class="pri">Guardar</button>
+        </menu>
+    </form>
+</dialog>
+
+<div id="toast" role="status" aria-live="polite"></div>
 <script type="module" src="admin.js"></script>
+<script src="../FIREBASE/ver-password.js" defer></script>
 </body>
 </html>

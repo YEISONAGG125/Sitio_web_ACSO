@@ -216,3 +216,7 @@
     .pf-avatar { width: 72px; height: 72px; font-size: 24px; }
     .pf-acciones .pf-btn { flex: 1; }
 }
+
+
+/* Botón mostrar/ocultar contraseña (texto) */
+.pf-ver,button[id*="ostrar"],.toggle-password,.password-toggle{width:auto!important;min-width:0!important;padding:0 12px!important;font-size:13px!important;font-weight:600;white-space:nowrap}

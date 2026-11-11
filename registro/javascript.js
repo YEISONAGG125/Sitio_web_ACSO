@@ -46,56 +46,58 @@ function limpiarMensaje() {
 function cargando(activo) {
     btnRegistro.disabled = activo;
     btnText.textContent = activo ? "Creando cuenta..." : "Crear cuenta";
-    btnArrow.textContent = activo ? "⏳" : "→";
+    btnArrow.textContent = activo ? "" : "";
 }
 
 if (mostrarPassword) {
     mostrarPassword.addEventListener("click", () => {
         const visible = passwordInput.type === "text";
         passwordInput.type = visible ? "password" : "text";
-        mostrarPassword.textContent = visible ? "👁" : "🙈";
+        mostrarPassword.textContent = visible ? "Mostrar" : "Ocultar";
     });
 }
+// Sincroniza al empleado con el servidor Spring Boot (opcional).
+// Nunca debe impedir el registro: si el servidor está apagado, tarda o
+// responde con error, la cuenta se crea igual en Firebase.
 async function registrarEmpleadoEnServidor(datos) {
 
-    let respuesta;
+    const controlador = new AbortController();
+    const temporizador = setTimeout(() => controlador.abort(), 5000);
 
     try {
-        respuesta = await fetch(`${API_BASE}/usuarios/registro-empleado`, {
+        const respuesta = await fetch(`${API_BASE}/usuarios/registro-empleado`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },
-            body: JSON.stringify(datos)
+            body: JSON.stringify(datos),
+            signal: controlador.signal
         });
+
+        if (!respuesta.ok) {
+            console.warn(`Servidor Spring Boot respondió ${respuesta.status}; se registra solo en Firebase.`);
+            return { estado: "error" };
+        }
+
+        const texto = await respuesta.text();
+        let json = {};
+
+        try {
+            json = texto.trim() ? JSON.parse(texto) : {};
+        } catch {
+            json = {};
+        }
+
+        return { estado: "ok", datos: json };
+
     } catch (error) {
-        console.warn("Servidor Spring Boot no disponible:", error);
+        console.warn("Servidor Spring Boot no disponible; se registra solo en Firebase:", error);
         return { estado: "offline" };
+
+    } finally {
+        clearTimeout(temporizador);
     }
-
-    const texto = await respuesta.text();
-    let json = {};
-
-    try {
-        json = texto.trim() ? JSON.parse(texto) : {};
-    } catch {
-        json = {};
-    }
-
-    if (!respuesta.ok) {
-        return {
-            estado: "error",
-            mensaje:
-                json.message ||
-                json.mensaje ||
-                (respuesta.status === 401 || respuesta.status === 403
-                    ? "El servidor no permitió el registro (permisos)."
-                    : `El servidor rechazó el registro (código ${respuesta.status}).`)
-        };
-    }
-
-    return { estado: "ok", datos: json };
 }
 formulario.addEventListener("submit", async (e) => {
 
@@ -105,7 +107,7 @@ formulario.addEventListener("submit", async (e) => {
     const nombre = document.getElementById("nombre").value.trim();
     const cargo = document.getElementById("cargo").value.trim().toLowerCase();
     const correo = document.getElementById("correo").value.trim().toLowerCase();
-    const usuario = document.getElementById("usuario").value.trim();
+    const usuario = correo; // el ingreso es con correo
     const password = passwordInput.value;
     if (!nombre || !cargo || !correo || !usuario || !password) {
         mostrarMensaje("Todos los campos son obligatorios.", "error");
@@ -218,11 +220,6 @@ formulario.addEventListener("submit", async (e) => {
                 nombre, cargo, correo, usuario, password
             });
 
-            if (resultado.estado === "error") {
-                mostrarMensaje(resultado.mensaje, "error");
-                cargando(false);
-                return;
-            }
             if (resultado.estado === "ok") {
                 const d = resultado.datos || {};
                 if (d.id_empleado != null) registro.id_empleado = d.id_empleado;
@@ -240,7 +237,7 @@ formulario.addEventListener("submit", async (e) => {
         formulario.reset();
         bloqueSupervisor.hidden = true;
         btnText.textContent = "Cuenta creada";
-        btnArrow.textContent = "✓";
+        btnArrow.textContent = "";
 
         setTimeout(() => {
             window.location.href = "../inicio de sistema/login.html";

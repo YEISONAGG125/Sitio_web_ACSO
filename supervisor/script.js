@@ -858,44 +858,8 @@ cargarProductos();
 $("btnCerrarSesion").addEventListener("click", cerrarSesion);
 
 
-const btnMenu = document.getElementById("btnMenu");
-const consultaMovil = window.matchMedia("(max-width: 1100px)");
-
-const esMovil = () => consultaMovil.matches;
-
-function actualizarAriaMenu() {
-    btnMenu?.setAttribute(
-        "aria-expanded",
-        String(!document.body.classList.contains("menu-cerrado"))
-    );
-}
-
-function cerrarMenuMovil() {
-    if (!esMovil()) return;
-    document.body.classList.add("menu-cerrado");
-    actualizarAriaMenu();
-}
-document.body.classList.toggle("menu-cerrado", esMovil());
-actualizarAriaMenu();
-
-btnMenu?.addEventListener("click", () => {
-    document.body.classList.toggle("menu-cerrado");
-    actualizarAriaMenu();
-});
-
-$("menuOverlay")?.addEventListener("click", cerrarMenuMovil);
-
-document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") cerrarMenuMovil();
-});
-document.querySelector(".sidebar")?.addEventListener("click", (e) => {
-    if (e.target.closest(".tab, .logout")) cerrarMenuMovil();
-});
-
-consultaMovil.addEventListener("change", () => {
-    document.body.classList.toggle("menu-cerrado", esMovil());
-    actualizarAriaMenu();
-});
+// El menú (abrir/cerrar, móvil, Esc, fondo oscuro) lo maneja FIREBASE/menu.js
+const cerrarMenuMovil = () => window.ACSOMenu?.cerrarEnMovil();
 
 function pintarEncabezado() {
     const s = leerSesion();

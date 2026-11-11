@@ -25,7 +25,7 @@ function pedir(pregunta) {
     const codigo = process.argv[2] || await pedir("Escribe el código de autorización (mín. 12 caracteres): ");
 
     if (codigo.length < 12) {
-        console.error("\n✖ El código debe tener mínimo 12 caracteres.");
+        console.error("\nEl código debe tener mínimo 12 caracteres.");
         process.exit(1);
     }
 

@@ -7,22 +7,27 @@
 
     <title>Panel Cliente | POWER CLEAN</title>
 
+    <script src="../FIREBASE/menu.js"></script>
     <link rel="stylesheet" href="estilos-cliente.css">
     <link rel="stylesheet" href="../FIREBASE/perfil.css">
+    <link rel="stylesheet" href="../FIREBASE/menu.css">
+    <link rel="stylesheet" href="../FIREBASE/paneles.css">
 </head>
 
 <body>
 
 <div class="app">
-    <button
-        class="menu-toggle"
-        id="menuToggle"
-        aria-label="Abrir menú"
-        aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
+    <div class="acso-topbar">
+        <button type="button" class="btn-hamburguesa" id="btnMenu" aria-label="Abrir o cerrar menú" aria-controls="sidebar" aria-expanded="true">
+            <span></span><span></span><span></span>
+        </button>
+        <a class="acso-marca" href="#"><span class="acso-marca-icono">A</span><span class="acso-marca-texto">CSO</span></a>
+        <div class="usuario">
+            <div class="avatar" id="avatar" data-pf-avatar>CL</div>
+            <div class="usuario-info"><strong id="nombreUsuario">Cliente</strong><small>Cliente</small></div>
+        </div>
+    </div>
+    <div class="menu-overlay" id="menuOverlay"></div>
     <aside class="sidebar" id="sidebar">
 
         <div class="logo-box">
@@ -102,6 +107,18 @@
             <a
                 href="#"
                 class="nav-link"
+                data-section="pagos">
+
+                <span class="nav-icon">▣</span>
+
+                <span>Mis Pagos</span>
+
+            </a>
+
+
+            <a
+                href="#"
+                class="nav-link"
                 data-section="notificaciones">
 
                 <span class="nav-icon">♢</span>
@@ -132,6 +149,17 @@
 
         </nav>
 
+        <div class="sidebar-info">
+
+            <span>POWER CLEAN</span>
+
+            <p>
+                Gestión fácil, rápida y segura.
+            </p>
+
+        </div>
+
+
         <button
             class="cerrar"
             id="btnCerrarSesion">
@@ -152,7 +180,9 @@
 
 
 
-    <main class="main">
+    <main class="main acso-contenido">
+
+        <!-- HEADER -->
 
         <header>
 
@@ -172,41 +202,18 @@
 
                 </h1>
 
-    
-            </div>
+                <p class="header-subtitulo">
 
+                    Consulta y administra la información
+                    de tus servicios.
 
-
-            <div class="usuario">
-
-                <div
-                    class="avatar"
-                    id="avatar"
-                    data-pf-avatar>
-
-                    CL
-
-                </div>
-
-                <div class="usuario-info">
-
-                    <strong id="nombreUsuario">
-
-                        Cliente
-
-                    </strong>
-
-                    <small>
-
-                        Cliente
-
-                    </small>
-
-                </div>
-
-                <span class="usuario-punto"></span>
+                </p>
 
             </div>
+
+
+
+            
 
         </header>
 
@@ -217,13 +224,17 @@
         <section
             class="contenido active"
             id="sec-inicio">
+
+
+            <!-- HERO -->
+
             <div class="bienvenida">
 
                 <div class="bienvenida-texto">
 
                     <span class="mini-etiqueta">
 
-                        -POWER CLEAN
+                        ✦ POWER CLEAN
 
                     </span>
 
@@ -237,7 +248,7 @@
                     <p>
 
                         Aquí puedes consultar tus servicios,
-                        contrato y recibir información
+                        contrato, pagos y recibir información
                         importante de POWER CLEAN.
 
                     </p>
@@ -247,7 +258,7 @@
                         class="btn-hero"
                         id="btnVerServicios">
 
-                        mis servicios
+                        Ver mis servicios
 
                         <span>→</span>
 
@@ -349,6 +360,17 @@
 
                     </div>
 
+                    <div class="card-datos">
+
+                        <strong id="statPagos">
+                            0
+                        </strong>
+
+                        <span>
+                            Pagos
+                        </span>
+
+                    </div>
 
                     <span class="card-decoracion">
                         $
@@ -357,6 +379,10 @@
                 </div>
 
             </div>
+
+
+            <!-- SERVICIOS ACTIVOS -->
+
             <div class="panel">
 
                 <div class="panel-header">
@@ -414,7 +440,11 @@
                 </div>
 
             </div>
-        <div class="acciones">
+
+
+            <!-- ACCIONES RÁPIDAS -->
+
+            <div class="acciones">
                 <button
                     class="accion"
                     data-go="solicitar">
@@ -502,7 +532,12 @@
 
         </section>
 
- <section
+
+        <!-- ==================================================
+             SERVICIOS
+        =================================================== -->
+
+        <section
             class="contenido"
             id="sec-servicios">
 
@@ -573,6 +608,12 @@
             </div>
 
         </section>
+
+
+        <!-- ==================================================
+             CONTRATO
+        =================================================== -->
+
         <section
             class="contenido"
             id="sec-contrato">
@@ -587,6 +628,7 @@
                     <span class="pill pill--curso oculto" id="estadoContrato">● Vigente</span>
                 </div>
 
+                <!-- Sin contrato aprobado -->
                 <div class="vacio-bloque" id="contratoVacio">
                     <strong>Aún no tienes un contrato aprobado</strong>
                     Cuando el supervisor apruebe tu solicitud de contrato,
@@ -597,6 +639,7 @@
                     </button>
                 </div>
 
+                <!-- Con contrato aprobado -->
                 <div id="contratoDatos" class="oculto">
 
                     <div class="contrato-grid">
@@ -653,6 +696,11 @@
 
         </section>
 
+
+
+        <!-- ==================================================
+             SOLICITAR SERVICIO / CONTRATO
+        =================================================== -->
         <section
             class="contenido"
             id="sec-solicitar">
@@ -680,6 +728,8 @@
                         📄 Pedir un contrato
                     </button>
                 </div>
+
+                <!-- ============ FORMULARIO SERVICIO ============ -->
                 <form id="formServicio" class="sol-form">
 
                     <div class="sol-fila">
@@ -731,9 +781,11 @@
                     </div>
 
                     <button type="submit" class="btn-primario" id="btnEnviarServicio">
-                        Enviar
+                        📤 Enviar solicitud de servicio
                     </button>
                 </form>
+
+                <!-- ============ FORMULARIO CONTRATO ============ -->
                 <form id="formContrato" class="sol-form oculto">
 
                     <div class="sol-fila">
@@ -780,7 +832,12 @@
                         </div>
                     </div>
 
-                 
+                    <div class="sol-fila">
+                        <div class="campo">
+                            <label for="conArea">Área aproximada en m² (opcional)</label>
+                            <input type="number" id="conArea" min="1" max="100000" placeholder="Ej: 250">
+                        </div>
+
                         <div class="campo">
                             <label for="conTelefono">Teléfono de contacto</label>
                             <input type="tel" id="conTelefono" maxlength="20" placeholder="300 000 0000" required>
@@ -799,13 +856,18 @@
                     </div>
 
                     <button type="submit" class="btn-primario" id="btnEnviarContrato">
-                         Enviar 
+                        📤 Enviar solicitud de contrato
                     </button>
                 </form>
 
             </div>
 
         </section>
+
+
+        <!-- ==================================================
+             MIS SOLICITUDES
+        =================================================== -->
         <section
             class="contenido"
             id="sec-solicitudes">
@@ -821,7 +883,8 @@
                 </div>
 
                 <p class="pista">
-                    Aquí ves en qué estado está cada pedido. 
+                    Aquí ves en qué estado está cada pedido. Se actualiza
+                    solo cuando el supervisor lo revisa.
                 </p>
 
                 <div id="listaSolicitudes">
@@ -832,7 +895,75 @@
 
         </section>
 
-        
+        <!-- ==================================================
+             PAGOS
+        =================================================== -->
+
+        <section
+            class="contenido"
+            id="sec-pagos">
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <span class="panel-etiqueta">
+                            FINANZAS
+                        </span>
+
+                        <h3>
+                            Historial de pagos
+                        </h3>
+
+                    </div>
+
+                    <span
+                        class="panel-count"
+                        id="conteoPagos">
+
+                        0 registrados
+
+                    </span>
+
+                </div>
+
+
+                <div class="tabla-scroll">
+
+                    <table>
+
+                        <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+
+                            <th>Contrato</th>
+
+                            <th>Método de pago</th>
+
+                        </tr>
+
+                        </thead>
+
+                        <tbody id="tablaPagos">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             NOTIFICACIONES
+        =================================================== -->
 
         <section
             class="contenido"
@@ -874,6 +1005,11 @@
             </div>
 
         </section>
+
+
+        <!-- ==================================================
+             PERFIL
+        =================================================== -->
 
         <section
             class="contenido"
@@ -984,7 +1120,7 @@
                         <label for="pfPassActual">Contraseña actual</label>
                         <div class="pf-pass-fila">
                             <input type="password" id="pfPassActual" autocomplete="current-password">
-                            <button type="button" class="pf-ver" data-pf-ver-pass="pfPassActual" aria-label="Mostrar contraseña">👁</button>
+                            <button type="button" class="pf-ver" data-pf-ver-pass="pfPassActual" aria-label="Mostrar contraseña">Mostrar</button>
                         </div>
                     </div>
 
@@ -992,7 +1128,7 @@
                         <label for="pfPassNueva">Nueva contraseña</label>
                         <div class="pf-pass-fila">
                             <input type="password" id="pfPassNueva" autocomplete="new-password" minlength="6">
-                            <button type="button" class="pf-ver" data-pf-ver-pass="pfPassNueva" aria-label="Mostrar contraseña">👁</button>
+                            <button type="button" class="pf-ver" data-pf-ver-pass="pfPassNueva" aria-label="Mostrar contraseña">Mostrar</button>
                         </div>
                     </div>
 
@@ -1000,7 +1136,7 @@
                         <label for="pfPassConfirmar">Confirmar contraseña</label>
                         <div class="pf-pass-fila">
                             <input type="password" id="pfPassConfirmar" autocomplete="new-password" minlength="6">
-                            <button type="button" class="pf-ver" data-pf-ver-pass="pfPassConfirmar" aria-label="Mostrar contraseña">👁</button>
+                            <button type="button" class="pf-ver" data-pf-ver-pass="pfPassConfirmar" aria-label="Mostrar contraseña">Mostrar</button>
                         </div>
                     </div>
 
@@ -1017,12 +1153,14 @@
         </section>
 
 
+        <!-- FOOTER -->
+
         <footer>
 
             <div class="footer-line"></div>
 
             <p>
-                © 2026 <strong>A C S O</strong>
+                © 2026 <strong>POWER CLEAN</strong>
                 · Gestión fácil, rápida y segura.
             </p>
 
@@ -1043,7 +1181,7 @@
     <div>
 
         <strong id="toastTitulo">
-            A C S O
+            POWER CLEAN
         </strong>
 
         <p id="toastMensaje">

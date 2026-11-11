@@ -159,7 +159,7 @@ function irASeccion(seccion) {
     }
 
     // En móvil el menú se cierra solo al elegir una opción
-    if (esMovil()) cerrarMenuMovil();
+    window.ACSOMenu?.cerrarEnMovil();
 
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -168,6 +168,12 @@ function configurarMenu() {
 
     document.querySelectorAll(".menu-item").forEach(boton => {
         boton.addEventListener("click", () => irASeccion(boton.dataset.seccion));
+    });
+
+    // El logo de la barra superior lleva al inicio
+    document.querySelector(".acso-marca")?.addEventListener("click", (e) => {
+        e.preventDefault();
+        irASeccion("inicio");
     });
 
     // Tarjeta de usuario del encabezado -> Mi perfil
@@ -183,66 +189,6 @@ function configurarMenu() {
     // Se puede entrar directo con empleado.html#perfil
     const hash = location.hash.replace("#", "");
     if (hash && $(hash)?.classList.contains("seccion")) irASeccion(hash);
-}
-
-
-// =====================================================
-// MENÚ HAMBURGUESA
-// =====================================================
-// Escritorio: body.menu-cerrado contrae la barra lateral.
-// Móvil (<= 900px): body.menu-abierto la muestra sobre el contenido.
-
-const consultaMovil = window.matchMedia("(max-width: 900px)");
-
-function esMovil() {
-    return consultaMovil.matches;
-}
-
-function cerrarMenuMovil() {
-    document.body.classList.remove("menu-abierto");
-    actualizarAriaMenu();
-}
-
-function actualizarAriaMenu() {
-    const boton = $("btnMenu");
-    if (!boton) return;
-
-    const abierto = esMovil()
-        ? document.body.classList.contains("menu-abierto")
-        : !document.body.classList.contains("menu-cerrado");
-
-    boton.setAttribute("aria-expanded", String(abierto));
-}
-
-function configurarHamburguesa() {
-
-    const boton = $("btnMenu");
-    if (!boton) return;
-
-    boton.addEventListener("click", () => {
-        if (esMovil()) {
-            document.body.classList.toggle("menu-abierto");
-        } else {
-            document.body.classList.toggle("menu-cerrado");
-        }
-        actualizarAriaMenu();
-    });
-
-    // Tocar el fondo oscuro cierra el menú
-    $("menuOverlay")?.addEventListener("click", cerrarMenuMovil);
-
-    // Esc cierra el menú en móvil
-    document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && esMovil()) cerrarMenuMovil();
-    });
-
-    // Al cambiar de móvil a escritorio (o al revés) se limpia el estado
-    consultaMovil.addEventListener("change", () => {
-        document.body.classList.remove("menu-abierto");
-        actualizarAriaMenu();
-    });
-
-    actualizarAriaMenu();
 }
 
 
@@ -639,7 +585,6 @@ async function cerrarSesion() {
 
 mostrarDatosEmpleado();
 configurarMenu();
-configurarHamburguesa();
 configurarFormulario();
 
 // Perfil: foto, datos personales y contraseña (FIREBASE/perfil.js)

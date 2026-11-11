@@ -8,36 +8,32 @@
     <title>ACSO | Panel de Supervisión</title>
 
     <style id="guard-style">html{visibility:hidden}</style>
+    <script src="../FIREBASE/menu.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="../FIREBASE/perfil.css">
+    <link rel="stylesheet" href="../FIREBASE/menu.css">
+    <link rel="stylesheet" href="../FIREBASE/paneles.css">
 </head>
 
 <body>
 
     <!-- ENCABEZADO PRINCIPAL -->
-    <header class="main-header">
+    <header class="acso-topbar main-header">
 
-        <div class="left">
-            <button
-                type="button"
-                class="menu-container"
-                id="btnMenu"
-                aria-label="Abrir o cerrar menú"
-                aria-controls="sidebar"
-                aria-expanded="true">
+        <button
+            type="button"
+            class="btn-hamburguesa"
+            id="btnMenu"
+            aria-label="Abrir o cerrar menú"
+            aria-controls="sidebar"
+            aria-expanded="true">
+            <span></span><span></span><span></span>
+        </button>
 
-                <span class="menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </span>
-            </button>
-        </div>
-
-        <div class="brand">
-            <div class="logo-icon">A</div>
-            <div class="logo-text">CSO</div>
-        </div>
+        <a class="acso-marca" href="#" onclick="mostrar('Inicio', document.querySelector('.tab')); return false;">
+            <span class="acso-marca-icono">A</span>
+            <span class="acso-marca-texto">CSO</span>
+        </a>
 
         <div class="right" id="abrirPerfil" role="button" tabindex="0" title="Ir a mi perfil">
             <span class="header-avatar" data-pf-avatar>S</span>
@@ -166,7 +162,7 @@
     </aside>
 
     <!-- CONTENIDO PRINCIPAL -->
-    <main class="main-content">
+    <main class="main-content acso-contenido">
 
         <header class="top-header">
             <div>
@@ -652,7 +648,7 @@
                         <label for="pfPassActual">Contraseña actual</label>
                         <div class="pf-pass-fila">
                             <input type="password" id="pfPassActual" autocomplete="current-password">
-                            <button type="button" class="pf-ver" data-pf-ver-pass="pfPassActual" aria-label="Mostrar contraseña">👁</button>
+                            <button type="button" class="pf-ver" data-pf-ver-pass="pfPassActual" aria-label="Mostrar contraseña">Mostrar</button>
                         </div>
                     </div>
 
@@ -660,7 +656,7 @@
                         <label for="pfPassNueva">Nueva contraseña</label>
                         <div class="pf-pass-fila">
                             <input type="password" id="pfPassNueva" autocomplete="new-password" minlength="6">
-                            <button type="button" class="pf-ver" data-pf-ver-pass="pfPassNueva" aria-label="Mostrar contraseña">👁</button>
+                            <button type="button" class="pf-ver" data-pf-ver-pass="pfPassNueva" aria-label="Mostrar contraseña">Mostrar</button>
                         </div>
                     </div>
 
@@ -668,7 +664,7 @@
                         <label for="pfPassConfirmar">Confirmar contraseña</label>
                         <div class="pf-pass-fila">
                             <input type="password" id="pfPassConfirmar" autocomplete="new-password" minlength="6">
-                            <button type="button" class="pf-ver" data-pf-ver-pass="pfPassConfirmar" aria-label="Mostrar contraseña">👁</button>
+                            <button type="button" class="pf-ver" data-pf-ver-pass="pfPassConfirmar" aria-label="Mostrar contraseña">Mostrar</button>
                         </div>
                     </div>
 

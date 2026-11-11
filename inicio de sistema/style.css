@@ -292,7 +292,8 @@ body {
     transition: color 0.2s ease;
 }
 
-.input-wrapper input {
+.input-wrapper input,
+.input-wrapper select {
     display: block;
     width: 100%;
     height: 53px;
@@ -311,16 +312,19 @@ body {
         background 0.25s ease;
 }
 
-.input-wrapper input::placeholder {
+.input-wrapper input::placeholder,
+.input-wrapper select::placeholder {
     color: #9aaca6;
     opacity: 1;
 }
 
-.input-wrapper input:hover {
+.input-wrapper input:hover,
+.input-wrapper select:hover {
     border-color: #b9d8d0;
 }
 
-.input-wrapper input:focus {
+.input-wrapper input:focus,
+.input-wrapper select:focus {
     background: #ffffff;
     border-color: #35b8ae;
     box-shadow: 0 0 0 4px rgba(53, 184, 174, 0.13);
@@ -621,7 +625,8 @@ body {
         margin-bottom: 19px;
     }
 
-    .input-wrapper input {
+    .input-wrapper input,
+.input-wrapper select {
         height: 51px;
         font-size: 13px;
     }
@@ -722,3 +727,10 @@ body {
     margin: -4px 0 14px;
     line-height: 1.4;
 }
+
+
+/* Botón mostrar/ocultar contraseña (texto) */
+.pf-ver,button[id*="ostrar"],.toggle-password,.password-toggle{width:auto!important;min-width:0!important;padding:0 12px!important;font-size:13px!important;font-weight:600;white-space:nowrap}
+
+.input-wrapper select{appearance:none;cursor:pointer}
+.input-wrapper select option{color:#10252c;background:#fff}

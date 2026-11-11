@@ -1,0 +1,39 @@
+/* ACSO · Pulido visual compartido por los cuatro paneles (cárgalo después de menu.css) */
+body { -webkit-font-smoothing: antialiased; }
+h1, h2, h3 { letter-spacing: -0.01em; }
+
+/* Barra superior y menú lateral */
+.acso-topbar { backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.88); }
+html .sidebar { box-shadow: 6px 0 30px rgba(11, 59, 60, 0.04); }
+.sidebar .nav-link, .sidebar .menu-item, .sidebar .tab { border-radius: 12px; transition: background .18s, color .18s, transform .18s; }
+.sidebar .nav-link:hover, .sidebar .menu-item:hover, .sidebar .tab:hover { background: var(--acso-suave, #e4f5f2); transform: translateX(2px); }
+.sidebar .active, .sidebar .activo { box-shadow: inset 3px 0 0 var(--acso-acento, #35b8ae); }
+
+/* Tarjetas y paneles */
+.panel, .dashboard-card, .tarjeta-resumen, .table-card, .pf-card, .kpi {
+    border-radius: var(--acso-radio, 18px);
+    box-shadow: var(--acso-sombra, 0 8px 25px rgba(11, 59, 60, 0.06));
+    transition: transform .2s, box-shadow .2s;
+}
+.dashboard-card:hover, .tarjeta-resumen:hover, .kpi:hover { transform: translateY(-3px); box-shadow: 0 14px 34px rgba(11, 59, 60, 0.11); }
+
+/* Tablas */
+table { border-collapse: separate; border-spacing: 0; }
+table thead th { background: #f3f9f7; color: var(--acso-texto-suave, #627570); font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+table td { border-bottom: 1px solid var(--acso-borde, #e1ebe8); }
+table tbody tr { transition: background .15s; }
+table tbody tr:hover { background: #f6fbfa; }
+
+/* Botones, campos y estados */
+button { transition: background .18s, transform .12s, box-shadow .18s, border-color .18s; }
+button:not(:disabled):active { transform: scale(.98); }
+.pf-btn-prim { box-shadow: 0 6px 16px rgba(11, 59, 60, 0.16); }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--acso-acento, #35b8ae); box-shadow: 0 0 0 4px rgba(53, 184, 174, 0.18); }
+:focus-visible { outline: 3px solid var(--acso-acento, #35b8ae); outline-offset: 2px; }
+.chip, .table-status, .tag { border-radius: 999px; font-weight: 700; }
+
+/* Entrada suave de cada sección y barras de desplazamiento finas */
+@keyframes acso-entra { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.acso-contenido > section, .acso-contenido .seccion { animation: acso-entra .35s ease both; }
+* { scrollbar-width: thin; scrollbar-color: #c9ddd9 transparent; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }

@@ -5,11 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Panel de empleado ACSO">
     <title>ACSO | Panel del Empleado</title>
+    <script src="../FIREBASE/menu.js"></script>
     <link rel="stylesheet" href="estilos.css">
     <link rel="stylesheet" href="../FIREBASE/perfil.css">
+    <link rel="stylesheet" href="../FIREBASE/menu.css">
+    <link rel="stylesheet" href="../FIREBASE/paneles.css">
 </head>
 
 <body>
+
+<!-- ================= BARRA SUPERIOR ================= -->
+<div class="acso-topbar">
+
+    <button
+        type="button"
+        class="btn-hamburguesa"
+        id="btnMenu"
+        aria-label="Abrir o cerrar menú"
+        aria-controls="sidebar"
+        aria-expanded="true">
+        <span></span><span></span><span></span>
+    </button>
+
+    <a class="acso-marca" href="#inicio">
+        <span class="acso-marca-icono">A</span>
+        <span class="acso-marca-texto">CSO</span>
+    </a>
+
+        <div class="empleado-info pf-abrir" id="abrirPerfil" role="button" tabindex="0" title="Ir a mi perfil">
+            <div class="avatar" id="avatarEmpleado" data-pf-avatar>US</div>
+            <div class="datos-header">
+                <strong id="nombreEmpleado">Cargando...</strong>
+                <small>Empleado</small>
+            </div>
+        </div>
+
+</div>
 
 <!-- Fondo oscuro que aparece detrás del menú en pantallas pequeñas -->
 <div class="menu-overlay" id="menuOverlay"></div>
@@ -18,13 +49,6 @@
 
     <!-- ================= SIDEBAR ================= -->
     <aside class="sidebar" id="sidebar">
-
-        <div class="logo-contenedor">
-            <a href="#inicio" class="logo">
-                <span class="logo-icon">A</span>
-                <span class="logo-text">C S O</span>
-            </a>
-        </div>
 
         <nav class="menu">
 
@@ -63,21 +87,11 @@
 
 
     <!-- ================= CONTENIDO ================= -->
-    <main class="contenido">
+    <main class="contenido acso-contenido">
 
         <header class="header">
 
             <div class="header-izq">
-                <button
-                    type="button"
-                    class="btn-hamburguesa"
-                    id="btnMenu"
-                    aria-label="Abrir o cerrar menú"
-                    aria-controls="sidebar"
-                    aria-expanded="true">
-                    <span></span><span></span><span></span>
-                </button>
-
                 <div class="header-titulo">
                     <span class="etiqueta-header">PANEL DE EMPLEADO</span>
                     <h1 id="tituloPagina">Panel del Empleado</h1>
@@ -85,13 +99,6 @@
                 </div>
             </div>
 
-            <div class="empleado-info pf-abrir" id="abrirPerfil" role="button" tabindex="0" title="Ir a mi perfil">
-                <div class="avatar" id="avatarEmpleado" data-pf-avatar>US</div>
-                <div class="datos-header">
-                    <strong id="nombreEmpleado">Cargando...</strong>
-                    <small>Empleado</small>
-                </div>
-            </div>
 
         </header>
 
@@ -408,7 +415,7 @@
                         <label for="pfPassActual">Contraseña actual</label>
                         <div class="pf-pass-fila">
                             <input type="password" id="pfPassActual" autocomplete="current-password">
-                            <button type="button" class="pf-ver" data-pf-ver-pass="pfPassActual" aria-label="Mostrar contraseña">👁</button>
+                            <button type="button" class="pf-ver" data-pf-ver-pass="pfPassActual" aria-label="Mostrar contraseña">Mostrar</button>
                         </div>
                     </div>
 
@@ -416,7 +423,7 @@
                         <label for="pfPassNueva">Nueva contraseña</label>
                         <div class="pf-pass-fila">
                             <input type="password" id="pfPassNueva" autocomplete="new-password" minlength="6">
-                            <button type="button" class="pf-ver" data-pf-ver-pass="pfPassNueva" aria-label="Mostrar contraseña">👁</button>
+                            <button type="button" class="pf-ver" data-pf-ver-pass="pfPassNueva" aria-label="Mostrar contraseña">Mostrar</button>
                         </div>
                     </div>
 
@@ -424,7 +431,7 @@
                         <label for="pfPassConfirmar">Confirmar contraseña</label>
                         <div class="pf-pass-fila">
                             <input type="password" id="pfPassConfirmar" autocomplete="new-password" minlength="6">
-                            <button type="button" class="pf-ver" data-pf-ver-pass="pfPassConfirmar" aria-label="Mostrar contraseña">👁</button>
+                            <button type="button" class="pf-ver" data-pf-ver-pass="pfPassConfirmar" aria-label="Mostrar contraseña">Mostrar</button>
                         </div>
                     </div>
 

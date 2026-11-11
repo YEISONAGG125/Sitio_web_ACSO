@@ -755,3 +755,7 @@ body { background: #f8fbfa; color: #102d2b; }
     opacity: 0.85;
     margin: 0 0 14px;
 }
+
+
+/* Botón mostrar/ocultar contraseña (texto) */
+.pf-ver,button[id*="ostrar"],.toggle-password,.password-toggle{width:auto!important;min-width:0!important;padding:0 12px!important;font-size:13px!important;font-weight:600;white-space:nowrap}

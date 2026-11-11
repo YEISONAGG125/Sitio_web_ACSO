@@ -4,9 +4,7 @@ const API_BASE = "http://localhost:8080/api";
 const navLinks = document.querySelectorAll(".nav-link");
 const secciones = document.querySelectorAll(".contenido");
 
-const menuToggle = document.getElementById("menuToggle");
 const sidebar = document.getElementById("sidebar");
-const overlay = document.getElementById("overlay");
 
 const btnVerServicios =
     document.getElementById("btnVerServicios");
@@ -324,55 +322,18 @@ if (btnVerServicios) {
 }
 
 
-if (menuToggle) {
-
-    menuToggle.addEventListener(
-        "click",
-        () => {
-
-            sidebar.classList.toggle(
-                "open"
-            );
-
-            overlay.classList.toggle(
-                "show"
-            );
-
-        }
-    );
-
-}
-
-
-if (overlay) {
-
-    overlay.addEventListener(
-        "click",
-        cerrarMenuMovil
-    );
-
-}
-
+// El menú (abrir/cerrar, móvil, Esc, fondo oscuro) lo maneja FIREBASE/menu.js
+// El logo de la barra superior lleva al inicio
+document.getElementById("marcaInicio")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    document.querySelector('.nav-link[data-section="inicio"]')?.click();
+});
 
 function cerrarMenuMovil() {
-
-    if (sidebar) {
-
-        sidebar.classList.remove(
-            "open"
-        );
-
-    }
-
-    if (overlay) {
-
-        overlay.classList.remove(
-            "show"
-        );
-
-    }
-
+    window.ACSOMenu?.cerrarEnMovil();
 }
+
+
 function animarNumero(
     elemento,
     destino

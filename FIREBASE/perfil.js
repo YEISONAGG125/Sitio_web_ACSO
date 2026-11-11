@@ -326,7 +326,7 @@ export async function montarPerfil(opciones = {}) {
         });
         btnGuardar?.classList.toggle("pf-oculto", si);
         btnCancelar?.classList.toggle("pf-oculto", si);
-        if (btnEditar) btnEditar.textContent = si ? "✎ Editar datos" : "✕ Cancelar";
+        if (btnEditar) btnEditar.textContent = si ? "Editar datos" : "Cancelar";
         editando = !si;
     }
 
@@ -432,7 +432,7 @@ export async function montarPerfil(opciones = {}) {
             mensaje("pfMsg", err.message || "No se pudo guardar el perfil.", "error");
         } finally {
             btnGuardar.disabled = false;
-            btnGuardar.textContent = "✓ Guardar cambios";
+            btnGuardar.textContent = "Guardar cambios";
         }
     });
 
@@ -507,7 +507,7 @@ export async function montarPerfil(opciones = {}) {
             if (!input) return;
             const oculto = input.type === "password";
             input.type = oculto ? "text" : "password";
-            b.textContent = oculto ? "🙈" : "👁";
+            b.textContent = oculto ? "Ocultar" : "Mostrar";
         });
     });
 }

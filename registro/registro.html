@@ -13,38 +13,23 @@
 
     <link
         rel="stylesheet"
-        href="style.css">
+        href="../inicio%20de%20sistema/style.css">
+    <link rel="stylesheet" href="extra.css">
 
 </head>
 
 
 <body>
 
-    <div class="background">
-
-        <div class="background-circle circle-one"></div>
-
-        <div class="background-circle circle-two"></div>
-
-        <div class="background-circle circle-three"></div>
-
-    </div>
-
-
-
-
-        </section>
-
-
-        <section class="register-panel">
+    <section class="login-panel">
 
 
             <form
                 id="formRegistro"
-                class="register-card">
+                class="login-card">
                 <!-- TITULO -->
 
-                <div class="register-header">
+                <div class="login-header">
 
                     <h1>
                         Crear cuenta
@@ -77,9 +62,7 @@
 
                     <div class="input-wrapper">
 
-                        <span class="input-icon">
-                            👤
-                        </span>
+                        
 
                         <input
                             type="text"
@@ -105,9 +88,7 @@
 
                     <div class="input-wrapper">
 
-                        <span class="input-icon">
-                            💼
-                        </span>
+                        
 
                         <select
                             id="cargo"
@@ -143,14 +124,14 @@
                 <div id="bloqueSupervisor" class="bloque-supervisor" hidden>
 
                     <p class="aviso-supervisor">
-                        🛡️ Las cuentas de supervisor requieren autorización.
+                        Las cuentas de supervisor requieren autorización.
                         Pide el código al administrador del sistema.
                     </p>
 
                     <div class="input-group">
                         <label for="codigoAut">Código de autorización</label>
                         <div class="input-wrapper">
-                            <span class="input-icon">🛡️</span>
+                            
                             <input
                                 type="password"
                                 id="codigoAut"
@@ -162,7 +143,7 @@
                     <div class="input-group">
                         <label for="claveSup">Clave de supervisor</label>
                         <div class="input-wrapper">
-                            <span class="input-icon">🔑</span>
+                            
                             <input
                                 type="password"
                                 id="claveSup"
@@ -174,7 +155,7 @@
                     <div class="input-group">
                         <label for="claveSupConfirmar">Confirmar clave de supervisor</label>
                         <div class="input-wrapper">
-                            <span class="input-icon">🔑</span>
+                            
                             <input
                                 type="password"
                                 id="claveSupConfirmar"
@@ -197,9 +178,7 @@
 
                     <div class="input-wrapper">
 
-                        <span class="input-icon">
-                            ✉️
-                        </span>
+                        
 
                         <input
                             type="email"
@@ -217,28 +196,7 @@
                      USUARIO
                 ================================== -->
 
-                <div class="input-group">
-
-                    <label for="usuario">
-                        Usuario
-                    </label>
-
-                    <div class="input-wrapper">
-
-                        <span class="input-icon">
-                            🔑
-                        </span>
-
-                        <input
-                            type="text"
-                            id="usuario"
-                            required
-                            placeholder="Crea tu nombre de usuario"
-                            autocomplete="username">
-
-                    </div>
-
-                </div>
+                
 
 
                 <!-- =================================
@@ -253,9 +211,7 @@
 
                     <div class="input-wrapper">
 
-                        <span class="input-icon">
-                            🔒
-                        </span>
+                        
 
                         <input
                             type="password"
@@ -269,7 +225,7 @@
                             class="show-password"
                             id="mostrarPassword">
 
-                            👁
+                            Mostrar
 
                         </button>
 
@@ -284,7 +240,7 @@
 
                 <button
                     type="submit"
-                    class="register-button"
+                    class="login-button"
                     id="btnRegistro">
 
                     <span id="btnText">
@@ -295,7 +251,7 @@
                         class="arrow"
                         id="btnArrow">
 
-                        →
+
 
                     </span>
 
@@ -323,26 +279,22 @@
                      VOLVER AL LOGIN
                 ================================== -->
 
-                <a
+                <div class="bottom-buttons">
+                    <a
                     href="../inicio de sistema/login.html"
-                    class="login-link">
+                    class="secondary-button">
 
-                    ← Iniciar sesión
+                    Iniciar sesión
 
                 </a>
-
-
-                <!-- =================================
-                     VOLVER AL INICIO
-                ================================== -->
-
-                <a
+                    <a
                     href="../Yeison/index.html"
-                    class="back-home">
+                    class="secondary-button">
 
                     Volver al inicio
 
                 </a>
+                </div>
 
 
                 <!-- FOOTER -->
@@ -361,6 +313,7 @@
 
     </div>
 
+<script src="../FIREBASE/iconos.js" defer></script>
 </body>
 <script type="module" src="javascript.js"></script>
 </html>

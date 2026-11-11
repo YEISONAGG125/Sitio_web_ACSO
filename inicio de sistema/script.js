@@ -102,7 +102,7 @@ loginForm.addEventListener("submit", async (event) => {
 
     limpiarMensaje();
 
-    const usuarioIngresado = usuarioInput.value.trim();
+    const usuarioIngresado = usuarioInput.value.trim().toLowerCase();
     const passwordIngresada = passwordInput.value;
 
 
@@ -127,7 +127,7 @@ loginForm.addEventListener("submit", async (event) => {
 
     btnLogin.disabled = true;
     btnText.textContent = "Verificando...";
-    btnArrow.textContent = "⏳";
+    btnArrow.textContent = "";
 
 
     try {
@@ -173,7 +173,7 @@ loginForm.addEventListener("submit", async (event) => {
 
 
             const usuarioFirebase =
-                String(datos.usuario || "").trim();
+                String(datos.correo || "").trim().toLowerCase();
 
             const passwordFirebase =
                 String(datos.password || "");
@@ -207,7 +207,7 @@ loginForm.addEventListener("submit", async (event) => {
         if (!usuarioEncontrado) {
 
             mostrarMensaje(
-                "Usuario o contraseña incorrectos.",
+                "Correo o contraseña incorrectos.",
                 "error"
             );
 
@@ -359,7 +359,7 @@ supervisorForm.addEventListener("submit", async (event) => {
 
     btnSup.disabled = true;
     btnSupText.textContent = "Verificando...";
-    btnSupArrow.textContent = "⏳";
+    btnSupArrow.textContent = "";
 
     try {
 
@@ -471,7 +471,7 @@ supervisorForm.addEventListener("submit", async (event) => {
         );
 
         btnSupText.textContent = "Bienvenido";
-        btnSupArrow.textContent = "✓";
+        btnSupArrow.textContent = "";
 
         await completarLogin(usuario, mensajeSup);
 
@@ -706,7 +706,7 @@ async function completarLogin(usuarioEncontrado, destinoMensaje = mensaje) {
         );
 
         btnText.textContent = "Bienvenido";
-        btnArrow.textContent = "✓";
+        btnArrow.textContent = "";
     }
 
 
@@ -764,7 +764,7 @@ function restaurarBoton() {
 
     btnText.textContent = "Entrar";
 
-    btnArrow.textContent = "→";
+    btnArrow.textContent = "";
 }
 
 
@@ -777,5 +777,5 @@ function restaurarBotonSup() {
             ? "Activar y entrar"
             : "Verificar";
 
-    btnSupArrow.textContent = "→";
+    btnSupArrow.textContent = "";
 }

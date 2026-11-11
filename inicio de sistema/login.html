@@ -61,27 +61,21 @@
 
                 <div class="input-group">
 
-                    <label for="usuario">
-
-                        Usuario
-
-                    </label>
+                    <label for="usuario">Correo electrónico</label>
 
 
                     <div class="input-wrapper">
 
-                        <span class="input-icon">
-                            👤
-                        </span>
+                        
 
 
                         <input
-                            type="text"
-                            id="usuario"
+                           
+                            id="usuario" type="email" placeholder="correo@ejemplo.com" autocomplete="email"
                             name="usuario"
                             required
-                            placeholder="Nombre de usuario"
-                            autocomplete="username">
+                           
+                           >
 
                     </div>
 
@@ -111,9 +105,7 @@
 
                     <div class="input-wrapper">
 
-                        <span class="input-icon">
-                            🔒
-                        </span>
+                        
 
 
                         <input
@@ -131,7 +123,7 @@
                             id="mostrarPassword"
                             aria-label="Mostrar contraseña">
 
-                            👁
+                            Mostrar
 
                         </button>
 
@@ -172,7 +164,7 @@
                         class="arrow"
                         id="btnArrow">
 
-                        →
+
 
                     </span>
 
@@ -209,7 +201,7 @@
                         class="secondary-button"
                         onclick="window.location.href='../Yeison/index.html'">
 
-                        ⬅ Volver
+                        Volver
 
                     </button>
 
@@ -272,7 +264,7 @@
                 <div class="input-group" id="grupoCodigo" hidden>
                     <label for="codigoAut">Código de autorización</label>
                     <div class="input-wrapper">
-                        <span class="input-icon">🛡️</span>
+                        
                         <input
                             type="password"
                             id="codigoAut"
@@ -284,7 +276,7 @@
                 <div class="input-group">
                     <label for="claveSup" id="labelClaveSup">Clave de supervisor</label>
                     <div class="input-wrapper">
-                        <span class="input-icon">🔑</span>
+                        
                         <input
                             type="password"
                             id="claveSup"
@@ -296,7 +288,7 @@
                 <div class="input-group" id="grupoClaveConfirmar" hidden>
                     <label for="claveSupConfirmar">Confirmar clave</label>
                     <div class="input-wrapper">
-                        <span class="input-icon">🔑</span>
+                        
                         <input
                             type="password"
                             id="claveSupConfirmar"
@@ -315,7 +307,7 @@
                     id="btnSup">
 
                     <span id="btnSupText">Verificar</span>
-                    <span class="arrow" id="btnSupArrow">→</span>
+                    <span class="arrow" id="btnSupArrow"></span>
 
                 </button>
 
@@ -325,7 +317,7 @@
                         class="secondary-button"
                         id="btnCancelarSup">
 
-                        ⬅ Cancelar
+                        Cancelar
 
                     </button>
                 </div>
@@ -382,7 +374,7 @@
                     password.type = "password";
 
                     mostrarPassword.textContent =
-                        "👁";
+                        "Mostrar";
 
                     mostrarPassword.setAttribute(
                         "aria-label",
@@ -397,6 +389,7 @@
     </script>
 
 
+<script src="../FIREBASE/iconos.js" defer></script>
 </body>
 
 </html>

@@ -10,29 +10,29 @@
 <section class="login-panel">
 
 <form id="fSol" class="login-card">
-    <div class="login-header"><h1>Recuperar contraseña</h1><p>Escribe tu usuario y tu correo. El administrador revisará tu solicitud.</p></div>
+    <div class="login-header"><h1>Recuperar contraseña</h1><p>Escribe el correo con el que te registraste. El administrador revisará tu solicitud.</p></div>
     <div id="m1" class="mensaje"></div>
-    <div class="input-group"><label for="sUsuario">Usuario</label><div class="input-wrapper"><span class="input-icon">👤</span><input id="sUsuario" required autocomplete="username" placeholder="Nombre de usuario"></div></div>
-    <div class="input-group"><label for="sCorreo">Correo registrado</label><div class="input-wrapper"><span class="input-icon">✉️</span><input id="sCorreo" type="email" required autocomplete="email" placeholder="correo@ejemplo.com"></div></div>
+    <div class="input-group"><label for="sCorreo">Correo registrado</label><div class="input-wrapper"><input id="sCorreo" type="email" required autocomplete="email" placeholder="correo@ejemplo.com"></div></div>
     <button type="submit" class="login-button"><span>Enviar solicitud</span></button>
     <div class="bottom-buttons">
         <button type="button" class="secondary-button" id="aCod">Ya tengo mi código</button>
-        <button type="button" class="secondary-button" onclick="location.href='../inicio de sistema/login.html'">⬅ Volver</button>
+        <button type="button" class="secondary-button" onclick="location.href='../inicio de sistema/login.html'">Volver</button>
     </div>
 </form>
 
 <form id="fCod" class="login-card" hidden>
     <div class="login-header"><h1>Crea tu nueva contraseña</h1><p>Usa el código de 8 caracteres que te dio el administrador. Vence en 30 minutos.</p></div>
     <div id="m2" class="mensaje"></div>
-    <div class="input-group"><label for="cUsuario">Usuario</label><div class="input-wrapper"><span class="input-icon">👤</span><input id="cUsuario" required autocomplete="username"></div></div>
-    <div class="input-group"><label for="cCodigo">Código</label><div class="input-wrapper"><span class="input-icon">🔑</span><input id="cCodigo" required maxlength="8" autocomplete="off" placeholder="XXXXXXXX"></div></div>
-    <div class="input-group"><label for="cPass">Nueva contraseña</label><div class="input-wrapper"><span class="input-icon">🔒</span><input id="cPass" type="password" minlength="8" required autocomplete="new-password" placeholder="Mínimo 8 caracteres"></div></div>
-    <div class="input-group"><label for="cPass2">Repite la contraseña</label><div class="input-wrapper"><span class="input-icon">🔒</span><input id="cPass2" type="password" minlength="8" required autocomplete="new-password"></div></div>
+    <div class="input-group"><label for="cCorreo">Correo registrado</label><div class="input-wrapper"><input id="cCorreo" type="email" required autocomplete="email" placeholder="correo@ejemplo.com"></div></div>
+    <div class="input-group"><label for="cCodigo">Código</label><div class="input-wrapper"><input id="cCodigo" required maxlength="8" autocomplete="off" placeholder="XXXXXXXX"></div></div>
+    <div class="input-group"><label for="cPass">Nueva contraseña</label><div class="input-wrapper"><input id="cPass" type="password" minlength="8" required autocomplete="new-password" placeholder="Mínimo 8 caracteres"></div></div>
+    <div class="input-group"><label for="cPass2">Repite la contraseña</label><div class="input-wrapper"><input id="cPass2" type="password" minlength="8" required autocomplete="new-password"></div></div>
     <button type="submit" class="login-button"><span>Cambiar contraseña</span></button>
-    <div class="bottom-buttons"><button type="button" class="secondary-button" id="aSol">⬅ Pedir un código</button></div>
+    <div class="bottom-buttons"><button type="button" class="secondary-button" id="aSol">Pedir un código</button></div>
 </form>
 
 </section>
+<script src="../FIREBASE/ver-password.js" defer></script>
 <script type="module">
 import { rtdb, ref, get, push, update } from "../FIREBASE/firebase.js";
 import { verificarHashClave } from "../FIREBASE/cripto.js";
@@ -44,17 +44,16 @@ const ver = (cod) => { $("fSol").hidden = cod; $("fCod").hidden = !cod; };
 $("aCod").onclick = () => ver(true);
 $("aSol").onclick = () => ver(false);
 
-async function buscar(usuario, correo) {
+async function buscar(correo) {
     const s = await get(ref(rtdb, "usuarios"));
-    return Object.entries(s.val() || {}).find(([, u]) => u && String(u.usuario || "").trim() === usuario
-        && (correo === null || String(u.correo || "").toLowerCase() === correo));
+    return Object.entries(s.val() || {}).find(([, u]) => u && String(u.correo || "").trim().toLowerCase() === correo);
 }
 
 $("fSol").onsubmit = async (e) => {
     e.preventDefault();
-    const usuario = $("sUsuario").value.trim(), correo = $("sCorreo").value.trim().toLowerCase();
+    const correo = $("sCorreo").value.trim().toLowerCase(), usuario = correo;
     try {
-        const hit = await buscar(usuario, correo);
+        const hit = await buscar(correo);
         if (hit) {
             const rs = (await get(ref(rtdb, "recuperaciones"))).val() || {};
             const hay = Object.values(rs).some((r) => r.id_usuario === hit[0] && r.estado === "pendiente");
@@ -67,13 +66,13 @@ $("fSol").onsubmit = async (e) => {
 
 $("fCod").onsubmit = async (e) => {
     e.preventDefault();
-    const usuario = $("cUsuario").value.trim(), codigo = $("cCodigo").value.trim().toUpperCase();
+    const correo = $("cCorreo").value.trim().toLowerCase(), codigo = $("cCodigo").value.trim().toUpperCase();
     const p1 = $("cPass").value, p2 = $("cPass2").value;
     if (p1.length < 8) return msg("m2", "La contraseña necesita mínimo 8 caracteres.", "error");
     if (p1 !== p2) return msg("m2", "Las contraseñas no coinciden.", "error");
     const malo = () => msg("m2", "Código incorrecto o vencido. Pide uno nuevo al administrador si hace falta.", "error");
     try {
-        const hit = await buscar(usuario, null);
+        const hit = await buscar(correo);
         if (!hit) return malo();
         const rs = (await get(ref(rtdb, "recuperaciones"))).val() || {};
         const [rid, r] = Object.entries(rs).filter(([, x]) => x.id_usuario === hit[0] && x.estado === "aprobada")
@@ -89,5 +88,6 @@ $("fCod").onsubmit = async (e) => {
     } catch (x) { console.error(x); msg("m2", "No se pudo cambiar la contraseña. Inténtalo de nuevo.", "error"); }
 };
 </script>
+<script src="../FIREBASE/iconos.js" defer></script>
 </body>
 </html>
