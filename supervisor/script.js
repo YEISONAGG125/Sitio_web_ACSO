@@ -20,6 +20,7 @@ import {
 } from "../FIREBASE/firebase.js";
 
 import { montarPerfil } from "../FIREBASE/perfil.js";
+import { iniciarGestion } from "./gestion.js";
 
 import {
     protegerSupervisor,
@@ -122,7 +123,6 @@ window.mostrar = function (id, elemento) {
     elemento?.classList.add("active");
 
     if (id === "Personal") cargarPersonal();
-    if (id === "Inventario") cargarProductos();
     if (id === "Contratos") cargarContratos();
     if (id === "Clientes") cargarClientes();
 };
@@ -194,10 +194,11 @@ function actualizarBadges() {
 
     const pendNov = novedades.filter(n => n.estado === "Pendiente").length;
     const pendSol = solicitudes.filter(s => s.estado === "Pendiente").length;
+    const pendPed = pedidosSup.filter(p => p.estado === "Pendiente").length;
 
     ponerBadge("badgeNovedades", pendNov);
     ponerBadge("badgeSolicitudes", pendSol);
-    ponerBadge("badgeNotificaciones", pendNov + pendSol);
+    ponerBadge("badgeNotificaciones", pendNov + pendSol + pendPed);
 }
 
 function pintarNovedades() {
@@ -363,7 +364,8 @@ function pintarNotificaciones() {
 
     const items = [
         ...novedades.map(n => ({ ...n, kind: "novedad" })),
-        ...solicitudes.map(s => ({ ...s, kind: "solicitud" }))
+        ...solicitudes.map(s => ({ ...s, kind: "solicitud" })),
+        ...pedidosSup.map(p => ({ ...p, kind: "pedido" }))
     ]
         .sort((a, b) => ms(b.fecha_envio) - ms(a.fecha_envio))
         .slice(0, 30);
@@ -377,7 +379,12 @@ function pintarNotificaciones() {
 
         let icono, titulo, detalle, quien;
 
-        if (n.kind === "novedad") {
+        if (n.kind === "pedido") {
+            icono = "🛒";
+            quien = n.nombre_empleado || "empleado";
+            titulo = `Pedido de productos de ${esc(quien)}`;
+            detalle = (n.items || []).map(i => `${esc(i.cantidad)} ${esc(i.nombre)}`).join(", ") || "Sin productos";
+        } else if (n.kind === "novedad") {
             icono = n.es_incapacidad ? "🩺" : "🔔";
             quien = n.nombre_empleado || "empleado";
             titulo = `${n.es_incapacidad ? "Incapacidad" : "Novedad"} de ${esc(quien)}`;
@@ -412,11 +419,16 @@ function configurarNotificaciones() {
 
         if (btn.dataset.ir === "solicitud") {
             window.mostrar("Solicitudes", $("tabSolicitudes"));
+        } else if (btn.dataset.ir === "pedido") {
+            window.mostrar("PedidosProductos", $("tabPedidos"));
         } else {
             window.mostrar("NovedadLaboral", $("tabNovedades"));
         }
     });
 }
+
+let pedidosSup = [];
+let gestion = null;
 
 let solicitudes = [];
 let primeraCargaSol = true;
@@ -448,10 +460,14 @@ function escucharSolicitudes() {
 
         pintarContadoresSol();
         pintarSolicitudes();
+        pintarContratosSolicitados();
         pintarNotificaciones();
 
     }, (error) => {
         console.error("Error Firestore (solicitudes):", error);
+        $("tablaContratosSol").innerHTML = `
+            <tr><td colspan="9">❌ No se pudieron cargar los contratos solicitados.
+            Revisa las reglas de Firestore.</td></tr>`;
         $("listaSolicitudesSup").innerHTML = `
             <div class="vacio error">
                 ❌ No se pudieron cargar las solicitudes.
@@ -562,6 +578,8 @@ function pintarSolicitudes() {
 
                 ${s.descripcion ? `<p class="novedad-texto">${esc(s.descripcion)}</p>` : ""}
 
+                ${s.empleado_asignado ? `<div class="contacto-sol"><span>👷 Asignado a <b>${esc(s.empleado_asignado)}</b></span></div>` : ""}
+
                 ${esContrato ? `
                 <div class="valor-contrato">
                     <label>💰 Valor total del contrato (COP)</label>
@@ -578,6 +596,9 @@ function pintarSolicitudes() {
                 <div class="acciones-estado">
                     <span class="acciones-label">Marcar como:</span>
                     ${botones}
+                    <button type="button" class="btn-estado btn-asignar-sol" data-id="${s.id}">
+                        👷 ${s.empleado_asignado ? "Reasignar" : "Asignar a empleado"}
+                    </button>
                 </div>
 
             </article>`;
@@ -660,8 +681,16 @@ function configurarSolicitudes() {
     const lista = $("listaSolicitudesSup");
 
     lista.addEventListener("click", (e) => {
+
+        const asignar = e.target.closest(".btn-asignar-sol");
+        if (asignar) {
+            const sol = solicitudes.find(x => x.id === asignar.dataset.id);
+            if (sol) gestion?.prepararAsignacion(sol);
+            return;
+        }
+
         const btn = e.target.closest(".btn-estado");
-        if (btn) cambiarEstadoSolicitud(btn.dataset.id, btn.dataset.estado);
+        if (btn && btn.dataset.estado) cambiarEstadoSolicitud(btn.dataset.id, btn.dataset.estado);
     });
 
     lista.addEventListener("input", (e) => {
@@ -735,7 +764,7 @@ function cargarPersonal() {
     });
 }
 
-async function cargarTabla({ endpoint, tablaId, columnas, filaHTML, contadorId, nombre }) {
+async function cargarTabla({ endpoint, tablaId, columnas, filaHTML, contadorId, nombre, alContar }) {
 
     const tabla = $(tablaId);
     if (!tabla) return;
@@ -749,11 +778,13 @@ async function cargarTabla({ endpoint, tablaId, columnas, filaHTML, contadorId, 
         if (!Array.isArray(datos) || datos.length === 0) {
             tabla.innerHTML = `<tr><td colspan="${columnas}">No hay ${nombre} registrados</td></tr>`;
             if (contadorId) actualizarContador(contadorId, 0);
+            alContar?.(0);
             return;
         }
 
         tabla.innerHTML = datos.map(filaHTML).join("");
         if (contadorId) actualizarContador(contadorId, datos.length);
+        alContar?.(datos.length);
 
     } catch (error) {
         console.warn(`API de ${nombre} no disponible:`, error);
@@ -762,7 +793,62 @@ async function cargarTabla({ endpoint, tablaId, columnas, filaHTML, contadorId, 
                 No se pudo conectar con el servidor (Spring Boot) para cargar ${nombre}.
             </td></tr>`;
         if (contadorId) actualizarContador(contadorId, 0);
+        alContar?.(0);
     }
+}
+
+// Contratos que ya están en el sistema (API) + contratos que piden los clientes
+let totalContratosApi = 0;
+
+function actualizarTotalContratos() {
+    const pedidos = solicitudes.filter(s => s.tipo === "Contrato").length;
+    actualizarContador("totalContratos", totalContratosApi + pedidos);
+}
+
+function pintarContratosSolicitados() {
+
+    const tabla = $("tablaContratosSol");
+    const contratos = solicitudes.filter(s => s.tipo === "Contrato");
+
+    actualizarContador("cntContratosSol", contratos.length);
+    actualizarTotalContratos();
+
+    if (contratos.length === 0) {
+        tabla.innerHTML = `<tr><td colspan="9">Todavía no hay contratos solicitados por clientes.</td></tr>`;
+        return;
+    }
+
+    tabla.innerHTML = contratos.map(c => `
+        <tr>
+            <td>
+                <strong>${esc(c.nombre_cliente || "Cliente")}</strong><br>
+                <small style="color:#627570">ID ${esc(c.id_cliente ?? "-")} · ${formatearFecha(c.fecha_envio)}</small>
+            </td>
+            <td>${esc(c.servicio ?? "-")}</td>
+            <td>${esc(c.frecuencia ?? "-")}</td>
+            <td>${formatearDia(c.fecha_inicio)}</td>
+            <td>${c.duracion_meses ? esc(c.duracion_meses) + " meses" : "-"}</td>
+            <td>${esc(c.direccion ?? "-")}${c.area_m2 ? `<br><small style="color:#627570">${esc(c.area_m2)} m²</small>` : ""}</td>
+            <td>${c.valor_total ? "$ " + esc(Number(c.valor_total).toLocaleString("es-CO")) : "Sin definir"}</td>
+            <td><span class="badge-estado ${claseEstado(c.estado)}">${esc(c.estado)}</span></td>
+            <td><button type="button" class="btn-ver" data-gestionar-contrato="${c.id}">Gestionar</button></td>
+        </tr>`).join("");
+}
+
+function configurarContratosSolicitados() {
+    $("tablaContratosSol").addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-gestionar-contrato]");
+        if (!btn) return;
+
+        const c = solicitudes.find(x => x.id === btn.dataset.gestionarContrato);
+
+        // Deja la lista de solicitudes filtrada por ese cliente
+        $("buscarSolicitud").value = c?.nombre_cliente || "";
+        $("filtroTipoSol").value = "Contrato";
+        pintarSolicitudes();
+
+        window.mostrar("Solicitudes", $("tabSolicitudes"));
+    });
 }
 
 function cargarContratos() {
@@ -770,8 +856,8 @@ function cargarContratos() {
         endpoint: "/reportes/contratos",
         tablaId: "tablaContratos",
         columnas: 7,
-        contadorId: "totalContratos",
         nombre: "contratos",
+        alContar: (n) => { totalContratosApi = n; actualizarTotalContratos(); },
         filaHTML: c => `
             <tr>
                 <td>${esc(c.id_contrato ?? "-")}</td>
@@ -801,26 +887,6 @@ function cargarClientes() {
     });
 }
 
-function cargarProductos() {
-    return cargarTabla({
-        endpoint: "/reportes/productos",
-        tablaId: "tablaProductos",
-        columnas: 6,
-        contadorId: "totalProductos",
-        nombre: "productos",
-        filaHTML: p => `
-            <tr>
-                <td>${esc(p.id_producto ?? "-")}</td>
-                <td>${esc(p.id_proveedor ?? "-")}</td>
-                <td>${esc(p.nombre_producto ?? "-")}</td>
-                <td>${esc(p.descripcion ?? "-")}</td>
-                <td>${esc(p.cantidad_stock ?? p.cantidad ?? p.stock ?? "-")}</td>
-                <td>$ ${esc(p.precio ?? "0")}</td>
-            </tr>`
-    });
-}
-
-
 // =====================================================
 // CERRAR SESIÓN
 // =====================================================
@@ -847,13 +913,25 @@ vigilarInactividad(async () => {
 configurarNovedades();
 configurarNotificaciones();
 configurarSolicitudes();
+configurarContratosSolicitados();
 escucharNovedades();
 escucharSolicitudes();
+
+// Inventario, pedidos de productos, servicios asignados y horarios
+gestion = iniciarGestion({
+    nombreSupervisor: () => nombreSupervisor,
+    toast: mostrarToast,
+    irA: (seccion, tab) => window.mostrar(seccion, tab),
+    alCambiarPedidos: (lista) => {
+        pedidosSup = lista;
+        actualizarBadges();
+        pintarNotificaciones();
+    }
+});
 
 cargarPersonal();
 cargarContratos();
 cargarClientes();
-cargarProductos();
 
 $("btnCerrarSesion").addEventListener("click", cerrarSesion);
 

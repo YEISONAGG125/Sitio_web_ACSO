@@ -17,6 +17,8 @@ import {
     collection,
     addDoc,
     updateDoc,
+    deleteDoc,
+    writeBatch,
     doc,
     onSnapshot,
     query,
@@ -48,6 +50,10 @@ const db = getFirestore(app);
 const COL_NOVEDADES = "novedades_laborales";
 const COL_NOTIFICACIONES = "notificaciones";
 const COL_SOLICITUDES = "solicitudes";   // pedidos de servicio y contrato de los clientes
+const COL_INVENTARIO = "inventario";               // productos que hay en bodega (los gestiona el supervisor)
+const COL_PEDIDOS = "pedidos_productos";           // productos que el empleado pide para un servicio
+const COL_ASIGNACIONES = "asignaciones_servicio";  // servicios que el supervisor asigna a un empleado
+const COL_HORARIOS = "horarios_empleados";         // horario de cada empleado (lo pone el supervisor)
 
 // Estados que puede tener una novedad
 const ESTADOS_NOVEDAD = [
@@ -65,6 +71,10 @@ export {
     COL_NOVEDADES,
     COL_NOTIFICACIONES,
     COL_SOLICITUDES,
+    COL_INVENTARIO,
+    COL_PEDIDOS,
+    COL_ASIGNACIONES,
+    COL_HORARIOS,
     ESTADOS_NOVEDAD,
 
     // Realtime Database
@@ -80,6 +90,8 @@ export {
     collection,
     addDoc,
     updateDoc,
+    deleteDoc,
+    writeBatch,
     doc,
     onSnapshot,
     query,

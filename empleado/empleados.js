@@ -14,7 +14,11 @@ import {
     where,
     serverTimestamp,
     COL_NOVEDADES,
-    COL_NOTIFICACIONES
+    COL_NOTIFICACIONES,
+    COL_INVENTARIO,
+    COL_PEDIDOS,
+    COL_ASIGNACIONES,
+    COL_HORARIOS
 } from "../FIREBASE/firebase.js";
 
 import { montarPerfil } from "../FIREBASE/perfil.js";
@@ -130,6 +134,7 @@ function mostrarDatosEmpleado() {
 const TITULOS = {
     inicio: ["Panel del Empleado", "Consulta tu información laboral"],
     servicios: ["Mis servicios", "Servicios asignados"],
+    productos: ["Pedir productos", "Pide al supervisor lo que necesitas para tu servicio"],
     novedades: ["Novedad laboral", "Envía una novedad o incapacidad al supervisor"],
     notificaciones: ["Notificaciones", "Información importante"],
     horarios: ["Mi horario", "Consulta tus horarios de trabajo"],
@@ -475,80 +480,538 @@ async function obtenerDatos(endpoint) {
     return await respuesta.json();
 }
 
-async function cargarServicios() {
+// ---------- utilidades de hora ----------
+
+function hoyISO() {
+    const h = new Date();
+    h.setMinutes(h.getMinutes() - h.getTimezoneOffset());
+    return h.toISOString().slice(0, 10);
+}
+
+function formatearHora(valor) {
+    if (!valor) return "-";
+    const m = String(valor).match(/^(\d{1,2}):(\d{2})/);
+    if (!m) return escaparHTML(valor);
+    const h = Number(m[1]);
+    return `${h % 12 === 0 ? 12 : h % 12}:${m[2]} ${h >= 12 ? "p. m." : "a. m."}`;
+}
+
+const DIAS_SEMANA = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
+
+function diaSemana(iso) {
+    const [a, m, d] = iso.split("-").map(Number);
+    return DIAS_SEMANA[new Date(a, m - 1, d).getDay()];
+}
+
+const COLOR_ESTADO = {
+    "Pendiente": "aviso",
+    "Aprobado": "azul",
+    "Entregado": "ok",
+    "Rechazado": "rojo"
+};
+
+
+// =====================================================
+// MIS SERVICIOS  (asignados por el supervisor + API)
+// =====================================================
+
+let asignaciones = [];      // los asigna el supervisor (Firestore, en vivo)
+let serviciosApi = [];      // los que vengan del servidor Spring Boot
+let apiServiciosFallo = false;
+
+function escucharAsignaciones() {
+
+    if (!idEmpleado) return;
+
+    const q = query(
+        collection(db, COL_ASIGNACIONES),
+        where("id_empleado", "==", idEmpleado)
+    );
+
+    let primera = true;
+
+    onSnapshot(q, (snap) => {
+
+        if (!primera) {
+            snap.docChanges().forEach(cambio => {
+                if (cambio.type === "added" && !cambio.doc.metadata.hasPendingWrites) {
+                    mostrarMensaje(`🧹 Nuevo servicio: ${cambio.doc.data().servicio}`, "exito");
+                }
+            });
+        }
+        primera = false;
+
+        asignaciones = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+
+        $("cargandoServicios").style.display = "none";
+        pintarServicios();
+        llenarServiciosPedido();
+
+    }, (error) => {
+        console.error("Error escuchando servicios asignados:", error);
+        $("cargandoServicios").style.display = "none";
+    });
+}
+
+function pintarServicios() {
 
     const contenedor = $("listaServicios");
+
+    $("totalServicios").textContent = asignaciones.length + serviciosApi.length;
+
+    if (asignaciones.length === 0 && serviciosApi.length === 0) {
+        contenedor.innerHTML = `
+            <div class="mensaje-vacio">
+                No tienes servicios asignados.
+                ${apiServiciosFallo ? "<br><small>(El servidor de servicios no está conectado.)</small>" : ""}
+            </div>`;
+        return;
+    }
+
+    const terminado = (a) => a.estado === "Completado" || a.estado === "Cancelado";
+
+    const ordenadas = [...asignaciones].sort((a, b) => {
+        if (terminado(a) !== terminado(b)) return terminado(a) ? 1 : -1;
+        return `${a.fecha || ""} ${a.hora || ""}`.localeCompare(`${b.fecha || ""} ${b.hora || ""}`);
+    });
+
+    const tarjetasAsignadas = ordenadas.map(a => {
+
+        let accion = "";
+        if (a.estado === "Asignado") {
+            accion = `<button type="button" class="gx-btn gx-btn-mini gx-btn-prim" data-id="${a.id}" data-estado="En curso">▶ Empezar servicio</button>`;
+        } else if (a.estado === "En curso") {
+            accion = `<button type="button" class="gx-btn gx-btn-mini gx-btn-prim" data-id="${a.id}" data-estado="Completado">✔ Marcar como completado</button>`;
+        }
+
+        return `
+            <div class="tarjeta-servicio">
+                <h3>🧹 ${escaparHTML(a.servicio)}</h3>
+                <p><strong>Fecha:</strong> ${formatearDia(a.fecha)}${a.hora ? " · " + formatearHora(a.hora) : ""}</p>
+                <p><strong>Ubicación:</strong> ${escaparHTML(a.direccion || "No especificada")}</p>
+                ${a.cliente ? `<p><strong>Cliente:</strong> ${escaparHTML(a.cliente)}</p>` : ""}
+                ${a.descripcion ? `<p><strong>Instrucciones:</strong> ${escaparHTML(a.descripcion)}</p>` : ""}
+                <span class="estado">${escaparHTML(a.estado || "Asignado")}</span>
+                ${accion ? `<div style="margin-top:12px">${accion}</div>` : ""}
+            </div>`;
+    }).join("");
+
+    const tarjetasApi = serviciosApi.map(s => `
+        <div class="tarjeta-servicio">
+            <h3>🧹 ${escaparHTML(s.nombre_servicio || s.nombre || "Servicio")}</h3>
+            <p><strong>Fecha:</strong> ${escaparHTML(s.fecha || s.fecha_servicio || "No especificada")}</p>
+            <p><strong>Ubicación:</strong> ${escaparHTML(s.ubicacion || s.direccion || "No especificada")}</p>
+            <span class="estado">${escaparHTML(s.estado || "Pendiente")}</span>
+        </div>`).join("");
+
+    contenedor.innerHTML = tarjetasAsignadas + tarjetasApi;
+}
+
+async function cambiarEstadoServicio(id, estado) {
+
+    try {
+        await updateDoc(doc(db, COL_ASIGNACIONES, id), {
+            estado,
+            fecha_actualizacion: serverTimestamp()
+        });
+        mostrarMensaje(
+            estado === "Completado" ? "Servicio completado. ¡Buen trabajo!" : "Servicio en curso.",
+            "exito"
+        );
+    } catch (error) {
+        console.error("Error cambiando estado del servicio:", error);
+        mostrarMensaje("No se pudo actualizar el servicio.", "error");
+    }
+}
+
+async function cargarServicios() {
+
     const cargando = $("cargandoServicios");
 
     cargando.style.display = "flex";
-    contenedor.innerHTML = "";
 
     try {
         const servicios = await obtenerDatos(`/servicios/empleado/${idEmpleado}`);
+        serviciosApi = Array.isArray(servicios) ? servicios : [];
+        apiServiciosFallo = false;
+    } catch (error) {
+        serviciosApi = [];
+        apiServiciosFallo = true;
+    }
 
-        cargando.style.display = "none";
-        $("totalServicios").textContent = Array.isArray(servicios) ? servicios.length : 0;
+    cargando.style.display = "none";
+    pintarServicios();
+}
 
-        if (!Array.isArray(servicios) || servicios.length === 0) {
-            contenedor.innerHTML = `<div class="mensaje-vacio">No tienes servicios asignados.</div>`;
+
+// =====================================================
+// PEDIR PRODUCTOS AL SUPERVISOR
+// =====================================================
+
+let inventario = [];
+
+function escucharInventario() {
+
+    onSnapshot(collection(db, COL_INVENTARIO), (snap) => {
+
+        inventario = snap.docs
+            .map(d => ({ id: d.id, ...d.data() }))
+            .sort((a, b) => String(a.nombre || "").localeCompare(String(b.nombre || ""), "es"));
+
+        $("notaInventario").textContent = inventario.length === 0
+            ? "El supervisor aún no ha registrado productos. Puedes pedir uno escribiéndolo en «Otro»."
+            : "Entre paréntesis ves cuántas unidades hay en bodega.";
+
+        refrescarSelectsProducto();
+
+    }, (error) => {
+        console.error("Error leyendo el inventario:", error);
+        $("notaInventario").textContent = "No se pudo cargar la lista de productos. Puedes escribirlo en «Otro».";
+    });
+}
+
+function opcionesProductos() {
+    return `<option value="">Elige un producto...</option>` +
+        inventario.map(p => {
+            const agotado = Number(p.cantidad || 0) <= 0;
+            return `<option value="${escaparHTML(p.id)}">${escaparHTML(p.nombre)} (${agotado ? "agotado" : "hay " + p.cantidad + " " + (p.unidad || "")})</option>`;
+        }).join("") +
+        `<option value="__otro">Otro (no está en la lista)...</option>`;
+}
+
+function refrescarSelectsProducto() {
+    document.querySelectorAll("#pedidoItems .pi-prod").forEach(sel => {
+        const actual = sel.value;
+        sel.innerHTML = opcionesProductos();
+        if ([...sel.options].some(o => o.value === actual)) sel.value = actual;
+    });
+}
+
+function agregarFilaProducto() {
+
+    const fila = document.createElement("div");
+    fila.className = "gx-fila-producto";
+    fila.innerHTML = `
+        <select class="pi-prod" aria-label="Producto">${opcionesProductos()}</select>
+        <input type="number" class="pi-cant" min="1" step="any" value="1" aria-label="Cantidad">
+        <button type="button" class="gx-btn gx-btn-mini gx-btn-peligro pi-quitar" aria-label="Quitar producto">✕</button>
+        <input type="text" class="pi-otro gx-oculto" maxlength="80" placeholder="¿Qué producto necesitas?" aria-label="Otro producto">
+    `;
+
+    $("pedidoItems").appendChild(fila);
+}
+
+function llenarServiciosPedido() {
+
+    const sel = $("pedidoServicio");
+    if (!sel) return;
+
+    const actual = sel.value;
+
+    const activos = asignaciones
+        .filter(a => a.estado !== "Completado" && a.estado !== "Cancelado")
+        .sort((a, b) => String(a.fecha || "").localeCompare(String(b.fecha || "")));
+
+    sel.innerHTML = `<option value="">Sin servicio específico</option>` +
+        activos.map(a => `<option value="${escaparHTML(a.id)}">${escaparHTML(a.servicio)} · ${formatearDia(a.fecha)}</option>`).join("");
+
+    if ([...sel.options].some(o => o.value === actual)) sel.value = actual;
+}
+
+function configurarPedidos() {
+
+    agregarFilaProducto();
+
+    const contenedor = $("pedidoItems");
+
+    $("btnAgregarProducto").addEventListener("click", agregarFilaProducto);
+
+    contenedor.addEventListener("change", (e) => {
+        if (e.target.classList.contains("pi-prod")) {
+            const otro = e.target.closest(".gx-fila-producto").querySelector(".pi-otro");
+            otro.classList.toggle("gx-oculto", e.target.value !== "__otro");
+            if (e.target.value === "__otro") otro.focus();
+        }
+    });
+
+    contenedor.addEventListener("click", (e) => {
+        if (!e.target.closest(".pi-quitar")) return;
+
+        const filas = contenedor.querySelectorAll(".gx-fila-producto");
+        const fila = e.target.closest(".gx-fila-producto");
+
+        if (filas.length === 1) {
+            // Si es la única fila, solo se limpia
+            fila.querySelector(".pi-prod").value = "";
+            fila.querySelector(".pi-cant").value = 1;
+            fila.querySelector(".pi-otro").value = "";
+            fila.querySelector(".pi-otro").classList.add("gx-oculto");
+        } else {
+            fila.remove();
+        }
+    });
+
+    $("formPedido").addEventListener("submit", enviarPedido);
+}
+
+async function enviarPedido(event) {
+
+    event.preventDefault();
+
+    if (!idEmpleado) {
+        mostrarMensaje("No se encontró tu ID. Vuelve a iniciar sesión.", "error");
+        return;
+    }
+
+    const items = [];
+
+    for (const fila of document.querySelectorAll("#pedidoItems .gx-fila-producto")) {
+
+        const seleccion = fila.querySelector(".pi-prod").value;
+        const cantidad = Number(fila.querySelector(".pi-cant").value);
+
+        if (!seleccion) continue;     // fila vacía
+
+        if (isNaN(cantidad) || cantidad <= 0) {
+            mostrarMensaje("Revisa las cantidades: deben ser mayores a 0.", "error");
             return;
         }
 
-        servicios.forEach(s => {
-            const tarjeta = document.createElement("div");
-            tarjeta.className = "tarjeta-servicio";
-            tarjeta.innerHTML = `
-                <h3>🧹 ${escaparHTML(s.nombre_servicio || s.nombre || "Servicio")}</h3>
-                <p><strong>Fecha:</strong> ${escaparHTML(s.fecha || s.fecha_servicio || "No especificada")}</p>
-                <p><strong>Ubicación:</strong> ${escaparHTML(s.ubicacion || s.direccion || "No especificada")}</p>
-                <span class="estado">${escaparHTML(s.estado || "Pendiente")}</span>
-            `;
-            contenedor.appendChild(tarjeta);
+        if (seleccion === "__otro") {
+            const nombre = fila.querySelector(".pi-otro").value.trim();
+            if (!nombre) {
+                mostrarMensaje("Escribe el nombre del producto en «Otro».", "error");
+                return;
+            }
+            items.push({ id_producto: null, nombre, cantidad, unidad: "" });
+        } else {
+            const prod = inventario.find(p => p.id === seleccion);
+            if (!prod) continue;
+            items.push({ id_producto: prod.id, nombre: prod.nombre, cantidad, unidad: prod.unidad || "" });
+        }
+    }
+
+    if (items.length === 0) {
+        mostrarMensaje("Elige al menos un producto.", "error");
+        return;
+    }
+
+    const idServicio = $("pedidoServicio").value;
+    const servicio = asignaciones.find(a => a.id === idServicio);
+
+    const boton = $("btnEnviarPedido");
+    boton.disabled = true;
+    boton.textContent = "Enviando...";
+
+    try {
+        await addDoc(collection(db, COL_PEDIDOS), {
+            id_empleado: idEmpleado,
+            nombre_empleado: nombreEmpleado,
+            id_asignacion: servicio ? servicio.id : null,
+            servicio: servicio ? servicio.servicio : "",
+            items,
+            nota: $("pedidoNota").value.trim(),
+            estado: "Pendiente",
+            comentario_supervisor: "",
+            descontado: false,
+            fecha_envio: serverTimestamp(),
+            fecha_actualizacion: serverTimestamp()
         });
 
+        mostrarMensaje("Pedido enviado al supervisor.", "exito");
+
+        $("formPedido").reset();
+        $("pedidoItems").innerHTML = "";
+        agregarFilaProducto();
+
     } catch (error) {
-        cargando.style.display = "none";
-        contenedor.innerHTML = `
-            <div class="mensaje-vacio">
-                Los servicios no están disponibles en este momento
-                (el servidor de servicios no está conectado).
-            </div>`;
+        console.error("Error enviando pedido:", error);
+        mostrarMensaje("No se pudo enviar. Revisa tu conexión y las reglas de Firestore.", "error");
+    } finally {
+        boton.disabled = false;
+        boton.textContent = "📤 Enviar pedido";
     }
+}
+
+function escucharPedidos() {
+
+    const contenedor = $("listaPedidos");
+
+    if (!idEmpleado) return;
+
+    const q = query(
+        collection(db, COL_PEDIDOS),
+        where("id_empleado", "==", idEmpleado)
+    );
+
+    onSnapshot(q, (snap) => {
+
+        const lista = snap.docs
+            .map(d => ({ id: d.id, ...d.data() }))
+            .sort((a, b) => milisegundos(b.fecha_envio) - milisegundos(a.fecha_envio));
+
+        if (lista.length === 0) {
+            contenedor.innerHTML = `<div class="mensaje-vacio">No has pedido productos todavía.</div>`;
+            return;
+        }
+
+        contenedor.innerHTML = `<div class="gx-lista">` + lista.map(p => `
+            <article class="gx-item ${p.estado === "Entregado" ? "ok" : ""}">
+                <div class="gx-item-cab">
+                    <div>
+                        <h3>🧰 ${p.servicio ? escaparHTML(p.servicio) : "Pedido general"}</h3>
+                        <small>Enviado: ${formatearFecha(p.fecha_envio) || "ahora"}</small>
+                    </div>
+                    <span class="gx-badge gx-b-${COLOR_ESTADO[p.estado] || "gris"}">${escaparHTML(p.estado)}</span>
+                </div>
+
+                <ul class="gx-productos">
+                    ${(p.items || []).map(i => `
+                        <li><span><strong>${escaparHTML(i.cantidad)}</strong> ${escaparHTML(i.unidad || "")} · ${escaparHTML(i.nombre)}</span></li>`).join("")}
+                </ul>
+
+                ${p.nota ? `<p class="gx-texto">💬 ${escaparHTML(p.nota)}</p>` : ""}
+
+                ${p.comentario_supervisor
+                    ? `<div class="gx-respuesta"><strong>Respuesta del supervisor:</strong> ${escaparHTML(p.comentario_supervisor)}</div>`
+                    : ""}
+            </article>`).join("") + `</div>`;
+
+    }, (error) => {
+        console.error("Error escuchando pedidos:", error);
+        contenedor.innerHTML = `
+            <div class="mensaje-error">
+                No se pudieron cargar tus pedidos. Revisa las reglas de Firestore.
+            </div>`;
+    });
+}
+
+
+// =====================================================
+// MI HORARIO  (lo pone el supervisor + API)
+// =====================================================
+
+let horariosFs = [];
+let horariosApi = [];
+let apiHorariosFallo = false;
+let errorHorariosFs = false;
+
+function escucharHorarios() {
+
+    if (!idEmpleado) return;
+
+    const q = query(
+        collection(db, COL_HORARIOS),
+        where("id_empleado", "==", idEmpleado)
+    );
+
+    let primera = true;
+
+    onSnapshot(q, (snap) => {
+
+        if (!primera) {
+            snap.docChanges().forEach(cambio => {
+                if (!cambio.doc.metadata.hasPendingWrites && (cambio.type === "added" || cambio.type === "modified")) {
+                    mostrarMensaje("🕐 El supervisor actualizó tu horario.", "exito");
+                }
+            });
+        }
+        primera = false;
+
+        errorHorariosFs = false;
+        horariosFs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        pintarHorarios();
+
+    }, (error) => {
+        console.error("Error escuchando horarios:", error);
+        errorHorariosFs = true;
+        pintarHorarios();
+    });
+}
+
+function pintarHorarios() {
+
+    const tabla = $("tablaHorarios");
+    const hoy = hoyISO();
+
+    const filas = [
+        ...horariosFs.map(h => ({
+            fecha: h.fecha,
+            inicio: h.hora_inicio,
+            fin: h.hora_fin,
+            turno: h.turno,
+            nota: h.nota,
+            estado: h.estado
+        })),
+        ...horariosApi.map(h => ({
+            fecha: String(h.fecha || h.fecha_asignado || "").slice(0, 10),
+            inicio: h.hora_inicio || h.horaInicio,
+            fin: h.hora_fin || h.horaFin,
+            turno: h.turno,
+            nota: "",
+            estado: h.estado || "Programado"
+        }))
+    ];
+
+    const esISO = (f) => /^\d{4}-\d{2}-\d{2}$/.test(f || "");
+
+    const proximos = filas.filter(f => !esISO(f.fecha) || f.fecha >= hoy)
+        .sort((a, b) => String(a.fecha).localeCompare(String(b.fecha)));
+    const pasados = filas.filter(f => esISO(f.fecha) && f.fecha < hoy)
+        .sort((a, b) => b.fecha.localeCompare(a.fecha));
+
+    $("totalHorarios").textContent = proximos.length;
+
+    // Turno de hoy en el inicio
+    const deHoy = filas.filter(f => f.fecha === hoy);
+    $("inicioTurnoHoy").textContent = deHoy.length
+        ? deHoy.map(f => `${formatearHora(f.inicio)} - ${formatearHora(f.fin)}`).join(" / ")
+        : "Sin turno";
+
+    if (filas.length === 0) {
+        tabla.innerHTML = `
+            <tr><td colspan="6">
+                ${errorHorariosFs
+                    ? "No se pudieron cargar tus horarios. Revisa las reglas de Firestore."
+                    : "Aún no tienes horarios. Cuando el supervisor te asigne uno, aparecerá aquí."}
+            </td></tr>`;
+        return;
+    }
+
+    const pintarFila = (f, clase) => {
+        const iso = esISO(f.fecha);
+        const estado = !iso ? (f.estado || "Programado")
+            : f.fecha === hoy ? "Hoy"
+            : f.fecha < hoy ? "Finalizado" : "Programado";
+
+        return `
+            <tr class="${clase}">
+                <td>${iso ? `${diaSemana(f.fecha)} ${formatearDia(f.fecha)}` : escaparHTML(f.fecha || "-")}</td>
+                <td>${formatearHora(f.inicio)}</td>
+                <td>${formatearHora(f.fin)}</td>
+                <td>${escaparHTML(f.turno || "-")}</td>
+                <td>${escaparHTML(f.nota || "-")}</td>
+                <td>${escaparHTML(estado)}</td>
+            </tr>`;
+    };
+
+    tabla.innerHTML =
+        proximos.map(f => pintarFila(f, f.fecha === hoy ? "fila-hoy" : "")).join("") +
+        pasados.map(f => pintarFila(f, "fila-pasada")).join("");
 }
 
 async function cargarHorarios() {
 
-    const tabla = $("tablaHorarios");
-
-    tabla.innerHTML = `<tr><td colspan="5">Cargando horarios...</td></tr>`;
-
     try {
         const horarios = await obtenerDatos(`/horarios/empleado/${idEmpleado}`);
-
-        $("totalHorarios").textContent = Array.isArray(horarios) ? horarios.length : 0;
-
-        if (!Array.isArray(horarios) || horarios.length === 0) {
-            tabla.innerHTML = `<tr><td colspan="5">No tienes horarios registrados.</td></tr>`;
-            return;
-        }
-
-        tabla.innerHTML = horarios.map(h => `
-            <tr>
-                <td>${escaparHTML(h.fecha || h.fecha_asignado || "-")}</td>
-                <td>${escaparHTML(h.hora_inicio || h.horaInicio || "-")}</td>
-                <td>${escaparHTML(h.hora_fin || h.horaFin || "-")}</td>
-                <td>${escaparHTML(h.turno || "-")}</td>
-                <td>${escaparHTML(h.estado || "Programado")}</td>
-            </tr>
-        `).join("");
-
+        horariosApi = Array.isArray(horarios) ? horarios : [];
+        apiHorariosFallo = false;
     } catch (error) {
-        tabla.innerHTML = `
-            <tr><td colspan="5">
-                Los horarios no están disponibles en este momento
-                (el servidor no está conectado).
-            </td></tr>`;
+        horariosApi = [];
+        apiHorariosFallo = true;
     }
+
+    pintarHorarios();
 }
 
 
@@ -600,6 +1063,14 @@ montarPerfil({
 escucharNovedades();
 escucharNotificaciones();
 
+// Lo que pone el supervisor (en vivo)
+configurarPedidos();
+escucharAsignaciones();
+escucharInventario();
+escucharPedidos();
+escucharHorarios();
+
+// Datos extra del servidor Spring Boot (si está encendido)
 if (idEmpleado) {
     cargarServicios();
     cargarHorarios();
@@ -608,3 +1079,8 @@ if (idEmpleado) {
 $("btnActualizarServicios").addEventListener("click", cargarServicios);
 $("btnActualizarHorarios").addEventListener("click", cargarHorarios);
 $("cerrarSesion").addEventListener("click", cerrarSesion);
+
+$("listaServicios").addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-estado][data-id]");
+    if (btn) cambiarEstadoServicio(btn.dataset.id, btn.dataset.estado);
+});

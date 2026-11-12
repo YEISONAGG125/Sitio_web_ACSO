@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="../FIREBASE/perfil.css">
     <link rel="stylesheet" href="../FIREBASE/menu.css">
     <link rel="stylesheet" href="../FIREBASE/paneles.css">
+    <link rel="stylesheet" href="../FIREBASE/gestion.css">
 </head>
 
 <body>
@@ -95,7 +96,36 @@
                     <div class="tab"
                          onclick="mostrar('Inventario', this)">
                         <span>🧰</span>
-                        <label>Productos</label>
+                        <label>Inventario</label>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="tab"
+                         id="tabPedidos"
+                         onclick="mostrar('PedidosProductos', this)">
+                        <span>🛒</span>
+                        <label>Pedidos de productos</label>
+                        <span id="badgePedidos"
+                              class="badge-menu oculto">0</span>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="tab"
+                         id="tabServicios"
+                         onclick="mostrar('Servicios', this)">
+                        <span>🧹</span>
+                        <label>Servicios</label>
+                    </div>
+                </li>
+
+                <li>
+                    <div class="tab"
+                         id="tabHorarios"
+                         onclick="mostrar('Horarios', this)">
+                        <span>🕐</span>
+                        <label>Horarios</label>
                     </div>
                 </li>
 
@@ -429,33 +459,381 @@
             <div class="section-header">
                 <div>
                     <span class="section-label">RECURSOS</span>
-                    <h2>🧰 Inventario / Productos</h2>
-                    <p>Consulta los productos disponibles.</p>
+                    <h2>🧰 Inventario de productos</h2>
+                    <p>Registra los productos que hay en bodega y cuántas unidades quedan.</p>
                 </div>
+
+                <button type="button" class="gx-btn gx-btn-prim" id="btnNuevoProducto">＋ Nuevo producto</button>
+            </div>
+
+            <div class="gx-kpis">
+                <div class="gx-kpi"><span>Productos</span><strong id="kpiInvProductos">0</strong></div>
+                <div class="gx-kpi"><span>Unidades en bodega</span><strong id="kpiInvUnidades">0</strong></div>
+                <div class="gx-kpi" id="kpiInvBajosBox"><span>Stock bajo</span><strong id="kpiInvBajos">0</strong></div>
+                <div class="gx-kpi" id="kpiInvAgotadosBox"><span>Agotados</span><strong id="kpiInvAgotados">0</strong></div>
+                <div class="gx-kpi"><span>Valor del inventario</span><strong id="kpiInvValor" style="font-size:17px">$ 0</strong></div>
+            </div>
+
+            <form id="invForm" class="gx-card gx-oculto" novalidate>
+                <div class="gx-card-titulo"><span id="invFormTitulo">➕ Nuevo producto</span></div>
+
+                <div class="gx-grid">
+                    <div class="gx-campo gx-ancho">
+                        <label for="prodNombre">Nombre del producto *</label>
+                        <input type="text" id="prodNombre" maxlength="80" placeholder="Ej: Desinfectante multiusos">
+                    </div>
+
+                    <div class="gx-campo">
+                        <label for="prodCategoria">Categoría</label>
+                        <select id="prodCategoria">
+                            <option>Químicos de limpieza</option>
+                            <option>Herramientas</option>
+                            <option>Equipos</option>
+                            <option>Insumos desechables</option>
+                            <option>Protección personal</option>
+                            <option>Otros</option>
+                        </select>
+                    </div>
+
+                    <div class="gx-campo">
+                        <label for="prodUnidad">Unidad</label>
+                        <select id="prodUnidad">
+                            <option>unidades</option>
+                            <option>litros</option>
+                            <option>galones</option>
+                            <option>kg</option>
+                            <option>cajas</option>
+                            <option>paquetes</option>
+                            <option>pares</option>
+                        </select>
+                    </div>
+
+                    <div class="gx-campo">
+                        <label for="prodCantidad">Cantidad disponible *</label>
+                        <input type="number" id="prodCantidad" min="0" step="any" placeholder="0">
+                    </div>
+
+                    <div class="gx-campo">
+                        <label for="prodMinimo">Avisar cuando queden (stock mínimo)</label>
+                        <input type="number" id="prodMinimo" min="0" step="any" placeholder="Ej: 5">
+                    </div>
+
+                    <div class="gx-campo">
+                        <label for="prodPrecio">Precio por unidad (COP)</label>
+                        <input type="number" id="prodPrecio" min="0" step="any" placeholder="Ej: 12000">
+                    </div>
+
+                    <div class="gx-campo">
+                        <label for="prodProveedor">Proveedor</label>
+                        <input type="text" id="prodProveedor" maxlength="80" placeholder="Opcional">
+                    </div>
+
+                    <div class="gx-campo gx-ancho">
+                        <label for="prodDescripcion">Descripción</label>
+                        <textarea id="prodDescripcion" maxlength="200" rows="2" placeholder="Opcional"></textarea>
+                    </div>
+                </div>
+
+                <div class="gx-acciones">
+                    <button type="submit" class="gx-btn gx-btn-prim" id="btnGuardarProducto">💾 Guardar producto</button>
+                    <button type="button" class="gx-btn" id="btnCancelarProducto">Cancelar</button>
+                </div>
+            </form>
+
+            <div class="filtros">
+                <input type="search" id="buscarProducto" placeholder="🔍 Buscar producto, proveedor..." aria-label="Buscar productos">
+
+                <select id="filtroCategoria" aria-label="Filtrar por categoría">
+                    <option value="">Todas las categorías</option>
+                    <option>Químicos de limpieza</option>
+                    <option>Herramientas</option>
+                    <option>Equipos</option>
+                    <option>Insumos desechables</option>
+                    <option>Protección personal</option>
+                    <option>Otros</option>
+                </select>
+
+                <select id="filtroStock" aria-label="Filtrar por stock">
+                    <option value="">Todo el stock</option>
+                    <option value="Disponible">Disponibles</option>
+                    <option value="Stock bajo">Stock bajo</option>
+                    <option value="Agotado">Agotados</option>
+                </select>
             </div>
 
             <div class="table-card">
                 <div class="table-title">
-                    <span>Productos registrados</span>
-                    <span class="table-status">● Inventario</span>
+                    <span>Productos en bodega</span>
+                    <span class="table-status">● En vivo</span>
                 </div>
 
                 <div class="tabla-contenedor">
-                    <table class="tabla-datos">
+                    <table class="tabla-datos" style="min-width:860px">
                         <thead>
                             <tr>
-                                <th>ID Producto</th>
-                                <th>ID Proveedor</th>
-                                <th>Nombre producto</th>
-                                <th>Descripción</th>
+                                <th>Producto</th>
+                                <th>Categoría</th>
                                 <th>Cantidad</th>
+                                <th>Mínimo</th>
                                 <th>Precio</th>
+                                <th>Proveedor</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
 
-                        <tbody id="tablaProductos">
+                        <tbody id="tablaInventario">
                             <tr>
-                                <td colspan="6">Cargando productos...</td>
+                                <td colspan="8">Cargando inventario...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- PEDIDOS DE PRODUCTOS -->
+        <section id="PedidosProductos" class="contenido">
+
+            <div class="section-header">
+                <div>
+                    <span class="section-label">RECURSOS</span>
+                    <h2>🛒 Pedidos de productos</h2>
+                    <p>
+                        Productos que los empleados necesitan para un servicio.
+                        Al marcarlos como «Entregado» se descuentan del inventario.
+                    </p>
+                </div>
+
+                <span class="table-status">● En vivo</span>
+            </div>
+
+            <div class="chips-estado" id="chipsPedidos">
+                <button type="button" class="chip activo" data-estado="">Todos <b id="cntPedTodos">0</b></button>
+                <button type="button" class="chip" data-estado="Pendiente">Pendientes <b id="cntPedPendiente">0</b></button>
+                <button type="button" class="chip" data-estado="Aprobado">Aprobados <b id="cntPedAprobado">0</b></button>
+                <button type="button" class="chip" data-estado="Entregado">Entregados <b id="cntPedEntregado">0</b></button>
+                <button type="button" class="chip" data-estado="Rechazado">Rechazados <b id="cntPedRechazado">0</b></button>
+            </div>
+
+            <div class="filtros">
+                <input type="search" id="buscarPedido" placeholder="🔍 Buscar por empleado, servicio o producto..." aria-label="Buscar pedidos">
+            </div>
+
+            <div id="listaPedidosSup" class="gx-lista">
+                <div class="gx-vacio">Cargando pedidos...</div>
+            </div>
+
+        </section>
+
+        <!-- SERVICIOS ASIGNADOS -->
+        <section id="Servicios" class="contenido">
+
+            <div class="section-header">
+                <div>
+                    <span class="section-label">OPERACIÓN</span>
+                    <h2>🧹 Asignar servicios</h2>
+                    <p>
+                        Asigna un servicio a un empleado. Le aparece al instante en
+                        «Mis servicios» y recibe una notificación.
+                    </p>
+                </div>
+
+                <span class="table-status">● En vivo</span>
+            </div>
+
+            <form id="asigForm" class="gx-card" novalidate>
+
+                <div class="gx-card-titulo"><span>➕ Nuevo servicio para un empleado</span></div>
+
+                <div class="gx-aviso-origen gx-oculto" id="asigOrigen">
+                    <span id="asigOrigenTexto">Asignando una solicitud de cliente</span>
+                    <button type="button" class="gx-btn gx-btn-mini" id="btnQuitarOrigen">Quitar y empezar de cero</button>
+                </div>
+
+                <div class="gx-grid">
+                    <div class="gx-campo">
+                        <label for="asigEmpleado">Empleado *</label>
+                        <select id="asigEmpleado"><option value="">Cargando empleados...</option></select>
+                    </div>
+
+                    <div class="gx-campo">
+                        <label for="asigServicio">Servicio *</label>
+                        <input type="text" id="asigServicio" maxlength="100" placeholder="Ej: Aseo general de oficina">
+                    </div>
+
+                    <div class="gx-campo">
+                        <label for="asigCliente">Cliente</label>
+                        <input type="text" id="asigCliente" maxlength="80" placeholder="Opcional">
+                    </div>
+
+                    <div class="gx-campo">
+                        <label for="asigFecha">Fecha *</label>
+                        <input type="date" id="asigFecha">
+                    </div>
+
+                    <div class="gx-campo">
+                        <label for="asigHora">Hora</label>
+                        <input type="time" id="asigHora">
+                    </div>
+
+                    <div class="gx-campo gx-ancho">
+                        <label for="asigDireccion">Dirección / ubicación</label>
+                        <input type="text" id="asigDireccion" maxlength="140" placeholder="Dónde se hace el servicio">
+                    </div>
+
+                    <div class="gx-campo gx-ancho">
+                        <label for="asigDescripcion">Instrucciones para el empleado</label>
+                        <textarea id="asigDescripcion" maxlength="400" rows="2" placeholder="Opcional: qué debe hacer, qué llevar, a quién preguntar..."></textarea>
+                    </div>
+                </div>
+
+                <div class="gx-acciones">
+                    <button type="submit" class="gx-btn gx-btn-prim" id="btnAsignar">📌 Asignar servicio</button>
+                </div>
+
+            </form>
+
+            <div class="chips-estado" id="chipsAsignaciones">
+                <button type="button" class="chip activo" data-estado="">Todos <b id="cntAsigTodas">0</b></button>
+                <button type="button" class="chip" data-estado="Asignado">Asignados <b id="cntAsigAsignado">0</b></button>
+                <button type="button" class="chip" data-estado="En curso">En curso <b id="cntAsigCurso">0</b></button>
+                <button type="button" class="chip" data-estado="Completado">Completados <b id="cntAsigCompletado">0</b></button>
+                <button type="button" class="chip" data-estado="Cancelado">Cancelados <b id="cntAsigCancelado">0</b></button>
+            </div>
+
+            <div class="filtros">
+                <select id="filtroAsigEmpleado" aria-label="Filtrar por empleado">
+                    <option value="">Todos los empleados</option>
+                </select>
+            </div>
+
+            <div id="listaAsignaciones" class="gx-lista">
+                <div class="gx-vacio">Cargando servicios asignados...</div>
+            </div>
+
+        </section>
+
+        <!-- HORARIOS -->
+        <section id="Horarios" class="contenido">
+
+            <div class="section-header">
+                <div>
+                    <span class="section-label">OPERACIÓN</span>
+                    <h2>🕐 Horarios del personal</h2>
+                    <p>
+                        Define el horario de cada empleado. Él lo ve en su panel
+                        («Mi horario») apenas lo guardas.
+                    </p>
+                </div>
+
+                <span class="table-status">● En vivo</span>
+            </div>
+
+            <form id="horForm" class="gx-card" novalidate>
+
+                <div class="gx-card-titulo"><span id="horFormTitulo">🕐 Poner horario a un empleado</span></div>
+
+                <div class="gx-grid">
+                    <div class="gx-campo">
+                        <label for="horEmpleado">Empleado *</label>
+                        <select id="horEmpleado"><option value="">Cargando empleados...</option></select>
+                    </div>
+
+                    <div class="gx-campo">
+                        <label for="horDesde">Fecha (o fecha inicial) *</label>
+                        <input type="date" id="horDesde">
+                    </div>
+
+                    <div class="gx-campo">
+                        <label for="horHasta">Hasta (opcional, para varios días)</label>
+                        <input type="date" id="horHasta">
+                    </div>
+
+                    <div class="gx-campo">
+                        <label for="horInicio">Hora de entrada *</label>
+                        <input type="time" id="horInicio">
+                    </div>
+
+                    <div class="gx-campo">
+                        <label for="horFin">Hora de salida *</label>
+                        <input type="time" id="horFin">
+                    </div>
+
+                    <div class="gx-campo">
+                        <label for="horTurno">Turno</label>
+                        <select id="horTurno">
+                            <option value="">Automático (según la hora)</option>
+                            <option>Mañana</option>
+                            <option>Tarde</option>
+                            <option>Noche</option>
+                            <option>Turno completo</option>
+                            <option>Disponible</option>
+                        </select>
+                    </div>
+
+                    <div class="gx-campo gx-ancho">
+                        <label>Días de la semana (se usan cuando pones «Hasta»)</label>
+                        <div class="gx-dias" id="horDias">
+                            <label><input type="checkbox" data-dia="1" checked> Lun</label>
+                            <label><input type="checkbox" data-dia="2" checked> Mar</label>
+                            <label><input type="checkbox" data-dia="3" checked> Mié</label>
+                            <label><input type="checkbox" data-dia="4" checked> Jue</label>
+                            <label><input type="checkbox" data-dia="5" checked> Vie</label>
+                            <label><input type="checkbox" data-dia="6" checked> Sáb</label>
+                            <label><input type="checkbox" data-dia="0"> Dom</label>
+                        </div>
+                    </div>
+
+                    <div class="gx-campo gx-ancho">
+                        <label for="horNota">Nota para el empleado</label>
+                        <input type="text" id="horNota" maxlength="140" placeholder="Opcional: lugar de encuentro, uniforme...">
+                    </div>
+                </div>
+
+                <div class="gx-acciones">
+                    <button type="submit" class="gx-btn gx-btn-prim" id="btnGuardarHorario">💾 Guardar horario</button>
+                    <button type="button" class="gx-btn gx-oculto" id="btnCancelarHorario">Cancelar edición</button>
+                    <span class="gx-nota">Si ese día el empleado ya tenía horario, se reemplaza.</span>
+                </div>
+
+            </form>
+
+            <div class="filtros">
+                <select id="filtroHorEmpleado" aria-label="Filtrar por empleado">
+                    <option value="">Todos los empleados</option>
+                </select>
+
+                <label class="gx-nota" style="display:flex;align-items:center;gap:8px;">
+                    <input type="checkbox" id="verHorariosPasados" style="width:auto;min-height:0;">
+                    Mostrar también días pasados
+                </label>
+            </div>
+
+            <div class="table-card">
+                <div class="table-title">
+                    <span>Horarios programados</span>
+                    <span class="table-status">● En vivo</span>
+                </div>
+
+                <div class="tabla-contenedor">
+                    <table class="tabla-datos" style="min-width:780px">
+                        <thead>
+                            <tr>
+                                <th>Empleado</th>
+                                <th>Día</th>
+                                <th>Entrada</th>
+                                <th>Salida</th>
+                                <th>Turno</th>
+                                <th>Nota</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tablaHorariosSup">
+                            <tr>
+                                <td colspan="7">Cargando horarios...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -471,15 +849,49 @@
                 <div>
                     <span class="section-label">ADMINISTRACIÓN</span>
                     <h2>📄 Contratos</h2>
-                    <p>Consulta los contratos registrados.</p>
+                    <p>Contratos pedidos por los clientes y contratos registrados.</p>
                 </div>
             </div>
 
-            <div class="table-card">
-                <div class="table-title">
-                    <span>Contratos registrados</span>
-                    <span class="table-status">● Actualizado</span>
+            <!-- Contratos que piden los clientes (Firestore, en vivo) -->
+            <details class="gx-desplegable" id="detContratosSol" open>
+                <summary>
+                    📑 Contratos solicitados por clientes
+                    <span class="gx-cuenta" id="cntContratosSol">0</span>
+                    <span class="table-status">● En vivo</span>
+                </summary>
+
+                <div class="tabla-contenedor">
+                    <table class="tabla-datos" style="min-width:980px">
+                        <thead>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Servicio</th>
+                                <th>Frecuencia</th>
+                                <th>Inicio</th>
+                                <th>Duración</th>
+                                <th>Ubicación</th>
+                                <th>Valor total</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tablaContratosSol">
+                            <tr>
+                                <td colspan="9">Cargando contratos solicitados...</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+            </details>
+
+            <!-- Contratos ya registrados en el sistema (API) -->
+            <details class="gx-desplegable" open>
+                <summary>
+                    📄 Contratos registrados
+                    <span class="table-status">● Actualizado</span>
+                </summary>
 
                 <div class="tabla-contenedor">
                     <table class="tabla-datos">
@@ -502,7 +914,7 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </details>
 
         </section>
 

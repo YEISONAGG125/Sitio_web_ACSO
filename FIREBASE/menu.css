@@ -1,19 +1,8 @@
-/* =====================================================
-   ACSO · MENÚ COMPARTIDO
-   Barra superior + botón hamburguesa + barra lateral + fondo oscuro.
-   Lo usan los cuatro paneles (administrador, supervisor, empleado
-   y cliente) para que el menú se vea y funcione igual en todos.
-
-   Estado: la clase "menu-cerrado" vive en <html> (la pone menu.js).
-   Cárgalo DESPUÉS de la hoja de estilos propia de cada panel.
-===================================================== */
 
 :root {
     --acso-alto-header: 72px;
     --acso-ancho-menu: 260px;
 }
-
-/* ---------- Barra superior ---------- */
 
 .acso-topbar {
     position: fixed;
