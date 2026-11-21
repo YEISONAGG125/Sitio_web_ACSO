@@ -311,7 +311,19 @@ div{
 }
 
 .switch input {
-    display: none;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.switch input:focus-visible + .slider {
+    outline: 3px solid #ffbf47;
+    outline-offset: 3px;
 }
 
 .slider {
@@ -688,3 +700,18 @@ body.modo-claro .btn-secundario, body.modo-claro .btn-restaurar { background: #e
 body.modo-claro .btn-secundario:hover, body.modo-claro .btn-restaurar:hover { background: #d8f1eb; }
 body.modo-claro .btn-peligro { background: #fff1ec; color: #b4380f; border: 1px solid #f6cdbd; }
 body.modo-claro .mensaje { background: #0b3b3c; color: #fff; border: none; }
+
+
+/* =========================================
+   NAVEGACIÓN SUPERIOR Y ACCESIBILIDAD
+========================================= */
+.barra-volver { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+.enlace-volver {
+    display: inline-flex; align-items: center; min-height: 44px; padding: 8px 16px;
+    border-radius: 12px; border: 1px solid #ccece7; background: #e4f5f2; color: #0b3b3c;
+    font-weight: 700; text-decoration: none; font-size: 15px;
+}
+.enlace-volver:hover { background: #d2efe9; }
+body:not(.modo-claro) .enlace-volver { background: rgba(255,255,255,.1); color: #fff; border-color: rgba(255,255,255,.25); }
+.bloque-accesibilidad { margin-bottom: 25px; }
+.guardar { flex-wrap: wrap; }

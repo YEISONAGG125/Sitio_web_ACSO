@@ -143,20 +143,19 @@ const TITULOS = {
 
 function irASeccion(seccion) {
 
-    const botones = document.querySelectorAll(".menu-item");
+    const botones = document.querySelectorAll(".sidebar .acso-nav-item[data-seccion]");
     const secciones = document.querySelectorAll(".seccion");
 
     if (!$(seccion)) return;
 
-    botones.forEach(b => b.classList.toggle("activo", b.dataset.seccion === seccion));
+    botones.forEach(b => {
+        if (b.dataset.seccion === seccion) b.setAttribute("aria-current", "page");
+        else b.removeAttribute("aria-current");
+    });
 
     secciones.forEach(s => s.classList.remove("activa"));
     $(seccion).classList.add("activa");
 
-    if (TITULOS[seccion]) {
-        $("tituloPagina").textContent = TITULOS[seccion][0];
-        $("subtituloPagina").textContent = TITULOS[seccion][1];
-    }
 
     // Al abrir notificaciones se marcan como leídas
     if (seccion === "notificaciones") {
@@ -171,7 +170,7 @@ function irASeccion(seccion) {
 
 function configurarMenu() {
 
-    document.querySelectorAll(".menu-item").forEach(boton => {
+    document.querySelectorAll(".sidebar .acso-nav-item[data-seccion]").forEach(boton => {
         boton.addEventListener("click", () => irASeccion(boton.dataset.seccion));
     });
 
@@ -441,9 +440,12 @@ function escucharNotificaciones() {
 
         contenedor.innerHTML = notificacionesActuales.map(n => `
             <div class="notificacion ${n.leida ? "" : "nueva"}">
-                <h3>🔔 ${escaparHTML(n.titulo || "Notificación")}</h3>
-                <p>${escaparHTML(n.mensaje || "")}</p>
-                <small>${formatearFecha(n.fecha)}</small>
+                <div class="icono-notificacion" aria-hidden="true">🔔</div>
+                <div class="notificacion-texto">
+                    <strong>${escaparHTML(n.titulo || "Notificación")}${n.leida ? "" : ' <span class="gx-badge gx-b-aviso">Nueva</span>'}</strong>
+                    <p>${escaparHTML(n.mensaje || "")}</p>
+                    <small>${formatearFecha(n.fecha)}</small>
+                </div>
             </div>
         `).join("");
 

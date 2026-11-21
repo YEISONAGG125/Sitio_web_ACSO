@@ -1,4 +1,8 @@
-
+// =====================================================
+// SUPERVISOR · INVENTARIO, PEDIDOS DE PRODUCTOS,
+// ASIGNACIÓN DE SERVICIOS Y HORARIOS DE EMPLEADOS
+// Todo se guarda en Cloud Firestore y se ve en tiempo real.
+// =====================================================
 
 import {
     db,
@@ -21,6 +25,12 @@ import {
     COL_SOLICITUDES
 } from "../FIREBASE/firebase.js";
 
+
+// ---------- utilidades ----------
+
+// Diálogos accesibles (FIREBASE/panel.js); si no cargaron, se usan los del navegador
+const dialogoConfirmar = (o) => window.ACSO?.confirmar ? window.ACSO.confirmar(o) : Promise.resolve(confirm(o.mensaje));
+const dialogoPreguntar = (o) => window.ACSO?.preguntar ? window.ACSO.preguntar(o) : Promise.resolve(prompt(o.mensaje, o.valor));
 
 const $ = (id) => document.getElementById(id);
 
@@ -390,7 +400,7 @@ async function accionProducto(accion, id) {
     }
 
     if (accion === "eliminar") {
-        if (!confirm(`¿Eliminar «${p.nombre}» del inventario?`)) return;
+        if (!await dialogoConfirmar({ titulo: "Eliminar producto", mensaje: `¿Eliminar «${p.nombre}» del inventario?`, aceptar: "Sí, eliminar", peligro: true })) return;
         try {
             await deleteDoc(doc(db, COL_INVENTARIO, id));
             ctx.toast("🗑️ Producto eliminado");
@@ -402,7 +412,7 @@ async function accionProducto(accion, id) {
     }
 
     if (accion === "entrada") {
-        const texto = prompt(`¿Cuántas unidades de «${p.nombre}» llegaron?`, "1");
+        const texto = await dialogoPreguntar({ titulo: "Entrada de stock", mensaje: `¿Cuántas unidades de «${p.nombre}» llegaron?`, etiqueta: "Unidades", tipo: "number", valor: "1", min: 1, aceptar: "Sumar al inventario" });
         if (texto === null) return;
         const n = Number(texto);
         if (isNaN(n) || n <= 0) {
@@ -619,10 +629,12 @@ async function cambiarEstadoPedido(id, nuevo) {
         });
 
         if (faltantes.length) {
-            const seguir = confirm(
-                `No hay suficiente stock de: ${faltantes.join(", ")}.\n` +
-                `Si continúas, quedará en 0. ¿Marcar como entregado igualmente?`
-            );
+            const seguir = await dialogoConfirmar({
+                titulo: "Stock insuficiente",
+                mensaje: `No hay suficiente stock de: ${faltantes.join(", ")}. Si continúas, quedará en 0. ¿Marcar como entregado igualmente?`,
+                aceptar: "Sí, entregar igualmente",
+                peligro: false
+            });
             if (!seguir) return;
             avisoStock = " (stock en 0 para algunos productos)";
         }
@@ -956,7 +968,7 @@ async function borrarAsignacion(id) {
 
     const a = asignaciones.find(x => x.id === id);
     if (!a) return;
-    if (!confirm(`¿Eliminar el servicio «${a.servicio}» asignado a ${nombreEmpleado(a.id_empleado, a.nombre_empleado)}?`)) return;
+    if (!await dialogoConfirmar({ titulo: "Eliminar servicio", mensaje: `¿Eliminar el servicio «${a.servicio}» asignado a ${nombreEmpleado(a.id_empleado, a.nombre_empleado)}?`, aceptar: "Sí, eliminar", peligro: true })) return;
 
     try {
         await deleteDoc(doc(db, COL_ASIGNACIONES, id));
@@ -1233,7 +1245,7 @@ async function borrarHorario(id) {
     const h = horarios.find(x => x.id === id);
     if (!h) return;
 
-    if (!confirm(`¿Eliminar el horario de ${nombreEmpleado(h.id_empleado, h.nombre_empleado)} del ${formatearDia(h.fecha)}?`)) return;
+    if (!await dialogoConfirmar({ titulo: "Eliminar horario", mensaje: `¿Eliminar el horario de ${nombreEmpleado(h.id_empleado, h.nombre_empleado)} del ${formatearDia(h.fecha)}?`, aceptar: "Sí, eliminar", peligro: true })) return;
 
     try {
         await deleteDoc(doc(db, COL_HORARIOS, id));

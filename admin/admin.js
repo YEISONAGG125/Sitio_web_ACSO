@@ -71,7 +71,7 @@ function dialogo({ titulo, html, ok = "Guardar", cancelar = "Cancelar", peligro 
 
         const si = $("dSi"), no = $("dNo");
         si.textContent = ok;
-        si.className = peligro ? "peligro" : "pri";
+        si.className = peligro ? "btn btn-peligro" : "btn btn-primario";
         no.textContent = cancelar || "Cancelar";
         no.hidden = cancelar === null;
 
@@ -108,11 +108,14 @@ const salir = async () => { await cerrarSesionSupervisor(); location.replace(LOG
 $("salir").onclick = salir;
 vigilarInactividad(salir);
 
-const VISTAS = ["resumen", "usuarios", "recup", "datos"];
+const VISTAS = ["resumen", "usuarios", "recup", "datos", "config"];
 
 function ir(v) {
     if (!VISTAS.includes(v)) v = "resumen";
-    document.querySelectorAll("#nav .tab").forEach((x) => x.classList.toggle("on", x.dataset.v === v));
+    document.querySelectorAll("#nav .acso-nav-item").forEach((x) => {
+        if (x.dataset.v === v) x.setAttribute("aria-current", "page");
+        else x.removeAttribute("aria-current");
+    });
     VISTAS.forEach((n) => { $("v-" + n).hidden = n !== v; });
     if (location.hash !== "#" + v) history.replaceState(null, "", "#" + v);
     if (v === "datos") cargarDatos();
@@ -167,7 +170,8 @@ const recPendientes = () => Object.values(recs).filter((r) => r && r.estado === 
 function tarjeta(icono, numero, texto, { go = "", estado = "", tono = "" } = {}) {
     const attrs = go ? `type="button" data-go="${esc(go)}"${estado ? ` data-estado="${esc(estado)}"` : ""}` : "";
     const etiqueta = go ? "button" : "div";
-    return `<${etiqueta} class="kpi ${tono}" ${attrs}><span class="ic" aria-hidden="true">${icono}</span><div><b>${numero}</b><span class="t">${esc(texto)}</span></div></${etiqueta}>`;
+    const color = { azul: "azul", aviso: "naranja", alerta: "rojo" }[tono] || "";
+    return `<${etiqueta} class="dashboard-card" ${attrs}><div class="card-icon ${color}" aria-hidden="true">${icono}</div><div><span>${esc(texto)}</span><strong>${numero}</strong></div></${etiqueta}>`;
 }
 
 function kpis() {
@@ -187,8 +191,8 @@ function kpis() {
 
     // Avisos que requieren atención
     const avisos = [];
-    if (rp) avisos.push(`<div class="fila"><span>🔑 <b>${rp}</b> ${rp === 1 ? "solicitud" : "solicitudes"} de recuperación de contraseña por atender</span><button type="button" class="mini pri" data-go="recup">Atender</button></div>`);
-    if (bloq) avisos.push(`<div class="fila"><span>⛔ <b>${bloq}</b> ${bloq === 1 ? "cuenta bloqueada" : "cuentas bloqueadas"} por intentos fallidos</span><button type="button" class="mini" data-go="usuarios" data-estado="bloq">Ver</button></div>`);
+    if (rp) avisos.push(`<div class="fila"><span>🔑 <b>${rp}</b> ${rp === 1 ? "solicitud" : "solicitudes"} de recuperación de contraseña por atender</span><button type="button" class="btn btn-mini btn-primario" data-go="recup">Atender</button></div>`);
+    if (bloq) avisos.push(`<div class="fila"><span>⛔ <b>${bloq}</b> ${bloq === 1 ? "cuenta bloqueada" : "cuentas bloqueadas"} por intentos fallidos</span><button type="button" class="btn btn-mini" data-go="usuarios" data-estado="bloq">Ver</button></div>`);
     const caja = $("atencion");
     caja.hidden = !avisos.length;
     caja.innerHTML = avisos.length ? `<strong>Requiere tu atención</strong>${avisos.join("")}` : "";
@@ -266,7 +270,7 @@ function pintaUsers() {
                 <td data-l="Cargo">${mio ? esc(ROL_TXT[u.cargo] || u.cargo) : `<select data-a="rol" aria-label="Cargo de ${esc(u.usuario)}">${ROLES.map((r) => `<option value="${r}" ${r === u.cargo ? "selected" : ""}>${ROL_TXT[r]}</option>`).join("")}</select>`}</td>
                 <td data-l="Estado">${estadoTag(u)}</td>
                 <td data-l="Último acceso"><span class="sec">${esc(hace(u.ultimoAcceso))}</span></td>
-                <td class="ac"><div class="acc"><button type="button" class="mini" data-a="pass">Nueva contraseña</button>${mio ? "" : `${bloqueado(u) ? '<button type="button" class="mini" data-a="desbloq">Desbloquear</button>' : ""}<button type="button" class="mini" data-a="act">${u.activo === false ? "Activar" : "Desactivar"}</button><button type="button" class="mini peligro" data-a="del">Eliminar</button>`}</div></td></tr>`;
+                <td class="ac"><div class="acc"><button type="button" class="btn btn-mini" data-a="pass">Nueva contraseña</button>${mio ? "" : `${bloqueado(u) ? '<button type="button" class="btn btn-mini" data-a="desbloq">Desbloquear</button>' : ""}<button type="button" class="btn btn-mini" data-a="act">${u.activo === false ? "Activar" : "Desactivar"}</button><button type="button" class="btn btn-mini btn-peligro" data-a="del">Eliminar</button>`}</div></td></tr>`;
         }).join("") || '<tr><td colspan="6" class="vacio">No hay usuarios con ese filtro.</td></tr>') + "</tbody>";
 }
 
@@ -389,7 +393,7 @@ function pintaRecup() {
             return `<tr data-id="${esc(id)}"><td data-l="Usuario"><strong>${esc(r.usuario)}</strong></td><td data-l="Correo">${esc(r.correo)}</td>
                 <td data-l="Estado"><span class="tag ${r.estado === "pendiente" ? "av2" : r.estado === "aprobada" && !vencida ? "ok" : r.estado === "rechazada" ? "no" : ""}">${esc(vencida ? "Código vencido" : REC_TXT[r.estado] || r.estado)}</span></td>
                 <td data-l="Fecha"><span class="sec">${r.creado ? esc(new Date(r.creado).toLocaleString("es-CO")) : "—"}</span></td>
-                <td class="ac"><div class="acc">${abierta ? `<button type="button" data-a="cod" class="mini pri">${vencida || r.estado === "aprobada" ? "Generar otro código" : "Generar código"}</button><button type="button" data-a="no" class="mini peligro">Rechazar</button>` : ""}</div></td></tr>`;
+                <td class="ac"><div class="acc">${abierta ? `<button type="button" data-a="cod" class="btn btn-mini btn-primario">${vencida || r.estado === "aprobada" ? "Generar otro código" : "Generar código"}</button><button type="button" data-a="no" class="btn btn-mini btn-peligro">Rechazar</button>` : ""}</div></td></tr>`;
         }).join("") || `<tr><td colspan="5" class="vacio">${soloAbiertas ? "No hay solicitudes por atender." : "No hay solicitudes de recuperación."}</td></tr>`) + "</tbody>";
 }
 
@@ -414,7 +418,7 @@ $("tRecup").onclick = async (e) => {
 
         const cerrado = dialogo({
             titulo: "Código de recuperación",
-            html: `<p>Código para <b>${esc(r.usuario)}</b>. Vence en 30 minutos. Entrégaselo a la persona; <b>no se volverá a mostrar</b>.</p><div class="codigo" id="codTxt">${esc(cod)}</div><button type="button" class="mini" id="cpCod">Copiar código</button>`,
+            html: `<p>Código para <b>${esc(r.usuario)}</b>. Vence en 30 minutos. Entrégaselo a la persona; <b>no se volverá a mostrar</b>.</p><div class="codigo" id="codTxt">${esc(cod)}</div><button type="button" class="btn btn-mini" id="cpCod">Copiar código</button>`,
             ok: "Listo",
             cancelar: null
         });
@@ -448,7 +452,7 @@ function pintaDatos() {
     const keys = [...new Set(todas.slice(0, 20).flatMap((r) => Object.keys(r.d)))].filter((k) => !/password|hash|salt/i.test(k)).slice(0, 6);
     $("tDatos").innerHTML = `<thead><tr>${keys.map((k) => `<th>${esc(k)}</th>`).join("")}<th>Acciones</th></tr></thead><tbody>` +
         visibles.map((r, i) => `<tr data-i="${i}">${keys.map((k) => `<td data-l="${esc(k)}">${esc(vista(r.d[k]))}</td>`).join("")}
-        <td class="ac"><div class="acc"><button type="button" class="mini" data-a="ed">Editar</button><button type="button" class="mini peligro" data-a="rm">Eliminar</button></div></td></tr>`).join("") + "</tbody>";
+        <td class="ac"><div class="acc"><button type="button" class="btn btn-mini" data-a="ed">Editar</button><button type="button" class="btn btn-mini btn-peligro" data-a="rm">Eliminar</button></div></td></tr>`).join("") + "</tbody>";
 }
 
 function recibir(rows) {

@@ -1,204 +1,184 @@
-
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Centro de ayuda de ACSO: preguntas frecuentes, guías por tipo de usuario y formas de contacto.">
 
-    <title>ACSO | Centro de Ayuda</title>
+    <title>Centro de ayuda | ACSO</title>
 
+    <script src="../FIREBASE/ajustes-a11y.js"></script>
     <link rel="stylesheet" href="ayuda.css">
-
+    <link rel="stylesheet" href="../FIREBASE/ajustes-a11y.css">
+    <meta name="color-scheme" content="light">
 </head>
 
 <body>
 
-<div class="fondo"></div>
-<div class="fondo-overlay"></div>
+<!-- Íconos (SVG incrustado: no dependen de internet) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+        <symbol id="i-flecha" viewBox="0 0 24 24"><path d="M19 12H5m6-6-6 6 6 6" /></symbol>
+        <symbol id="i-buscar" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></symbol>
+        <symbol id="i-escoba" viewBox="0 0 24 24"><path d="M14 3l-3 7m-4 3 10-3 2 8-12 3zM9 21l1-4m3 3 1-4" /></symbol>
+        <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.7 7.1L4 20l1-4.6A8 8 0 1 1 21 12z" /><path d="M9 10h6M9 14h4" /></symbol>
+        <symbol id="i-brujula" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="m15.5 8.5-2 5-5 2 2-5z" /></symbol>
+        <symbol id="i-persona" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" /><path d="M4 21c0-4 4-6 8-6s8 2 8 6" /></symbol>
+        <symbol id="i-llave" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4" /><path d="m11 12 9-9m-4 4 3 3" /></symbol>
+        <symbol id="i-escudo" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z" /><path d="m9 12 2 2 4-4" /></symbol>
+        <symbol id="i-externo" viewBox="0 0 24 24"><path d="M14 4h6v6m0-6-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" /></symbol>
+        <symbol id="i-mas" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" /></symbol>
+        <symbol id="i-auricular" viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0 1 16 0v2" /><rect x="3" y="14" width="4" height="6" rx="1.5" /><rect x="17" y="14" width="4" height="6" rx="1.5" /><path d="M19 20c0 1.5-2 2-4 2" /></symbol>
+        <symbol id="i-letra" viewBox="0 0 24 24"><path d="M3 19 9 5l6 14M5.5 14h7M16 19l2.5-6 2.5 6M17 17h3" /></symbol>
+        <symbol id="i-flecha-arriba" viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6" /></symbol>
+    </defs>
+</svg>
 
-<main class="contenedor">
-<header class="header">
-        <a href="#inicio" class="logo">
-            <span class="logo-icon">A</span>
-            <span class="logo-text">
-                C S O
-            </span>
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+
+<div class="contenedor">
+
+    <header class="header">
+        <a href="#contenido" class="logo" aria-label="ACSO, centro de ayuda">
+            <span class="logo-icon" aria-hidden="true">A</span>
+            <span class="logo-text" aria-hidden="true">CSO</span>
         </a>
 
-        <a href="../inicio de sistema/login.html" class="btn-volver">
-            <i class="fa-solid fa-arrow-left"></i>
-            Volver
+        <a href="../inicio de sistema/login.html" class="btn-volver" id="btnVolver">
+            <svg class="ico" aria-hidden="true"><use href="#i-flecha" /></svg>
+            <span id="txtVolver">Volver</span>
         </a>
-
     </header>
-    <section class="hero">
 
-        <span class="etiqueta">
-            <i class="fa-solid fa-circle-question"></i>
-            CENTRO DE AYUDA
-        </span>
+    <main id="contenido" tabindex="-1">
 
-        <h2>
-            ¿En qué podemos ayudarte?
-        </h2>
+        <!-- ================= PORTADA + BUSCADOR ================= -->
+        <section class="hero" aria-labelledby="tituloAyuda">
+            <span class="etiqueta">CENTRO DE AYUDA</span>
+            <h1 id="tituloAyuda">¿En qué podemos ayudarte?</h1>
+            <p>Busca tu duda, elige tu tipo de usuario o comunícate con el área correspondiente.</p>
 
-        <p>
-            Identifica el tipo de problema que estás presentando
-            y comunícate con el área correspondiente.
-        </p>
+            <form class="buscador" role="search" id="formBuscar" novalidate>
+                <label for="buscar" class="sr-only">Buscar en el centro de ayuda</label>
+                <svg class="ico" aria-hidden="true"><use href="#i-buscar" /></svg>
+                <input id="buscar" type="search" placeholder="Ej.: olvidé mi contraseña, enviar una novedad, pagos…"
+                       autocomplete="off" aria-describedby="estadoBusqueda">
+                <button type="button" id="limpiar" class="limpiar" hidden>Borrar</button>
+            </form>
+            <p id="estadoBusqueda" class="estado-busqueda" role="status" aria-live="polite"></p>
+        </section>
 
-    </section>
-    <section class="opciones">
-        <article class="ayuda-card">
-            <div class="icono servicio">
+        <!-- ================= CONTACTO ================= -->
+        <section class="opciones" aria-labelledby="tituloContacto">
+            <h2 id="tituloContacto" class="titulo-seccion">¿A quién me comunico?</h2>
 
-                <i class="fa-solid fa-broom"></i>
+            <div class="rejilla">
+                <article class="ayuda-card">
+                    <div class="icono servicio"><svg class="ico" aria-hidden="true"><use href="#i-escoba" /></svg></div>
+                    <div class="contenido-card">
+                        <span class="numero">01</span>
+                        <h3>Problema con un servicio</h3>
+                        <p>Si un servicio se ejecutó de manera incorrecta o inapropiada, comunícate con el supervisor y explícale el problema que se está presentando.</p>
+                        <div class="accion-card">
+                            <svg class="ico" aria-hidden="true"><use href="#i-escudo" /></svg>
+                            <span>Contacta al supervisor</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="ayuda-card destacado">
+                    <div class="icono whatsapp"><svg class="ico" aria-hidden="true"><use href="#i-chat" /></svg></div>
+                    <div class="contenido-card">
+                        <span class="numero">02</span>
+                        <h3>Contáctanos</h3>
+                        <p>Si necesitas comunicarte directamente con nosotros, usa nuestro canal de atención por WhatsApp.</p>
+                        <a href="https://web.whatsapp.com/" target="_blank" rel="noopener noreferrer" class="btn-whatsapp" id="btnWhatsApp">
+                            Contactar por WhatsApp
+                            <svg class="ico" aria-hidden="true"><use href="#i-externo" /></svg>
+                            <span class="sr-only">(se abre en una pestaña nueva)</span>
+                        </a>
+                    </div>
+                </article>
+
+                <article class="ayuda-card">
+                    <div class="icono navegacion"><svg class="ico" aria-hidden="true"><use href="#i-brujula" /></svg></div>
+                    <div class="contenido-card">
+                        <span class="numero">03</span>
+                        <h3>Problema de navegación</h3>
+                        <p>Si no puedes navegar o usar correctamente la página web, comunícate con los administradores del sistema.</p>
+                        <div class="accion-card">
+                            <svg class="ico" aria-hidden="true"><use href="#i-persona" /></svg>
+                            <span>Soporte administrativo</span>
+                        </div>
+                    </div>
+                </article>
             </div>
-            <div class="contenido-card">
-                <span class="numero">
-                    01
-                </span>
+        </section>
 
-                <h3>
-                    Problema con un servicio
-                </h3>
+        <!-- ================= PREGUNTAS FRECUENTES ================= -->
+        <section class="faq" aria-labelledby="tituloFaq">
+            <h2 id="tituloFaq" class="titulo-seccion">Preguntas frecuentes</h2>
 
-                <p>
-                    Si tu problema se debe a un servicio que fue
-                    ejecutado de manera incorrecta o inapropiada,
-                    comunícate con el supervisor y explícale
-                    el problema que se está presentando.
-                </p>
+            <div class="pestanas" role="group" aria-label="Filtrar por tipo de usuario" id="pestanas">
+                <button type="button" class="pestana" data-grupo="todas" aria-pressed="true">Todas</button>
+                <button type="button" class="pestana" data-grupo="cliente" aria-pressed="false">Cliente</button>
+                <button type="button" class="pestana" data-grupo="empleado" aria-pressed="false">Empleado</button>
+                <button type="button" class="pestana" data-grupo="supervisor" aria-pressed="false">Supervisor</button>
+                <button type="button" class="pestana" data-grupo="admin" aria-pressed="false">Administrador</button>
+                <button type="button" class="pestana" data-grupo="general" aria-pressed="false">Cuenta y acceso</button>
+            </div>
 
-                <div class="accion-card">
+            <div class="faq-acciones">
+                <button type="button" class="texto-boton" id="abrirTodas">Abrir todas</button>
+                <button type="button" class="texto-boton" id="cerrarTodas">Cerrar todas</button>
+            </div>
 
-                    <i class="fa-solid fa-user-tie"></i>
+            <div id="listaFaq" class="lista-faq"></div>
 
-                    <span>
-                        Contacta al supervisor
-                    </span>
+            <div id="sinResultados" class="sin-resultados" hidden>
+                <h3>No encontramos resultados</h3>
+                <p>Prueba con otras palabras (por ejemplo «contraseña», «pago» o «horario») o escríbenos por WhatsApp y te ayudamos.</p>
+                <button type="button" class="texto-boton" id="verTodasFaq">Ver todas las preguntas</button>
+            </div>
+        </section>
 
+        <!-- ================= ACCESIBILIDAD ================= -->
+        <section class="accesibilidad" aria-labelledby="tituloAcc">
+            <div class="acc-cab">
+                <div class="info-icono"><svg class="ico" aria-hidden="true"><use href="#i-letra" /></svg></div>
+                <div>
+                    <h2 id="tituloAcc">¿Te cuesta leer o usar la pantalla?</h2>
+                    <p>Puedes cambiar el tamaño del texto, el contraste, el movimiento y más. Dentro de cada panel, estas opciones están en <strong>Configuración</strong>.</p>
                 </div>
-
             </div>
+            <details class="acc-detalle" id="accDetalle">
+                <summary>Abrir las opciones de accesibilidad</summary>
+                <div data-acso-ajustes></div>
+            </details>
+        </section>
 
-        </article>
-
-        <article class="ayuda-card destacado">
-
-            <div class="icono whatsapp">
-                <i class="fa-brands fa-whatsapp"></i>
+        <!-- ================= SOPORTE ================= -->
+        <section class="informacion" aria-labelledby="tituloSoporte">
+            <div class="info-icono"><svg class="ico" aria-hidden="true"><use href="#i-auricular" /></svg></div>
+            <div class="info-texto">
+                <span>SOPORTE ACSO</span>
+                <h2 id="tituloSoporte">Estamos para ayudarte</h2>
+                <p>Describe claramente el problema (qué hacías, qué pantalla viste y qué mensaje apareció) para que podamos atenderte más rápido.</p>
             </div>
+        </section>
 
-            <div class="contenido-card">
-
-                <span class="numero">
-                    02
-                </span>
-
-                <h3>
-                    Contáctanos
-                </h3>
-
-                <p>
-                    Si necesitas comunicarte directamente con
-                    nosotros, puedes utilizar nuestro canal
-                    de atención por WhatsApp.
-                </p>
-
-                <a
-                    href="https://web.whatsapp.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="btn-whatsapp">
-
-                    <i class="fa-brands fa-whatsapp"></i>
-
-                    Contactar por WhatsApp
-
-                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-
-                </a>
-
-            </div>
-
-        </article>
-
-
-        <article class="ayuda-card">
-
-            <div class="icono navegacion">
-                <i class="fa-solid fa-compass"></i>
-            </div>
-
-            <div class="contenido-card">
-
-                <span class="numero">
-                    03
-                </span>
-
-                <h3>
-                    Problema de navegación
-                </h3>
-
-                <p>
-                    Si el problema se debe a una dificultad para
-                    navegar o utilizar correctamente la página web,
-                    comunícate con los administradores del sistema.
-                </p>
-
-                <div class="accion-card">
-
-                    <i class="fa-solid fa-gears"></i>
-
-                    <span>
-                        Soporte administrativo
-                    </span>
-
-                </div>
-
-            </div>
-
-        </article>
-
-    </section>
-    <section class="informacion">
-
-        <div class="info-icono">
-            <i class="fa-solid fa-headset"></i>
-        </div>
-
-        <div class="info-texto">
-
-            <span>
-                SOPORTE ACSO
-            </span>
-
-            <h3>
-                Estamos para ayudarte
-            </h3>
-
-            <p>
-                Describe claramente el problema que estás
-                presentando para que podamos brindarte una
-                atención más rápida y efectiva.
-            </p>
-
-        </div>
-
-    </section>
+    </main>
 
     <footer>
-
-        <p>
-            © 2026 ACSO · Sistema de gestión de servicios
-        </p>
-
+        <p>© 2026 ACSO · Sistema de gestión de servicios</p>
     </footer>
 
-</main>
+</div>
 
+<button type="button" class="subir" id="btnSubir" hidden aria-label="Volver arriba">
+    <svg class="ico" aria-hidden="true"><use href="#i-flecha-arriba" /></svg>
+</button>
 
 <script src="ayuda.js"></script>
 

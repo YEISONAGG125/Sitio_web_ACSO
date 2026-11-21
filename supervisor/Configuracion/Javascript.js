@@ -3,25 +3,35 @@
 // CONFIGURACIÓN
 // =====================================================
 
-const API_BASE = "http://localhost:8080/api";
-
-
 // =====================================================
-// DATOS DEL SUPERVISOR
+// DATOS DEL SUPERVISOR (salen de la sesión guardada al iniciar sesión)
 // =====================================================
+
+function leerSesion() {
+    try {
+        return JSON.parse(localStorage.getItem("usuarioLogueado")) || {};
+    } catch {
+        return {};
+    }
+}
+
+const sesion = leerSesion();
 
 const idSupervisor =
+    sesion.id ||
     localStorage.getItem("id_usuario") ||
     localStorage.getItem("id_supervisor") ||
     "";
 
 const nombreSupervisor =
+    sesion.nombre_completo ||
+    sesion.nombre ||
+    sesion.usuario ||
     localStorage.getItem("nombre_usuario") ||
-    localStorage.getItem("nombreSupervisor") ||
-    localStorage.getItem("nombre_empleado") ||
     "Supervisor";
 
 const correoSupervisor =
+    sesion.correo ||
     localStorage.getItem("correo") ||
     localStorage.getItem("correo_usuario") ||
     "No registrado";
@@ -79,6 +89,12 @@ function cargarDatosPerfil() {
 // EVENTOS
 // =====================================================
 
+// Editar el perfil y cambiar la contraseña se hacen en «Mi perfil» del panel
+function irAlPerfil() {
+    window.location.href = "../supervisor.html#perfil";
+}
+
+
 function configurarEventos() {
 
     document.getElementById(
@@ -97,32 +113,10 @@ function configurarEventos() {
     );
 
 
-    document.getElementById(
-        "btnEditarPerfil"
-    ).addEventListener(
-        "click",
-        () => {
-
-            mostrarMensaje(
-                "La edición del perfil se conectará con Spring Boot."
-            );
-
-        }
-    );
+    document.getElementById("btnEditarPerfil").addEventListener("click", irAlPerfil);
 
 
-    document.getElementById(
-        "btnCambiarPassword"
-    ).addEventListener(
-        "click",
-        () => {
-
-            mostrarMensaje(
-                "La opción de cambiar contraseña se conectará con tu sistema de seguridad."
-            );
-
-        }
-    );
+    document.getElementById("btnCambiarPassword").addEventListener("click", irAlPerfil);
 
 
     document.getElementById(
@@ -394,17 +388,23 @@ function aplicarModo() {
 // CERRAR SESIÓN
 // =====================================================
 
-function cerrarSesion() {
+async function cerrarSesion() {
 
-    const confirmar =
-        confirm(
-            "¿Seguro que deseas cerrar sesión?"
-        );
-
-    if (!confirmar) {
+    if (!confirm("¿Seguro que deseas cerrar sesión?")) {
         return;
     }
 
+    try {
+        // Invalida el token en el servidor y borra la sesión local
+        const seguridad = await import("../../FIREBASE/seguridad.js");
+        await seguridad.cerrarSesionSupervisor();
+    } catch (error) {
+        console.warn("No se pudo cerrar la sesión en el servidor:", error);
+    }
+
+
+    ["usuarioLogueado", "usuario", "cargo"].forEach(k => localStorage.removeItem(k));
+    sessionStorage.removeItem("acso_sesion_supervisor");
 
     localStorage.removeItem(
         "id_usuario"
@@ -432,7 +432,7 @@ function cerrarSesion() {
 
 
     window.location.href =
-        "../inicio de sistema/login.html";
+        "../../inicio%20de%20sistema/login.html";
 }
 
 

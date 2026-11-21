@@ -4,46 +4,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>ACSO | Panel de Supervisión</title>
-
+    <title>Inicio | ACSO · Panel de supervisión</title>
     <style id="guard-style">html{visibility:hidden}</style>
     <script src="../FIREBASE/menu.js"></script>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="../FIREBASE/perfil.css">
-    <link rel="stylesheet" href="../FIREBASE/menu.css">
-    <link rel="stylesheet" href="../FIREBASE/paneles.css">
-    <link rel="stylesheet" href="../FIREBASE/gestion.css">
+    <link rel="stylesheet" href="../FIREBASE/accesibilidad.css">
+    <link rel="stylesheet" href="../FIREBASE/acso-ui.css">
+    <script src="../FIREBASE/ajustes-a11y.js"></script>
+    <link rel="stylesheet" href="../FIREBASE/ajustes-a11y.css">
+    <script src="../FIREBASE/accesibilidad.js" defer></script>
+    <script src="../FIREBASE/panel.js" defer></script>
 </head>
 
-<body>
+<body data-panel="Panel de supervisión">
 
-    <!-- ENCABEZADO PRINCIPAL -->
-    <header class="acso-topbar main-header">
-
-        <button
-            type="button"
-            class="btn-hamburguesa"
-            id="btnMenu"
-            aria-label="Abrir o cerrar menú"
-            aria-controls="sidebar"
-            aria-expanded="true">
+    <!-- BARRA SUPERIOR -->
+    <header class="acso-topbar">
+        <button type="button" class="btn-hamburguesa" id="btnMenu"
+                aria-label="Abrir o cerrar menú" aria-controls="sidebar" aria-expanded="true">
             <span></span><span></span><span></span>
         </button>
 
-        <a class="acso-marca" href="#" onclick="mostrar('Inicio', document.querySelector('.tab')); return false;">
-            <span class="acso-marca-icono">A</span>
-            <span class="acso-marca-texto">CSO</span>
+        <a class="acso-marca" href="#" id="marcaInicio" aria-label="ACSO, ir al inicio">
+            <span class="acso-marca-icono" aria-hidden="true">A</span>
+            <span class="acso-marca-texto" aria-hidden="true">CSO</span>
         </a>
 
-        <div class="right" id="abrirPerfil" role="button" tabindex="0" title="Ir a mi perfil">
-            <span class="header-avatar" data-pf-avatar>S</span>
-            <span class="right-textos">
-                <span id="usuarioNombre">Supervisor</span>
-                <span id="usuarioCargo">Supervisor</span>
+        <button type="button" class="acso-usuario" id="abrirPerfil" title="Ir a mi perfil">
+            <span class="acso-avatar" data-pf-avatar aria-hidden="true">S</span>
+            <span class="acso-usuario-datos">
+                <strong id="usuarioNombre">Supervisor</strong>
+                <small id="usuarioCargo">Supervisor</small>
             </span>
-        </div>
-
+        </button>
     </header>
 
     <!-- Fondo oscuro detrás del menú en pantallas pequeñas -->
@@ -52,158 +44,105 @@
     <!-- BARRA LATERAL -->
     <aside class="sidebar" id="sidebar">
         <nav aria-label="Menú principal">
-            <ul>
+        <ul class="acso-nav">
+            <li>
+                <button type="button" class="acso-nav-item" onclick="mostrar('Inicio', this)" aria-current="page">
+                    <span class="acso-nav-ico" aria-hidden="true">🏠</span><span class="acso-nav-txt">Inicio</span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="acso-nav-item" onclick="mostrar('Personal', this)">
+                    <span class="acso-nav-ico" aria-hidden="true">👨‍💼</span><span class="acso-nav-txt">Personal</span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="acso-nav-item" id="tabNovedades" onclick="mostrar('NovedadLaboral', this)">
+                    <span class="acso-nav-ico" aria-hidden="true">📋</span><span class="acso-nav-txt">Novedad laboral</span>
+                    <span id="badgeNovedades" class="acso-badge oculto">0</span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="acso-nav-item" id="tabSolicitudes" onclick="mostrar('Solicitudes', this)">
+                    <span class="acso-nav-ico" aria-hidden="true">📑</span><span class="acso-nav-txt">Solicitudes</span>
+                    <span id="badgeSolicitudes" class="acso-badge oculto">0</span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="acso-nav-item" onclick="mostrar('Inventario', this)">
+                    <span class="acso-nav-ico" aria-hidden="true">🧰</span><span class="acso-nav-txt">Inventario</span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="acso-nav-item" id="tabPedidos" onclick="mostrar('PedidosProductos', this)">
+                    <span class="acso-nav-ico" aria-hidden="true">🛒</span><span class="acso-nav-txt">Pedidos de productos</span>
+                    <span id="badgePedidos" class="acso-badge oculto">0</span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="acso-nav-item" id="tabServicios" onclick="mostrar('Servicios', this)">
+                    <span class="acso-nav-ico" aria-hidden="true">🧹</span><span class="acso-nav-txt">Servicios</span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="acso-nav-item" id="tabHorarios" onclick="mostrar('Horarios', this)">
+                    <span class="acso-nav-ico" aria-hidden="true">🕐</span><span class="acso-nav-txt">Horarios</span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="acso-nav-item" onclick="mostrar('Contratos', this)">
+                    <span class="acso-nav-ico" aria-hidden="true">📄</span><span class="acso-nav-txt">Contratos</span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="acso-nav-item" onclick="mostrar('Clientes', this)">
+                    <span class="acso-nav-ico" aria-hidden="true">🤝</span><span class="acso-nav-txt">Clientes</span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="acso-nav-item" onclick="mostrar('Notificaciones', this)">
+                    <span class="acso-nav-ico" aria-hidden="true">🔔</span><span class="acso-nav-txt">Notificaciones</span>
+                    <span id="badgeNotificaciones" class="acso-badge oculto">0</span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="acso-nav-item" id="tabPerfil" onclick="mostrar('Perfil', this)">
+                    <span class="acso-nav-ico" aria-hidden="true">👤</span><span class="acso-nav-txt">Mi perfil</span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="acso-nav-item" onclick="window.location.href='./Configuracion/html.html'">
+                    <span class="acso-nav-ico" aria-hidden="true">⚙️</span><span class="acso-nav-txt">Configuración</span>
+                </button>
+            </li>
+            <li>
+                <a class="acso-nav-item" href="../ayuda/ayuda.html?desde=supervisor">
+                    <span class="acso-nav-ico" aria-hidden="true">❓</span><span class="acso-nav-txt">Ayuda</span>
+                </a>
+            </li>
+            <li>
+                <button type="button" class="acso-nav-item" onclick="window.location.href='../Reportes/reportes.html'">
+                    <span class="acso-nav-ico" aria-hidden="true">📊</span><span class="acso-nav-txt">Reportes</span>
+                </button>
+            </li>
+        </ul>
+    </nav>
 
-                <li>
-                    <div class="tab active"
-                         onclick="mostrar('Inicio', this)">
-                        <span>🏠</span>
-                        <label>Inicio</label>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="tab"
-                         onclick="mostrar('Personal', this)">
-                        <span>👨‍💼</span>
-                        <label>Personal</label>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="tab"
-                         id="tabNovedades"
-                         onclick="mostrar('NovedadLaboral', this)">
-                        <span>📋</span>
-                        <label>Novedad laboral</label>
-                        <span id="badgeNovedades"
-                              class="badge-menu oculto">0</span>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="tab"
-                         id="tabSolicitudes"
-                         onclick="mostrar('Solicitudes', this)">
-                        <span>📑</span>
-                        <label>Solicitudes</label>
-                        <span id="badgeSolicitudes"
-                              class="badge-menu oculto">0</span>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="tab"
-                         onclick="mostrar('Inventario', this)">
-                        <span>🧰</span>
-                        <label>Inventario</label>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="tab"
-                         id="tabPedidos"
-                         onclick="mostrar('PedidosProductos', this)">
-                        <span>🛒</span>
-                        <label>Pedidos de productos</label>
-                        <span id="badgePedidos"
-                              class="badge-menu oculto">0</span>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="tab"
-                         id="tabServicios"
-                         onclick="mostrar('Servicios', this)">
-                        <span>🧹</span>
-                        <label>Servicios</label>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="tab"
-                         id="tabHorarios"
-                         onclick="mostrar('Horarios', this)">
-                        <span>🕐</span>
-                        <label>Horarios</label>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="tab"
-                         onclick="mostrar('Contratos', this)">
-                        <span>📄</span>
-                        <label>Contratos</label>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="tab"
-                         onclick="mostrar('Clientes', this)">
-                        <span>🤝</span>
-                        <label>Clientes</label>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="tab"
-                         onclick="mostrar('Notificaciones', this)">
-                        <span>🔔</span>
-                        <label>Notificaciones</label>
-                        <span id="badgeNotificaciones"
-                              class="badge-menu oculto">0</span>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="tab"
-                         id="tabPerfil"
-                         onclick="mostrar('Perfil', this)">
-                        <span>👤</span>
-                        <label>Mi perfil</label>
-                    </div>
-                </li>
-
-    <li>
-    <div class="tab"
-         onclick="window.location.href='./Configuración_supervisor/html.html'">
-        <span>⚙️</span>
-        <label>Configuración</label>
-    </div>
-</li>
-
-                <li>
-                    <div class="tab"
-                         onclick="window.location.href='../Reportes/reportes.html'">
-                        <span>📊</span>
-                        <label>Reportes</label>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="logout" id="btnCerrarSesion" role="button" tabindex="0">
-                        <span>⬅</span>
-                        <label>Cerrar sesión</label>
-                    </div>
-                </li>
-
-            </ul>
-        </nav>
+    <div class="acso-sidebar-pie">
+            <button type="button" id="btnCerrarSesion" class="acso-nav-item acso-salir">
+                <span class="acso-nav-ico" aria-hidden="true">🚪</span><span class="acso-nav-txt">Cerrar sesión</span>
+            </button>
+        </div>
     </aside>
 
     <!-- CONTENIDO PRINCIPAL -->
-    <main class="main-content acso-contenido">
+    <main class="acso-contenido" id="contenido-principal" tabindex="-1">
 
-        <header class="top-header">
+        <header class="acso-cab">
             <div>
-                <span class="header-small">PANEL DE SUPERVISIÓN</span>
-                <h2>ACSO</h2>
+                <p class="acso-eyebrow">ACSO · POWER CLEAN</p>
+                <h1>Panel de supervisión</h1>
             </div>
-
-            <div class="header-status">
-                <span class="status-dot"></span>
-                Sistema en línea
-            </div>
+            <p class="acso-estado">Sistema en línea</p>
         </header>
 
         <!-- INICIO -->
@@ -214,7 +153,7 @@
 
                 <div>
                     <span class="section-label">PANEL DE CONTROL</span>
-                    <h1>Bienvenido al Panel de Supervisión</h1>
+                    <h2>Bienvenido al Panel de Supervisión</h2>
 
                     <p>
                         Gestiona y supervisa las operaciones de ACSO
@@ -1092,15 +1031,15 @@
 
         </section>
 
+    <footer class="acso-pie">
+            <p>© 2026 <strong>ACSO</strong> · Power Clean. Experiencia y eficacia sin igual a la mano.</p>
+        </footer>
     </main>
 
     <!-- MENSAJES EMERGENTES -->
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-    <!-- PIE DE PÁGINA -->
-    <footer>
-        <p>© 2026 ACSO - Experiencia y eficacia sin igual a la mano.</p>
-    </footer>
+    
 
     <script type="module" src="script.js"></script>
 

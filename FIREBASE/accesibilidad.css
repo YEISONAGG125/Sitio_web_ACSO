@@ -1,0 +1,16 @@
+/* ACSO · Accesibilidad y usabilidad común (WCAG 2.2 AA) */
+.sr-only{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.skip-link{position:fixed;top:-100px;left:8px;z-index:100000;background:#0b3d91;color:#fff;padding:.75rem 1.25rem;border-radius:0 0 8px 8px;font:600 1rem/1.2 system-ui,sans-serif;text-decoration:none}
+.skip-link:focus{top:0;outline:3px solid #ffbf47;outline-offset:2px}
+:where(a,button,input,select,textarea,summary,[tabindex],[role=button]):focus-visible{outline:3px solid #ffbf47!important;outline-offset:2px!important;box-shadow:0 0 0 5px #0b3d91!important}
+:where(button,[role=button],a.btn,select,input[type=checkbox],input[type=radio]){min-height:44px;min-width:44px}
+input[type=checkbox],input[type=radio]{accent-color:#0b3d91}
+[role=button]{cursor:pointer}
+main:focus,[role=main]:focus{outline:none}
+:where(.mensaje,.toast,.alerta):empty{display:none}
+table{max-width:100%}
+.tabla-responsive,.table-wrap{overflow-x:auto}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+@media (forced-colors:active){:where(a,button,input,select,textarea):focus-visible{outline:3px solid Highlight!important}}
+@media (max-width:480px){input,select,textarea{font-size:16px!important}}

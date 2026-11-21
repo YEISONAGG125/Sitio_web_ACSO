@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Perfil - Power Clean</title>
     <link rel="stylesheet" href="style.css">
+    <meta name="color-scheme" content="light dark">
+    <link rel="stylesheet" href="../FIREBASE/accesibilidad.css">
+    <script src="../FIREBASE/accesibilidad.js" defer></script>
 </head>
 <body>
 
@@ -23,33 +26,33 @@
     </label>
 </div><br></br>
 
-        <h2>Mi Perfil</h2>
+        <h1>Mi Perfil</h1>
 
         <form>
 
             <div class="grupo">
                 <label>Nombre Completo</label>
-                <input type="text" value="Juan Pérez">
+                <input type="text" value="Juan Pérez" aria-label="Nombre completo">
             </div>
 
             <div class="grupo">
                 <label>Correo Electrónico</label>
-                <input type="email" value="juan@gmail.com">
+                <input type="email" value="juan@gmail.com" aria-label="Correo electrónico">
             </div>
 
             <div class="grupo">
                 <label>Teléfono</label>
-                <input type="text" value="3101234567">
+                <input type="text" value="3101234567" aria-label="Teléfono">
             </div>
 
             <div class="grupo">
                 <label>Dirección</label>
-                <input type="text" value="Tunja, Boyacá">
+                <input type="text" value="Tunja, Boyacá" aria-label="Ciudad">
             </div>
 
             <div class="grupo">
                 <label>Tipo de Cliente</label>
-                <input type="text" value="Empresarial">
+                <input type="text" value="Empresarial" aria-label="Tipo de servicio">
             </div>
 
             <button type="submit"> Guardar Cambios</button>

@@ -4,217 +4,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Panel Cliente | POWER CLEAN</title>
-
+    <title>Inicio | ACSO · Panel de cliente</title>
     <script src="../FIREBASE/menu.js"></script>
-    <link rel="stylesheet" href="estilos-cliente.css">
-    <link rel="stylesheet" href="../FIREBASE/perfil.css">
-    <link rel="stylesheet" href="../FIREBASE/menu.css">
-    <link rel="stylesheet" href="../FIREBASE/paneles.css">
+    <link rel="stylesheet" href="../FIREBASE/accesibilidad.css">
+    <link rel="stylesheet" href="../FIREBASE/acso-ui.css">
+    <script src="../FIREBASE/ajustes-a11y.js"></script>
+    <link rel="stylesheet" href="../FIREBASE/ajustes-a11y.css">
+    <script src="../FIREBASE/accesibilidad.js" defer></script>
+    <script src="../FIREBASE/panel.js" defer></script>
 </head>
 
-<body>
+<body data-panel="Panel de cliente">
 
 <div class="app">
-    <div class="acso-topbar">
-        <button type="button" class="btn-hamburguesa" id="btnMenu" aria-label="Abrir o cerrar menú" aria-controls="sidebar" aria-expanded="true">
+    <header class="acso-topbar">
+        <button type="button" class="btn-hamburguesa" id="btnMenu"
+                aria-label="Abrir o cerrar menú" aria-controls="sidebar" aria-expanded="true">
             <span></span><span></span><span></span>
         </button>
-        <a class="acso-marca" href="#"><span class="acso-marca-icono">A</span><span class="acso-marca-texto">CSO</span></a>
-        <div class="usuario">
-            <div class="avatar" id="avatar" data-pf-avatar>CL</div>
-            <div class="usuario-info"><strong id="nombreUsuario">Cliente</strong><small>Cliente</small></div>
-        </div>
-    </div>
-    <div class="menu-overlay" id="menuOverlay"></div>
-    <aside class="sidebar" id="sidebar">
 
-        <div class="logo-box">
-
-            <div class="logo-circle">
-            </div>
-
-             <a href="#inicio" class="logo">
-            <span class="logo-icon">A</span>
-            <span class="logo-text">
-                C S O
-            </span>
+        <a class="acso-marca" href="#" id="marcaInicio" aria-label="ACSO, ir al inicio">
+            <span class="acso-marca-icono" aria-hidden="true">A</span>
+            <span class="acso-marca-texto" aria-hidden="true">CSO</span>
         </a>
 
-        </div>
-
-        <div class="estado-cliente">
-
-            <span class="estado-punto"></span>
-
-            <span>
-                Cuenta activa
+        <button type="button" class="acso-usuario" id="abrirPerfil" title="Ir a mi perfil">
+            <span class="acso-avatar" id="avatar" data-pf-avatar aria-hidden="true">CL</span>
+            <span class="acso-usuario-datos">
+                <strong id="nombreUsuario">Cliente</strong>
+                <small>Cliente</small>
             </span>
+        </button>
+    </header>
 
-        </div>
-        <nav id="navMenu">
-            <a
-                href="#"
-                class="nav-link active"
-                data-section="inicio">
-                <span class="nav-icon">⌂</span>
-                <span>Inicio</span>
-            </a>
-            <a
-                href="#"
-                class="nav-link"
-                data-section="servicios">
+    <div class="menu-overlay" id="menuOverlay"></div>
 
-                <span class="nav-icon">▣</span>
-
-                <span>Mis Servicios</span>
-
-            </a>
-
-
-            <a
-                href="#"
-                class="nav-link"
-                data-section="contrato">
-
-                <span class="nav-icon">▤</span>
-
-                <span>Mi Contrato</span>
-
-            </a>
-            <a
-                href="#"
-                class="nav-link"
-                data-section="solicitar">
-                <span class="nav-icon">+</span>
-                <span>Solicitar</span>
-            </a>
-            <a
-                href="#"
-                class="nav-link"
-                data-section="solicitudes">
-                <span class="nav-icon">≡</span>
-                <span>Mis solicitudes</span>
-                <span
-                    class="badge"
-                    id="badgeSolicitudes">
-                    0
-                </span>
-            </a>
-
-
-            <a
-                href="#"
-                class="nav-link"
-                data-section="pagos">
-
-                <span class="nav-icon">▣</span>
-
-                <span>Mis Pagos</span>
-
-            </a>
-
-
-            <a
-                href="#"
-                class="nav-link"
-                data-section="notificaciones">
-
-                <span class="nav-icon">♢</span>
-
-                <span>Notificaciones</span>
-
-                <span
-                    class="badge"
-                    id="badgeNotif">
-
-                    0
-
-                </span>
-
-            </a>
-
-
-            <a
-                href="#"
-                class="nav-link"
-                data-section="perfil">
-
-                <span class="nav-icon">◉</span>
-
-                <span>Mi Perfil</span>
-
-            </a>
-
+    <aside class="sidebar" id="sidebar">
+        <nav id="navMenu" aria-label="Menú principal">
+            <ul class="acso-nav">
+            <li>
+                <button type="button" class="acso-nav-item" data-section="inicio" aria-current="page">
+                    <span class="acso-nav-ico" aria-hidden="true">🏠</span><span class="acso-nav-txt">Inicio</span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="acso-nav-item" data-section="servicios">
+                    <span class="acso-nav-ico" aria-hidden="true">🧹</span><span class="acso-nav-txt">Mis servicios</span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="acso-nav-item" data-section="contrato">
+                    <span class="acso-nav-ico" aria-hidden="true">📄</span><span class="acso-nav-txt">Mi contrato</span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="acso-nav-item" data-section="solicitar">
+                    <span class="acso-nav-ico" aria-hidden="true">➕</span><span class="acso-nav-txt">Solicitar</span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="acso-nav-item" data-section="solicitudes">
+                    <span class="acso-nav-ico" aria-hidden="true">📑</span><span class="acso-nav-txt">Mis solicitudes</span>
+                    <span class="acso-badge oculto" id="badgeSolicitudes">0</span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="acso-nav-item" data-section="pagos">
+                    <span class="acso-nav-ico" aria-hidden="true">💳</span><span class="acso-nav-txt">Mis pagos</span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="acso-nav-item" data-section="notificaciones">
+                    <span class="acso-nav-ico" aria-hidden="true">🔔</span><span class="acso-nav-txt">Notificaciones</span>
+                    <span class="acso-badge oculto" id="badgeNotif">0</span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="acso-nav-item" data-section="perfil">
+                    <span class="acso-nav-ico" aria-hidden="true">👤</span><span class="acso-nav-txt">Mi perfil</span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="acso-nav-item" data-section="config">
+                    <span class="acso-nav-ico" aria-hidden="true">⚙️</span><span class="acso-nav-txt">Configuración</span>
+                </button>
+            </li>
+            <li>
+                <a class="acso-nav-item" href="../ayuda/ayuda.html?desde=cliente">
+                    <span class="acso-nav-ico" aria-hidden="true">❓</span><span class="acso-nav-txt">Ayuda</span>
+                </a>
+            </li>
+            </ul>
         </nav>
 
-        <div class="sidebar-info">
-
-            <span>POWER CLEAN</span>
-
-            <p>
-                Gestión fácil, rápida y segura.
-            </p>
-
+        <div class="acso-sidebar-pie">
+            <button type="button" id="btnCerrarSesion" class="acso-nav-item acso-salir">
+                <span class="acso-nav-ico" aria-hidden="true">🚪</span><span class="acso-nav-txt">Cerrar sesión</span>
+            </button>
         </div>
-
-
-        <button
-            class="cerrar"
-            id="btnCerrarSesion">
-
-            <span>↪</span>
-
-            Cerrar sesión
-
-        </button>
-
     </aside>
 
+    <main class="acso-contenido" id="contenido-principal" tabindex="-1">
 
-    <div
-        class="overlay"
-        id="overlay">
-    </div>
-
-
-
-    <main class="main acso-contenido">
-
-        <!-- HEADER -->
-
-        <header>
-
-            <div class="header-titulo">
-
-                <p
-                    class="eyebrow"
-                    id="sectionEyebrow">
-
-                    PANEL DE CLIENTE
-
-                </p>
-
-                <h1 id="sectionTitulo">
-
-                    Bienvenido
-
-                </h1>
-
-                <p class="header-subtitulo">
-
-                    Consulta y administra la información
-                    de tus servicios.
-
-                </p>
-
+        <header class="acso-cab">
+            <div>
+                <p class="acso-eyebrow">ACSO · POWER CLEAN</p>
+                <h1>Panel de cliente</h1>
             </div>
-
-
-
-            
-
+            <p class="acso-estado">Sistema en línea</p>
         </header>
 
 
@@ -226,156 +123,47 @@
             id="sec-inicio">
 
 
-            <!-- HERO -->
-
+            <!-- BIENVENIDA -->
             <div class="bienvenida">
-
-                <div class="bienvenida-texto">
-
-                    <span class="mini-etiqueta">
-
-                        ✦ POWER CLEAN
-
-                    </span>
-
-                    <h2>
-
-                        Todo el control
-                        <span>en un solo lugar.</span>
-
-                    </h2>
-
-                    <p>
-
-                        Aquí puedes consultar tus servicios,
-                        contrato, pagos y recibir información
-                        importante de POWER CLEAN.
-
-                    </p>
-
-
-                    <button
-                        class="btn-hero"
-                        id="btnVerServicios">
-
-                        Ver mis servicios
-
-                        <span>→</span>
-
-                    </button>
-
+                <div class="bienvenida-icono" aria-hidden="true">👋</div>
+                <div>
+                    <span class="section-label">POWER CLEAN</span>
+                    <h2 id="saludoCliente">Bienvenido</h2>
+                    <p>Aquí puedes consultar tus servicios, contrato, pagos y recibir información importante de POWER CLEAN.</p>
+                    <button type="button" class="btn-hero" id="btnVerServicios">Ver mis servicios →</button>
                 </div>
-
-
-                <div class="bienvenida-grafico">
-
-                    <div class="circulo-grande">
-
-                        <div class="icono-limpieza">
-                            ✦
-                        </div>
-
-                    </div>
-
-                    <div class="burbuja burbuja-1">
-                        ✓
-                    </div>
-
-                    <div class="burbuja burbuja-2">
-                        ★
-                    </div>
-
-                    <div class="burbuja burbuja-3">
-                        +
-                    </div>
-
-                </div>
-
             </div>
-            <div class="estadisticas">
+
+            <div class="dashboard-grid">
 
 
-                <div class="card">
+                <div class="dashboard-card">
 
-                    <div
-                        class="card-icono card-icono--azul">
-
-                        ▣
-
+                    <div class="card-icon azul">🧹</div>
+                    <div>
+                        <span>Servicios</span>
+                        <strong id="statServicios">0</strong>
                     </div>
-
-                    <div class="card-datos">
-
-                        <strong id="statServicios">
-                            0
-                        </strong>
-
-                        <span>
-                            Servicios
-                        </span>
-
-                    </div>
-
-                    <span class="card-decoracion">
-                        +
-                    </span>
-
                 </div>
 
 
-                <div class="card">
+                <div class="dashboard-card">
 
-                    <div
-                        class="card-icono card-icono--verde">
-
-                        ▤
-
+                    <div class="card-icon verde">📄</div>
+                    <div>
+                        <span>Contratos</span>
+                        <strong id="statContratos">0</strong>
                     </div>
-
-                    <div class="card-datos">
-
-                        <strong id="statContratos">
-                            0
-                        </strong>
-
-                        <span>
-                            Contratos
-                        </span>
-
-                    </div>
-
-                    <span class="card-decoracion">
-                        ✓
-                    </span>
-
                 </div>
 
 
-                <div class="card">
+                <div class="dashboard-card">
 
-                    <div
-                        class="card-icono card-icono--morado">
-
-                        $
-
+                    <div class="card-icon morado">💳</div>
+                    <div>
+                        <span>Pagos</span>
+                        <strong id="statPagos">0</strong>
                     </div>
-
-                    <div class="card-datos">
-
-                        <strong id="statPagos">
-                            0
-                        </strong>
-
-                        <span>
-                            Pagos
-                        </span>
-
-                    </div>
-
-                    <span class="card-decoracion">
-                        $
-                    </span>
-
                 </div>
 
             </div>
@@ -540,6 +328,14 @@
         <section
             class="contenido"
             id="sec-servicios">
+            <header class="section-header">
+                <div>
+                    <span class="section-label">MIS SERVICIOS</span>
+                    <h2>Servicios contratados</h2>
+                    <p>Consulta los servicios que tienes con POWER CLEAN y su estado.</p>
+                </div>
+            </header>
+
 
             <div class="panel">
 
@@ -617,6 +413,14 @@
         <section
             class="contenido"
             id="sec-contrato">
+            <header class="section-header">
+                <div>
+                    <span class="section-label">MI CONTRATO</span>
+                    <h2>Información del contrato</h2>
+                    <p>Revisa las condiciones y el valor de tu contrato.</p>
+                </div>
+            </header>
+
 
             <div class="panel panel-contrato">
 
@@ -704,6 +508,14 @@
         <section
             class="contenido"
             id="sec-solicitar">
+            <header class="section-header">
+                <div>
+                    <span class="section-label">NUEVA SOLICITUD</span>
+                    <h2>Solicitar servicio o contrato</h2>
+                    <p>Pide un servicio puntual o un contrato. El supervisor te responderá aquí.</p>
+                </div>
+            </header>
+
 
             <div class="panel">
 
@@ -871,6 +683,14 @@
         <section
             class="contenido"
             id="sec-solicitudes">
+            <header class="section-header">
+                <div>
+                    <span class="section-label">SEGUIMIENTO</span>
+                    <h2>Mis solicitudes</h2>
+                    <p>Mira en qué estado va cada solicitud y lee la respuesta del supervisor.</p>
+                </div>
+            </header>
+
 
             <div class="panel">
 
@@ -902,6 +722,14 @@
         <section
             class="contenido"
             id="sec-pagos">
+            <header class="section-header">
+                <div>
+                    <span class="section-label">MIS PAGOS</span>
+                    <h2>Historial de pagos</h2>
+                    <p>Consulta los pagos registrados a tu nombre.</p>
+                </div>
+            </header>
+
 
             <div class="panel">
 
@@ -968,6 +796,14 @@
         <section
             class="contenido"
             id="sec-notificaciones">
+            <header class="section-header">
+                <div>
+                    <span class="section-label">NOTIFICACIONES</span>
+                    <h2>Centro de notificaciones</h2>
+                    <p>Información importante sobre tus servicios y solicitudes.</p>
+                </div>
+            </header>
+
 
             <div class="panel">
 
@@ -1014,6 +850,14 @@
         <section
             class="contenido"
             id="sec-perfil">
+            <header class="section-header">
+                <div>
+                    <span class="section-label">MI PERFIL</span>
+                    <h2>Información de mi cuenta</h2>
+                    <p>Consulta y actualiza tus datos personales.</p>
+                </div>
+            </header>
+
 
             <div class="panel panel-perfil">
 
@@ -1153,43 +997,42 @@
         </section>
 
 
-        <!-- FOOTER -->
+            <section class="contenido" id="sec-config">
+        <header class="section-header">
+            <div>
+                <span class="section-label">Preferencias</span>
+                <h2>Configuración</h2>
+                <p>Ajusta cómo se ve y se comporta el panel en este equipo.</p>
+            </div>
+        </header>
 
-        <footer>
+        <div class="acso-cfg">
+            <div data-acso-ajustes></div>
 
-            <div class="footer-line"></div>
+            <div class="acso-cfg-bloque">
+                <div>
+                    <h3>Ayuda y soporte</h3>
+                    <p>¿Tienes un problema con un servicio o con la página? Consulta las preguntas frecuentes o escríbenos.</p>
+                </div>
+                <a class="acso-cfg-enlace" href="../ayuda/ayuda.html?desde=cliente">Abrir el centro de ayuda</a>
+            </div>
+        </div>
+    </section>
 
-            <p>
-                © 2026 <strong>POWER CLEAN</strong>
-                · Gestión fácil, rápida y segura.
-            </p>
-
+        <footer class="acso-pie">
+            <p>© 2026 <strong>ACSO</strong> · Power Clean. Experiencia y eficacia sin igual a la mano.</p>
         </footer>
 
     </main>
 
 </div>
 
-<div
-    class="toast"
-    id="toast">
-
-    <span id="toastIcon">
-        ✓
-    </span>
-
+<div class="toast" id="toast" role="status" aria-live="polite">
+    <span id="toastIcon" aria-hidden="true">✓</span>
     <div>
-
-        <strong id="toastTitulo">
-            POWER CLEAN
-        </strong>
-
-        <p id="toastMensaje">
-            Operación realizada.
-        </p>
-
+        <strong id="toastTitulo">POWER CLEAN</strong>
+        <p id="toastMensaje">Operación realizada.</p>
     </div>
-
 </div>
 
 

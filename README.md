@@ -363,3 +363,23 @@ match /horarios_empleados/{id}     { allow read, write: if true; }
 * `supervisor/gestion.js` – inventario, pedidos, servicios y horarios del supervisor.
 * `supervisor/supervisor.html`, `supervisor/script.js` – menú, secciones y desplegable de contratos.
 * `empleado/empleado.html`, `empleado/empleados.js` – *Pedir productos*, *Mis servicios* y *Mi horario* en vivo.
+
+
+---
+
+## Diseño unificado y accesibilidad de los paneles
+
+Los cuatro paneles (administrador, supervisor, empleado y cliente) usan **una sola hoja de estilos** y **un solo script común**:
+
+| Archivo | Para qué sirve |
+|---|---|
+| `FIREBASE/acso-ui.css` | Sistema de diseño único: colores, barra superior, menú lateral, cabecera, tarjetas, tablas, botones, formularios, estados, avisos y diálogos. Si algo cambia aquí, cambia igual en los cuatro paneles. |
+| `FIREBASE/panel.js` | Comportamiento común: barra «Accesibilidad» (texto A / A+ / A++ y alto contraste), foco y título al cambiar de sección, flechas en el menú, indicador de conexión, `ACSO.confirmar()` / `ACSO.preguntar()` / `ACSO.errorCampo()`. |
+| `FIREBASE/menu.js` | Menú lateral (ahora también aplica las preferencias de accesibilidad y bloquea el fondo en móvil). |
+
+Estructura idéntica en los cuatro HTML: `header.acso-topbar` → `aside.sidebar` (`.acso-nav-item`, botón *Cerrar sesión* abajo) → `main.acso-contenido` (`.acso-cab`, secciones con `.section-header`, `footer.acso-pie`).
+La opción activa del menú se marca con `aria-current="page"`.
+
+Se eliminaron `menu.css`, `paneles.css`, `perfil.css`, `gestion.css`, `admin.css`, `supervisor/style.css`, `empleado/estilos.css` y `cliente/estilos-cliente.css` (todo quedó en `acso-ui.css`).
+
+Pendiente: `supervisor/Configuracion` y `Reportes` siguen con su diseño propio.

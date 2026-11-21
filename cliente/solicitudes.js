@@ -241,7 +241,7 @@ function escucharSolicitudes() {
         const enTramite = lista.filter(s => s.estado === "Pendiente" || s.estado === "Visto" || s.estado === "En revisión").length;
         const badge = $("badgeSolicitudes");
         badge.textContent = enTramite;
-        badge.classList.toggle("visible", enTramite > 0);
+        badge.classList.toggle("oculto", enTramite === 0);
 
         if (lista.length === 0) {
             contenedor.innerHTML = `<div class="sol-vacio">Aún no has enviado solicitudes.</div>`;

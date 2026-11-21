@@ -15,6 +15,9 @@
         rel="stylesheet"
         href="style.css">
 
+    <meta name="color-scheme" content="light dark">
+    <link rel="stylesheet" href="../FIREBASE/accesibilidad.css">
+    <script src="../FIREBASE/accesibilidad.js" defer></script>
 </head>
 
 
@@ -390,6 +393,13 @@
 
 
 <script src="../FIREBASE/iconos.js" defer></script>
+
+<style>
+.acso-ayuda-flotante{position:fixed;right:16px;bottom:16px;z-index:50;display:inline-flex;align-items:center;min-height:44px;padding:8px 18px;border-radius:999px;background:#0b3b3c;color:#fff;font:700 15px/1.2 system-ui,Arial,sans-serif;text-decoration:none;box-shadow:0 8px 24px rgba(11,59,60,.28)}
+.acso-ayuda-flotante:hover{background:#166363}
+.acso-ayuda-flotante:focus-visible{outline:3px solid #ffbf47;outline-offset:2px}
+</style>
+<a class="acso-ayuda-flotante" href="../ayuda/ayuda.html">¿Necesitas ayuda?</a>
 </body>
 
 </html>

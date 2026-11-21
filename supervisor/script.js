@@ -98,6 +98,16 @@ function actualizarContador(id, valor) {
     if (el) el.textContent = valor;
 }
 
+// Preferencias guardadas en Configuración (avisos que la persona quiere ver)
+function preferencia(clave, defecto) {
+    try {
+        const c = JSON.parse(localStorage.getItem("configuracion_supervisor"));
+        return c && typeof c[clave] === "boolean" ? c[clave] : defecto;
+    } catch {
+        return defecto;
+    }
+}
+
 function mostrarToast(texto) {
     const t = $("toast");
     t.textContent = texto;
@@ -116,11 +126,17 @@ function ponerBadge(id, cantidad) {
 
 window.mostrar = function (id, elemento) {
 
+    // Si no llega el elemento del menú, se busca el que corresponde a la sección
+    if (!elemento) {
+        elemento = document.querySelector(`.sidebar [onclick*="'${id}'"]`);
+    }
+
+
     document.querySelectorAll(".contenido").forEach(s => s.classList.remove("active"));
-    document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+    document.querySelectorAll(".sidebar .acso-nav-item").forEach(t => t.removeAttribute("aria-current"));
 
     $(id)?.classList.add("active");
-    elemento?.classList.add("active");
+    elemento?.setAttribute("aria-current", "page");
 
     if (id === "Personal") cargarPersonal();
     if (id === "Contratos") cargarContratos();
@@ -149,7 +165,10 @@ function escucharNovedades() {
             snap.docChanges().forEach(cambio => {
                 if (cambio.type === "added" && !cambio.doc.metadata.hasPendingWrites) {
                     const n = cambio.doc.data();
-                    mostrarToast(
+                    const avisar = n.es_incapacidad
+                        ? preferencia("notificacionesIncapacidades", true)
+                        : preferencia("notificacionesNovedades", true);
+                    if (avisar) mostrarToast(
                         `🔔 Nueva ${n.es_incapacidad ? "incapacidad" : "novedad"} de ${n.nombre_empleado || "un empleado"}`
                     );
                 }
@@ -448,7 +467,7 @@ function escucharSolicitudes() {
             snap.docChanges().forEach(cambio => {
                 if (cambio.type === "added" && !cambio.doc.metadata.hasPendingWrites) {
                     const s = cambio.doc.data();
-                    mostrarToast(
+                    if (preferencia("notificacionesServicios", true)) mostrarToast(
                         `📑 Nueva solicitud de ${s.tipo === "Contrato" ? "contrato" : "servicio"} de ${s.nombre_cliente || "un cliente"}`
                     );
                 }
@@ -961,6 +980,10 @@ function abrirPerfil() {
     cerrarMenuMovil();
 }
 
+$("marcaInicio")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    window.mostrar("Inicio");
+});
 $("abrirPerfil")?.addEventListener("click", abrirPerfil);
 $("abrirPerfil")?.addEventListener("keydown", (e) => {
     if (e.key === "Enter" || e.key === " ") {

@@ -8,12 +8,22 @@
     <title>Configuración | ACSO</title>
 
     <style id="guard-style">html{visibility:hidden}</style>
+    <script src="../../FIREBASE/ajustes-a11y.js"></script>
     <link rel="stylesheet" href="css.css">
+    <meta name="color-scheme" content="light dark">
+    <link rel="stylesheet" href="../../FIREBASE/accesibilidad.css">
+    <link rel="stylesheet" href="../../FIREBASE/ajustes-a11y.css">
+    <script src="../../FIREBASE/accesibilidad.js" defer></script>
 </head>
 
-<body>
+<body class="pagina-config modo-claro">
 
-<div class="contenedor">
+<main class="contenedor" id="contenido-principal">
+
+    <nav class="barra-volver" aria-label="Navegación">
+        <a class="enlace-volver" href="../supervisor.html">← Volver al panel</a>
+        <a class="enlace-volver" href="../../ayuda/ayuda.html?desde=supervisor">Centro de ayuda</a>
+    </nav>
 
     <!-- =========================================
          ENCABEZADO
@@ -345,6 +355,13 @@
 
 
     <!-- =========================================
+         ACCESIBILIDAD
+    ========================================== -->
+
+    <div data-acso-ajustes class="bloque-accesibilidad"></div>
+
+
+    <!-- =========================================
          ACTUALIZACIÓN
     ========================================== -->
 
@@ -432,7 +449,6 @@
 
             </button>
 
-<div class="tab" onclick="window.location.href='/inicio de sistema/login.html'"> ⬅ Cerrar sesión</div>
 
 
     </section>
@@ -460,6 +476,14 @@
 
         </button>
 
+        <button
+            class="btn-restaurar"
+            id="btnCerrarSesion">
+
+            🚪 Cerrar sesión
+
+        </button>
+
     </div>
 
 
@@ -469,11 +493,13 @@
 
     <div
         id="mensaje"
-        class="mensaje">
+        class="mensaje"
+        role="status"
+        aria-live="polite">
 
     </div>
 
-</div>
+</main>
 
 
 <script type="module">
@@ -482,7 +508,7 @@
     await protegerSupervisor();
 </script>
 
-<script src="javascript.js"></script>
+<script src="javascript.js" defer></script>
 
 </body>
 </html>
