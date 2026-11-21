@@ -63,42 +63,95 @@ $("yo").textContent = nombreYo;
 $("yoAvatar").textContent = iniciales(nombreYo);
 $("saludo").textContent = saludo();
 
-// Diálogo reutilizable. Devuelve una promesa: true si se confirmó, false si se cerró.
-function dialogo({ titulo, html, ok = "Guardar", cancelar = "Cancelar", peligro = false, onOk }) {
+
+// Diálogo reutilizable. Devuelve true si se confirmó y false si se canceló.
+function dialogo({
+    titulo,
+    html,
+    ok = "Guardar",
+    cancelar = "Cancelar",
+    peligro = false,
+    onOk
+}) {
     return new Promise((resolver) => {
+        const dlg = $("dlg");
+        const form = $("fDlg");
+        const si = $("dSi");
+        const no = $("dNo");
+
         $("dT").textContent = titulo;
         $("dB").innerHTML = html;
 
-        const si = $("dSi"), no = $("dNo");
         si.textContent = ok;
-        si.className = peligro ? "btn btn-peligro" : "btn btn-primario";
+        si.className = peligro
+            ? "btn btn-peligro"
+            : "btn btn-primario";
+
+        si.type = "submit";
+        no.type = "button";
         no.textContent = cancelar || "Cancelar";
         no.hidden = cancelar === null;
 
         let hecho = false;
-        $("dlg").addEventListener("close", () => resolver(hecho), { once: true });
+        let procesando = false;
 
-        $("fDlg").onsubmit = async (e) => {
-            if (e.submitter?.value !== "ok") return;
-            e.preventDefault();
-            si.disabled = true;
-            try {
-                if (onOk) await onOk();
-                hecho = true;
-                $("dlg").close();
-            } catch (x) {
-                aviso(x.message || "No se pudo guardar.");
-            } finally {
-                si.disabled = false;
+        const finalizar = () => {
+            resolver(hecho);
+        };
+
+        dlg.addEventListener("close", finalizar, { once: true });
+
+        no.onclick = () => {
+            if (!procesando) {
+                dlg.close("cancel");
             }
         };
 
-        $("dlg").showModal();
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+
+            if (procesando) return;
+            if (!form.reportValidity()) return;
+
+            procesando = true;
+            si.disabled = true;
+            no.disabled = true;
+
+            try {
+                if (onOk) {
+                    await onOk();
+                }
+
+                hecho = true;
+                dlg.close("ok");
+
+            } catch (error) {
+                console.error("Error en el diálogo:", error);
+
+                aviso(
+                    error?.message ||
+                    "No se pudo completar la operación."
+                );
+
+            } finally {
+                procesando = false;
+                si.disabled = false;
+                no.disabled = false;
+            }
+        };
+
+        dlg.showModal();
     });
 }
 
+// Confirmación reutilizable
 const confirmar = (titulo, texto, boton = "Eliminar") =>
-    dialogo({ titulo, html: `<p>${esc(texto)}</p>`, ok: boton, peligro: true });
+    dialogo({
+        titulo,
+        html: `<p>${esc(texto)}</p>`,
+        ok: boton,
+        peligro: true
+    });
 
 // =====================================================
 // SESIÓN Y NAVEGACIÓN

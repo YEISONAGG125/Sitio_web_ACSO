@@ -241,13 +241,14 @@
 </main>
 
 <!-- ================= DIÁLOGO ================= -->
+
 <dialog id="dlg" aria-labelledby="dT">
-    <form method="dialog" id="fDlg">
+    <form id="fDlg">
         <h2 id="dT"></h2>
         <div id="dB"></div>
         <menu>
-            <button value="x" id="dNo" formnovalidate class="btn">Cancelar</button>
-            <button value="ok" id="dSi" class="btn btn-primario">Guardar</button>
+            <button type="button" id="dNo" class="btn">Cancelar</button>
+            <button type="submit" id="dSi" class="btn btn-primario">Guardar</button>
         </menu>
     </form>
 </dialog>
