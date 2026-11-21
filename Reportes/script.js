@@ -10,7 +10,7 @@ async function cargarReportes() {
 
     if (mensaje) {
         mensaje.textContent = "Cargando información...";
-        mensaje.className = "mensaje";
+        mensaje.className = "mensaje-reporte";
     }
 
     try {
@@ -68,7 +68,7 @@ async function cargarReportes() {
             mensaje.textContent =
                 "✓ Reportes cargados correctamente";
 
-            mensaje.className = "mensaje exito";
+            mensaje.className = "mensaje-reporte exito";
         }
 
     } catch (error) {
@@ -77,9 +77,9 @@ async function cargarReportes() {
 
         if (mensaje) {
             mensaje.textContent =
-                "❌ No se pudo cargar la información.";
+                "❌ No se pudo cargar la información. Revisa que el servidor esté encendido y pulsa «Actualizar».";
 
-            mensaje.className = "mensaje error";
+            mensaje.className = "mensaje-reporte error";
         }
     }
 }
@@ -93,6 +93,8 @@ function colocarDato(id, valor) {
 }
 
 function crearGraficaGeneral(datos) {
+    // Si no se pudo cargar Chart.js (sin internet), se omiten las gráficas y el resto sigue
+    if (typeof Chart === "undefined") return;
 
     const canvas =
         document.getElementById("graficaGeneral");
@@ -174,6 +176,8 @@ function crearGraficaGeneral(datos) {
 }
 
 function crearGraficaOperaciones(datos) {
+    // Si no se pudo cargar Chart.js (sin internet), se omiten las gráficas y el resto sigue
+    if (typeof Chart === "undefined") return;
 
     const canvas =
         document.getElementById("graficaOperaciones");
@@ -228,6 +232,8 @@ function crearGraficaOperaciones(datos) {
 }
 
 function crearGraficaInventario(datos) {
+    // Si no se pudo cargar Chart.js (sin internet), se omiten las gráficas y el resto sigue
+    if (typeof Chart === "undefined") return;
 
     const canvas =
         document.getElementById("graficaInventario");

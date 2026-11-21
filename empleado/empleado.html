@@ -4,43 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Panel de empleado ACSO">
-    <title>ACSO | Panel del Empleado</title>
+    <title>Inicio | ACSO · Panel de empleado</title>
     <script src="../FIREBASE/menu.js"></script>
-    <link rel="stylesheet" href="estilos.css">
-    <link rel="stylesheet" href="../FIREBASE/perfil.css">
-    <link rel="stylesheet" href="../FIREBASE/menu.css">
-    <link rel="stylesheet" href="../FIREBASE/paneles.css">
+    <link rel="stylesheet" href="../FIREBASE/accesibilidad.css">
+    <link rel="stylesheet" href="../FIREBASE/acso-ui.css">
+    <script src="../FIREBASE/accesibilidad.js" defer></script>
+    <script src="../FIREBASE/panel.js" defer></script>
 </head>
 
-<body>
+<body data-panel="Panel de empleado">
 
 <!-- ================= BARRA SUPERIOR ================= -->
-<div class="acso-topbar">
-
-    <button
-        type="button"
-        class="btn-hamburguesa"
-        id="btnMenu"
-        aria-label="Abrir o cerrar menú"
-        aria-controls="sidebar"
-        aria-expanded="true">
+<header class="acso-topbar">
+    <button type="button" class="btn-hamburguesa" id="btnMenu"
+            aria-label="Abrir o cerrar menú" aria-controls="sidebar" aria-expanded="true">
         <span></span><span></span><span></span>
     </button>
 
-    <a class="acso-marca" href="#inicio">
-        <span class="acso-marca-icono">A</span>
-        <span class="acso-marca-texto">CSO</span>
+    <a class="acso-marca" href="#inicio" aria-label="ACSO, ir al inicio">
+        <span class="acso-marca-icono" aria-hidden="true">A</span>
+        <span class="acso-marca-texto" aria-hidden="true">CSO</span>
     </a>
 
-        <div class="empleado-info pf-abrir" id="abrirPerfil" role="button" tabindex="0" title="Ir a mi perfil">
-            <div class="avatar" id="avatarEmpleado" data-pf-avatar>US</div>
-            <div class="datos-header">
-                <strong id="nombreEmpleado">Cargando...</strong>
-                <small>Empleado</small>
-            </div>
-        </div>
-
-</div>
+    <button type="button" class="acso-usuario" id="abrirPerfil" title="Ir a mi perfil">
+        <span class="acso-avatar" id="avatarEmpleado" data-pf-avatar aria-hidden="true">US</span>
+        <span class="acso-usuario-datos">
+            <strong id="nombreEmpleado">Cargando...</strong>
+            <small>Empleado</small>
+        </span>
+    </button>
+</header>
 
 <!-- Fondo oscuro que aparece detrás del menú en pantallas pequeñas -->
 <div class="menu-overlay" id="menuOverlay"></div>
@@ -50,56 +43,65 @@
     <!-- ================= SIDEBAR ================= -->
     <aside class="sidebar" id="sidebar">
 
-        <nav class="menu">
-
-            <button type="button" class="menu-item activo" data-seccion="inicio">
-                <span>🏠</span><span class="texto-menu">Inicio</span>
-            </button>
-
-            <button type="button" class="menu-item" data-seccion="servicios">
-                <span>🧹</span><span class="texto-menu">Mis servicios</span>
-            </button>
-
-            <button type="button" class="menu-item" data-seccion="novedades">
-                <span>📝</span><span class="texto-menu">Novedad laboral</span>
-            </button>
-
-            <button type="button" class="menu-item" data-seccion="notificaciones">
-                <span>🔔</span><span class="texto-menu">Notificaciones</span>
-                <span id="contadorNotificaciones" class="contador oculto">0</span>
-            </button>
-
-            <button type="button" class="menu-item" data-seccion="horarios">
-                <span>🕐</span><span class="texto-menu">Mi horario</span>
-            </button>
-
-            <button type="button" class="menu-item" data-seccion="perfil">
-                <span>👤</span><span class="texto-menu">Mi perfil</span>
-            </button>
-
+        <nav aria-label="Menú principal">
+            <ul class="acso-nav">
+            <li>
+                    <button type="button" class="acso-nav-item" data-seccion="inicio" aria-current="page">
+                        <span class="acso-nav-ico" aria-hidden="true">🏠</span><span class="acso-nav-txt">Inicio</span>
+                    </button>
+                </li>
+            <li>
+                    <button type="button" class="acso-nav-item" data-seccion="servicios">
+                        <span class="acso-nav-ico" aria-hidden="true">🧹</span><span class="acso-nav-txt">Mis servicios</span>
+                    </button>
+                </li>
+            <li>
+                    <button type="button" class="acso-nav-item" data-seccion="productos">
+                        <span class="acso-nav-ico" aria-hidden="true">🧰</span><span class="acso-nav-txt">Pedir productos</span>
+                    </button>
+                </li>
+            <li>
+                    <button type="button" class="acso-nav-item" data-seccion="novedades">
+                        <span class="acso-nav-ico" aria-hidden="true">📝</span><span class="acso-nav-txt">Novedad laboral</span>
+                    </button>
+                </li>
+            <li>
+                    <button type="button" class="acso-nav-item" data-seccion="notificaciones">
+                        <span class="acso-nav-ico" aria-hidden="true">🔔</span><span class="acso-nav-txt">Notificaciones</span>
+                        <span id="contadorNotificaciones" class="acso-badge oculto">0</span>
+                    </button>
+                </li>
+            <li>
+                    <button type="button" class="acso-nav-item" data-seccion="horarios">
+                        <span class="acso-nav-ico" aria-hidden="true">🕐</span><span class="acso-nav-txt">Mi horario</span>
+                    </button>
+                </li>
+            <li>
+                    <button type="button" class="acso-nav-item" data-seccion="perfil">
+                        <span class="acso-nav-ico" aria-hidden="true">👤</span><span class="acso-nav-txt">Mi perfil</span>
+                    </button>
+                </li>
+            </ul>
         </nav>
 
-        <div class="sidebar-abajo">
-            <button type="button" id="cerrarSesion" class="btn-salir">🚪 Cerrar sesión</button>
+        <div class="acso-sidebar-pie">
+            <button type="button" id="cerrarSesion" class="acso-nav-item acso-salir">
+                <span class="acso-nav-ico" aria-hidden="true">🚪</span><span class="acso-nav-txt">Cerrar sesión</span>
+            </button>
         </div>
 
     </aside>
 
 
     <!-- ================= CONTENIDO ================= -->
-    <main class="contenido acso-contenido">
+    <main class="acso-contenido" id="contenido-principal" tabindex="-1">
 
-        <header class="header">
-
-            <div class="header-izq">
-                <div class="header-titulo">
-                    <span class="etiqueta-header">PANEL DE EMPLEADO</span>
-                    <h1 id="tituloPagina">Panel del Empleado</h1>
-                    <p id="subtituloPagina">Consulta tu información laboral</p>
-                </div>
+        <header class="acso-cab">
+            <div>
+                <p class="acso-eyebrow">ACSO · POWER CLEAN</p>
+                <h1>Panel de empleado</h1>
             </div>
-
-
+            <p class="acso-estado">Sistema en línea</p>
         </header>
 
 
@@ -109,7 +111,7 @@
             <div class="bienvenida">
                 <div class="bienvenida-icono">👋</div>
                 <div>
-                    <span class="etiqueta-seccion">ÁREA DE TRABAJO</span>
+                    <span class="section-label">ÁREA DE TRABAJO</span>
                     <h2 id="saludoEmpleado">Bienvenido al panel de empleado</h2>
                     <p>
                         Desde aquí puedes consultar tus servicios, horarios y notificaciones,
@@ -118,25 +120,25 @@
                 </div>
             </div>
 
-            <div class="tarjetas-resumen">
+            <div class="dashboard-grid">
 
-                <div class="tarjeta-resumen">
-                    <div class="icono azul">🧹</div>
+                <div class="dashboard-card">
+                    <div class="card-icon azul">🧹</div>
                     <div><span>Servicios</span><strong id="totalServicios">0</strong></div>
                 </div>
 
-                <div class="tarjeta-resumen">
-                    <div class="icono verde">📝</div>
+                <div class="dashboard-card">
+                    <div class="card-icon verde">📝</div>
                     <div><span>Novedades enviadas</span><strong id="totalNovedades">0</strong></div>
                 </div>
 
-                <div class="tarjeta-resumen">
-                    <div class="icono naranja">🔔</div>
+                <div class="dashboard-card">
+                    <div class="card-icon naranja">🔔</div>
                     <div><span>Notificaciones</span><strong id="totalNotificaciones">0</strong></div>
                 </div>
 
-                <div class="tarjeta-resumen">
-                    <div class="icono morado">🕐</div>
+                <div class="dashboard-card">
+                    <div class="card-icon morado">🕐</div>
                     <div><span>Horarios</span><strong id="totalHorarios">0</strong></div>
                 </div>
 
@@ -145,8 +147,8 @@
             <div class="panel">
                 <div class="panel-titulo">
                     <div>
-                        <span class="etiqueta-seccion">INFORMACIÓN</span>
-                        <h2>Mi información</h2>
+                        <span class="section-label">INFORMACIÓN</span>
+                        <h3>Mi información</h3>
                     </div>
                 </div>
 
@@ -154,6 +156,7 @@
                     <div><span>Empleado</span><strong id="inicioNombre">-</strong></div>
                     <div><span>ID empleado</span><strong id="inicioId">-</strong></div>
                     <div><span>Estado</span><strong class="estado-activo">● Activo</strong></div>
+                    <div><span>Turno de hoy</span><strong id="inicioTurnoHoy">Sin turno</strong></div>
                 </div>
             </div>
 
@@ -163,9 +166,9 @@
         <!-- ================= SERVICIOS ================= -->
         <section id="servicios" class="seccion">
 
-            <div class="seccion-header">
+            <div class="section-header">
                 <div>
-                    <span class="etiqueta-seccion">TRABAJO ASIGNADO</span>
+                    <span class="section-label">TRABAJO ASIGNADO</span>
                     <h2>Mis servicios</h2>
                     <p>Consulta los servicios que tienes asignados.</p>
                 </div>
@@ -181,12 +184,71 @@
         </section>
 
 
+        <!-- ================= PEDIR PRODUCTOS ================= -->
+        <section id="productos" class="seccion">
+
+            <div class="section-header">
+                <div>
+                    <span class="section-label">MATERIALES</span>
+                    <h2>Pedir productos</h2>
+                    <p>Dile al supervisor qué productos necesitas para tu servicio. Te avisará cuando estén listos.</p>
+                </div>
+            </div>
+
+            <div class="panel formulario-panel">
+
+                <form id="formPedido" novalidate>
+
+                    <div class="grupo-formulario">
+                        <label for="pedidoServicio">¿Para qué servicio?</label>
+                        <select id="pedidoServicio">
+                            <option value="">Sin servicio específico</option>
+                        </select>
+                    </div>
+
+                    <div class="grupo-formulario">
+                        <label>Productos que necesitas</label>
+                        <div class="gx-filas" id="pedidoItems"></div>
+                        <button type="button" class="gx-btn gx-btn-mini" id="btnAgregarProducto" style="margin-top:10px">＋ Agregar otro producto</button>
+                        <p class="gx-nota" id="notaInventario" style="margin-top:8px"></p>
+                    </div>
+
+                    <div class="grupo-formulario">
+                        <label for="pedidoNota">Nota para el supervisor (opcional)</label>
+                        <textarea id="pedidoNota" rows="3" maxlength="400" placeholder="Ej: lo necesito antes del jueves, el cliente pidió un producto especial..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-enviar" id="btnEnviarPedido">📤 Enviar pedido</button>
+
+                </form>
+
+            </div>
+
+            <div class="panel">
+
+                <div class="panel-titulo">
+                    <div>
+                        <span class="section-label">HISTORIAL</span>
+                        <h3>Mis pedidos</h3>
+                    </div>
+                    <span class="en-vivo">● En vivo</span>
+                </div>
+
+                <div id="listaPedidos">
+                    <div class="mensaje-vacio">No has pedido productos todavía.</div>
+                </div>
+
+            </div>
+
+        </section>
+
+
         <!-- ================= NOVEDADES ================= -->
         <section id="novedades" class="seccion">
 
-            <div class="seccion-header">
+            <div class="section-header">
                 <div>
-                    <span class="etiqueta-seccion">COMUNICACIÓN LABORAL</span>
+                    <span class="section-label">COMUNICACIÓN LABORAL</span>
                     <h2>Novedad laboral</h2>
                     <p>Envía una novedad o incapacidad al supervisor. Llegará a su panel al instante.</p>
                 </div>
@@ -270,8 +332,8 @@
 
                 <div class="panel-titulo">
                     <div>
-                        <span class="etiqueta-seccion">HISTORIAL</span>
-                        <h2>Mis novedades</h2>
+                        <span class="section-label">HISTORIAL</span>
+                        <h3>Mis novedades</h3>
                     </div>
                     <span class="en-vivo">● En vivo</span>
                 </div>
@@ -285,12 +347,11 @@
         </section>
 
 
-        <!-- ================= NOTIFICACIONES ================= -->
         <section id="notificaciones" class="seccion">
 
-            <div class="seccion-header">
+            <div class="section-header">
                 <div>
-                    <span class="etiqueta-seccion">AVISOS</span>
+                    <span class="section-label">AVISOS</span>
                     <h2>Notificaciones</h2>
                     <p>Aquí verás cuando el supervisor revise tus novedades.</p>
                 </div>
@@ -303,14 +364,13 @@
         </section>
 
 
-        <!-- ================= HORARIOS ================= -->
         <section id="horarios" class="seccion">
 
-            <div class="seccion-header">
+            <div class="section-header">
                 <div>
-                    <span class="etiqueta-seccion">ORGANIZACIÓN</span>
+                    <span class="section-label">ORGANIZACIÓN</span>
                     <h2>Mi horario</h2>
-                    <p>Consulta tus horarios de trabajo.</p>
+                    <p>Los horarios que te pone el supervisor aparecen aquí al instante.</p>
                 </div>
                 <button type="button" class="btn-recargar" id="btnActualizarHorarios">🔄 Actualizar</button>
             </div>
@@ -323,6 +383,7 @@
                             <th>Hora inicio</th>
                             <th>Hora fin</th>
                             <th>Turno</th>
+                            <th>Nota</th>
                             <th>Estado</th>
                         </tr>
                     </thead>
@@ -333,16 +394,10 @@
         </section>
 
 
-        <!-- ================= PERFIL ================= -->
+  
         <section id="perfil" class="seccion">
 
-            <div class="seccion-header">
-                <div>
-                    <span class="etiqueta-seccion">CUENTA</span>
-                    <h2>Mi perfil</h2>
-                    <p>Consulta y actualiza tus datos personales.</p>
-                </div>
-            </div>
+            
 
             <div class="pf-card">
 
@@ -447,11 +502,14 @@
 
         </section>
 
+    <footer class="acso-pie">
+            <p>© 2026 <strong>ACSO</strong> · Power Clean. Experiencia y eficacia sin igual a la mano.</p>
+        </footer>
     </main>
 
 </div>
 
-<div id="mensajeSistema" class="mensaje-sistema">
+<div id="mensajeSistema" class="mensaje-sistema" role="status" aria-live="polite">
     <span id="textoMensaje"></span>
 </div>
 

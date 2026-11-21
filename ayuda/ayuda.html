@@ -1,206 +1,204 @@
-
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>ACSO | Centro de Ayuda</title>
-
+    <meta name="description" content="Centro de ayuda de ACSO: preguntas frecuentes, recuperación de contraseña y contacto con soporte.">
+    <title>Centro de ayuda | ACSO</title>
+    <script src="../FIREBASE/menu.js"></script>
+    <link rel="stylesheet" href="../FIREBASE/accesibilidad.css">
+    <link rel="stylesheet" href="../FIREBASE/acso-ui.css">
     <link rel="stylesheet" href="ayuda.css">
-
+    <script src="../FIREBASE/accesibilidad.js" defer></script>
+    <script src="../FIREBASE/panel.js" defer></script>
 </head>
+<body data-panel="Centro de ayuda">
 
-<body>
+<header class="acso-topbar">
+    <a class="acso-marca" href="../inicio%20de%20sistema/login.html" aria-label="ACSO, ir al inicio de sesión">
+        <span class="acso-marca-icono" aria-hidden="true">A</span>
+        <span class="acso-marca-texto" aria-hidden="true">CSO</span>
+    </a>
+    <a class="btn" id="btnVolver" href="../inicio%20de%20sistema/login.html">← Volver</a>
+</header>
 
-<div class="fondo"></div>
-<div class="fondo-overlay"></div>
+<main class="acso-contenido ayuda" id="contenido-principal" tabindex="-1">
 
-<main class="contenedor">
-<header class="header">
-        <a href="#inicio" class="logo">
-            <span class="logo-icon">A</span>
-            <span class="logo-text">
-                C S O
-            </span>
-        </a>
+    <header class="ayuda-hero">
+        <p class="acso-eyebrow">Centro de ayuda</p>
+        <h1>¿En qué podemos ayudarte?</h1>
+        <p class="acso-sub">Busca tu duda, entra a la opción que necesitas o cuéntanos el problema y te decimos a quién escribirle.</p>
 
-        <a href="../inicio de sistema/login.html" class="btn-volver">
-            <i class="fa-solid fa-arrow-left"></i>
-            Volver
-        </a>
-
+        <form class="ayuda-buscador" role="search" id="formBuscar">
+            <label for="buscar" class="sr-only">Buscar en la ayuda</label>
+            <input id="buscar" type="search" placeholder="Ej: contraseña, novedad, solicitud…" autocomplete="off">
+            <button type="submit" class="btn btn-primario">Buscar</button>
+        </form>
+        <p id="resultadoBusqueda" class="acso-sub" role="status" aria-live="polite"></p>
     </header>
-    <section class="hero">
 
-        <span class="etiqueta">
-            <i class="fa-solid fa-circle-question"></i>
-            CENTRO DE AYUDA
-        </span>
-
-        <h2>
-            ¿En qué podemos ayudarte?
-        </h2>
-
-        <p>
-            Identifica el tipo de problema que estás presentando
-            y comunícate con el área correspondiente.
-        </p>
-
-    </section>
-    <section class="opciones">
-        <article class="ayuda-card">
-            <div class="icono servicio">
-
-                <i class="fa-solid fa-broom"></i>
-            </div>
-            <div class="contenido-card">
-                <span class="numero">
-                    01
-                </span>
-
-                <h3>
-                    Problema con un servicio
-                </h3>
-
-                <p>
-                    Si tu problema se debe a un servicio que fue
-                    ejecutado de manera incorrecta o inapropiada,
-                    comunícate con el supervisor y explícale
-                    el problema que se está presentando.
-                </p>
-
-                <div class="accion-card">
-
-                    <i class="fa-solid fa-user-tie"></i>
-
-                    <span>
-                        Contacta al supervisor
-                    </span>
-
-                </div>
-
-            </div>
-
-        </article>
-
-        <article class="ayuda-card destacado">
-
-            <div class="icono whatsapp">
-                <i class="fa-brands fa-whatsapp"></i>
-            </div>
-
-            <div class="contenido-card">
-
-                <span class="numero">
-                    02
-                </span>
-
-                <h3>
-                    Contáctanos
-                </h3>
-
-                <p>
-                    Si necesitas comunicarte directamente con
-                    nosotros, puedes utilizar nuestro canal
-                    de atención por WhatsApp.
-                </p>
-
-                <a
-                    href="https://web.whatsapp.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="btn-whatsapp">
-
-                    <i class="fa-brands fa-whatsapp"></i>
-
-                    Contactar por WhatsApp
-
-                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-
-                </a>
-
-            </div>
-
-        </article>
-
-
-        <article class="ayuda-card">
-
-            <div class="icono navegacion">
-                <i class="fa-solid fa-compass"></i>
-            </div>
-
-            <div class="contenido-card">
-
-                <span class="numero">
-                    03
-                </span>
-
-                <h3>
-                    Problema de navegación
-                </h3>
-
-                <p>
-                    Si el problema se debe a una dificultad para
-                    navegar o utilizar correctamente la página web,
-                    comunícate con los administradores del sistema.
-                </p>
-
-                <div class="accion-card">
-
-                    <i class="fa-solid fa-gears"></i>
-
-                    <span>
-                        Soporte administrativo
-                    </span>
-
-                </div>
-
-            </div>
-
-        </article>
-
-    </section>
-    <section class="informacion">
-
-        <div class="info-icono">
-            <i class="fa-solid fa-headset"></i>
+    <!-- Accesos rápidos -->
+    <section aria-labelledby="t-accesos" class="ayuda-bloque">
+        <h2 id="t-accesos">Accesos rápidos</h2>
+        <div class="ayuda-grid">
+            <a class="ayuda-acceso" href="../recuperar/recuperar.html" data-busca="contraseña clave olvidé recuperar código">
+                <span class="card-icon" aria-hidden="true">🔑</span>
+                <span><strong>Olvidé mi contraseña</strong><small>Pide un código de recuperación</small></span>
+            </a>
+            <a class="ayuda-acceso" href="../inicio%20de%20sistema/login.html" data-busca="iniciar sesión entrar ingresar login">
+                <span class="card-icon verde" aria-hidden="true">🚪</span>
+                <span><strong>Iniciar sesión</strong><small>Entra a tu panel</small></span>
+            </a>
+            <a class="ayuda-acceso" href="../registro/registro.html" data-busca="registro crear cuenta registrarme">
+                <span class="card-icon azul" aria-hidden="true">📝</span>
+                <span><strong>Crear una cuenta</strong><small>Regístrate como cliente, empleado o supervisor</small></span>
+            </a>
         </div>
-
-        <div class="info-texto">
-
-            <span>
-                SOPORTE ACSO
-            </span>
-
-            <h3>
-                Estamos para ayudarte
-            </h3>
-
-            <p>
-                Describe claramente el problema que estás
-                presentando para que podamos brindarte una
-                atención más rápida y efectiva.
-            </p>
-
-        </div>
-
     </section>
 
-    <footer>
+    <!-- Tipo de problema -->
+    <section aria-labelledby="t-tipos" class="ayuda-bloque">
+        <h2 id="t-tipos">¿Con quién debo hablar?</h2>
+        <div class="ayuda-grid">
+            <article class="panel ayuda-tipo" data-busca="servicio mal hecho queja supervisor limpieza">
+                <span class="card-icon naranja" aria-hidden="true">🧹</span>
+                <h3>Problema con un servicio</h3>
+                <p>Si un servicio se hizo mal o quedó incompleto, cuéntaselo al supervisor.</p>
+                <ul class="ayuda-pasos">
+                    <li><strong>Si eres cliente:</strong> entra a <em>Solicitar</em> y describe lo ocurrido.</li>
+                    <li><strong>Si eres empleado:</strong> usa <em>Novedad laboral</em>, tipo «Problema en el servicio».</li>
+                </ul>
+            </article>
 
-        <p>
-            © 2026 ACSO · Sistema de gestión de servicios
-        </p>
+            <article class="panel ayuda-tipo" data-busca="navegación página error no carga administrador usuario cuenta bloqueada">
+                <span class="card-icon azul" aria-hidden="true">🧭</span>
+                <h3>Problema con la página o mi cuenta</h3>
+                <p>Si algo no carga, no puedes entrar o tu cuenta está bloqueada, escribe a los administradores del sistema.</p>
+                <ul class="ayuda-pasos">
+                    <li>Cuenta bloqueada por intentos fallidos: el administrador puede desbloquearla.</li>
+                    <li>Describe qué estabas haciendo y qué mensaje apareció.</li>
+                </ul>
+            </article>
 
+            <article class="panel ayuda-tipo destacado" data-busca="whatsapp contacto escribir mensaje">
+                <span class="card-icon verde" aria-hidden="true">💬</span>
+                <h3>Escríbenos</h3>
+                <p>Cuéntanos tu caso con el formulario de abajo: arma el mensaje por ti y lo puedes enviar por WhatsApp o copiar.</p>
+                <a class="btn btn-primario" href="#contacto">Ir al formulario</a>
+            </article>
+        </div>
+    </section>
+
+    <!-- Preguntas frecuentes -->
+    <section aria-labelledby="t-faq" class="ayuda-bloque">
+        <h2 id="t-faq">Preguntas frecuentes</h2>
+        <div id="listaFaq" class="ayuda-faq">
+
+            <details class="ayuda-pregunta" data-busca="contraseña olvidé recuperar código clave">
+                <summary>No recuerdo mi contraseña</summary>
+                <div>
+                    <p>Entra a <a href="../recuperar/recuperar.html">Recuperar contraseña</a> y escribe el correo con el que te registraste. El administrador verifica tu identidad y te entrega un código de un solo uso que vence en 30 minutos. Con ese código creas tu nueva contraseña.</p>
+                </div>
+            </details>
+
+            <details class="ayuda-pregunta" data-busca="bloqueada bloqueo intentos fallidos supervisor clave segundo paso">
+                <summary>Mi cuenta quedó bloqueada</summary>
+                <div>
+                    <p>Por seguridad, el acceso de supervisor se bloquea durante 15 minutos tras 3 intentos fallidos de la clave. Puedes esperar ese tiempo o pedir al administrador que la desbloquee.</p>
+                </div>
+            </details>
+
+            <details class="ayuda-pregunta" data-busca="supervisor registro código autorización clave">
+                <summary>¿Cómo me registro como supervisor?</summary>
+                <div>
+                    <p>Necesitas el código de autorización que entregan las personas que autorizan supervisores y crear una clave de supervisor distinta a tu contraseña. Si no tienes el código, pídeselo al administrador.</p>
+                </div>
+            </details>
+
+            <details class="ayuda-pregunta" data-busca="empleado novedad incapacidad ausencia retraso eps arl">
+                <summary>Soy empleado: ¿cómo reporto una novedad o una incapacidad?</summary>
+                <div>
+                    <p>En tu panel entra a <em>Novedad laboral</em>, elige el tipo y escribe la descripción. Si es una incapacidad, indica las fechas y la EPS o ARL. El supervisor la recibe al instante y verás su respuesta en <em>Notificaciones</em>.</p>
+                </div>
+            </details>
+
+            <details class="ayuda-pregunta" data-busca="empleado productos pedido inventario materiales">
+                <summary>¿Cómo pido productos para un servicio?</summary>
+                <div>
+                    <p>En el panel de empleado abre <em>Pedir productos</em>, elige el servicio, agrega los productos y envía el pedido. El supervisor te avisa cuando esté aprobado o entregado.</p>
+                </div>
+            </details>
+
+            <details class="ayuda-pregunta" data-busca="cliente solicitar servicio contrato solicitud seguimiento">
+                <summary>Soy cliente: ¿cómo pido un servicio o un contrato?</summary>
+                <div>
+                    <p>En tu panel entra a <em>Solicitar</em> y elige «Pedir un servicio» o «Pedir un contrato». Luego sigue su estado en <em>Mis solicitudes</em>: Pendiente, Visto, En revisión, Aprobada o Rechazada, con la respuesta del supervisor.</p>
+                </div>
+            </details>
+
+            <details class="ayuda-pregunta" data-busca="datos no cargan servidor api conexión aviso error">
+                <summary>Aparece un aviso de que no se pueden cargar los datos</summary>
+                <div>
+                    <p>Algunas secciones (servicios, contratos, horarios, clientes y productos) dependen del servidor de la empresa. Si está apagado o no tienes internet, verás un aviso y el resto del panel sigue funcionando. Revisa tu conexión, vuelve a intentarlo en unos minutos y, si continúa, avisa a un administrador.</p>
+                </div>
+            </details>
+
+            <details class="ayuda-pregunta" data-busca="sesión inactividad cerrada tiempo">
+                <summary>Mi sesión se cerró sola</summary>
+                <div>
+                    <p>Los accesos de supervisor y administrador se cierran tras 15 minutos sin actividad para proteger tus datos. Solo vuelve a iniciar sesión.</p>
+                </div>
+            </details>
+
+            <details class="ayuda-pregunta" data-busca="accesibilidad texto grande contraste lector pantalla teclado">
+                <summary>¿Puedo agrandar el texto o aumentar el contraste?</summary>
+                <div>
+                    <p>Sí. En la barra superior de cada panel está el botón <strong>Accesibilidad</strong>: cambia el tamaño del texto (A, A+, A++) y activa el alto contraste. También puedes moverte con el teclado: Tab para avanzar, Enter para elegir y Escape para cerrar ventanas.</p>
+                </div>
+            </details>
+        </div>
+        <p id="sinResultados" class="vacio" hidden>No encontramos nada con esa búsqueda. Prueba con otra palabra o escríbenos con el formulario.</p>
+    </section>
+
+    <!-- Contacto -->
+    <section aria-labelledby="contacto" class="ayuda-bloque" id="seccionContacto">
+        <h2 id="contacto">Cuéntanos tu problema</h2>
+        <form class="panel ayuda-form" id="formContacto" novalidate>
+            <div class="pf-grid">
+                <div class="campo">
+                    <label for="cNombre">Tu nombre</label>
+                    <input id="cNombre" type="text" autocomplete="name" maxlength="80">
+                </div>
+                <div class="campo">
+                    <label for="cTipo">¿Qué te pasó?</label>
+                    <select id="cTipo" required>
+                        <option value="">Elige una opción</option>
+                        <option value="servicio">Problema con un servicio</option>
+                        <option value="acceso">No puedo entrar o recuperar mi cuenta</option>
+                        <option value="pagina">La página no funciona bien</option>
+                        <option value="otro">Otro</option>
+                    </select>
+                </div>
+                <div class="campo campo-ancho">
+                    <label for="cMensaje">Describe lo que ocurrió</label>
+                    <textarea id="cMensaje" rows="5" maxlength="600" required placeholder="Qué estabas haciendo, qué esperabas y qué mensaje apareció."></textarea>
+                    <small class="contador-texto" id="cContador" aria-live="off">0 / 600</small>
+                </div>
+            </div>
+            <div class="gx-acciones">
+                <a class="btn btn-primario" id="btnWhatsapp" href="https://wa.me/" target="_blank" rel="noopener noreferrer">Enviar por WhatsApp</a>
+                <button type="button" class="btn" id="btnCopiar">Copiar mensaje</button>
+                <span id="avisoContacto" class="confirmacion" role="status" aria-live="polite"></span>
+            </div>
+            <p class="gx-nota">WhatsApp se abre con el mensaje ya escrito; elige allí a quién enviarlo. Nunca incluyas tu contraseña.</p>
+        </form>
+    </section>
+
+    <footer class="acso-pie">
+        <p>© 2026 <strong>ACSO</strong> · Sistema de gestión de servicios de Power Clean</p>
     </footer>
-
 </main>
 
-
 <script src="ayuda.js"></script>
-
 </body>
 </html>

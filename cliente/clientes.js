@@ -1,7 +1,7 @@
 
 const API_BASE = "http://localhost:8080/api";
 
-const navLinks = document.querySelectorAll(".nav-link");
+const navLinks = document.querySelectorAll(".sidebar .acso-nav-item[data-section]");
 const secciones = document.querySelectorAll(".contenido");
 
 const sidebar = document.getElementById("sidebar");
@@ -130,9 +130,11 @@ function actualizarIdentidad() {
             nombreUsuario;
     }
 
-    if (sectionTitulo) {
+    const saludoCliente = document.getElementById("saludoCliente");
 
-        sectionTitulo.textContent =
+    if (saludoCliente) {
+
+        saludoCliente.textContent =
             "Bienvenido, " +
             nombreUsuario;
     }
@@ -214,10 +216,11 @@ function mostrarSeccion(nombre) {
 
     navLinks.forEach(link => {
 
-        link.classList.toggle(
-            "active",
-            link.dataset.section === nombre
-        );
+        if (link.dataset.section === nombre) {
+            link.setAttribute("aria-current", "page");
+        } else {
+            link.removeAttribute("aria-current");
+        }
 
     });
 
@@ -230,31 +233,6 @@ function mostrarSeccion(nombre) {
         );
 
     });
-
-
-    const datos =
-        titulos[nombre];
-
-
-    if (datos) {
-
-        sectionEyebrow.textContent =
-            datos.eyebrow;
-
-
-        if (nombre === "inicio") {
-
-            sectionTitulo.textContent =
-                datos.titulo +
-                nombreUsuario;
-
-        } else {
-
-            sectionTitulo.textContent =
-                datos.titulo;
-        }
-
-    }
 
 
     cerrarMenuMovil();
@@ -326,7 +304,12 @@ if (btnVerServicios) {
 // El logo de la barra superior lleva al inicio
 document.getElementById("marcaInicio")?.addEventListener("click", (e) => {
     e.preventDefault();
-    document.querySelector('.nav-link[data-section="inicio"]')?.click();
+    mostrarSeccion("inicio");
+});
+
+// La tarjeta de usuario de la barra superior abre «Mi perfil»
+document.getElementById("abrirPerfil")?.addEventListener("click", () => {
+    mostrarSeccion("perfil");
 });
 
 function cerrarMenuMovil() {
@@ -684,7 +667,7 @@ function cargarNotificaciones() {
 
     if (badge) {
         badge.textContent = noLeidas > 0 ? noLeidas : "0";
-        badge.classList.toggle("visible", noLeidas > 0);
+        badge.classList.toggle("oculto", noLeidas === 0);
     }
 
     if (todas.length === 0) {
@@ -697,16 +680,28 @@ function cargarNotificaciones() {
         const li = document.createElement("li");
         li.className = "notificacion";
 
+        if (!notificacion.leida) li.classList.add("nueva");
+
         li.innerHTML = `
-            <span class="notificacion-icono">
-                ${notificacion.leida ? "✓" : "!"}
-            </span>
-            <div>
-                <strong>${esc(notificacion.titulo)}</strong>
+            <span class="icono-notificacion" aria-hidden="true">${notificacion.leida ? "✓" : "🔔"}</span>
+            <div class="notificacion-texto">
+                <strong>${esc(notificacion.titulo)}${notificacion.leida ? "" : ' <span class="gx-badge gx-b-aviso">Nueva</span>'}</strong>
                 <p>${esc(notificacion.mensaje)}</p>
+                <small>${esc(notificacion.fecha)}${notificacion.leida ? "" : " · Pulsa para marcar como leída"}</small>
             </div>
-            <small>${esc(notificacion.fecha)}</small>
         `;
+
+        // Se puede usar con el teclado, no solo con el ratón
+        if (!notificacion.leida) {
+            li.tabIndex = 0;
+            li.setAttribute("role", "button");
+        }
+        li.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                li.click();
+            }
+        });
 
         li.addEventListener("click", () => {
 
@@ -1112,12 +1107,16 @@ if (btnCerrarSesion) {
 
     btnCerrarSesion.addEventListener(
         "click",
-        () => {
+        async () => {
 
-            const confirmar =
-                confirm(
-                    "¿Deseas cerrar tu sesión?"
-                );
+            const confirmar = window.ACSO?.confirmar
+                ? await window.ACSO.confirmar({
+                    titulo: "Cerrar sesión",
+                    mensaje: "¿Deseas cerrar tu sesión?",
+                    aceptar: "Sí, cerrar sesión",
+                    peligro: false
+                })
+                : confirm("¿Deseas cerrar tu sesión?");
 
 
             if (!confirmar) {

@@ -24,7 +24,6 @@ El sistema permite gestionar información de:
 * Proveedores y productos.
 * Contratos.
 * Servicios.
-* Pagos.
 * Horarios.
 * Notificaciones.
 * Novedades laborales.
@@ -79,14 +78,11 @@ Se utiliza:
 
 La base de datos almacena y relaciona la información utilizada por el sistema.
 
----
-
-
 ##  Base de datos
 
 La aplicación utiliza **PostgreSQL** como sistema gestor de base de datos.
 
-La base de datos contiene **16 tablas relacionadas**, utilizando claves primarias y claves foráneas para organizar la información.
+La base de datos contiene **15 tablas relacionadas**, utilizando claves primarias y claves foráneas para organizar la información.
 
 Entre las principales tablas se encuentran:
 
@@ -101,13 +97,10 @@ Entre las principales tablas se encuentran:
 * PRODUCTOS
 * CONTRATO
 * SERVICIOS
-* PAGOS
 * HORARIO
 * NOTIFICACION
 * NOVEDAD_LABORAL
 * PRODUCTOS_SERVICIOS
-
----
 
 ## Autenticación y seguridad
 
@@ -119,23 +112,15 @@ El sistema cuenta con:
 * Autenticación de usuarios.
 * Control de acceso según roles.
 * Contraseñas protegidas mediante **BCrypt**.
-* Protección de los diferentes endpoints de la API.
 
 El inicio de sesión se realiza mediante el endpoint:
-
-```text
 POST /api/login
-```
-
----
 
 ## API REST
 
 El backend proporciona una API REST para realizar las operaciones del sistema.
 
 Los principales recursos disponibles son:
-
-```text
 /api/roles
 /api/personas
 /api/zonas
@@ -149,22 +134,15 @@ Los principales recursos disponibles son:
 /api/notificaciones
 /api/novedades
 /api/contratos
-/api/pagos
 /api/servicios
 /api/productos-servicios
-```
 
 Los recursos cuentan con operaciones CRUD:
-
-```text
 GET       Consultar registros
 GET /id   Consultar un registro específico
 POST      Crear registros
 PUT /id   Actualizar registros
 DELETE /id Eliminar registros
-```
-
----
 
 ##  Pruebas de la API
 
@@ -173,8 +151,6 @@ Las pruebas de los endpoints se realizan utilizando **Postman**.
 Se realizan solicitudes HTTP para comprobar el funcionamiento de las operaciones CRUD y verificar las respuestas del backend.
 
 También se utiliza Postman para comprobar el funcionamiento de la autenticación y de los diferentes endpoints de la API.
-
----
 
 ##  Requisitos
 
@@ -190,8 +166,6 @@ Para ejecutar el proyecto se necesitan las herramientas utilizadas durante su de
 * Navegador web
 * Postman
 
----
-
 ##  Ejecución del proyecto
 
 ### 1. Base de datos
@@ -199,63 +173,41 @@ Para ejecutar el proyecto se necesitan las herramientas utilizadas durante su de
 Crear y configurar la base de datos PostgreSQL utilizada por el proyecto.
 
 Los scripts de la base de datos se encuentran en:
-
-```text
 database/scripts.sql
-database/respaldo.sql
-```
+database/respaldo.sq
 
 La configuración de conexión se encuentra en el archivo:
-
-```text
 backend/powerclean-acso/src/main/resources/application.properties
-```
 
 La aplicación utiliza PostgreSQL mediante una conexión similar a:
 
-```text
 jdbc:postgresql://localhost:5432/power_clean_acso
-```
-
----
 
 ### 2. Backend
 
 Abrir la carpeta:
 
-```text
+
 backend/powerclean-acso
-```
 
 Ejecutar la aplicación Spring Boot desde IntelliJ IDEA o mediante Maven.
 
 El backend está configurado para ejecutarse en:
-
-```text
 http://localhost:8081
-```
-
----
 
 ### 3. Frontend
 
 Abrir la carpeta:
-
-```text
 frontend
-```
 
 El frontend puede ejecutarse mediante **Live Server** desde Visual Studio Code.
 
 Después de iniciar el servidor, acceder al sistema desde el navegador.
 
----
-
 ## Flujo general del sistema
 
 El funcionamiento general del proyecto sigue el siguiente flujo:
 
-```text
 Usuario
    ↓
 Frontend
@@ -269,11 +221,8 @@ Backend Spring Boot
 PostgreSQL
    ↓
 Respuesta al Frontend
-```
 
 La autenticación permite identificar al usuario y determinar el rol correspondiente para controlar el acceso a las funcionalidades.
-
----
 
 ##  Herramientas utilizadas
 
@@ -297,7 +246,6 @@ Durante el desarrollo del proyecto se utilizaron:
 | GitHub             | Repositorio y trabajo colaborativo                 |
 | Docker             | Herramientas de apoyo para el entorno del proyecto |
 
----
 
 ## Archivos de apoyo
 
@@ -309,7 +257,6 @@ El proyecto contiene archivos destinados a facilitar su desarrollo y pruebas:
 * `docker/Dockerfile` — configuración de Docker.
 * `docker/docker-compose.yml` — configuración de Docker Compose.
 
----
 
 ##  Autores
 
@@ -317,14 +264,10 @@ El proyecto contiene archivos destinados a facilitar su desarrollo y pruebas:
 
 **Yeison Estid Acuña Guevara**
 
----
-
 ##  Proyecto académico
 
 Proyecto desarrollado como parte del proceso de formación en **Análisis y Desarrollo de Software (ADSO)**.
 
-
----
 
 ## Novedades laborales e incapacidades (Firebase / Cloud Firestore)
 
@@ -380,3 +323,67 @@ El ingreso como supervisor usa un segundo paso (clave de supervisor), código de
 * **Primer administrador:** `node herramientas/crear-admin.js` y pegar el JSON como nuevo hijo de `usuarios` en Realtime Database.
 * **Recuperar contraseña:** `recuperar/recuperar.html`. La persona pide la recuperación, el admin verifica su identidad y genera un código de un solo uso (30 min); con ese código crea su nueva contraseña.
 * Las contraseñas nuevas se guardan con hash (PBKDF2); las cuentas antiguas en texto plano siguen entrando.
+
+
+---
+
+## Inventario, pedidos de productos, servicios asignados y horarios
+
+Todo se guarda en **Cloud Firestore** y se actualiza en tiempo real entre supervisor y empleado.
+
+| Qué | Quién lo hace | Dónde se ve | Colección |
+|---|---|---|---|
+| Inventario de productos (crear, editar, sumar stock, eliminar, alerta de stock bajo) | Supervisor → *Inventario* | Supervisor, y el empleado lo ve al pedir productos | `inventario` |
+| Pedido de productos para un servicio | Empleado → *Pedir productos* | Supervisor → *Pedidos de productos* (con contador en el menú). Al marcarlo **Entregado** se descuenta del inventario (una sola vez) | `pedidos_productos` |
+| Asignar un servicio a un empleado (a mano o desde una solicitud de cliente con el botón **👷 Asignar a empleado**) | Supervisor → *Servicios* | Empleado → *Mis servicios* (puede marcarlo *En curso* / *Completado*) | `asignaciones_servicio` |
+| Horario de cada empleado (un día, o un rango de fechas con días de la semana) | Supervisor → *Horarios* | Empleado → *Mi horario* y «Turno de hoy» en Inicio | `horarios_empleados` |
+| Contratos pedidos por clientes | Cliente → *Solicitar* | Supervisor → *Contratos* → desplegable **Contratos solicitados por clientes** | `solicitudes` (ya existía) |
+
+Cada asignación, cambio de horario o respuesta a un pedido crea una notificación para el empleado en `notificaciones`.
+
+El empleado se identifica con `id_empleado` (o `id_usuario`, o la llave del usuario en Realtime Database), igual que en el resto del panel.
+
+### Reglas de Firestore
+
+Hay que **añadir estas colecciones** a las reglas publicadas (`firestore.rules`), si no Firestore las rechaza:
+
+```
+match /inventario/{id}             { allow read, write: if true; }
+match /pedidos_productos/{id}      { allow read, write: if true; }
+match /asignaciones_servicio/{id}  { allow read, write: if true; }
+match /horarios_empleados/{id}     { allow read, write: if true; }
+```
+
+(Usa el mismo criterio que ya tienes en `novedades_laborales` y `solicitudes`.)
+
+### Archivos nuevos / modificados
+
+* `FIREBASE/firebase.js` – nuevas colecciones y `deleteDoc` / `writeBatch`.
+* `FIREBASE/gestion.css` – estilos compartidos (supervisor y empleado).
+* `supervisor/gestion.js` – inventario, pedidos, servicios y horarios del supervisor.
+* `supervisor/supervisor.html`, `supervisor/script.js` – menú, secciones y desplegable de contratos.
+* `empleado/empleado.html`, `empleado/empleados.js` – *Pedir productos*, *Mis servicios* y *Mi horario* en vivo.
+
+
+---
+
+## Diseño unificado y accesibilidad de los paneles
+
+Los cuatro paneles (administrador, supervisor, empleado y cliente) usan **una sola hoja de estilos** y **un solo script común**:
+
+| Archivo | Para qué sirve |
+|---|---|
+| `FIREBASE/acso-ui.css` | Sistema de diseño único: colores, barra superior, menú lateral, cabecera, tarjetas, tablas, botones, formularios, estados, avisos y diálogos. Si algo cambia aquí, cambia igual en los cuatro paneles. |
+| `FIREBASE/panel.js` | Comportamiento común: barra «Accesibilidad» (texto A / A+ / A++ y alto contraste), foco y título al cambiar de sección, flechas en el menú, indicador de conexión, `ACSO.confirmar()` / `ACSO.preguntar()` / `ACSO.errorCampo()`. |
+| `FIREBASE/menu.js` | Menú lateral (ahora también aplica las preferencias de accesibilidad y bloquea el fondo en móvil). |
+
+Estructura idéntica en los cuatro HTML: `header.acso-topbar` → `aside.sidebar` (`.acso-nav-item`, botón *Cerrar sesión* abajo) → `main.acso-contenido` (`.acso-cab`, secciones con `.section-header`, `footer.acso-pie`).
+La opción activa del menú se marca con `aria-current="page"`.
+
+Se eliminaron `menu.css`, `paneles.css`, `perfil.css`, `gestion.css`, `admin.css`, `supervisor/style.css`, `empleado/estilos.css` y `cliente/estilos-cliente.css` (todo quedó en `acso-ui.css`).
+
+`supervisor/Configuracion` y `Reportes` también usan el mismo marco (menú, barra superior, componentes) y comparten `FIREBASE/subpagina.js` (sesión, cierre de sesión e inactividad).
+- **Configuración:** las preferencias de avisos ahora sí las usa el panel del supervisor (`configuracion_supervisor` en el navegador). Se quitaron las opciones que no hacían nada (modo oscuro, intervalo de actualización).
+- **Reportes:** ahora exige sesión de supervisor y sigue funcionando si Chart.js no carga.
+- **Ayuda (`ayuda/ayuda.html`):** rediseñada con el sistema común: buscador, accesos rápidos, preguntas frecuentes y formulario que arma el mensaje para WhatsApp o lo copia. Para fijar un número de atención, escribe el número en `WHATSAPP_NUMERO` de `ayuda/ayuda.js`.
+- Se corrigió `Javascript.js` → `javascript.js` (fallaba en servidores que distinguen mayúsculas).

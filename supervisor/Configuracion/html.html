@@ -1,488 +1,134 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Configuración | ACSO</title>
-
+    <title>Configuración | ACSO · Panel de supervisión</title>
     <style id="guard-style">html{visibility:hidden}</style>
-    <link rel="stylesheet" href="css.css">
+    <script src="../../FIREBASE/menu.js"></script>
+    <link rel="stylesheet" href="../../FIREBASE/accesibilidad.css">
+    <link rel="stylesheet" href="../../FIREBASE/acso-ui.css">
+    <link rel="stylesheet" href="configuracion.css">
+    <script src="../../FIREBASE/accesibilidad.js" defer></script>
+    <script src="../../FIREBASE/panel.js" defer></script>
 </head>
+<body data-panel="Panel de supervisión">
 
-<body>
+<header class="acso-topbar">
+    <button type="button" class="btn-hamburguesa" id="btnMenu" aria-label="Abrir o cerrar menú" aria-controls="sidebar" aria-expanded="true">
+        <span></span><span></span><span></span>
+    </button>
+    <a class="acso-marca" href="../supervisor.html#Inicio" aria-label="ACSO, volver al panel">
+        <span class="acso-marca-icono" aria-hidden="true">A</span>
+        <span class="acso-marca-texto" aria-hidden="true">CSO</span>
+    </a>
+    <a class="acso-usuario" href="../supervisor.html#Perfil" title="Ir a mi perfil">
+        <span class="acso-avatar" id="usuarioAvatar" aria-hidden="true">S</span>
+        <span class="acso-usuario-datos">
+            <strong id="usuarioNombre">Supervisor</strong>
+            <small>Supervisor</small>
+        </span>
+    </a>
+</header>
 
-<div class="contenedor">
+<div class="menu-overlay" id="menuOverlay"></div>
 
-    <!-- =========================================
-         ENCABEZADO
-    ========================================== -->
+<aside class="sidebar" id="sidebar">
+    <nav aria-label="Menú principal">
+        <ul class="acso-nav">
+            <li><a class="acso-nav-item" href="../supervisor.html#Inicio"><span class="acso-nav-ico" aria-hidden="true">🏠</span><span class="acso-nav-txt">Inicio</span></a></li>
+            <li><a class="acso-nav-item" href="../supervisor.html#Personal"><span class="acso-nav-ico" aria-hidden="true">👨‍💼</span><span class="acso-nav-txt">Personal</span></a></li>
+            <li><a class="acso-nav-item" href="../supervisor.html#NovedadLaboral"><span class="acso-nav-ico" aria-hidden="true">📋</span><span class="acso-nav-txt">Novedad laboral</span></a></li>
+            <li><a class="acso-nav-item" href="../supervisor.html#Solicitudes"><span class="acso-nav-ico" aria-hidden="true">📑</span><span class="acso-nav-txt">Solicitudes</span></a></li>
+            <li><a class="acso-nav-item" href="../supervisor.html#Inventario"><span class="acso-nav-ico" aria-hidden="true">🧰</span><span class="acso-nav-txt">Inventario</span></a></li>
+            <li><a class="acso-nav-item" href="../supervisor.html#PedidosProductos"><span class="acso-nav-ico" aria-hidden="true">🛒</span><span class="acso-nav-txt">Pedidos de productos</span></a></li>
+            <li><a class="acso-nav-item" href="../supervisor.html#Servicios"><span class="acso-nav-ico" aria-hidden="true">🧹</span><span class="acso-nav-txt">Servicios</span></a></li>
+            <li><a class="acso-nav-item" href="../supervisor.html#Horarios"><span class="acso-nav-ico" aria-hidden="true">🕐</span><span class="acso-nav-txt">Horarios</span></a></li>
+            <li><a class="acso-nav-item" href="../supervisor.html#Contratos"><span class="acso-nav-ico" aria-hidden="true">📄</span><span class="acso-nav-txt">Contratos</span></a></li>
+            <li><a class="acso-nav-item" href="../supervisor.html#Clientes"><span class="acso-nav-ico" aria-hidden="true">🤝</span><span class="acso-nav-txt">Clientes</span></a></li>
+            <li><a class="acso-nav-item" href="../supervisor.html#Notificaciones"><span class="acso-nav-ico" aria-hidden="true">🔔</span><span class="acso-nav-txt">Notificaciones</span></a></li>
+            <li><a class="acso-nav-item" href="../supervisor.html#Perfil"><span class="acso-nav-ico" aria-hidden="true">👤</span><span class="acso-nav-txt">Mi perfil</span></a></li>
+            <li><a class="acso-nav-item" href="html.html" aria-current="page"><span class="acso-nav-ico" aria-hidden="true">⚙️</span><span class="acso-nav-txt">Configuración</span></a></li>
+            <li><a class="acso-nav-item" href="../../Reportes/reportes.html"><span class="acso-nav-ico" aria-hidden="true">📊</span><span class="acso-nav-txt">Reportes</span></a></li>
+        </ul>
+    </nav>
+    <div class="acso-sidebar-pie">
+        <button type="button" id="btnCerrarSesion" class="acso-nav-item acso-salir">
+            <span class="acso-nav-ico" aria-hidden="true">🚪</span><span class="acso-nav-txt">Cerrar sesión</span>
+        </button>
+    </div>
+</aside>
 
-    <header class="encabezado">
-
+<main class="acso-contenido" id="contenido-principal" tabindex="-1">
+    <header class="acso-cab">
         <div>
-            <span class="etiqueta">ACSO</span>
-
-            <h1>⚙️ Configuración</h1>
-
-            <p>
-                Administra tu cuenta y las preferencias
-                del panel de supervisor.
-            </p>
+            <p class="acso-eyebrow">ACSO · POWER CLEAN</p>
+            <h1>Panel de supervisión</h1>
         </div>
-
-        <div class="estado-cuenta">
-            <span class="punto"></span>
-            Cuenta activa
-        </div>
-
+        <p class="acso-estado">Sistema en línea</p>
     </header>
 
-
-    <!-- =========================================
-         PERFIL
-    ========================================== -->
-
-    <section class="tarjeta">
-
-        <div class="titulo-seccion">
-            <div class="icono">👤</div>
-
+    <section aria-labelledby="t-conf">
+        <header class="section-header">
             <div>
-                <h2>Perfil del supervisor</h2>
-                <p>Información de tu cuenta</p>
+                <span class="section-label">Preferencias</span>
+                <h2 id="t-conf" tabindex="-1">Configuración</h2>
+                <p>Administra tu cuenta y los avisos del panel de supervisión. Estas preferencias se guardan en este navegador.</p>
+            </div>
+        </header>
+
+        <div class="panel" aria-labelledby="t-perfil">
+            <div class="panel-titulo"><h3 id="t-perfil">Mi cuenta</h3></div>
+            <div class="pf-cabecera">
+                <div class="pf-avatar" id="avatarSupervisor" aria-hidden="true">S</div>
+                <div class="pf-identidad">
+                    <h3 id="nombreSupervisor">Supervisor</h3>
+                    <span class="pf-rol">Supervisor</span>
+                    <p class="gx-nota">Correo: <strong id="correoSupervisor">No registrado</strong></p>
+                </div>
+            </div>
+            <div class="gx-acciones">
+                <a class="btn btn-primario" href="../supervisor.html#Perfil">Editar mi perfil</a>
+                <a class="btn" href="../supervisor.html#Perfil">Cambiar contraseña</a>
             </div>
         </div>
 
-
-        <div class="perfil">
-
-            <div class="avatar" id="avatarSupervisor">
-                S
+        <form class="panel" id="formConfig" aria-labelledby="t-avisos" novalidate>
+            <div class="panel-titulo"><h3 id="t-avisos">Avisos emergentes</h3></div>
+            <p class="pista">Elige de qué quieres que te avise el panel mientras lo tienes abierto.</p>
+            <div class="opciones-check">
+                <label class="opcion-check"><input type="checkbox" id="notificacionesNovedades" checked>
+                    <span><strong>Nuevas novedades laborales</strong><small>Cuando un empleado envíe una novedad.</small></span></label>
+                <label class="opcion-check"><input type="checkbox" id="notificacionesIncapacidades" checked>
+                    <span><strong>Nuevas incapacidades</strong><small>Cuando un empleado reporte una incapacidad.</small></span></label>
+                <label class="opcion-check"><input type="checkbox" id="notificacionesServicios" checked>
+                    <span><strong>Solicitudes de clientes</strong><small>Cuando un cliente pida un servicio o un contrato.</small></span></label>
             </div>
-
-            <div class="datos-perfil">
-
-                <h3 id="nombreSupervisor">
-                    Supervisor
-                </h3>
-
-                <span class="cargo">
-                    Supervisor
-                </span>
-
-                <p>
-                    🆔 ID:
-                    <strong id="idSupervisor">-</strong>
-                </p>
-
-                <p>
-                    📧
-                    <span id="correoSupervisor">
-                        No registrado
-                    </span>
-                </p>
-
+            <div class="gx-acciones">
+                <button type="submit" class="btn btn-primario" id="btnGuardar">Guardar cambios</button>
+                <button type="button" class="btn" id="btnRestaurar">Restaurar valores</button>
             </div>
+        </form>
 
-            <button
-                class="btn-principal"
-                id="btnEditarPerfil">
-
-                ✏️ Editar perfil
-
-            </button>
-
+        <div class="panel" aria-labelledby="t-acc">
+            <div class="panel-titulo"><h3 id="t-acc">Accesibilidad</h3></div>
+            <p class="pista">Agranda el texto o activa el alto contraste. Se aplica a todos los paneles y se recuerda en este equipo.</p>
+            <div class="gx-acciones"><button type="button" class="btn" id="abrirA11y">Abrir opciones de accesibilidad</button></div>
         </div>
 
+        <div class="panel" aria-labelledby="t-seg">
+            <div class="panel-titulo"><h3 id="t-seg">Seguridad</h3></div>
+            <p class="pista">Por tu seguridad, la sesión se cierra sola tras 15 minutos sin actividad. Si usas un equipo compartido, cierra la sesión al terminar.</p>
+            <div class="gx-acciones"><button type="button" class="btn btn-peligro" id="btnCerrarSesion2">Cerrar sesión ahora</button></div>
+        </div>
     </section>
 
-
-    <!-- =========================================
-         NOTIFICACIONES
-    ========================================== -->
-
-    <section class="tarjeta">
-
-        <div class="titulo-seccion">
-
-            <div class="icono">
-                🔔
-            </div>
-
-            <div>
-                <h2>Notificaciones</h2>
-
-                <p>
-                    Decide qué alertas quieres recibir
-                </p>
-            </div>
-
-        </div>
-
-
-        <div class="opciones">
-
-            <div class="opcion">
-
-                <div>
-                    <strong>
-                        Nuevas novedades laborales
-                    </strong>
-
-                    <span>
-                        Recibir alertas cuando un empleado
-                        registre una novedad.
-                    </span>
-                </div>
-
-                <label class="switch">
-
-                    <input
-                        type="checkbox"
-                        id="notificacionesNovedades"
-                        checked>
-
-                    <span class="slider"></span>
-
-                </label>
-
-            </div>
-
-
-            <div class="opcion">
-
-                <div>
-                    <strong>
-                        Incapacidades
-                    </strong>
-
-                    <span>
-                        Recibir alertas sobre incapacidades
-                        y ausencias.
-                    </span>
-                </div>
-
-                <label class="switch">
-
-                    <input
-                        type="checkbox"
-                        id="notificacionesIncapacidades"
-                        checked>
-
-                    <span class="slider"></span>
-
-                </label>
-
-            </div>
-
-
-            <div class="opcion">
-
-                <div>
-                    <strong>
-                        Solicitudes de servicio
-                    </strong>
-
-                    <span>
-                        Avisos cuando llegue una nueva
-                        solicitud.
-                    </span>
-                </div>
-
-                <label class="switch">
-
-                    <input
-                        type="checkbox"
-                        id="notificacionesServicios"
-                        checked>
-
-                    <span class="slider"></span>
-
-                </label>
-
-            </div>
-
-
-            <div class="opcion">
-
-                <div>
-                    <strong>
-                        Alertas de inventario
-                    </strong>
-
-                    <span>
-                        Avisos cuando un producto tenga
-                        poco stock.
-                    </span>
-                </div>
-
-                <label class="switch">
-
-                    <input
-                        type="checkbox"
-                        id="notificacionesInventario">
-
-                    <span class="slider"></span>
-
-                </label>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================================
-         SISTEMA
-    ========================================== -->
-
-    <section class="tarjeta">
-
-        <div class="titulo-seccion">
-
-            <div class="icono">
-                🖥️
-            </div>
-
-            <div>
-                <h2>Preferencias del sistema</h2>
-
-                <p>
-                    Personaliza el funcionamiento del panel
-                </p>
-            </div>
-
-        </div>
-
-
-        <div class="opciones">
-
-            <div class="opcion">
-
-                <div>
-                    <strong>
-                        Actualización automática
-                    </strong>
-
-                    <span>
-                        Actualizar la información del panel
-                        automáticamente.
-                    </span>
-                </div>
-
-                <label class="switch">
-
-                    <input
-                        type="checkbox"
-                        id="actualizacionAutomatica"
-                        checked>
-
-                    <span class="slider"></span>
-
-                </label>
-
-            </div>
-
-
-            <div class="opcion">
-
-                <div>
-                    <strong>
-                        Mostrar servicios completados
-                    </strong>
-
-                    <span>
-                        Mostrar servicios que ya fueron
-                        finalizados.
-                    </span>
-                </div>
-
-                <label class="switch">
-
-                    <input
-                        type="checkbox"
-                        id="mostrarCompletados">
-
-                    <span class="slider"></span>
-
-                </label>
-
-            </div>
-
-
-            <div class="opcion">
-
-                <div>
-
-                    <strong>
-                        Modo oscuro
-                    </strong>
-
-                    <span>
-                        Cambia la apariencia del panel.
-                    </span>
-
-                </div>
-
-                <label class="switch">
-
-                    <input
-                        type="checkbox"
-                        id="modoOscuro">
-
-                    <span class="slider"></span>
-
-                </label>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================================
-         ACTUALIZACIÓN
-    ========================================== -->
-
-    <section class="tarjeta">
-
-        <div class="titulo-seccion">
-
-            <div class="icono">
-                🔄
-            </div>
-
-            <div>
-                <h2>Actualización de información</h2>
-
-                <p>
-                    Controla cada cuánto se actualiza
-                    el panel.
-                </p>
-            </div>
-
-        </div>
-
-
-        <div class="selector">
-
-            <label for="intervaloActualizacion">
-                Intervalo de actualización
-            </label>
-
-            <select id="intervaloActualizacion">
-
-                <option value="30">
-                    Cada 30 segundos
-                </option>
-
-                <option value="60" selected>
-                    Cada 1 minuto
-                </option>
-
-                <option value="300">
-                    Cada 5 minutos
-                </option>
-
-                <option value="600">
-                    Cada 10 minutos
-                </option>
-
-            </select>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================================
-         SEGURIDAD
-    ========================================== -->
-
-    <section class="tarjeta seguridad">
-
-        <div class="titulo-seccion">
-
-            <div class="icono">
-                🔐
-            </div>
-
-            <div>
-                <h2>Seguridad</h2>
-
-                <p>
-                    Protege tu cuenta de supervisor.
-                </p>
-            </div>
-
-        </div>
-
-
-        <div class="acciones-seguridad">
-
-            <button
-                class="btn-secundario"
-                id="btnCambiarPassword">
-
-                🔑 Cambiar contraseña
-
-            </button>
-
-<div class="tab" onclick="window.location.href='/inicio de sistema/login.html'"> ⬅ Cerrar sesión</div>
-
-
-    </section>
-
-
-    <!-- =========================================
-         GUARDAR
-    ========================================== -->
-
-    <div class="guardar">
-
-        <button
-            class="btn-guardar"
-            id="btnGuardar">
-
-            💾 Guardar configuración
-
-        </button>
-
-        <button
-            class="btn-restaurar"
-            id="btnRestaurar">
-
-            ↩ Restaurar
-
-        </button>
-
-    </div>
-
-
-    <!-- =========================================
-         MENSAJE
-    ========================================== -->
-
-    <div
-        id="mensaje"
-        class="mensaje">
-
-    </div>
-
-</div>
-
-
-<script type="module">
-    // Solo supervisores con sesión verificada pueden ver esta página
-    import { protegerSupervisor } from "../../FIREBASE/seguridad.js";
-    await protegerSupervisor();
-</script>
-
-<script src="javascript.js"></script>
-
+    <footer class="acso-pie">
+        <p>© 2026 <strong>ACSO</strong> · Power Clean. Experiencia y eficacia sin igual a la mano.</p>
+    </footer>
+</main>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script type="module" src="configuracion.js"></script>
 </body>
 </html>

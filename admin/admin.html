@@ -3,104 +3,129 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ACSO | Panel de administración</title>
+<title>Resumen | ACSO · Panel de administración</title>
 <style id="guard-style">html{visibility:hidden}</style>
 <script src="../FIREBASE/menu.js"></script>
-<link rel="stylesheet" href="admin.css">
-<link rel="stylesheet" href="../FIREBASE/menu.css">
-    <link rel="stylesheet" href="../FIREBASE/paneles.css">
+<link rel="stylesheet" href="../FIREBASE/accesibilidad.css">
+<link rel="stylesheet" href="../FIREBASE/acso-ui.css">
+<script src="../FIREBASE/accesibilidad.js" defer></script>
+<script src="../FIREBASE/panel.js" defer></script>
 </head>
-<body>
+<body data-panel="Panel de administración">
 
 <!-- ================= BARRA SUPERIOR ================= -->
-<div class="acso-topbar">
+<header class="acso-topbar">
 
     <button type="button" class="btn-hamburguesa" id="btnMenu"
             aria-label="Abrir o cerrar menú" aria-controls="sidebar" aria-expanded="true">
         <span></span><span></span><span></span>
     </button>
 
-    <a class="acso-marca" href="#resumen" data-ir="resumen">
-        <span class="acso-marca-icono">A</span>
-        <span class="acso-marca-texto">CSO</span>
+    <a class="acso-marca" href="#resumen" data-ir="resumen" aria-label="ACSO, ir al resumen">
+        <span class="acso-marca-icono" aria-hidden="true">A</span>
+        <span class="acso-marca-texto" aria-hidden="true">CSO</span>
     </a>
 
-    <div class="yo-chip">
-        <span class="yo-avatar" id="yoAvatar" aria-hidden="true">AD</span>
-        <span class="yo-textos">
+    <div class="acso-usuario">
+        <span class="acso-avatar" id="yoAvatar" aria-hidden="true">AD</span>
+        <span class="acso-usuario-datos">
             <strong id="yo">Administrador</strong>
             <small>Administrador</small>
         </span>
     </div>
 
-</div>
+</header>
 
 <div class="menu-overlay" id="menuOverlay"></div>
 
 <!-- ================= BARRA LATERAL ================= -->
 <aside class="sidebar" id="sidebar">
     <nav id="nav" aria-label="Menú principal">
-        <button type="button" class="tab on" data-v="resumen">
-            <span class="ico">📊</span><span class="txt">Resumen</span>
-        </button>
-        <button type="button" class="tab" data-v="usuarios">
-            <span class="ico">👥</span><span class="txt">Usuarios</span>
-            <span class="cuenta oculto" id="cUsuarios">0</span>
-        </button>
-        <button type="button" class="tab" data-v="recup">
-            <span class="ico">🔑</span><span class="txt">Recuperar contraseñas</span>
-            <span class="cuenta alerta oculto" id="cRecup">0</span>
-        </button>
-        <button type="button" class="tab" data-v="datos">
-            <span class="ico">🗂️</span><span class="txt">Datos del sistema</span>
-        </button>
+        <ul class="acso-nav">
+            <li>
+                <button type="button" class="acso-nav-item" data-v="resumen" aria-current="page">
+                    <span class="acso-nav-ico" aria-hidden="true">📊</span><span class="acso-nav-txt">Resumen</span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="acso-nav-item" data-v="usuarios">
+                    <span class="acso-nav-ico" aria-hidden="true">👥</span><span class="acso-nav-txt">Usuarios</span>
+                    <span class="acso-badge neutro oculto" id="cUsuarios">0</span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="acso-nav-item" data-v="recup">
+                    <span class="acso-nav-ico" aria-hidden="true">🔑</span><span class="acso-nav-txt">Recuperar contraseñas</span>
+                    <span class="acso-badge oculto" id="cRecup">0</span>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="acso-nav-item" data-v="datos">
+                    <span class="acso-nav-ico" aria-hidden="true">🗂️</span><span class="acso-nav-txt">Datos del sistema</span>
+                </button>
+            </li>
+        </ul>
     </nav>
 
-    <div class="sidebar-abajo">
-        <button type="button" id="salir" class="btn-salir">🚪 Cerrar sesión</button>
+    <div class="acso-sidebar-pie">
+        <button type="button" id="salir" class="acso-nav-item acso-salir">
+            <span class="acso-nav-ico" aria-hidden="true">🚪</span><span class="acso-nav-txt">Cerrar sesión</span>
+        </button>
     </div>
 </aside>
 
 <!-- ================= CONTENIDO ================= -->
-<main class="acso-contenido">
+<main class="acso-contenido" id="contenido-principal" tabindex="-1">
+
+    <header class="acso-cab">
+        <div>
+            <p class="acso-eyebrow">ACSO · POWER CLEAN</p>
+            <h1>Panel de administración</h1>
+        </div>
+        <p class="acso-estado">Sistema en línea</p>
+    </header>
 
     <!-- ---------- RESUMEN ---------- -->
-    <section id="v-resumen" class="vista">
-        <header class="cab">
-            <p class="eyebrow">PANEL DE ADMINISTRACIÓN</p>
-            <h1 id="saludo">Resumen</h1>
-            <p class="nota">Aquí controlas las cuentas de los paneles de supervisor, empleado y cliente, y los datos que manejan.</p>
+    <section id="v-resumen" class="vista" aria-labelledby="saludo">
+        <header class="section-header">
+            <div>
+                <span class="section-label">Resumen</span>
+                <h2 id="saludo">Resumen</h2>
+                <p>Aquí controlas las cuentas de los paneles de supervisor, empleado y cliente, y los datos que manejan.</p>
+            </div>
         </header>
 
-        <div id="atencion" class="atencion" hidden></div>
+        <div id="atencion" class="atencion" role="region" aria-label="Requiere tu atención" hidden></div>
 
-        <h2 class="sub">Cuentas</h2>
-        <div id="kCuentas" class="kpis"></div>
+        <h3 class="sub">Cuentas</h3>
+        <div id="kCuentas" class="dashboard-grid"></div>
 
         <div class="dos-col">
             <div class="tarjeta">
-                <h2 class="sub">Distribución por cargo</h2>
+                <h3 class="sub">Distribución por cargo</h3>
                 <div id="distribucion"></div>
             </div>
             <div class="tarjeta">
-                <h2 class="sub">Últimos accesos</h2>
+                <h3 class="sub">Últimos accesos</h3>
                 <ul id="accesos" class="lista"></ul>
             </div>
         </div>
 
-        <h2 class="sub">Pendientes y actividad</h2>
-        <div id="kActividad" class="kpis"></div>
+        <h3 class="sub">Pendientes y actividad</h3>
+        <div id="kActividad" class="dashboard-grid"></div>
     </section>
 
     <!-- ---------- USUARIOS ---------- -->
-    <section id="v-usuarios" class="vista" hidden>
-        <header class="cab">
-            <p class="eyebrow">CUENTAS</p>
-            <h1>Usuarios</h1>
-            <p class="nota" id="notaUsuarios"></p>
+    <section id="v-usuarios" class="vista" aria-labelledby="t-usuarios" hidden>
+        <header class="section-header">
+            <div>
+                <span class="section-label">Cuentas</span>
+                <h2 id="t-usuarios">Usuarios</h2>
+                <p id="notaUsuarios"></p>
+            </div>
         </header>
 
-        <div class="bar">
+        <div class="bar" role="search" aria-label="Buscar y filtrar usuarios">
             <input id="q" type="search" placeholder="Buscar por nombre, usuario o correo" aria-label="Buscar usuarios">
             <select id="fRol" aria-label="Filtrar por cargo">
                 <option value="">Todos los cargos</option>
@@ -116,18 +141,20 @@
                 <option value="off">Desactivados</option>
                 <option value="bloq">Bloqueados</option>
             </select>
-            <button id="csv" type="button">⬇ Exportar CSV</button>
-            <button id="nuevo" type="button" class="pri">＋ Nuevo usuario</button>
+            <button id="csv" type="button" class="btn">⬇ Exportar CSV</button>
+            <button id="nuevo" type="button" class="btn btn-primario">＋ Nuevo usuario</button>
         </div>
         <div class="tw"><table id="tUsers" class="resp"></table></div>
     </section>
 
     <!-- ---------- RECUPERAR CONTRASEÑAS ---------- -->
-    <section id="v-recup" class="vista" hidden>
-        <header class="cab">
-            <p class="eyebrow">SEGURIDAD</p>
-            <h1>Recuperar contraseñas</h1>
-            <p class="nota">Verifica la identidad de la persona (llamada o mensaje) antes de generar su código. El código se muestra una sola vez y vence en 30 minutos.</p>
+    <section id="v-recup" class="vista" aria-labelledby="t-recup" hidden>
+        <header class="section-header">
+            <div>
+                <span class="section-label">Seguridad</span>
+                <h2 id="t-recup">Recuperar contraseñas</h2>
+                <p>Verifica la identidad de la persona (llamada o mensaje) antes de generar su código. El código se muestra una sola vez y vence en 30 minutos.</p>
+            </div>
         </header>
 
         <div class="bar">
@@ -140,14 +167,16 @@
     </section>
 
     <!-- ---------- DATOS DEL SISTEMA ---------- -->
-    <section id="v-datos" class="vista" hidden>
-        <header class="cab">
-            <p class="eyebrow">INFORMACIÓN</p>
-            <h1>Datos del sistema</h1>
-            <p class="nota" id="notaDatos">Elige una lista para consultarla y editarla.</p>
+    <section id="v-datos" class="vista" aria-labelledby="t-datos" hidden>
+        <header class="section-header">
+            <div>
+                <span class="section-label">Información</span>
+                <h2 id="t-datos">Datos del sistema</h2>
+                <p id="notaDatos">Elige una lista para consultarla y editarla.</p>
+            </div>
         </header>
 
-        <div class="bar">
+        <div class="bar" role="search" aria-label="Elegir y filtrar la lista de datos">
             <select id="fuente" aria-label="Lista de datos">
                 <optgroup label="Firebase">
                     <option value="fs:novedades_laborales">Novedades laborales</option>
@@ -166,20 +195,24 @@
                 </optgroup>
             </select>
             <input id="qDatos" type="search" placeholder="Filtrar en la lista" aria-label="Filtrar registros">
-            <button id="nuevoDato" type="button" class="pri">＋ Nuevo registro</button>
+            <button id="nuevoDato" type="button" class="btn btn-primario">＋ Nuevo registro</button>
         </div>
         <div class="tw"><table id="tDatos" class="resp"></table></div>
     </section>
+
+    <footer class="acso-pie">
+        <p>© 2026 <strong>ACSO</strong> · Power Clean. Experiencia y eficacia sin igual a la mano.</p>
+    </footer>
 </main>
 
 <!-- ================= DIÁLOGO ================= -->
-<dialog id="dlg">
+<dialog id="dlg" aria-labelledby="dT">
     <form method="dialog" id="fDlg">
         <h2 id="dT"></h2>
         <div id="dB"></div>
         <menu>
-            <button value="x" id="dNo" formnovalidate>Cancelar</button>
-            <button value="ok" id="dSi" class="pri">Guardar</button>
+            <button value="x" id="dNo" formnovalidate class="btn">Cancelar</button>
+            <button value="ok" id="dSi" class="btn btn-primario">Guardar</button>
         </menu>
     </form>
 </dialog>

@@ -4,7 +4,6 @@
 
 Para entrar como supervisor ya no basta con usuario y contraseña.
 
-```
 Paso 1: usuario + contraseña
    ↓  (si el cargo es supervisor)
 Paso 2: clave de supervisor  ← distinta a la contraseña
@@ -12,7 +11,7 @@ Paso 2: clave de supervisor  ← distinta a la contraseña
 Se crea una sesión con token aleatorio
    ↓
 Panel del supervisor (verifica el token en cada carga)
-```
+
 
 | Capa | Qué evita |
 |---|---|
@@ -24,8 +23,6 @@ Panel del supervisor (verifica el token en cada carga)
 | **Cierre de sesión real** | Al salir, el token se invalida en el servidor (un token copiado deja de servir) |
 
 Las claves (de supervisor y código) se guardan con **PBKDF2-SHA256, 210 000 iteraciones y sal aleatoria**. Nunca en texto plano.
-
----
 
 ## Puesta en marcha (una sola vez)
 
