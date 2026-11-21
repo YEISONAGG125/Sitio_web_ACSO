@@ -1,0 +1,129 @@
+/* =====================================================================
+   ACSO · Ajustes de accesibilidad (tarjeta de Configuración + efectos)
+   Va con FIREBASE/ajustes-a11y.js. Usa las variables de acso-ui.css y
+   tiene valores de respaldo para páginas que no la cargan.
+   ===================================================================== */
+
+.acso-sr {
+    position: absolute !important; width: 1px; height: 1px; margin: -1px; padding: 0;
+    overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+/* ---------- Tarjeta ---------- */
+.acso-ajustes {
+    --aj-primario: var(--acso-primario, #0b3b3c);
+    --aj-borde: var(--acso-borde-control, #9fb8b4);
+    --aj-suave: var(--acso-suave, #e4f5f2);
+    --aj-texto: var(--acso-texto, #102d2b);
+    --aj-tenue: var(--acso-texto-suave, #4a5f5b);
+    --aj-fondo: var(--acso-blanco, #fff);
+    padding: 22px;
+    background: var(--aj-fondo);
+    color: var(--aj-texto);
+    border: 1px solid var(--acso-borde, #d9e6e3);
+    border-radius: var(--acso-radio, 18px);
+    box-shadow: var(--acso-sombra, 0 8px 25px rgba(11, 59, 60, .06));
+    font-family: var(--acso-fuente, system-ui, Arial, sans-serif);
+    text-align: left;
+}
+.acso-ajustes *, .acso-ajustes *::before, .acso-ajustes *::after { box-sizing: border-box; letter-spacing: normal; }
+
+.acso-aj-cab { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+.acso-aj-cab h3 { margin: 0 0 2px; font-size: 1.125rem; color: var(--aj-primario); }
+.acso-aj-cab p { margin: 0; color: var(--aj-tenue); font-size: .9375rem; line-height: 1.45; }
+.acso-aj-ico {
+    flex: 0 0 auto; width: 48px; height: 48px; display: grid; place-items: center;
+    border-radius: 14px; background: var(--aj-primario); color: #fff;
+    font-size: 1.125rem; font-weight: 800;
+}
+
+.acso-aj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.acso-aj-campo {
+    margin: 0; padding: 14px 16px 16px; min-width: 0;
+    border: 1px solid var(--acso-borde, #d9e6e3); border-radius: 14px;
+    background: var(--aj-suave);
+}
+.acso-aj-campo legend { padding: 0 6px; margin-left: -6px; font-size: .9375rem; font-weight: 700; color: var(--aj-primario); }
+.acso-aj-ayuda { margin: 2px 0 10px; color: var(--aj-tenue); font-size: .8125rem; line-height: 1.4; }
+.acso-aj-opciones { display: flex; gap: 8px; flex-wrap: wrap; }
+
+.acso-aj-opcion {
+    flex: 1 1 0; min-width: 72px; min-height: 44px; padding: 8px 12px;
+    border: 1.5px solid var(--aj-borde); border-radius: 12px;
+    background: var(--aj-fondo); color: var(--aj-primario);
+    font: inherit; font-size: .9375rem; font-weight: 700; cursor: pointer;
+    transition: background .15s, color .15s, border-color .15s;
+}
+.acso-aj-opcion[data-muestra="1"] { font-size: .9375rem; }
+.acso-aj-opcion[data-muestra="2"] { font-size: 1.0625rem; }
+.acso-aj-opcion[data-muestra="3"] { font-size: 1.1875rem; }
+.acso-aj-opcion:hover { background: #fff; border-color: var(--aj-primario); }
+.acso-aj-opcion[aria-pressed="true"] { background: var(--aj-primario); border-color: var(--aj-primario); color: #fff; }
+.acso-aj-opcion[aria-pressed="true"]::before { content: "✓ "; }
+
+.acso-aj-pie { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 18px; }
+.acso-aj-muestra { margin: 0; flex: 1 1 260px; padding: 12px 14px; border-left: 4px solid var(--aj-primario); background: var(--aj-suave); border-radius: 0 10px 10px 0; color: var(--aj-texto); }
+.acso-aj-restablecer {
+    min-height: 44px; padding: 8px 18px; border: 1.5px solid var(--aj-borde); border-radius: 12px;
+    background: transparent; color: var(--aj-primario); font: inherit; font-weight: 700; cursor: pointer;
+}
+.acso-aj-restablecer:hover { background: var(--aj-suave); }
+
+/* ---------- Efectos de las preferencias ---------- */
+html[data-acso-texto="grande"] { font-size: 112.5%; }
+html[data-acso-texto="mayor"]  { font-size: 125%; }
+
+html[data-acso-movimiento="reducido"] { scroll-behavior: auto !important; }
+html[data-acso-movimiento="reducido"] *,
+html[data-acso-movimiento="reducido"] *::before,
+html[data-acso-movimiento="reducido"] *::after {
+    animation-duration: .01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important; scroll-behavior: auto !important;
+}
+
+html[data-acso-lectura="amplia"] body { line-height: 1.8; word-spacing: .12em; }
+html[data-acso-lectura="amplia"] p,
+html[data-acso-lectura="amplia"] li,
+html[data-acso-lectura="amplia"] td,
+html[data-acso-lectura="amplia"] label { line-height: 1.8; letter-spacing: .04em; word-spacing: .12em; }
+
+html[data-acso-enlaces="subrayados"] a { text-decoration: underline !important; text-underline-offset: 3px; }
+
+/* ---------- Alto contraste: paneles que no usan acso-ui.css ---------- */
+html[data-acso-contraste="alto"] .acso-ajustes { border: 2px solid #000; box-shadow: none; }
+html[data-acso-contraste="alto"] .acso-aj-opcion { border-color: #000; border-width: 2px; }
+html[data-acso-contraste="alto"] .acso-aj-opcion[aria-pressed="true"] { background: #000; color: #fff; outline: 3px solid #ffbf47; outline-offset: 2px; }
+
+/* ---------- Página «Configuración» del supervisor (css.css propio) ---------- */
+html[data-acso-texto="grande"] body.pagina-config { zoom: 1.125; }
+html[data-acso-texto="mayor"]  body.pagina-config { zoom: 1.25; }
+html[data-acso-contraste="alto"] body.pagina-config,
+html[data-acso-contraste="alto"] body.pagina-config.modo-claro { background: #fff; color: #000; }
+html[data-acso-contraste="alto"] body.pagina-config :is(h1, h2, h3, p, span, label, strong, small) { color: #000 !important; }
+html[data-acso-contraste="alto"] body.pagina-config .tarjeta { background: #fff !important; border: 2px solid #000 !important; box-shadow: none !important; }
+html[data-acso-contraste="alto"] body.pagina-config .etiqueta,
+html[data-acso-contraste="alto"] body.pagina-config .estado-cuenta { background: #fff !important; border: 2px solid #000 !important; }
+
+@media (max-width: 560px) {
+    .acso-ajustes { padding: 16px; }
+    .acso-aj-grid { grid-template-columns: 1fr; }
+}
+
+/* ---------- Bloques de la sección «Configuración» ---------- */
+.acso-cfg { display: grid; gap: 20px; max-width: 1000px; }
+.acso-cfg-bloque {
+    display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap;
+    padding: 20px 22px; background: var(--acso-blanco, #fff); color: var(--acso-texto, #102d2b);
+    border: 1px solid var(--acso-borde, #d9e6e3); border-radius: var(--acso-radio, 18px);
+    box-shadow: var(--acso-sombra, 0 8px 25px rgba(11, 59, 60, .06));
+    font-family: var(--acso-fuente, system-ui, Arial, sans-serif);
+}
+.acso-cfg-bloque h3 { margin: 0 0 4px; font-size: 1.0625rem; color: var(--acso-primario, #0b3b3c); }
+.acso-cfg-bloque p { margin: 0; color: var(--acso-texto-suave, #4a5f5b); font-size: .9375rem; line-height: 1.45; max-width: 60ch; }
+.acso-cfg-enlace {
+    display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 8px 20px;
+    border-radius: 12px; background: var(--acso-primario, #0b3b3c); color: #fff; font-weight: 700; text-decoration: none;
+}
+.acso-cfg-enlace:hover { background: var(--acso-primario-hover, #0d5254); }
+a.acso-nav-item { text-decoration: none; }
+html[data-acso-contraste="alto"] .acso-cfg-bloque { border: 2px solid #000; box-shadow: none; }

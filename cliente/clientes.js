@@ -70,6 +70,17 @@ try {
     );
 }
 
+// Solo pueden entrar clientes
+if (String(usuario.cargo || localStorage.getItem("cargo") || "").toLowerCase() !== "cliente") {
+
+    window.location.href =
+        "../inicio de sistema/login.html";
+
+    throw new Error(
+        "Este panel es solo para clientes."
+    );
+}
+
 let nombreUsuario =
     usuario.nombre ||
     usuario.nombre_completo ||
@@ -207,6 +218,10 @@ const titulos = {
     perfil: {
         eyebrow: "MI PERFIL",
         titulo: "Información de mi cuenta"
+    },
+    config: {
+        eyebrow: "CONFIGURACIÓN",
+        titulo: "Preferencias del panel"
     }
 
 };
